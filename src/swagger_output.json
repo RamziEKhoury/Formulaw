@@ -1,0 +1,365 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Formula Admin API",
+    "description": ""
+  },
+  "host": "15.184.198.65:3002",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    },
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "read_pets": "read your pets",
+        "write_pets": "modify pets in your account"
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "User details for registration - firstname, lastname, username, email, password and roles",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": ""
+                },
+                "email": {
+                  "type": "string",
+                  "example": ""
+                },
+                "firstname": {
+                  "type": "string",
+                  "example": ""
+                },
+                "lastname": {
+                  "type": "string",
+                  "example": ""
+                },
+                "roleName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "roleId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "password": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "username",
+                "email",
+                "firstname",
+                "lastname",
+                "roleName",
+                "roleId",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 200
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User registered successfully!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "User details for login - username and password",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": ""
+                },
+                "password": {
+                  "type": "string",
+                  "example": ""
+                },
+                "roleId": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "username",
+                "password",
+                "roleId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "User is not activated, please contact to super admin.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string",
+                  "example": ""
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User is not activated, please contact to super admin."
+                }
+              },
+              "required": [
+                "accessToken",
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "User Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/role/add-role": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Role details - title, ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isDeleted": {
+                  "type": "number",
+                  "example": 0
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "required": [
+                "title",
+                "isDeleted",
+                "isActive"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 200
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfully!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/role/getOneRole/{roleId}": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/role/getAllRole": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
+}
