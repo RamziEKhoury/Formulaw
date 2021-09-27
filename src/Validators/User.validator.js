@@ -1,6 +1,6 @@
 const {body, sanitizeBody, validationResult} = require('express-validator');
 const apiResponses = require('../Components/apiresponse');
-
+const {query} = require('express-validator/check');
 
 const signUpValidator = [
 	body('firstname').isLength({min: 1})
@@ -46,9 +46,25 @@ const signInValidate = [
 	}];
 
 
+const userProfile = [
+	query('userId').isLength({min: 1})
+		.trim().withMessage('userId must be specified.'),
+	sanitizeBody('userId').escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return apiResponses.validationErrorWithData(
+				res, 'Validation Error.', errors.array(),
+			);
+		} else {
+			next();
+		}
+	}];
+
 const userValidator = {
 	signUpValidator: signUpValidator,
 	signInValidate: signInValidate,
+	userProfile: userProfile,
 };
 
 module.exports = userValidator;

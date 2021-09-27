@@ -175,3 +175,41 @@ module.exports.userLogin = (req, res) => {
 			return apiResponses.errorResponse(res, err.message, {});
 		});
 };
+
+
+module.exports.userProfile = (req, res) => {
+	// Get User from Database
+	// #swagger.tags = ['Auth']
+	User.findOne({
+		where: {
+			userId: req.params.userId,
+		},
+	})
+		.then(async (user) => {
+			if (!user) {
+				/* #swagger.responses[404] = {
+                   description: "User Not found.",
+                   schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+               } */
+				// return res.status(404).send({ message: "User Not found." });
+				return apiResponses.notFoundResponse(
+					res, 'User Not found.', {},
+				);
+			}
+			// res.status(200).send({
+			//   status: "200",
+			//   user: user,
+			// });
+			return apiResponses.successResponseWithData(
+				res, 'success', user,
+			);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                description: "Error message",
+                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+            } */
+			// return res.status(500).send({ message: err.message });
+			return apiResponses.errorResponse(res, err.message, {});
+		});
+};
