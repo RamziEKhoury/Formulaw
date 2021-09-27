@@ -359,6 +359,1741 @@
         "parameters": [],
         "responses": {}
       }
+    },
+    "/api/v1/language/add-language": {
+      "post": {
+        "tags": [
+          "Language"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Language details for add - en_name, ar_name, isActive",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "409": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 409
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Language already exist!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/language/update-language": {
+      "post": {
+        "tags": [
+          "Language"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Language details for update - id en_name, ar_name, isActive",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "id",
+                "en_name",
+                "ar_name",
+                "isActive"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": "ar_name"
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": "isActive"
+                },
+                "isDeleted": {
+                  "type": "string",
+                  "example": "isDeleted"
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive",
+                "isDeleted"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/language/get-languages/{page}/{offset}": {
+      "get": {
+        "tags": [
+          "Language"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/language/get-language/{id}": {
+      "get": {
+        "tags": [
+          "Language"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/country/add-country": {
+      "post": {
+        "tags": [
+          "Country"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Country details for add - en_name, ar_name, isActive, countryCode, description, flag",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "flag": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "countryCode": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "flag",
+                "isActive",
+                "countryCode",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "409": {
+            "description": "Already!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 409
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Country already exist!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/country/update-country": {
+      "post": {
+        "tags": [
+          "Country"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Country details for add - en_name, ar_name, isActive, countryCode, description, flag",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "flag": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "countryCode": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "flag",
+                "isActive",
+                "countryCode",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "description"
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 0
+                },
+                "isDeleted": {
+                  "type": "number",
+                  "example": 1
+                },
+                "countryCode": {
+                  "type": "string",
+                  "example": "countryCode"
+                },
+                "flag": {
+                  "type": "string",
+                  "example": "flag"
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "description",
+                "isActive",
+                "isDeleted",
+                "countryCode",
+                "flag"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "User Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/country/get-countries/{limit}": {
+      "get": {
+        "tags": [
+          "Country"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/country/get-country/{id}": {
+      "get": {
+        "tags": [
+          "Country"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/industrial/add-industrial": {
+      "post": {
+        "tags": [
+          "Industrial"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Industrial details for add - en_name, ar_name, isActive, description",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "409": {
+            "description": "Already!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 409
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Already exist!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/industrial/update-industrial": {
+      "post": {
+        "tags": [
+          "Industrial"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Details for add - en_name, ar_name, isActive, description",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "id",
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "description"
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 0
+                },
+                "isDeleted": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "description",
+                "isActive",
+                "isDeleted"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/industrial/get-industrials/{page}/{offset}": {
+      "get": {
+        "tags": [
+          "Industrial"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/industrial/get-industrial/{id}": {
+      "get": {
+        "tags": [
+          "Industrial"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/add-service": {
+      "post": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "service details for add - en_name, ar_name, isActive, description",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "409": {
+            "description": "Already!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 409
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Already exist!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/update-country": {
+      "post": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Details for add - en_name, ar_name, isActive, description",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "id",
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "description"
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 0
+                },
+                "isDeleted": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "description",
+                "isActive",
+                "isDeleted"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/get-countries/{page}/{offset}": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/get-service/{id}": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/add-subcategory": {
+      "post": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "service details for add - en_name, ar_name, isActive, description",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "serviceId",
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "409": {
+            "description": "Already!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 409
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Already exist!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/update-subcategory": {
+      "post": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Details for add - en_name, ar_name, isActive, description",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "description": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "serviceId",
+                "id",
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "description"
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 0
+                },
+                "isDeleted": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "description",
+                "isActive",
+                "isDeleted"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/get-subcategories/{serviceId}/{page}/{offset}": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/service/get-subcategory/{id}": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {}

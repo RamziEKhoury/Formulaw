@@ -31,8 +31,16 @@ const doc = {
 };
 
 const outputFile = './swagger_output.json';
-const endpointsFiles = ['../src/Routes/user.route', '../src/Routes/role.route'];
+const endpointsFiles = [
+	'../src/Routes/user.route',
+	'../src/Routes/role.route',
+	'../src/Routes/language.route',
+	'../src/Routes/country.route',
+	'../src/Routes/industrial.route',
+	'../src/Routes/service.route.js',
+	'../src/Routes/service-subcategory.route',
+];
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-	require('./index'); // Your project's root file
+	require('./index');
 });

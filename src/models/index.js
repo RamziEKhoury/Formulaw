@@ -26,5 +26,10 @@ db.sequelize = sequelize;
 
 db.user = require('./users.model')(sequelize, Sequelize);
 db.role = require('./roles.model')(sequelize, Sequelize);
+db.country = require('./countries.model')(sequelize, Sequelize);
+db.language = require('./languages.model')(sequelize, Sequelize);
+db.industrial = require('./industrials.model')(sequelize, Sequelize);
+db.service = require('./services.model')(sequelize, Sequelize);
+db.service_subCategory = require('./service-subcategory.model')(sequelize, Sequelize);
 
 module.exports = db;

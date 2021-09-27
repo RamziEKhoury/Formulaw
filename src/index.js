@@ -25,3 +25,8 @@ app.listen(4300, () => {
 /* Endpoints */
 require('../src/Routes/user.route')(app);
 require('../src/Routes/role.route')(app);
+require('../src/Routes/language.route')(app);
+require('../src/Routes/country.route')(app);
+require('../src/Routes/industrial.route')(app);
+require('../src/Routes/service.route')(app);
+require('../src/Routes/service-subcategory.route')(app);
