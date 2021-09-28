@@ -25,7 +25,7 @@ module.exports = function(app) {
 	);
 
 	app.get(
-		'/api/v1/service/get-subcategories/:serviceId/:page/:offset',
+		'/api/v1/service/get-subcategories/:serviceId/:limit',
 		serviceSubCategoryController.getServiceSubcategories);
 
 	app.get(

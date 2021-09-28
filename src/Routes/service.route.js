@@ -19,13 +19,13 @@ module.exports = function(app) {
 	);
 
 	app.post(
-		'/api/v1/service/update-country',
+		'/api/v1/service/update-service',
 		[ServiceValidator.updateServiceValidator],
 		serviceController.serviceUpdate,
 	);
 
 	app.get(
-		'/api/v1/service/get-countries/:page/:offset',
+		'/api/v1/service/get-services/:limit',
 		serviceController.getServices);
 
 	app.get(

@@ -112,8 +112,7 @@ module.exports.languageUpdate = async (req, res) => {
 module.exports.getLanguages = (req, res) => {
 	// Get Country from Database
 	// #swagger.tags = ['Language']
-	const offset = req.params.offset;
-	const limit = req.params.page;
+	const limit = req.params.limit;
 	const search = req.query.searchText;
 
 	if (!!search) {
@@ -126,9 +125,8 @@ module.exports.getLanguages = (req, res) => {
 					{
 						ar_name: {[Op.like]: `%${search}%`},
 					},
-				], isDeleted: 0},
+				], isDeleted: 0, isActive: 1},
 			limit: limit,
-			offset: offset,
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -154,7 +152,7 @@ module.exports.getLanguages = (req, res) => {
 			});
 	} else {
 		Language.findAndCountAll({
-			where: {isDeleted: 0, isActive: 1}, offset: offset, limit: limit})
+			where: {isDeleted: 0, isActive: 1}, limit: limit})
 			.then((result) => {
 				// res.status(200).send({
 				//   status: "200",
