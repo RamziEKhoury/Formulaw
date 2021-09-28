@@ -131,7 +131,6 @@ module.exports.getServices = (req, res) => {
 					},
 				], isDeleted: 0, isActive: 1},
 			limit: limit,
-			offset: offset,
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -157,7 +156,7 @@ module.exports.getServices = (req, res) => {
 			});
 	} else {
 		Services.findAndCountAll({
-			where: {isDeleted: 0, isActive: 1}, offset: offset, limit: limit})
+			where: {isDeleted: 0, isActive: 1}, limit: limit})
 			.then((result) => {
 				// res.status(200).send({
 				//   status: "200",

@@ -115,7 +115,7 @@ module.exports.getIndustrials = (req, res) => {
 	// Get Industrials from Database
 	// #swagger.tags = ['Industrial']
 	const offset = req.params.offset;
-	const limit = req.params.page;
+	const limit = req.params.limit;
 	const search = req.query.searchText;
 
 	if (!!search) {
@@ -128,12 +128,8 @@ module.exports.getIndustrials = (req, res) => {
 					{
 						ar_name: {[Op.like]: `%${search}%`},
 					},
-					{
-						countryCode: {[Op.like]: `%${search}%`},
-					},
 				], isDeleted: 0, isActive: 1},
 			limit: limit,
-			offset: offset,
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -159,7 +155,7 @@ module.exports.getIndustrials = (req, res) => {
 			});
 	} else {
 		Industrial.findAndCountAll({
-			where: {isDeleted: 0, isActive: 1}, offset: offset, limit: limit})
+			where: {isDeleted: 0, isActive: 1}, limit: limit})
 			.then((result) => {
 				// res.status(200).send({
 				//   status: "200",

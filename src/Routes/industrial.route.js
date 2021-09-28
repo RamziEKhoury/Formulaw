@@ -25,7 +25,7 @@ module.exports = function(app) {
 	);
 
 	app.get(
-		'/api/v1/industrial/get-industrials/:page/:offset',
+		'/api/v1/industrial/get-industrials/:limit',
 		industrialController.getIndustrials);
 
 	app.get(

@@ -575,7 +575,7 @@
         }
       }
     },
-    "/api/v1/language/get-languages/{page}/{offset}": {
+    "/api/v1/language/get-languages/{limit}": {
       "get": {
         "tags": [
           "Language"
@@ -583,13 +583,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
+            "name": "limit",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1280,7 +1274,7 @@
         }
       }
     },
-    "/api/v1/industrial/get-industrials/{page}/{offset}": {
+    "/api/v1/industrial/get-industrials/{limit}": {
       "get": {
         "tags": [
           "Industrial"
@@ -1288,13 +1282,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
+            "name": "limit",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1470,7 +1458,7 @@
         }
       }
     },
-    "/api/v1/service/update-country": {
+    "/api/v1/service/update-service": {
       "post": {
         "tags": [
           "Service"
@@ -1623,7 +1611,7 @@
         }
       }
     },
-    "/api/v1/service/get-countries/{page}/{offset}": {
+    "/api/v1/service/get-services/{limit}": {
       "get": {
         "tags": [
           "Service"
@@ -1631,13 +1619,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
+            "name": "limit",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1976,7 +1958,7 @@
         }
       }
     },
-    "/api/v1/service/get-subcategories/{serviceId}/{page}/{offset}": {
+    "/api/v1/service/get-subcategories/{serviceId}/{limit}": {
       "get": {
         "tags": [
           "Service"
@@ -1990,13 +1972,7 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
+            "name": "limit",
             "in": "path",
             "required": true,
             "type": "string"

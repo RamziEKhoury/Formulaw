@@ -25,7 +25,7 @@ module.exports = function(app) {
 	);
 
 	app.get(
-		'/api/v1/language/get-languages/:page/:offset',
+		'/api/v1/language/get-languages/:limit',
 		languageController.getLanguages);
 
 	app.get(

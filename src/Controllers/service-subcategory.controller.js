@@ -118,8 +118,7 @@ module.exports.subCategoryUpdate = async (req, res) => {
 module.exports.getServiceSubcategories = (req, res) => {
 	// Get Industrials from Database
 	// #swagger.tags = ['Service']
-	const offset = req.params.offset;
-	const limit = req.params.page;
+	const limit = req.params.limit;
 	const serviceId = req.params.serviceId;
 	const search = req.query.searchText;
 
@@ -138,7 +137,6 @@ module.exports.getServiceSubcategories = (req, res) => {
 					},
 				], isDeleted: 0, isActive: 1},
 			limit: limit,
-			offset: offset,
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -167,7 +165,7 @@ module.exports.getServiceSubcategories = (req, res) => {
 			where: {
 				serviceId: req.params.serviceId,
 				isDeleted: 0, isActive: 1},
-			offset: offset, limit: limit,
+			    limit: limit,
 		})
 			.then((result) => {
 				// res.status(200).send({
