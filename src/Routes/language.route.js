@@ -31,4 +31,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/language/get-language/:id',
 		languageController.getLanguage);
+
+	app.delete(
+		'/api/v1/language/delete-language/:id',
+		languageController.deleteLanguage);
 };

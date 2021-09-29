@@ -31,4 +31,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/service/get-service/:id',
 		serviceController.getService);
+
+	app.delete(
+		'/api/v1/service/delete-service/:id',
+		serviceController.deleteService);
 };

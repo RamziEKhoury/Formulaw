@@ -31,4 +31,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/service/get-subcategory/:id',
 		serviceSubCategoryController.getSubCategory);
+
+	app.delete(
+		'/api/v1/service/delete-subcategory/:id',
+		serviceSubCategoryController.deleteSubcategory);
 };
