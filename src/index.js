@@ -19,7 +19,9 @@ app.use(bodyParser.json());
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(4300, () => {
-	console.log('Server is running!\nAPI documentation: http://localhost:4300/doc');
+  console.log(
+    'Server is running!\nAPI documentation: http://localhost:4300/doc'
+  );
 });
 
 /* Endpoints */
@@ -30,3 +32,4 @@ require('../src/Routes/country.route')(app);
 require('../src/Routes/industrial.route')(app);
 require('../src/Routes/service.route')(app);
 require('../src/Routes/service-subcategory.route')(app);
+require('../src/Routes/lawFirm.route')(app);

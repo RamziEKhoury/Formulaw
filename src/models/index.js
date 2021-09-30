@@ -1,23 +1,18 @@
 const config = require('../Config/db.config');
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(
-	config.DB,
-	config.USER,
-	config.PASSWORD,
-	{
-		host: config.HOST,
-		dialect: config.dialect,
-		operatorsAliases: false,
+const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
+  host: config.HOST,
+  dialect: config.dialect,
+  operatorsAliases: false,
 
-		pool: {
-			max: config.pool.max,
-			min: config.pool.min,
-			acquire: config.pool.acquire,
-			idle: config.pool.idle,
-		},
-	},
-);
+  pool: {
+    max: config.pool.max,
+    min: config.pool.min,
+    acquire: config.pool.acquire,
+    idle: config.pool.idle,
+  },
+});
 
 const db = {};
 
@@ -30,6 +25,10 @@ db.country = require('./countries.model')(sequelize, Sequelize);
 db.language = require('./languages.model')(sequelize, Sequelize);
 db.industrial = require('./industrials.model')(sequelize, Sequelize);
 db.service = require('./services.model')(sequelize, Sequelize);
-db.service_subCategory = require('./service-subcategory.model')(sequelize, Sequelize);
+db.service_subCategory = require('./service-subcategory.model')(
+  sequelize,
+  Sequelize
+);
+db.lawFirm = require('./lawFirms.model')(sequelize, Sequelize);
 
 module.exports = db;
