@@ -21,4 +21,6 @@ module.exports = function(app) {
 	app.get('/api/v1/role/getOneRole/:roleId', roleController.roleById);
 
 	app.get('/api/v1/role/getAllRole', roleController.role_All);
+
+	app.delete('/api/v1/role/delete-role/:id', roleController.deleteRole);
 };

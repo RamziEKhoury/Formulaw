@@ -216,3 +216,42 @@ module.exports.getCountry = (req, res) => {
 			});
 		});
 };
+
+
+module.exports.deleteCountry = async (req, res) => {
+	// #swagger.tags = ['Country']
+	try {
+		await Country.update({
+			isDeleted: 1,
+		}, {where: {id: req.params.id}})
+			.then((country) => {
+				if (!country) {
+					/* #swagger.responses[404] = {
+                               description: "Not found.",
+                               schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
+                           } */
+					// return res.status(404).send({ message: "Not found." });
+					return apiResponses.notFoundResponse(
+						res, 'Not found.', {},
+					);
+				}
+				/* #swagger.responses[200] = {
+                            description: "success!",
+                        } */
+				// return res.status(200).send({ status:'200', message: "success!" , data: country });
+				return apiResponses.successResponseWithData(
+					res, 'Success', country,
+				);
+			})
+			.catch((err) => {
+				/* #swagger.responses[500] = {
+                            description: "Error message",
+                            schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                        } */
+				// return res.status(500).send({ message: err.message });
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};

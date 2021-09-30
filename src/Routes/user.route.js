@@ -26,4 +26,9 @@ module.exports = function(app) {
 		[UserAuth.signInValidate, validateUsername],
 		userController.userLogin,
 	);
+
+	app.delete(
+		'/api/v1/auth/delete-user',
+		userController.deleteUser,
+	);
 };

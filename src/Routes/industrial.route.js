@@ -31,4 +31,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/industrial/get-industrial/:id',
 		industrialController.getIndustrial);
+
+	app.delete(
+		'/api/v1/industrial/delete-industrial/:id',
+		industrialController.deleteIndustrial);
 };

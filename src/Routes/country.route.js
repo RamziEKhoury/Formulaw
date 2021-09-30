@@ -31,4 +31,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/country/get-country/:id',
 		countryController.getCountry);
+
+	app.delete(
+		'/api/v1/country/delete-country/:id',
+		countryController.deleteCountry);
 };
