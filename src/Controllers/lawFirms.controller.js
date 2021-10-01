@@ -34,7 +34,7 @@ module.exports.addLawFirm = async (req, res) => {
         legalField: req.body.legalField,
         service: req.body.service,
         rating: req.body.rating,
-        expertise: req.body.expertise,
+        experience: req.body.experience,
         isActive: req.body.isActive,
       },
     }).then((lawFirm) => {
