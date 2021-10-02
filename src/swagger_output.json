@@ -8,7 +8,10 @@
   "host": "localhost:3002",
   "basePath": "/",
   "tags": [],
-  "schemes": ["http", "https"],
+  "schemes": [
+    "http",
+    "https"
+  ],
   "securityDefinitions": {
     "api_key": {
       "type": "apiKey",
@@ -25,12 +28,18 @@
       }
     }
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
-    "/api/v1/auth/signup": {
+    "\r/api/v1/auth/signup": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -104,7 +113,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -116,9 +130,11 @@
         }
       }
     },
-    "/api/v1/auth/login": {
+    "\r/api/v1/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -141,7 +157,11 @@
                   "example": ""
                 }
               },
-              "required": ["username", "password", "roleId"]
+              "required": [
+                "username",
+                "password",
+                "roleId"
+              ]
             }
           }
         ],
@@ -163,7 +183,10 @@
                   "example": "User is not activated, please contact to super admin."
                 }
               },
-              "required": ["accessToken", "message"],
+              "required": [
+                "accessToken",
+                "message"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -191,7 +214,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -219,7 +247,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -228,9 +261,11 @@
         }
       }
     },
-    "/api/v1/auth/delete-user": {
+    "\r/api/v1/auth/delete-user": {
       "delete": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
@@ -259,7 +294,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -287,7 +327,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -296,9 +341,11 @@
         }
       }
     },
-    "/api/v1/role/add-role": {
+    "\r/api/v1/role/add-role": {
       "post": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "description": "",
         "parameters": [
           {
@@ -321,7 +368,11 @@
                   "example": 0
                 }
               },
-              "required": ["title", "isDeleted", "isActive"]
+              "required": [
+                "title",
+                "isDeleted",
+                "isActive"
+              ]
             }
           }
         ],
@@ -348,7 +399,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -359,7 +415,9 @@
     },
     "/api/v1/role/getOneRole/{roleId}": {
       "get": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "description": "",
         "parameters": [
           {
@@ -374,7 +432,9 @@
     },
     "/api/v1/role/getAllRole": {
       "get": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "description": "",
         "parameters": [],
         "responses": {}
@@ -382,7 +442,9 @@
     },
     "/api/v1/role/delete-role/{id}": {
       "delete": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "description": "",
         "parameters": [
           {
@@ -418,7 +480,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -446,7 +513,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -455,9 +527,11 @@
         }
       }
     },
-    "/api/v1/language/add-language": {
+    "\r/api/v1/language/add-language": {
       "post": {
-        "tags": ["Language"],
+        "tags": [
+          "Language"
+        ],
         "description": "",
         "parameters": [
           {
@@ -480,7 +554,11 @@
                   "example": ""
                 }
               },
-              "required": ["en_name", "ar_name", "isActive"]
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive"
+              ]
             }
           }
         ],
@@ -507,7 +585,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -516,9 +599,11 @@
         }
       }
     },
-    "/api/v1/language/update-language": {
+    "\r/api/v1/language/update-language": {
       "post": {
-        "tags": ["Language"],
+        "tags": [
+          "Language"
+        ],
         "description": "",
         "parameters": [
           {
@@ -545,7 +630,12 @@
                   "example": ""
                 }
               },
-              "required": ["id", "en_name", "ar_name", "isActive"]
+              "required": [
+                "id",
+                "en_name",
+                "ar_name",
+                "isActive"
+              ]
             }
           }
         ],
@@ -572,7 +662,12 @@
                   "example": "isDeleted"
                 }
               },
-              "required": ["en_name", "ar_name", "isActive", "isDeleted"],
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive",
+                "isDeleted"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -600,7 +695,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -628,7 +728,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -637,9 +742,11 @@
         }
       }
     },
-    "/api/v1/language/get-languages/{limit}": {
+    "\r/api/v1/language/get-languages/{limit}": {
       "get": {
-        "tags": ["Language"],
+        "tags": [
+          "Language"
+        ],
         "description": "",
         "parameters": [
           {
@@ -677,7 +784,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -686,9 +798,11 @@
         }
       }
     },
-    "/api/v1/language/get-language/{id}": {
+    "\r/api/v1/language/get-language/{id}": {
       "get": {
-        "tags": ["Language"],
+        "tags": [
+          "Language"
+        ],
         "description": "",
         "parameters": [
           {
@@ -721,7 +835,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -730,9 +849,11 @@
         }
       }
     },
-    "/api/v1/language/delete-language/{id}": {
+    "\r/api/v1/language/delete-language/{id}": {
       "delete": {
-        "tags": ["Language"],
+        "tags": [
+          "Language"
+        ],
         "description": "",
         "parameters": [
           {
@@ -768,7 +889,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -796,7 +922,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -805,9 +936,11 @@
         }
       }
     },
-    "/api/v1/country/add-country": {
+    "\r/api/v1/country/add-country": {
       "post": {
-        "tags": ["Country"],
+        "tags": [
+          "Country"
+        ],
         "description": "",
         "parameters": [
           {
@@ -876,7 +1009,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -885,9 +1023,11 @@
         }
       }
     },
-    "/api/v1/country/update-country": {
+    "\r/api/v1/country/update-country": {
       "post": {
-        "tags": ["Country"],
+        "tags": [
+          "Country"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1004,7 +1144,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1032,7 +1177,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1041,9 +1191,11 @@
         }
       }
     },
-    "/api/v1/country/get-countries/{limit}": {
+    "\r/api/v1/country/get-countries/{limit}": {
       "get": {
-        "tags": ["Country"],
+        "tags": [
+          "Country"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1081,7 +1233,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1090,9 +1247,11 @@
         }
       }
     },
-    "/api/v1/country/get-country/{id}": {
+    "\r/api/v1/country/get-country/{id}": {
       "get": {
-        "tags": ["Country"],
+        "tags": [
+          "Country"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1125,7 +1284,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1134,9 +1298,11 @@
         }
       }
     },
-    "/api/v1/country/delete-country/{id}": {
+    "\r/api/v1/country/delete-country/{id}": {
       "delete": {
-        "tags": ["Country"],
+        "tags": [
+          "Country"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1172,7 +1338,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1200,7 +1371,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1209,9 +1385,11 @@
         }
       }
     },
-    "/api/v1/industrial/add-industrial": {
+    "\r/api/v1/industrial/add-industrial": {
       "post": {
-        "tags": ["Industrial"],
+        "tags": [
+          "Industrial"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1238,7 +1416,12 @@
                   "example": ""
                 }
               },
-              "required": ["en_name", "ar_name", "isActive", "description"]
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
             }
           }
         ],
@@ -1265,7 +1448,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1274,9 +1462,11 @@
         }
       }
     },
-    "/api/v1/industrial/update-industrial": {
+    "\r/api/v1/industrial/update-industrial": {
       "post": {
-        "tags": ["Industrial"],
+        "tags": [
+          "Industrial"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1378,7 +1568,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1406,7 +1601,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1415,9 +1615,11 @@
         }
       }
     },
-    "/api/v1/industrial/get-industrials/{limit}": {
+    "\r/api/v1/industrial/get-industrials/{limit}": {
       "get": {
-        "tags": ["Industrial"],
+        "tags": [
+          "Industrial"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1455,7 +1657,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1464,9 +1671,11 @@
         }
       }
     },
-    "/api/v1/industrial/get-industrial/{id}": {
+    "\r/api/v1/industrial/get-industrial/{id}": {
       "get": {
-        "tags": ["Industrial"],
+        "tags": [
+          "Industrial"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1499,7 +1708,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1508,9 +1722,11 @@
         }
       }
     },
-    "/api/v1/industrial/delete-industrial/{id}": {
+    "\r/api/v1/industrial/delete-industrial/{id}": {
       "delete": {
-        "tags": ["Industrial"],
+        "tags": [
+          "Industrial"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1546,7 +1762,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1574,7 +1795,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1583,9 +1809,11 @@
         }
       }
     },
-    "/api/v1/service/add-service": {
+    "\r/api/v1/service/add-service": {
       "post": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1612,7 +1840,12 @@
                   "example": ""
                 }
               },
-              "required": ["en_name", "ar_name", "isActive", "description"]
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive",
+                "description"
+              ]
             }
           }
         ],
@@ -1639,7 +1872,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1648,9 +1886,11 @@
         }
       }
     },
-    "/api/v1/service/update-service": {
+    "\r/api/v1/service/update-service": {
       "post": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1752,7 +1992,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1780,7 +2025,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1789,9 +2039,11 @@
         }
       }
     },
-    "/api/v1/service/get-services/{limit}": {
+    "\r/api/v1/service/get-services/{limit}": {
       "get": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1829,7 +2081,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1838,9 +2095,11 @@
         }
       }
     },
-    "/api/v1/service/get-service/{id}": {
+    "\r/api/v1/service/get-service/{id}": {
       "get": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1873,7 +2132,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1882,9 +2146,11 @@
         }
       }
     },
-    "/api/v1/service/delete-service/{id}": {
+    "\r/api/v1/service/delete-service/{id}": {
       "delete": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1920,7 +2186,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1948,7 +2219,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -1957,9 +2233,11 @@
         }
       }
     },
-    "/api/v1/service/add-subcategory": {
+    "\r/api/v1/service/add-subcategory": {
       "post": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2023,7 +2301,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2032,9 +2315,11 @@
         }
       }
     },
-    "/api/v1/service/update-subcategory": {
+    "\r/api/v1/service/update-subcategory": {
       "post": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2141,7 +2426,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2169,7 +2459,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2178,9 +2473,11 @@
         }
       }
     },
-    "/api/v1/service/get-subcategories/{serviceId}/{limit}": {
+    "\r/api/v1/service/get-subcategories/{serviceId}/{limit}": {
       "get": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2224,7 +2521,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2233,9 +2535,11 @@
         }
       }
     },
-    "/api/v1/service/get-subcategory/{id}": {
+    "\r/api/v1/service/get-subcategory/{id}": {
       "get": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2268,7 +2572,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2277,9 +2586,11 @@
         }
       }
     },
-    "/api/v1/service/delete-subcategory/{id}": {
+    "\r/api/v1/service/delete-subcategory/{id}": {
       "delete": {
-        "tags": ["Service"],
+        "tags": [
+          "Service"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2315,7 +2626,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2343,107 +2659,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/lawfirm/add-lawfirm": {
-      "post": {
-        "tags": ["LawFirm"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,experience,numOfLawyer,jurisdiction,legalField,service,expertise, isActive",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "en_name": {
-                  "type": "string",
-                  "example": ""
-                },
-                "ar_name": {
-                  "type": "string",
-                  "example": ""
-                },
-                "isActive": {
-                  "type": "string",
-                  "example": ""
-                },
-                "licenseNumber": {
-                  "type": "string",
-                  "example": ""
-                },
-                "experience": {
-                  "type": "string",
-                  "example": ""
-                },
-                "numOfLawyer": {
-                  "type": "string",
-                  "example": ""
-                },
-                "jurisdiction": {
-                  "type": "string",
-                  "example": ""
-                },
-                "legalField": {
-                  "type": "string",
-                  "example": ""
-                },
-                "service": {
-                  "type": "string",
-                  "example": ""
-                },
-                "expertise": {
-                  "type": "string",
-                  "example": ""
-                }
-              },
               "required": [
-                "en_name",
-                "ar_name",
-                "isActive",
-                "licenseNumber",
-                "experience",
-                "numOfLawyer",
-                "jurisdiction",
-                "legalField",
-                "service",
-                "expertise"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "409": {
-            "description": "Already!",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "statusCode": {
-                  "type": "number",
-                  "example": 409
-                },
-                "status": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Lawfirm already exist!"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "required": ["statusCode", "status", "message", "data"],
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2452,7 +2673,7 @@
         }
       }
     },
-    "/api/v1/lawfirm/update-lawfirm": {
+    "\r/api/v1/lawfirm/add-lawfirm": {
       "post": {
         "tags": [],
         "description": "",
@@ -2460,10 +2681,14 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,username,licenseNumber,experience,numOfLawyer,jurisdiction,legalField,service,expertise, isActive",
+            "description": "LawFirm details for add - id, en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
             "schema": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
                 "en_name": {
                   "type": "string",
                   "example": ""
@@ -2480,7 +2705,35 @@
                   "type": "string",
                   "example": ""
                 },
+                "country": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langauge": {
+                  "type": "string",
+                  "example": ""
+                },
+                "logo": {
+                  "type": "string",
+                  "example": ""
+                },
+                "price": {
+                  "type": "string",
+                  "example": ""
+                },
+                "currency": {
+                  "type": "string",
+                  "example": ""
+                },
+                "rating": {
+                  "type": "string",
+                  "example": ""
+                },
                 "experience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryExperience": {
                   "type": "string",
                   "example": ""
                 },
@@ -2506,11 +2759,19 @@
                 }
               },
               "required": [
+                "id",
                 "en_name",
                 "ar_name",
                 "isActive",
                 "licenseNumber",
+                "country",
+                "langauge",
+                "logo",
+                "price",
+                "currency",
+                "rating",
                 "experience",
+                "industryExperience",
                 "numOfLawyer",
                 "jurisdiction",
                 "legalField",
@@ -2537,6 +2798,34 @@
                 "licenseNumber": {
                   "type": "string",
                   "example": "licenseNumber"
+                },
+                "industryExperience": {
+                  "type": "string",
+                  "example": "industryExperience"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "country"
+                },
+                "language": {
+                  "type": "string",
+                  "example": "language"
+                },
+                "logo": {
+                  "type": "string",
+                  "example": "logo"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "price"
+                },
+                "currency": {
+                  "type": "string",
+                  "example": "currency"
+                },
+                "rating": {
+                  "type": "string",
+                  "example": "rating"
                 },
                 "isActive": {
                   "type": "number",
@@ -2575,6 +2864,13 @@
                 "en_name",
                 "ar_name",
                 "licenseNumber",
+                "industryExperience",
+                "country",
+                "language",
+                "logo",
+                "price",
+                "currency",
+                "rating",
                 "isActive",
                 "isDeleted",
                 "experience",
@@ -2611,7 +2907,45 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "409": {
+            "description": "Already!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 409
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Lawfirm already exist!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2639,7 +2973,293 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "\r/api/v1/lawfirm/update-lawfirm": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "LawFirm details for add - id, en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "licenseNumber": {
+                  "type": "string",
+                  "example": ""
+                },
+                "country": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langauge": {
+                  "type": "string",
+                  "example": ""
+                },
+                "logo": {
+                  "type": "string",
+                  "example": ""
+                },
+                "price": {
+                  "type": "string",
+                  "example": ""
+                },
+                "currency": {
+                  "type": "string",
+                  "example": ""
+                },
+                "rating": {
+                  "type": "string",
+                  "example": ""
+                },
+                "experience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryExperience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "numOfLawyer": {
+                  "type": "string",
+                  "example": ""
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "example": ""
+                },
+                "legalField": {
+                  "type": "string",
+                  "example": ""
+                },
+                "service": {
+                  "type": "string",
+                  "example": ""
+                },
+                "expertise": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "id",
+                "en_name",
+                "ar_name",
+                "isActive",
+                "licenseNumber",
+                "country",
+                "langauge",
+                "logo",
+                "price",
+                "currency",
+                "rating",
+                "experience",
+                "industryExperience",
+                "numOfLawyer",
+                "jurisdiction",
+                "legalField",
+                "service",
+                "expertise"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": "ar_name"
+                },
+                "licenseNumber": {
+                  "type": "string",
+                  "example": "licenseNumber"
+                },
+                "industryExperience": {
+                  "type": "string",
+                  "example": "industryExperience"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "country"
+                },
+                "language": {
+                  "type": "string",
+                  "example": "language"
+                },
+                "logo": {
+                  "type": "string",
+                  "example": "logo"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "price"
+                },
+                "currency": {
+                  "type": "string",
+                  "example": "currency"
+                },
+                "rating": {
+                  "type": "string",
+                  "example": "rating"
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 0
+                },
+                "isDeleted": {
+                  "type": "number",
+                  "example": 1
+                },
+                "experience": {
+                  "type": "string",
+                  "example": "experience"
+                },
+                "numOfLawyer": {
+                  "type": "string",
+                  "example": "numOfLawyer"
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "example": "jurisdiction"
+                },
+                "expertise": {
+                  "type": "string",
+                  "example": "expertise"
+                },
+                "legalField": {
+                  "type": "string",
+                  "example": "legalField"
+                },
+                "service": {
+                  "type": "string",
+                  "example": "service"
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "licenseNumber",
+                "industryExperience",
+                "country",
+                "language",
+                "logo",
+                "price",
+                "currency",
+                "rating",
+                "isActive",
+                "isDeleted",
+                "experience",
+                "numOfLawyer",
+                "jurisdiction",
+                "expertise",
+                "legalField",
+                "service"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2650,7 +3270,9 @@
     },
     "/api/v1/lawfirm/get-lawfirms/{limit}": {
       "get": {
-        "tags": ["LawFirm"],
+        "tags": [
+          "LawFirm"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2683,7 +3305,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2694,7 +3321,9 @@
     },
     "/api/v1/lawfirm/get-lawfirm/{id}": {
       "get": {
-        "tags": ["LawFirm"],
+        "tags": [
+          "LawFirm"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2727,7 +3356,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2736,9 +3370,11 @@
         }
       }
     },
-    "/api/v1/lawfirm/delete-lawfirm/{id}": {
+    "\r/api/v1/lawfirm/delete-lawfirm/{id}": {
       "delete": {
-        "tags": ["LawFirm"],
+        "tags": [
+          "LawFirm"
+        ],
         "description": "",
         "parameters": [
           {
@@ -2774,7 +3410,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }
@@ -2802,7 +3443,12 @@
                   "properties": {}
                 }
               },
-              "required": ["statusCode", "status", "message", "data"],
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
               "xml": {
                 "name": "main"
               }

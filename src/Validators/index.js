@@ -6,6 +6,9 @@ const industrialValidator = require('./Industrial.validator');
 const serviceValidator = require('./Services.validator');
 const serviceSubcategoryValidator = require('./Service-subcategories.validator');
 const lawFirmValidator = require('./lawFirm.validator');
+
+
+
 module.exports = {
   userValidator,
   rolesValidator,

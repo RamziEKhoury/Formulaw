@@ -39,6 +39,11 @@ const addLawFirmValidator = [
     .trim()
     .withMessage('jurisdiction must be specified.'),
 
+    body('industryExperience')
+    .isLength({ min: 1 })
+    .trim()
+    .withMessage('industryExperience must be specified.'),
+
   body('language')
     .isLength({ min: 1 })
     .trim()
@@ -91,6 +96,11 @@ const updateLawFirmValidator = [
     .isLength({ min: 1 })
     .trim()
     .withMessage('licenseNumber must be specified.'),
+
+  body('industryExperience')
+    .isLength({ min: 1 })
+    .trim()
+    .withMessage('industryExperience must be specified.'),
 
   body('country')
     .isLength({ min: 1 })

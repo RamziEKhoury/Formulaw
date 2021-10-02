@@ -25,22 +25,30 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       country: {
-        type: sequelize.STRING,
+        type: Sequelize.STRING,
       },
       language: {
-        type: Sequelize.ARRAY,
-      },
+        type: Sequelize.ARRAY(Sequelize.ENUM({
+          values: ['english', 'arabic']
+      })),
+        allowNull: false
+    },
       logo: {
         type: Sequelize.STRING,
       },
       price: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
       },
       currency: {
         type: Sequelize.STRING,
       },
-      experience: {
-        type: Sequelize.INTEGER,
+      industryExperience: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+      },
+      experience:{
+        type:Sequelize.INTEGER,
       },
       numOfLawyer: {
         type: Sequelize.INTEGER,
@@ -52,13 +60,20 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       service: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
       },
       expertise: {
         type: Sequelize.STRING,
       },
       rating: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        validate: {
+            min: 1,
+            max: 10
+        }
       },
       isActive: {
         type: Sequelize.INTEGER,

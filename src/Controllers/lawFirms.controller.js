@@ -6,12 +6,13 @@ const Op = db.Sequelize.Op;
 module.exports.addLawFirm = async (req, res) => {
   try {
     console.log(req.body.en_name);
-    // #swagger.tags = ['LawFirm']
-    /*  #swagger.parameters['obj'] = {
+    // #swagger.tags = ['LawFirm]
+  /*  #swagger.parameters['obj'] = {
                     in: 'body',
-                    description: "LawFirm details for add - en_name, ar_name,licenseNumber,country,langauge,logo,experience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
-                    schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $country: "" , $langauge: "" ,$logo: "" ,$price: "" ,$currency: "" , $rating: "" , $experience: "", $numOfLawyer: "", $jurisdiction: "", $legalField: "" , $service: "", $expertise: ""}
+                     description: "LawFirm details for add - id, en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+                    schema: { $id: "",$en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $country: "" , $langauge: "" ,$logo: "" ,$price: "" ,$currency: "" , $rating: "" , $experience: "",$industryExperience:"", $numOfLawyer: "", $jurisdiction: "", $legalField: "" , $service: "", $expertise: ""}
             } */
+  
     LawFirm.findOrCreate({
       where: {
         [Op.or]: [
@@ -22,7 +23,7 @@ module.exports.addLawFirm = async (req, res) => {
       defaults: {
         en_name: req.body.en_name,
         ar_name: req.body.ar_name,
-        licenseNumber: req.body.flag,
+        licenseNumber: req.body.licenseNumber,
         country: req.body.country,
         language: req.body.language,
         logo: req.body.logo,
@@ -34,6 +35,7 @@ module.exports.addLawFirm = async (req, res) => {
         legalField: req.body.legalField,
         service: req.body.service,
         rating: req.body.rating,
+        industryExperience:req.body.industryExperience,
         experience: req.body.experience,
         isActive: req.body.isActive,
       },
@@ -55,7 +57,7 @@ module.exports.addLawFirm = async (req, res) => {
           id: inserted.id,
           en_name: inserted.en_name,
           ar_name: inserted.ar_name,
-          licenseNumber: inserted.flag,
+          licenseNumber: inserted.licenseNumber,
           country: inserted.country,
           language: inserted.language,
           logo: inserted.logo,
@@ -66,6 +68,7 @@ module.exports.addLawFirm = async (req, res) => {
           legalField: inserted.legalField,
           service: inserted.service,
           expertise: inserted.expertise,
+          industryExperience:inserted.industryExperience,
           rating: inserted.rating,
           isActive: inserted.isActive,
           isDeleted: inserted.isDeleted,
@@ -83,20 +86,24 @@ module.exports.addLawFirm = async (req, res) => {
   }
 };
 
+
+
+
 module.exports.lawFirmUpdate = async (req, res) => {
   // #swagger.tags = ['LawFirm]
   /*  #swagger.parameters['obj'] = {
                     in: 'body',
-                     description: "LawFirm details for add - en_name, ar_name,licenseNumber,country,langauge,logo,experience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
-                    schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $country: "" , $langauge: "" ,$logo: "" ,$price: "" ,$currency: "" , $rating: "" , $experience: "", $numOfLawyer: "", $jurisdiction: "", $legalField: "" , $service: "", $expertise: ""}
+                     description: "LawFirm details for add - id, en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+                    schema: { $id: "",$en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $country: "" , $langauge: "" ,$logo: "" ,$price: "" ,$currency: "" , $rating: "" , $experience: "",$industryExperience:"", $numOfLawyer: "", $jurisdiction: "", $legalField: "" , $service: "", $expertise: ""}
             } */
 
   try {
     await LawFirm.update(
       {
+        id:req.body.id,
         en_name: req.body.en_name,
         ar_name: req.body.ar_name,
-        licenseNumber: req.body.flag,
+        licenseNumber: req.body.licenseNumber,
         country: req.body.country,
         language: req.body.language,
         logo: req.body.logo,
@@ -108,6 +115,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
         legalField: req.body.legalField,
         service: req.body.service,
         rating: req.body.rating,
+        industryExperience:req.body.industryExperience,
         expertise: req.body.expertise,
         isActive: req.body.isActive,
       },
@@ -124,7 +132,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
         }
         /* #swagger.responses[200] = {
                             description: "success!",
-                            schema: { $en_name: "en_name", $ar_name: "ar_name", $licenseNumber: "licenseNumber",$country: "country",$language: "language",$logo: "logo",$price: "price",$currency: "currency",$rating: "rating", $isActive: 0, $isDeleted: 1, $experience: "experience", $numOfLawyer: "numOfLawyer",$jurisdiction: "jurisdiction", $expertise: "expertise", $legalField: "legalField", $service: "service"}
+                            schema: { $en_name: "en_name", $ar_name: "ar_name", $licenseNumber: "licenseNumber",$industryExperience:"industryExperience",$country: "country",$language: "language",$logo: "logo",$price: "price",$currency: "currency",$rating: "rating", $isActive: 0, $isDeleted: 1, $experience: "experience", $numOfLawyer: "numOfLawyer",$jurisdiction: "jurisdiction", $expertise: "expertise", $legalField: "legalField", $service: "service"}
                             
                         } */
         // return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
@@ -143,6 +151,9 @@ module.exports.lawFirmUpdate = async (req, res) => {
   }
 };
 
+
+
+
 module.exports.getLawFirms = (req, res) => {
   //Get Lawfirm data from Database
   //#swagger.tags = ['LawFirm']
@@ -160,9 +171,7 @@ module.exports.getLawFirms = (req, res) => {
           {
             ar_name: { [Op.like]: `%${search}%` },
           },
-          {
-            licenseNumber: { [Op.like]: `%${search}%` },
-          },
+          
         ],
         isDeleted: 0,
         isActive: 1,
@@ -212,6 +221,9 @@ module.exports.getLawFirms = (req, res) => {
   }
 };
 
+
+
+
 module.exports.getLawFirm = (req, res) => {
   // Get Country from Database
   // #swagger.tags = ['LawFirm']
@@ -237,6 +249,9 @@ module.exports.getLawFirm = (req, res) => {
       });
     });
 };
+
+
+
 module.exports.deleteLawFirm = async (req, res) => {
   // #swagger.tags = ['LawFirm']
   try {
