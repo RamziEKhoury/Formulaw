@@ -1,6 +1,5 @@
 const swaggerAutogen = require('swagger-autogen')();
 
-
 const doc = {
 	info: {
 		version: '1.0.0',
@@ -39,6 +38,7 @@ const endpointsFiles = [
 	'../src/Routes/industrial.route',
 	'../src/Routes/service.route.js',
 	'../src/Routes/service-subcategory.route',
+	'../src/Routes/lawFirm.route.js',
 ];
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {

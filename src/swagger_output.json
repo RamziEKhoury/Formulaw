@@ -2672,6 +2672,620 @@
           }
         }
       }
+    },
+    "/api/v1/lawfirm/add-lawfirm": {
+      "post": {
+        "tags": [
+          "LawFirm"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "licenseNumber": {
+                  "type": "string",
+                  "example": ""
+                },
+                "country": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langauge": {
+                  "type": "string",
+                  "example": ""
+                },
+                "logo": {
+                  "type": "string",
+                  "example": ""
+                },
+                "price": {
+                  "type": "string",
+                  "example": ""
+                },
+                "currency": {
+                  "type": "string",
+                  "example": ""
+                },
+                "rating": {
+                  "type": "string",
+                  "example": ""
+                },
+                "experience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryExperience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "numOfLawyer": {
+                  "type": "string",
+                  "example": ""
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "example": ""
+                },
+                "legalField": {
+                  "type": "string",
+                  "example": ""
+                },
+                "service": {
+                  "type": "string",
+                  "example": ""
+                },
+                "expertise": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "isActive",
+                "licenseNumber",
+                "country",
+                "langauge",
+                "logo",
+                "price",
+                "currency",
+                "rating",
+                "experience",
+                "industryExperience",
+                "numOfLawyer",
+                "jurisdiction",
+                "legalField",
+                "service",
+                "expertise"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "409": {
+            "description": "Already!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 409
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Lawfirm already exist!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lawfirm/update-lawfirm": {
+      "post": {
+        "tags": [
+          "LawFirm"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "LawFirm details for add - id, en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "en_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                },
+                "licenseNumber": {
+                  "type": "string",
+                  "example": ""
+                },
+                "country": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langauge": {
+                  "type": "string",
+                  "example": ""
+                },
+                "logo": {
+                  "type": "string",
+                  "example": ""
+                },
+                "price": {
+                  "type": "string",
+                  "example": ""
+                },
+                "currency": {
+                  "type": "string",
+                  "example": ""
+                },
+                "rating": {
+                  "type": "string",
+                  "example": ""
+                },
+                "experience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryExperience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "numOfLawyer": {
+                  "type": "string",
+                  "example": ""
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "example": ""
+                },
+                "legalField": {
+                  "type": "string",
+                  "example": ""
+                },
+                "service": {
+                  "type": "string",
+                  "example": ""
+                },
+                "expertise": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "id",
+                "en_name",
+                "ar_name",
+                "isActive",
+                "licenseNumber",
+                "country",
+                "langauge",
+                "logo",
+                "price",
+                "currency",
+                "rating",
+                "experience",
+                "industryExperience",
+                "numOfLawyer",
+                "jurisdiction",
+                "legalField",
+                "service",
+                "expertise"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "en_name": {
+                  "type": "string",
+                  "example": "en_name"
+                },
+                "ar_name": {
+                  "type": "string",
+                  "example": "ar_name"
+                },
+                "licenseNumber": {
+                  "type": "string",
+                  "example": "licenseNumber"
+                },
+                "industryExperience": {
+                  "type": "string",
+                  "example": "industryExperience"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "country"
+                },
+                "language": {
+                  "type": "string",
+                  "example": "language"
+                },
+                "logo": {
+                  "type": "string",
+                  "example": "logo"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "price"
+                },
+                "currency": {
+                  "type": "string",
+                  "example": "currency"
+                },
+                "rating": {
+                  "type": "string",
+                  "example": "rating"
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 0
+                },
+                "isDeleted": {
+                  "type": "number",
+                  "example": 1
+                },
+                "experience": {
+                  "type": "string",
+                  "example": "experience"
+                },
+                "numOfLawyer": {
+                  "type": "string",
+                  "example": "numOfLawyer"
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "example": "jurisdiction"
+                },
+                "expertise": {
+                  "type": "string",
+                  "example": "expertise"
+                },
+                "legalField": {
+                  "type": "string",
+                  "example": "legalField"
+                },
+                "service": {
+                  "type": "string",
+                  "example": "service"
+                }
+              },
+              "required": [
+                "en_name",
+                "ar_name",
+                "licenseNumber",
+                "industryExperience",
+                "country",
+                "language",
+                "logo",
+                "price",
+                "currency",
+                "rating",
+                "isActive",
+                "isDeleted",
+                "experience",
+                "numOfLawyer",
+                "jurisdiction",
+                "expertise",
+                "legalField",
+                "service"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Lawfirm Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lawfirm/get-lawfirms/{limit}": {
+      "get": {
+        "tags": [
+          "LawFirm"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lawfirm/get-lawfirm/{id}": {
+      "get": {
+        "tags": [
+          "LawFirm"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lawfirm/delete-lawfirm/{id}": {
+      "delete": {
+        "tags": [
+          "LawFirm"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!"
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {}
