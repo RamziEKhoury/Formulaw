@@ -5,7 +5,7 @@
     "title": "Formula Admin API",
     "description": ""
   },
-  "host": "localhost:3002",
+  "host": "15.184.198.65:3002",
   "basePath": "/",
   "tags": [],
   "schemes": [
