@@ -35,7 +35,7 @@
     "application/json"
   ],
   "paths": {
-    "\r/api/v1/auth/signup": {
+    "/api/v1/auth/signup": {
       "post": {
         "tags": [
           "Auth"
@@ -130,7 +130,7 @@
         }
       }
     },
-    "\r/api/v1/auth/login": {
+    "/api/v1/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -261,7 +261,7 @@
         }
       }
     },
-    "\r/api/v1/auth/delete-user": {
+    "/api/v1/auth/delete-user": {
       "delete": {
         "tags": [
           "Auth"
@@ -341,7 +341,7 @@
         }
       }
     },
-    "\r/api/v1/role/add-role": {
+    "/api/v1/role/add-role": {
       "post": {
         "tags": [
           "Role"
@@ -527,7 +527,7 @@
         }
       }
     },
-    "\r/api/v1/language/add-language": {
+    "/api/v1/language/add-language": {
       "post": {
         "tags": [
           "Language"
@@ -599,7 +599,7 @@
         }
       }
     },
-    "\r/api/v1/language/update-language": {
+    "/api/v1/language/update-language": {
       "post": {
         "tags": [
           "Language"
@@ -742,7 +742,7 @@
         }
       }
     },
-    "\r/api/v1/language/get-languages/{limit}": {
+    "/api/v1/language/get-languages/{limit}": {
       "get": {
         "tags": [
           "Language"
@@ -798,7 +798,7 @@
         }
       }
     },
-    "\r/api/v1/language/get-language/{id}": {
+    "/api/v1/language/get-language/{id}": {
       "get": {
         "tags": [
           "Language"
@@ -849,7 +849,7 @@
         }
       }
     },
-    "\r/api/v1/language/delete-language/{id}": {
+    "/api/v1/language/delete-language/{id}": {
       "delete": {
         "tags": [
           "Language"
@@ -936,7 +936,7 @@
         }
       }
     },
-    "\r/api/v1/country/add-country": {
+    "/api/v1/country/add-country": {
       "post": {
         "tags": [
           "Country"
@@ -1023,7 +1023,7 @@
         }
       }
     },
-    "\r/api/v1/country/update-country": {
+    "/api/v1/country/update-country": {
       "post": {
         "tags": [
           "Country"
@@ -1191,7 +1191,7 @@
         }
       }
     },
-    "\r/api/v1/country/get-countries/{limit}": {
+    "/api/v1/country/get-countries/{limit}": {
       "get": {
         "tags": [
           "Country"
@@ -1247,7 +1247,7 @@
         }
       }
     },
-    "\r/api/v1/country/get-country/{id}": {
+    "/api/v1/country/get-country/{id}": {
       "get": {
         "tags": [
           "Country"
@@ -1298,7 +1298,7 @@
         }
       }
     },
-    "\r/api/v1/country/delete-country/{id}": {
+    "/api/v1/country/delete-country/{id}": {
       "delete": {
         "tags": [
           "Country"
@@ -1385,7 +1385,7 @@
         }
       }
     },
-    "\r/api/v1/industrial/add-industrial": {
+    "/api/v1/industrial/add-industrial": {
       "post": {
         "tags": [
           "Industrial"
@@ -1462,7 +1462,7 @@
         }
       }
     },
-    "\r/api/v1/industrial/update-industrial": {
+    "/api/v1/industrial/update-industrial": {
       "post": {
         "tags": [
           "Industrial"
@@ -1615,7 +1615,7 @@
         }
       }
     },
-    "\r/api/v1/industrial/get-industrials/{limit}": {
+    "/api/v1/industrial/get-industrials/{limit}": {
       "get": {
         "tags": [
           "Industrial"
@@ -1671,7 +1671,7 @@
         }
       }
     },
-    "\r/api/v1/industrial/get-industrial/{id}": {
+    "/api/v1/industrial/get-industrial/{id}": {
       "get": {
         "tags": [
           "Industrial"
@@ -1722,7 +1722,7 @@
         }
       }
     },
-    "\r/api/v1/industrial/delete-industrial/{id}": {
+    "/api/v1/industrial/delete-industrial/{id}": {
       "delete": {
         "tags": [
           "Industrial"
@@ -1809,7 +1809,7 @@
         }
       }
     },
-    "\r/api/v1/service/add-service": {
+    "/api/v1/service/add-service": {
       "post": {
         "tags": [
           "Service"
@@ -1886,7 +1886,7 @@
         }
       }
     },
-    "\r/api/v1/service/update-service": {
+    "/api/v1/service/update-service": {
       "post": {
         "tags": [
           "Service"
@@ -2039,7 +2039,7 @@
         }
       }
     },
-    "\r/api/v1/service/get-services/{limit}": {
+    "/api/v1/service/get-services/{limit}": {
       "get": {
         "tags": [
           "Service"
@@ -2095,7 +2095,7 @@
         }
       }
     },
-    "\r/api/v1/service/get-service/{id}": {
+    "/api/v1/service/get-service/{id}": {
       "get": {
         "tags": [
           "Service"
@@ -2146,7 +2146,7 @@
         }
       }
     },
-    "\r/api/v1/service/delete-service/{id}": {
+    "/api/v1/service/delete-service/{id}": {
       "delete": {
         "tags": [
           "Service"
@@ -2233,7 +2233,7 @@
         }
       }
     },
-    "\r/api/v1/service/add-subcategory": {
+    "/api/v1/service/add-subcategory": {
       "post": {
         "tags": [
           "Service"
@@ -2315,7 +2315,7 @@
         }
       }
     },
-    "\r/api/v1/service/update-subcategory": {
+    "/api/v1/service/update-subcategory": {
       "post": {
         "tags": [
           "Service"
@@ -2473,7 +2473,7 @@
         }
       }
     },
-    "\r/api/v1/service/get-subcategories/{serviceId}/{limit}": {
+    "/api/v1/service/get-subcategories/{serviceId}/{limit}": {
       "get": {
         "tags": [
           "Service"
@@ -2535,7 +2535,7 @@
         }
       }
     },
-    "\r/api/v1/service/get-subcategory/{id}": {
+    "/api/v1/service/get-subcategory/{id}": {
       "get": {
         "tags": [
           "Service"
@@ -2586,7 +2586,7 @@
         }
       }
     },
-    "\r/api/v1/service/delete-subcategory/{id}": {
+    "/api/v1/service/delete-subcategory/{id}": {
       "delete": {
         "tags": [
           "Service"
@@ -2673,22 +2673,20 @@
         }
       }
     },
-    "\r/api/v1/lawfirm/add-lawfirm": {
+    "/api/v1/lawfirm/add-lawfirm": {
       "post": {
-        "tags": [],
+        "tags": [
+          "LawFirm"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - id, en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
-                  "type": "string",
-                  "example": ""
-                },
                 "en_name": {
                   "type": "string",
                   "example": ""
@@ -2759,7 +2757,6 @@
                 }
               },
               "required": [
-                "id",
                 "en_name",
                 "ar_name",
                 "isActive",
@@ -2782,142 +2779,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "success!",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "en_name": {
-                  "type": "string",
-                  "example": "en_name"
-                },
-                "ar_name": {
-                  "type": "string",
-                  "example": "ar_name"
-                },
-                "licenseNumber": {
-                  "type": "string",
-                  "example": "licenseNumber"
-                },
-                "industryExperience": {
-                  "type": "string",
-                  "example": "industryExperience"
-                },
-                "country": {
-                  "type": "string",
-                  "example": "country"
-                },
-                "language": {
-                  "type": "string",
-                  "example": "language"
-                },
-                "logo": {
-                  "type": "string",
-                  "example": "logo"
-                },
-                "price": {
-                  "type": "string",
-                  "example": "price"
-                },
-                "currency": {
-                  "type": "string",
-                  "example": "currency"
-                },
-                "rating": {
-                  "type": "string",
-                  "example": "rating"
-                },
-                "isActive": {
-                  "type": "number",
-                  "example": 0
-                },
-                "isDeleted": {
-                  "type": "number",
-                  "example": 1
-                },
-                "experience": {
-                  "type": "string",
-                  "example": "experience"
-                },
-                "numOfLawyer": {
-                  "type": "string",
-                  "example": "numOfLawyer"
-                },
-                "jurisdiction": {
-                  "type": "string",
-                  "example": "jurisdiction"
-                },
-                "expertise": {
-                  "type": "string",
-                  "example": "expertise"
-                },
-                "legalField": {
-                  "type": "string",
-                  "example": "legalField"
-                },
-                "service": {
-                  "type": "string",
-                  "example": "service"
-                }
-              },
-              "required": [
-                "en_name",
-                "ar_name",
-                "licenseNumber",
-                "industryExperience",
-                "country",
-                "language",
-                "logo",
-                "price",
-                "currency",
-                "rating",
-                "isActive",
-                "isDeleted",
-                "experience",
-                "numOfLawyer",
-                "jurisdiction",
-                "expertise",
-                "legalField",
-                "service"
-              ],
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "404": {
-            "description": "Not found.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "statusCode": {
-                  "type": "string",
-                  "example": "404"
-                },
-                "status": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Not found."
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "required": [
-                "statusCode",
-                "status",
-                "message",
-                "data"
-              ],
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
           "409": {
             "description": "Already!",
             "schema": {
@@ -2950,46 +2811,15 @@
                 "name": "main"
               }
             }
-          },
-          "500": {
-            "description": "Error message",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "statusCode": {
-                  "type": "string",
-                  "example": "500"
-                },
-                "status": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Error Message"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "required": [
-                "statusCode",
-                "status",
-                "message",
-                "data"
-              ],
-              "xml": {
-                "name": "main"
-              }
-            }
           }
         }
       }
     },
-    "\r/api/v1/lawfirm/update-lawfirm": {
+    "/api/v1/lawfirm/update-lawfirm": {
       "post": {
-        "tags": [],
+        "tags": [
+          "LawFirm"
+        ],
         "description": "",
         "parameters": [
           {
@@ -3200,7 +3030,7 @@
             }
           },
           "404": {
-            "description": "Not found.",
+            "description": "Lawfirm Not found.",
             "schema": {
               "type": "object",
               "properties": {
@@ -3370,7 +3200,7 @@
         }
       }
     },
-    "\r/api/v1/lawfirm/delete-lawfirm/{id}": {
+    "/api/v1/lawfirm/delete-lawfirm/{id}": {
       "delete": {
         "tags": [
           "LawFirm"

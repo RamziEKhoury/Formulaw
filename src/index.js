@@ -19,9 +19,9 @@ app.use(bodyParser.json());
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(4300, () => {
-  console.log(
-    'Server is running!\nAPI documentation: http://localhost:4300/doc'
-  );
+	console.log(
+		'Server is running!\nAPI documentation: http://localhost:4300/doc',
+	);
 });
 
 /* Endpoints */
