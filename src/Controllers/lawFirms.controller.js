@@ -98,7 +98,6 @@ module.exports.lawFirmUpdate = async (req, res) => {
 	try {
 		await LawFirm.update(
 			{
-				id: req.body.id,
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				licenseNumber: req.body.licenseNumber,

@@ -4,3 +4,12 @@ module.exports.Status = {
 	DEACTIVATE: 'DEACTIVATE',
 	OFFLINE: 'OFFLINE',
 };
+
+
+module.exports.RequestWorkflow = {
+	NEW: 'NEW',
+	APPROVED: 'APPROVED',
+	COMPLETED: 'COMPLETED',
+	PENDING: 'PENDING',
+	REJECTED: 'REJECTED',
+};
