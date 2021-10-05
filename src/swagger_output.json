@@ -2683,7 +2683,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
             "schema": {
               "type": "object",
               "properties": {
@@ -2703,7 +2703,7 @@
                   "type": "string",
                   "example": ""
                 },
-                "country": {
+                "countryId": {
                   "type": "string",
                   "example": ""
                 },
@@ -2761,7 +2761,7 @@
                 "ar_name",
                 "isActive",
                 "licenseNumber",
-                "country",
+                "countryId",
                 "langauge",
                 "logo",
                 "price",
