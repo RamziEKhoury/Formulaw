@@ -33,3 +33,4 @@ require('../src/Routes/industrial.route')(app);
 require('../src/Routes/service.route')(app);
 require('../src/Routes/service-subcategory.route')(app);
 require('../src/Routes/lawFirm.route')(app);
+require('../src/Routes/request.route')(app);

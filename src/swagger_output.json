@@ -3286,6 +3286,551 @@
           }
         }
       }
+    },
+    "/api/v1/request/create-request": {
+      "post": {
+        "tags": [
+          "Requests"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Request details for add - firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "email": {
+                  "type": "string",
+                  "example": ""
+                },
+                "jurisdictionId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "languageId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "legalFieldId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "legalFieldName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "serviceSubcategoryId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "serviceSubcategoryName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "budgetMin": {
+                  "type": "string",
+                  "example": ""
+                },
+                "budgetMax": {
+                  "type": "string",
+                  "example": ""
+                },
+                "rating": {
+                  "type": "string",
+                  "example": ""
+                },
+                "lawFirmId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "experience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "email",
+                "jurisdictionId",
+                "languageId",
+                "legalFieldId",
+                "legalFieldName",
+                "serviceSubcategoryId",
+                "serviceSubcategoryName",
+                "budgetMin",
+                "budgetMax",
+                "rating",
+                "lawFirmId",
+                "experience",
+                "isActive"
+              ]
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/request/update-request": {
+      "post": {
+        "tags": [
+          "Requests"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Request details for add - id, firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "email": {
+                  "type": "string",
+                  "example": ""
+                },
+                "jurisdictionId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "languageId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "legalFieldId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "legalFieldName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "serviceSubcategoryId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "serviceSubcategoryName": {
+                  "type": "string",
+                  "example": ""
+                },
+                "budgetMin": {
+                  "type": "string",
+                  "example": ""
+                },
+                "budgetMax": {
+                  "type": "string",
+                  "example": ""
+                },
+                "rating": {
+                  "type": "string",
+                  "example": ""
+                },
+                "lawFirmId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "experience": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isActive": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "id",
+                "firstName",
+                "lastName",
+                "email",
+                "jurisdictionId",
+                "languageId",
+                "legalFieldId",
+                "legalFieldName",
+                "serviceSubcategoryId",
+                "serviceSubcategoryName",
+                "budgetMin",
+                "budgetMax",
+                "rating",
+                "lawFirmId",
+                "experience",
+                "isActive"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "firstName"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "lastName"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "email"
+                },
+                "jurisdictionId": {
+                  "type": "string",
+                  "example": "jurisdictionId"
+                },
+                "languageId": {
+                  "type": "string",
+                  "example": "languageId"
+                },
+                "legalFieldId": {
+                  "type": "string",
+                  "example": "legalFieldId"
+                },
+                "legalFieldName": {
+                  "type": "string",
+                  "example": "legalFieldName"
+                },
+                "serviceSubcategoryId": {
+                  "type": "string",
+                  "example": "serviceSubcategoryId"
+                },
+                "serviceSubcategoryName": {
+                  "type": "string",
+                  "example": "serviceSubcategoryName"
+                },
+                "budgetMin": {
+                  "type": "string",
+                  "example": "budgetMin"
+                },
+                "budgetMax": {
+                  "type": "string",
+                  "example": "budgetMax"
+                },
+                "rating": {
+                  "type": "string",
+                  "example": "rating"
+                },
+                "lawFirmId": {
+                  "type": "string",
+                  "example": "lawFirmId"
+                },
+                "experience": {
+                  "type": "string",
+                  "example": "experience"
+                },
+                "isActive": {
+                  "type": "number",
+                  "example": 1
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "email",
+                "jurisdictionId",
+                "languageId",
+                "legalFieldId",
+                "legalFieldName",
+                "serviceSubcategoryId",
+                "serviceSubcategoryName",
+                "budgetMin",
+                "budgetMax",
+                "rating",
+                "lawFirmId",
+                "experience",
+                "isActive"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/request/get-request/{limit}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/request/get-request/{id}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/request/delete-request/{id}": {
+      "delete": {
+        "tags": [
+          "Requests"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success!"
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "404"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Error message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "string",
+                  "example": "500"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error Message"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "statusCode",
+                "status",
+                "message",
+                "data"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {}

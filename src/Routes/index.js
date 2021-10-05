@@ -7,4 +7,5 @@ module.exports=(app)=> {
 	require('./service.route')(app);
 	require('./service-subcategory.route')(app);
 	require('./lawFirm.route')(app);
+	require('./request.route')(app);
 };
