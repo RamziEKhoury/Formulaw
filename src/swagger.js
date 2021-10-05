@@ -36,9 +36,10 @@ const endpointsFiles = [
 	'../src/Routes/language.route',
 	'../src/Routes/country.route',
 	'../src/Routes/industrial.route',
-	'../src/Routes/service.route.js',
+	'../src/Routes/service.route',
 	'../src/Routes/service-subcategory.route',
-	'../src/Routes/lawFirm.route.js',
+	'../src/Routes/lawFirm.route',
+	'../src/Routes/request.route',
 ];
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {

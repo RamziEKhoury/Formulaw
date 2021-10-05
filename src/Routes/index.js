@@ -6,4 +6,5 @@ module.exports=(app)=> {
 	require('./industrial.route')(app);
 	require('./service.route')(app);
 	require('./service-subcategory.route')(app);
+	require('./request.route')(app);
 };
