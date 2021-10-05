@@ -1,4 +1,5 @@
 const {body, sanitizeBody, validationResult} = require('express-validator');
+const {isNumber} = require('underscore');
 const apiResponses = require('../Components/apiresponse');
 
 const addLawFirmValidator = [
@@ -19,10 +20,14 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('licenseNumber must be specified.'),
 
-	body('country')
+	body('countryId')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('country must be specified.'),
+		.withMessage('country Id must be specified.'),
+	body('countryTitle')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('country title must be specified.'),
 
 	body('experience')
 		.isLength({min: 1})
@@ -39,15 +44,45 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('jurisdiction must be specified.'),
 
-	body('industryExperience')
+	body('industryId')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('industryExperience must be specified.'),
+		.withMessage('industry must be specified.'),
 
-	body('language')
+	body('industryTitle')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('language must be specified.'),
+		.withMessage('industry Title must be specified.'),
+
+	body('subCategoryId')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('subCategory Id must be specified.'),
+
+	body('subCategoryTitle')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('subCategory title must be specified.'),
+
+	body('serviceId')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('service Id must be specified.'),
+
+	body('serviceTitle')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('service title must be specified.'),
+
+	body('languageId')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('lanuage Id must be specified.'),
+
+	body('languageTitle')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('lanuage title must be specified.'),
 
 	body('price')
 		.isLength({min: 1})

@@ -14,24 +14,25 @@ module.exports = (sequelize, Sequelize) => {
 			ar_name: {
 				type: Sequelize.STRING,
 			},
-			// username: {
-			//   type: Sequelize.STRING,
-			//   allowNull: false,
-			// },
-			// password: {
-			//   type: Sequelize.STRING,
-			// },
+
 			licenseNumber: {
 				type: Sequelize.STRING,
 			},
-			country: {
+			countryId: {
+				type: Sequelize.UUID,
+				defaultValue: Sequelize.UUIDV4,
+				allowNull: false,
+			},
+			countryTitle: {
 				type: Sequelize.STRING,
 			},
-			language: {
-				type: Sequelize.ARRAY(Sequelize.ENUM({
-					values: ['english', 'arabic'],
-				})),
+			languageId: {
+				type: Sequelize.UUID,
+				defaultValue: Sequelize.UUIDV4,
 				allowNull: false,
+			},
+			languageTitle: {
+				type: Sequelize.STRING,
 			},
 			logo: {
 				type: Sequelize.STRING,
@@ -42,11 +43,16 @@ module.exports = (sequelize, Sequelize) => {
 			currency: {
 				type: Sequelize.STRING,
 			},
-			industryExperience: {
+			industryId: {
 				type: Sequelize.UUID,
 				defaultValue: Sequelize.UUIDV4,
 				allowNull: false,
 			},
+
+			industryTitle: {
+				type: Sequelize.STRING,
+			},
+
 			experience: {
 				type: Sequelize.INTEGER,
 			},
@@ -56,14 +62,24 @@ module.exports = (sequelize, Sequelize) => {
 			jurisdiction: {
 				type: Sequelize.STRING,
 			},
-			legalField: {
-				type: Sequelize.STRING,
-			},
-			service: {
+			serviceId: {
 				type: Sequelize.UUID,
 				defaultValue: Sequelize.UUIDV4,
 				allowNull: false,
 			},
+			serviceTitle: {
+				type: Sequelize.STRING,
+			},
+			subCategoryId: {
+				type: Sequelize.UUID,
+				defaultValue: Sequelize.UUIDV4,
+				allowNull: false,
+			},
+
+			subCategoryTitle: {
+				type: Sequelize.STRING,
+			},
+
 			expertise: {
 				type: Sequelize.STRING,
 			},

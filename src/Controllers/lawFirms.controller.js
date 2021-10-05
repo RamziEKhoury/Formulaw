@@ -9,8 +9,8 @@ module.exports.addLawFirm = async (req, res) => {
 		console.log(req.body.en_name);
 		/*  #swagger.parameters['obj'] = {
 			in: 'body',
-			 description: "LawFirm details for add - en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
-			schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $country: "" , $langauge: "" ,$logo: "" ,$price: "" ,$currency: "" , $rating: "" , $experience: "",$industryExperience:"", $numOfLawyer: "", $jurisdiction: "", $legalField: "" , $service: "", $expertise: ""}
+			 description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+			schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" , $langauge: "" ,$logo: "" ,$price: "" ,$currency: "" , $rating: "" , $experience: "",$industryExperience:"", $numOfLawyer: "", $jurisdiction: "", $legalField: "" , $service: "", $expertise: ""}
             } */
 
 		LawFirm.findOrCreate({
@@ -24,18 +24,23 @@ module.exports.addLawFirm = async (req, res) => {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				licenseNumber: req.body.licenseNumber,
-				country: req.body.country,
-				language: req.body.language,
+				countryId: req.body.countryId,
+				countryTitle: req.body.countryTitle,
+				languageId: req.body.languageId,
+				languageTitle: req.body.languageTitle,
 				logo: req.body.logo,
 				price: req.body.price,
 				currency: req.body.currency,
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
 				jurisdiction: req.body.jurisdiction,
-				legalField: req.body.legalField,
-				service: req.body.service,
+				serviceId: req.body.legalFieldId,
+				serviceTitle: req.body.legalFieldTitle,
+				subCategoryTitle: req.body.subCategoryTitle,
+				subCategoryId: req.body.subCategoryId,
 				rating: req.body.rating,
-				industryExperience: req.body.industryExperience,
+				industryId: req.body.industryId,
+				industryTitle: req.body.industryTitle,
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
@@ -85,7 +90,6 @@ module.exports.addLawFirm = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
-
 
 module.exports.lawFirmUpdate = async (req, res) => {
 	// #swagger.tags = ['LawFirm']
@@ -147,7 +151,6 @@ module.exports.lawFirmUpdate = async (req, res) => {
 	}
 };
 
-
 module.exports.getLawFirms = (req, res) => {
 	// Get Lawfirm data from Database
 	// #swagger.tags = ['LawFirm']
@@ -165,7 +168,6 @@ module.exports.getLawFirms = (req, res) => {
 					{
 						ar_name: {[Op.like]: `%${search}%`},
 					},
-
 				],
 				isDeleted: 0,
 				isActive: 1,
@@ -215,7 +217,6 @@ module.exports.getLawFirms = (req, res) => {
 	}
 };
 
-
 module.exports.getLawFirm = (req, res) => {
 	// Get Country from Database
 	// #swagger.tags = ['LawFirm']
@@ -237,12 +238,10 @@ module.exports.getLawFirm = (req, res) => {
                               } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message: err.message ||
-                    'Some error occurred while retrieving LawFirm.',
+				message: err.message || 'Some error occurred while retrieving LawFirm.',
 			});
 		});
 };
-
 
 module.exports.deleteLawFirm = async (req, res) => {
 	// #swagger.tags = ['LawFirm']
