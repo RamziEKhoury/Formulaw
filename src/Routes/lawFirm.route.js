@@ -25,7 +25,7 @@ module.exports = function(app) {
 
 	app.get('/api/v1/lawfirm/get-lawfirms/:limit', lawFirmController.getLawFirms);
 
-	app.get('/api/v1/lawfirm/get-lawfirm/:id', lawFirmController.getLawFirms);
+	app.get('/api/v1/lawfirm/get-lawfirm/:id', lawFirmController.getLawFirm);
 
 	app.delete(
 		'/api/v1/lawfirm/delete-lawfirm/:id',
