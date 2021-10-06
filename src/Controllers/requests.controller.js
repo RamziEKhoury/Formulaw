@@ -13,25 +13,7 @@ module.exports.createRequest = async (req, res) => {
             schema: { $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
             } */
 
-		Request.create({
-			defaults: {
-				firstName: req.body.firstName,
-				lastName: req.body.lastName,
-				email: req.body.email,
-				jurisdictionId: req.body.jurisdictionId,
-				languageId: req.body.languageId,
-				legalFieldId: req.body.legalFieldId,
-				legalFieldName: req.body.legalFieldName,
-				serviceSubcategoryId: req.body.serviceSubcategoryId,
-				serviceSubcategoryName: req.body.serviceSubcategoryName,
-				budgetMin: req.body.budgetMin,
-				budgetMax: req.body.budgetMax,
-				rating: req.body.rating,
-				experience: req.body.experience,
-				lawFirmId: req.body.lawFirmId,
-				isActive: req.body.isActive,
-			},
-		}).then((request) => {
+		Request.create(req.body).then((request) => {
 			const createdRequest = {
 				id: request.id,
 				firstName: request.firstName,

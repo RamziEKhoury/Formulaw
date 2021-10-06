@@ -11,21 +11,24 @@ module.exports = (sequelize, Sequelize) => {
 			},
 			firstName: {
 				type: Sequelize.STRING,
-				allowNull: false,
 			},
 			lastName: {
 				type: Sequelize.STRING,
-				allowNull: false,
 			},
 			email: {
 			  type: Sequelize.STRING,
-			  allowNull: false,
 			},
 			jurisdictionId: {
 			  type: Sequelize.UUID,
 			},
+			jurisdictionName: {
+				type: Sequelize.STRING,
+			},
 			languageId: {
 				type: Sequelize.UUID,
+			},
+			languageName: {
+				type: Sequelize.STRING,
 			},
 			legalFieldId: {
 				type: Sequelize.UUID,
