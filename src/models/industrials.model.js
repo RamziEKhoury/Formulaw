@@ -1,29 +1,36 @@
 module.exports = (sequelize, Sequelize) => {
-	return sequelize.define('industry', {
-		id: {
-			type: Sequelize.UUID,
-			defaultValue: Sequelize.UUIDV4,
-			allowNull: false,
-			primaryKey: true,
-		},
-		en_name: {
-			type: Sequelize.STRING,
-		},
-		ar_name: {
-			type: Sequelize.STRING,
-		},
-		description: {
-			type: Sequelize.STRING,
-		},
-		isActive: {
-			type: Sequelize.INTEGER,
-		},
-		isDeleted: {
-			defaultValue: 0,
-			type: Sequelize.INTEGER,
-		},
-	}, {
-		timestamps: true,
-	},
-	);
+  return sequelize.define(
+    'industry',
+    {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
+      en_name: {
+        type: Sequelize.STRING,
+      },
+      ar_name: {
+        type: Sequelize.STRING,
+      },
+      description: {
+        type: Sequelize.STRING,
+      },
+      isBillable: {
+        defaultValue: 0,
+        type: Sequelize.ENUM('0', '1'),
+      },
+      isActive: {
+        type: Sequelize.INTEGER,
+      },
+      isDeleted: {
+        defaultValue: 0,
+        type: Sequelize.INTEGER,
+      },
+    },
+    {
+      timestamps: true,
+    }
+  );
 };
