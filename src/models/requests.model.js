@@ -1,7 +1,7 @@
 const {RequestWorkflow} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
-		'request',
+		'query',
 		{
 			id: {
 				type: Sequelize.UUID,
