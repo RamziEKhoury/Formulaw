@@ -1395,7 +1395,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Industrial details for add - en_name, ar_name, isActive, description",
+            "description": "Industrial details for add - en_name, ar_name, isActive, description,isBillable",
             "schema": {
               "type": "object",
               "properties": {
@@ -1412,6 +1412,10 @@
                   "example": ""
                 },
                 "description": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isBillable": {
                   "type": "string",
                   "example": ""
                 }
@@ -1472,7 +1476,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Details for add - en_name, ar_name, isActive, description",
+            "description": "Details for add - en_name, ar_name, isActive, description, isBillable",
             "schema": {
               "type": "object",
               "properties": {
@@ -1493,6 +1497,10 @@
                   "example": ""
                 },
                 "description": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isBillable": {
                   "type": "string",
                   "example": ""
                 }
@@ -1525,6 +1533,10 @@
                   "type": "string",
                   "example": "description"
                 },
+                "isBillable": {
+                  "type": "string",
+                  "example": "isBillable"
+                },
                 "isActive": {
                   "type": "number",
                   "example": 0
@@ -1538,6 +1550,7 @@
                 "en_name",
                 "ar_name",
                 "description",
+                "isBillable",
                 "isActive",
                 "isDeleted"
               ],
@@ -1819,7 +1832,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "service details for add - en_name, ar_name, isActive, description",
+            "description": "service details for add - en_name, ar_name, isActive, description,isBillable",
             "schema": {
               "type": "object",
               "properties": {
@@ -1838,13 +1851,18 @@
                 "description": {
                   "type": "string",
                   "example": ""
+                },
+                "isBillable": {
+                  "type": "string",
+                  "example": ""
                 }
               },
               "required": [
                 "en_name",
                 "ar_name",
                 "isActive",
-                "description"
+                "description",
+                "isBillable"
               ]
             }
           }
@@ -1896,7 +1914,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Details for add - en_name, ar_name, isActive, description",
+            "description": "Details for add - en_name, ar_name, isActive, description,isBillable",
             "schema": {
               "type": "object",
               "properties": {
@@ -1917,6 +1935,10 @@
                   "example": ""
                 },
                 "description": {
+                  "type": "string",
+                  "example": ""
+                },
+                "isBillable": {
                   "type": "string",
                   "example": ""
                 }
@@ -1949,6 +1971,10 @@
                   "type": "string",
                   "example": "description"
                 },
+                "isBillable": {
+                  "type": "string",
+                  "example": "isBillable"
+                },
                 "isActive": {
                   "type": "number",
                   "example": 0
@@ -1962,6 +1988,7 @@
                 "en_name",
                 "ar_name",
                 "description",
+                "isBillable",
                 "isActive",
                 "isDeleted"
               ],
@@ -2243,7 +2270,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "service details for add - en_name, ar_name, isActive, description",
+            "description": "service details for add - en_name, ar_name, isActive, description,isBillable",
             "schema": {
               "type": "object",
               "properties": {
@@ -2266,6 +2293,10 @@
                 "description": {
                   "type": "string",
                   "example": ""
+                },
+                "isBillable": {
+                  "type": "string",
+                  "example": ""
                 }
               },
               "required": [
@@ -2273,7 +2304,8 @@
                 "en_name",
                 "ar_name",
                 "isActive",
-                "description"
+                "description",
+                "isBillable"
               ]
             }
           }
@@ -2325,7 +2357,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Details for add - en_name, ar_name, isActive, description",
+            "description": "Details for add - en_name, ar_name, isActive, description,isBillable",
             "schema": {
               "type": "object",
               "properties": {
@@ -2352,6 +2384,10 @@
                 "description": {
                   "type": "string",
                   "example": ""
+                },
+                "isBillable": {
+                  "type": "string",
+                  "example": ""
                 }
               },
               "required": [
@@ -2360,7 +2396,8 @@
                 "en_name",
                 "ar_name",
                 "isActive",
-                "description"
+                "description",
+                "isBillable"
               ]
             }
           }
@@ -2383,6 +2420,10 @@
                   "type": "string",
                   "example": "description"
                 },
+                "isBillable": {
+                  "type": "string",
+                  "example": "isBillable"
+                },
                 "isActive": {
                   "type": "number",
                   "example": 0
@@ -2396,6 +2437,7 @@
                 "en_name",
                 "ar_name",
                 "description",
+                "isBillable",
                 "isActive",
                 "isDeleted"
               ],
@@ -2683,7 +2725,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,industryId,industryTitle,price,currency,numOfLawyer,jurisdiction,,serviceId,serviceTitle,subCategoryId,subCategoryTitle,expertise,rating, isActive",
             "schema": {
               "type": "object",
               "properties": {
@@ -2707,11 +2749,31 @@
                   "type": "string",
                   "example": ""
                 },
-                "langauge": {
+                "countryTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langaugeId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langaugeTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryId": {
                   "type": "string",
                   "example": ""
                 },
                 "logo": {
+                  "type": "string",
+                  "example": ""
+                },
+                "images": {
                   "type": "string",
                   "example": ""
                 },
@@ -2723,6 +2785,22 @@
                   "type": "string",
                   "example": ""
                 },
+                "serviceId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "serviceTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "subCategoryTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "subCategoryId": {
+                  "type": "string",
+                  "example": ""
+                },
                 "rating": {
                   "type": "string",
                   "example": ""
@@ -2731,27 +2809,15 @@
                   "type": "string",
                   "example": ""
                 },
-                "industryExperience": {
-                  "type": "string",
-                  "example": ""
-                },
                 "numOfLawyer": {
                   "type": "string",
                   "example": ""
                 },
-                "jurisdiction": {
-                  "type": "string",
-                  "example": ""
-                },
-                "legalField": {
-                  "type": "string",
-                  "example": ""
-                },
-                "service": {
-                  "type": "string",
-                  "example": ""
-                },
                 "expertise": {
+                  "type": "string",
+                  "example": ""
+                },
+                "jurisdiction": {
                   "type": "string",
                   "example": ""
                 }
@@ -2762,18 +2828,24 @@
                 "isActive",
                 "licenseNumber",
                 "countryId",
-                "langauge",
+                "countryTitle",
+                "langaugeId",
+                "langaugeTitle",
+                "industryTitle",
+                "industryId",
                 "logo",
+                "images",
                 "price",
                 "currency",
+                "serviceId",
+                "serviceTitle",
+                "subCategoryTitle",
+                "subCategoryId",
                 "rating",
                 "experience",
-                "industryExperience",
                 "numOfLawyer",
-                "jurisdiction",
-                "legalField",
-                "service",
-                "expertise"
+                "expertise",
+                "jurisdiction"
               ]
             }
           }
@@ -2825,14 +2897,10 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - id, en_name, ar_name,licenseNumber,country,langauge,logo,experience,industryExperience,price,currency,numOfLawyer,jurisdiction,legalField,service,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,industryId,industryTitle,price,currency,numOfLawyer,jurisdiction,,serviceId,serviceTitle,subCategoryId,subCategoryTitle,expertise,rating, isActive",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
-                  "type": "string",
-                  "example": ""
-                },
                 "en_name": {
                   "type": "string",
                   "example": ""
@@ -2849,15 +2917,35 @@
                   "type": "string",
                   "example": ""
                 },
-                "country": {
+                "countryId": {
                   "type": "string",
                   "example": ""
                 },
-                "langauge": {
+                "countryTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langaugeId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "langaugeTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "industryId": {
                   "type": "string",
                   "example": ""
                 },
                 "logo": {
+                  "type": "string",
+                  "example": ""
+                },
+                "images": {
                   "type": "string",
                   "example": ""
                 },
@@ -2869,15 +2957,27 @@
                   "type": "string",
                   "example": ""
                 },
+                "serviceId": {
+                  "type": "string",
+                  "example": ""
+                },
+                "serviceTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "subCategoryTitle": {
+                  "type": "string",
+                  "example": ""
+                },
+                "subCategoryId": {
+                  "type": "string",
+                  "example": ""
+                },
                 "rating": {
                   "type": "string",
                   "example": ""
                 },
                 "experience": {
-                  "type": "string",
-                  "example": ""
-                },
-                "industryExperience": {
                   "type": "string",
                   "example": ""
                 },
@@ -2889,37 +2989,34 @@
                   "type": "string",
                   "example": ""
                 },
-                "legalField": {
-                  "type": "string",
-                  "example": ""
-                },
-                "service": {
-                  "type": "string",
-                  "example": ""
-                },
                 "expertise": {
                   "type": "string",
                   "example": ""
                 }
               },
               "required": [
-                "id",
                 "en_name",
                 "ar_name",
                 "isActive",
                 "licenseNumber",
-                "country",
-                "langauge",
+                "countryId",
+                "countryTitle",
+                "langaugeId",
+                "langaugeTitle",
+                "industryTitle",
+                "industryId",
                 "logo",
+                "images",
                 "price",
                 "currency",
+                "serviceId",
+                "serviceTitle",
+                "subCategoryTitle",
+                "subCategoryId",
                 "rating",
                 "experience",
-                "industryExperience",
                 "numOfLawyer",
                 "jurisdiction",
-                "legalField",
-                "service",
                 "expertise"
               ]
             }
@@ -2939,25 +3036,45 @@
                   "type": "string",
                   "example": "ar_name"
                 },
+                "isActive": {
+                  "type": "string",
+                  "example": "0"
+                },
                 "licenseNumber": {
                   "type": "string",
                   "example": "licenseNumber"
                 },
-                "industryExperience": {
+                "countryId": {
                   "type": "string",
-                  "example": "industryExperience"
+                  "example": "countryId"
                 },
-                "country": {
+                "countryTitle": {
                   "type": "string",
-                  "example": "country"
+                  "example": "countryTitle"
                 },
-                "language": {
+                "langaugeId": {
                   "type": "string",
-                  "example": "language"
+                  "example": "langaugeId"
+                },
+                "langaugeTitle": {
+                  "type": "string",
+                  "example": "langaugeTitle"
+                },
+                "industryTitle": {
+                  "type": "string",
+                  "example": "industryTitle"
+                },
+                "industryId": {
+                  "type": "string",
+                  "example": "industryId"
                 },
                 "logo": {
                   "type": "string",
                   "example": "logo"
+                },
+                "images": {
+                  "type": "string",
+                  "example": "images"
                 },
                 "price": {
                   "type": "string",
@@ -2967,17 +3084,25 @@
                   "type": "string",
                   "example": "currency"
                 },
+                "serviceId": {
+                  "type": "string",
+                  "example": "serviceId"
+                },
+                "serviceTitle": {
+                  "type": "string",
+                  "example": "serviceTitle"
+                },
+                "subCategoryTitle": {
+                  "type": "string",
+                  "example": "subCategoryTitle"
+                },
+                "subCategoryId": {
+                  "type": "string",
+                  "example": "subCategoryId"
+                },
                 "rating": {
                   "type": "string",
                   "example": "rating"
-                },
-                "isActive": {
-                  "type": "number",
-                  "example": 0
-                },
-                "isDeleted": {
-                  "type": "number",
-                  "example": 1
                 },
                 "experience": {
                   "type": "string",
@@ -2994,35 +3119,32 @@
                 "expertise": {
                   "type": "string",
                   "example": "expertise"
-                },
-                "legalField": {
-                  "type": "string",
-                  "example": "legalField"
-                },
-                "service": {
-                  "type": "string",
-                  "example": "service"
                 }
               },
               "required": [
                 "en_name",
                 "ar_name",
+                "isActive",
                 "licenseNumber",
-                "industryExperience",
-                "country",
-                "language",
+                "countryId",
+                "countryTitle",
+                "langaugeId",
+                "langaugeTitle",
+                "industryTitle",
+                "industryId",
                 "logo",
+                "images",
                 "price",
                 "currency",
+                "serviceId",
+                "serviceTitle",
+                "subCategoryTitle",
+                "subCategoryId",
                 "rating",
-                "isActive",
-                "isDeleted",
                 "experience",
                 "numOfLawyer",
                 "jurisdiction",
-                "expertise",
-                "legalField",
-                "service"
+                "expertise"
               ],
               "xml": {
                 "name": "main"
@@ -3643,7 +3765,7 @@
         }
       }
     },
-    "/api/v1/request/get-request/{limit}": {
+    "/api/v1/request/get-requests/{limit}": {
       "get": {
         "tags": [
           "Requests"
