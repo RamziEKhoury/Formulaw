@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
-		'servicenew',
+		'service',
 		{
 			id: {
 				type: Sequelize.UUID,
@@ -17,10 +17,10 @@ module.exports = (sequelize, Sequelize) => {
 			description: {
 				type: Sequelize.STRING,
 			},
-			isBillable: {
-				defaultValue: 0,
-				type: Sequelize.INTEGER,
-			},
+			// isBillable: {
+			// 	defaultValue: 0,
+			// 	type: Sequelize.INTEGER,
+			// },
 			isActive: {
 				type: Sequelize.INTEGER,
 			},

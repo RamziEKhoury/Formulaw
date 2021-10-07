@@ -24,7 +24,7 @@ module.exports.addIndustrial = async (req, res) => {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				description: req.body.description,
-				isBillable: req.body.isBillable,
+				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
 			},
 		}).then((industrial) => {
@@ -46,7 +46,7 @@ module.exports.addIndustrial = async (req, res) => {
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
 					description: inserted.description,
-					isBillable: inserted.isBillable,
+					// isBillable: inserted.isBillable,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};
@@ -76,7 +76,7 @@ module.exports.industrialUpdate = async (req, res) => {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				description: req.body.description,
-				isBillable: req.body.isBillable,
+				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
 			},
 			{where: {id: req.body.id}},
@@ -113,7 +113,6 @@ module.exports.industrialUpdate = async (req, res) => {
 module.exports.getIndustrials = (req, res) => {
 	// Get Industrials from Database
 	// #swagger.tags = ['Industrial']
-	console.log('calling--->', req.params);
 	const offset = req.params.offset;
 	const limit = req.params.limit;
 	const search = req.query.searchText;
