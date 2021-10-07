@@ -10,8 +10,6 @@ const addCountryValidator = [
 		.trim().withMessage('countryCode must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
-	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
 	sanitizeBody('countryCode').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -37,8 +35,6 @@ const updateCountryValidator = [
 		.trim().withMessage('countryCode must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
-	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
 	sanitizeBody('countryCode').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);

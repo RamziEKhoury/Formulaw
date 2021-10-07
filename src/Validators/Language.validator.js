@@ -8,8 +8,6 @@ const addLanguageValidator = [
 		.trim().withMessage('ar_name must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
-	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
 	sanitizeBody('isActive').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -31,8 +29,7 @@ const updateLanguageValidator = [
 		.trim().withMessage('ar_name must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
-	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
+	sanitizeBody('isActive').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {

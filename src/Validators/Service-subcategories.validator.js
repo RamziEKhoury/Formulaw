@@ -26,8 +26,8 @@ const addServiceSubcategoryValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('isActive must be specified.'),
-	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
+	sanitizeBody('isActive').escape(),
+	sanitizeBody('serviceId').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -68,7 +68,7 @@ const updateServiceSubcategoryValidator = [
 		.trim()
 		.withMessage('isActive must be specified.'),
 	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
+	sanitizeBody('isActive').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {

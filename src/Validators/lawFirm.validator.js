@@ -95,8 +95,8 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('isActive must be specified.'),
 
-	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
+	sanitizeBody('languageId').escape(),
+	sanitizeBody('subCategoryId').escape(),
 	//   sanitizeBody('username').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -210,8 +210,8 @@ const updateLawFirmValidator = [
 		.trim()
 		.withMessage('isActive must be specified.'),
 
-	sanitizeBody('en_name').escape(),
-	sanitizeBody('ar_name').escape(),
+	sanitizeBody('countryId').escape(),
+	sanitizeBody('languageId').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
