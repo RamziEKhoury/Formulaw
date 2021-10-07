@@ -37,7 +37,7 @@ module.exports.addLawFirm = async (req, res) => {
 				serviceId: req.body.serviceId,
 				serviceTitle: req.body.serviceTitle,
 				subCategoryId: req.body.subCategoryId,
-				subCategoryTitle: req.body.subCategoryId,
+				subCategoryTitle: req.body.subCategoryTitle,
 				rating: req.body.rating,
 				industryId: req.body.industryId,
 				industryTitle: req.body.industryTitle,
