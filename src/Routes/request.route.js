@@ -24,7 +24,7 @@ module.exports = function(app) {
 	);
 
 	app.get(
-		'/api/v1/request/get-request/:limit',
+		'/api/v1/request/get-requests/:limit',
 		requestControllers.getRequests,
 	);
 
