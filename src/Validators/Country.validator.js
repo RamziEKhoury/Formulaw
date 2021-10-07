@@ -38,7 +38,6 @@ const updateCountryValidator = [
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
 	sanitizeBody('en_name').escape(),
-	sanitizeBody('flag').escape(),
 	sanitizeBody('ar_name').escape(),
 	sanitizeBody('countryCode').escape(),
 	(req, res, next) => {
