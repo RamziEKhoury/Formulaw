@@ -18,9 +18,9 @@ module.exports = (sequelize, Sequelize) => {
 			email: {
 			  type: Sequelize.STRING,
 			},
-			// getstarted: {
-			// 	type: Sequelize.STRING,
-			// },
+			getstarted: {
+				type: Sequelize.STRING,
+			},
 			jurisdictionId: {
 			  type: Sequelize.UUID,
 			},
