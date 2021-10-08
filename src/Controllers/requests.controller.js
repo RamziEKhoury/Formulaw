@@ -10,13 +10,12 @@ module.exports.createRequest = async (req, res) => {
 		/*  #swagger.parameters['obj'] = {
             in: 'body',
              description: "Request details for add - firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",
-            schema: { $getStarted: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
+            schema: { $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
             } */
 
 		Request.create(req.body).then((request) => {
 			const createdRequest = {
 				id: request.id,
-				getStarted: request.getStarted,
 				firstName: request.firstName,
 				lastName: request.lastName,
 				email: request.email,
@@ -52,13 +51,12 @@ module.exports.requestUpdate = async (req, res) => {
 	/*  #swagger.parameters['obj'] = {
         in: 'body',
           description: "Request details for add - id, firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",
-            schema: { $id: "", $getStarted:"", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
+            schema: { $id: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
               } */
 
 	try {
 		await Request.update(
 			{
-				getStarted: req.body.getStarted,
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: req.body.email,
@@ -88,7 +86,7 @@ module.exports.requestUpdate = async (req, res) => {
 				}
 				/* #swagger.responses[200] = {
 						description: "success!",
-						schema: { $getStarted: "getStarted", $firstName: "firstName", $lastName: "lastName" ,  $email: "email", $jurisdictionId: "jurisdictionId" , $languageId: "languageId" , $legalFieldId: "legalFieldId" ,$legalFieldName: "legalFieldName" ,$serviceSubcategoryId: "serviceSubcategoryId" ,$serviceSubcategoryName: "serviceSubcategoryName" , $budgetMin: "budgetMin" , $budgetMax: "budgetMax",$rating:"rating", $lawFirmId: "lawFirmId", $experience: "experience", $isActive: 1}
+						schema: { $firstName: "firstName", $lastName: "lastName" ,  $email: "email", $jurisdictionId: "jurisdictionId" , $languageId: "languageId" , $legalFieldId: "legalFieldId" ,$legalFieldName: "legalFieldName" ,$serviceSubcategoryId: "serviceSubcategoryId" ,$serviceSubcategoryName: "serviceSubcategoryName" , $budgetMin: "budgetMin" , $budgetMax: "budgetMax",$rating:"rating", $lawFirmId: "lawFirmId", $experience: "experience", $isActive: 1}
 					} */
 				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
 				return apiResponses.successResponseWithData(
