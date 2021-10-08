@@ -2,6 +2,11 @@ const {body, sanitizeBody, validationResult} = require('express-validator');
 const apiResponses = require('../Components/apiresponse');
 
 const createRequestValidator = [
+	body('getstarted')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('getStarted text must be specified.'),
+
 	body('firstName')
 		.isLength({min: 1})
 		.trim()
@@ -91,7 +96,10 @@ const updateRequestValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('request id must be specified.'),
-
+	body('getstarted')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('getstarted text must be specified.'),
 	body('firstName')
 		.isLength({min: 1})
 		.trim()
