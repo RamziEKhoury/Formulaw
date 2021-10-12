@@ -34,11 +34,11 @@ module.exports = (sequelize, Sequelize) => {
       languageTitle: {
         type: Sequelize.STRING,
       },
-      logo: {
-        type: Sequelize.STRING,
-        defaultValue:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA6CTxPl6iceBCryzjbmL3PAx36dRTYoij3Q&usqp=CAU',
-      },
+      // logo: {
+      //   type: Sequelize.STRING,
+      //   defaultValue:
+      //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA6CTxPl6iceBCryzjbmL3PAx36dRTYoij3Q&usqp=CAU',
+      // },
       // images: {
       //   type: Sequelize.ARRAY(
       //     Sequelize.ENUM({
@@ -51,21 +51,7 @@ module.exports = (sequelize, Sequelize) => {
       //   ),
       //   allowNull: false,
       // },
-      price: {
-        type: Sequelize.INTEGER,
-      },
-      currency: {
-        type: Sequelize.STRING,
-      },
-      industryId: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        allowNull: false,
-      },
-
-      industryTitle: {
-        type: Sequelize.STRING,
-      },
+     
 
       experience: {
         type: Sequelize.INTEGER,
@@ -74,23 +60,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
       },
       jurisdiction: {
-        type: Sequelize.STRING,
-      },
-      serviceId: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        allowNull: false,
-      },
-      serviceTitle: {
-        type: Sequelize.STRING,
-      },
-      subCategoryId: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        allowNull: false,
-      },
-
-      subCategoryTitle: {
         type: Sequelize.STRING,
       },
 

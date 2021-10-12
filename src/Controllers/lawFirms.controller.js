@@ -9,8 +9,8 @@ module.exports.addLawFirm = async (req, res) => {
 		console.log(req.body.en_name);
 		/*  #swagger.parameters['obj'] = {
 			          in: 'body',
-			          description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,industryId,industryTitle,price,currency,numOfLawyer,jurisdiction,,serviceId,serviceTitle,subCategoryId,subCategoryTitle,expertise,rating, isActive",
-			          schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$langaugeTitle:"",$industryTitle:"",$industryId:"",$logo: "",$images:"" ,$price: "" ,$currency: "",$serviceId:"",$serviceTitle:"",$subCategoryTitle:"",$subCategoryId:"", $rating: "" , $experience: "",$numOfLawyer: "", $expertise: "",$jurisdiction:""}
+			          description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,currency,numOfLawyer,jurisdiction,expertise,rating, isActive",
+			          schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$langaugeTitle:"",$logo: "",$images:"" ,$currency: "",$serviceId:"", $rating: "" , $experience: "",$numOfLawyer: "", $expertise: "",$jurisdiction:""}
         } */
 		LawFirm.findOrCreate({
 			where: {
@@ -27,20 +27,12 @@ module.exports.addLawFirm = async (req, res) => {
 				countryTitle: req.body.countryTitle,
 				languageId: req.body.languageId,
 				languageTitle: req.body.languageTitle,
-				logo: req.body.logo,
-				images: req.body.images,
-				price: req.body.price,
-				currency: req.body.currency,
+				// logo: req.body.logo,
+				// images: req.body.images,
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
 				jurisdiction: req.body.jurisdiction,
-				serviceId: req.body.serviceId,
-				serviceTitle: req.body.serviceTitle,
-				subCategoryId: req.body.subCategoryId,
-				subCategoryTitle: req.body.subCategoryTitle,
-				rating: req.body.rating,
-				industryId: req.body.industryId,
-				industryTitle: req.body.industryTitle,
+			    rating: req.body.rating,
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
@@ -68,19 +60,11 @@ module.exports.addLawFirm = async (req, res) => {
 					countryTitle: inserted.countryTitle,
 					languageId: inserted.languageId,
 					languageTitle: inserted.languageTitle,
-					logo: inserted.logo,
-					images: inserted.images,
-					price: inserted.price,
-					currency: inserted.currency,
+					// logo: inserted.logo,
+					// images: inserted.images,
 					experience: inserted.experience,
 					jurisdiction: inserted.jurisdiction,
-					serviceId: inserted.serviceId,
-					serviceTitle: inserted.serviceTitle,
-					subCategoryId: inserted.subCategoryId,
-					subCategoryTitle: inserted.subCategoryTitle,
 					expertise: inserted.expertise,
-					industryId: inserted.industryId,
-					industryTitle: inserted.industryTitle,
 					numOfLawyer: inserted.numOfLawyer,
 					rating: inserted.rating,
 					isActive: inserted.isActive,
@@ -103,8 +87,8 @@ module.exports.lawFirmUpdate = async (req, res) => {
 	// #swagger.tags = ['LawFirm']
 	/*  #swagger.parameters['obj'] = {
 		in: 'body',
-		 description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,industryId,industryTitle,price,currency,numOfLawyer,jurisdiction,,serviceId,serviceTitle,subCategoryId,subCategoryTitle,expertise,rating, isActive",
-			schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$langaugeTitle:"",$industryTitle:"",$industryId:"",$logo: "",$images:"",$price: "" ,$currency: "",$serviceId:"",$serviceTitle:"",$subCategoryTitle:"",$subCategoryId:"", $rating: "" , $experience: "", $numOfLawyer: "", $jurisdiction: "", $expertise: ""}
+		 description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,price,currency,numOfLawyer,jurisdiction,expertise,rating, isActive",
+			schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$logo: "",$images:"",$price: "" ,$currency: "", $rating: "" , $experience: "", $numOfLawyer: "", $jurisdiction: "", $expertise: ""}
             } */
 
 	try {
@@ -118,20 +102,16 @@ module.exports.lawFirmUpdate = async (req, res) => {
 				countryTitle: req.body.countryTitle,
 				languageId: req.body.languageId,
 				languageTitle: req.body.languageTitle,
-				logo: req.body.logo,
-				images: req.body.images,
-				price: req.body.price,
+				// logo: req.body.logo,
+				// images: req.body.images,
+				// price: req.body.price,
 				currency: req.body.currency,
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
 				jurisdiction: req.body.jurisdiction,
-				serviceId: req.body.serviceId,
-				serviceTitle: req.body.serviceTitle,
-				subCategoryId: req.body.subCategoryId,
-				subCategoryTitle: req.body.subCategoryTitle,
 				rating: req.body.rating,
-				industryId: req.body.industryId,
-				industryTitle: req.body.industryTitle,
+				// industry: req.body.industry,
+				// industryTitle: req.body.industryTitle,
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
@@ -148,7 +128,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
 				}
 				/* #swagger.responses[200] = {
                             description: "success!",
-                           schema: { $en_name: "en_name", $ar_name: "ar_name" ,  $isActive: "0", $licenseNumber: "licenseNumber" , $countryId: "countryId" ,$countryTitle:"countryTitle", $langaugeId: "langaugeId",$langaugeTitle:"langaugeTitle",$industryTitle:"industryTitle",$industryId:"industryId",$logo: "logo",$images:"images",$price: "price",$currency: "currency",$serviceId:"serviceId",$serviceTitle:"serviceTitle",$subCategoryTitle:"subCategoryTitle",$subCategoryId:"subCategoryId", $rating: "rating" , $experience: "experience", $numOfLawyer: "numOfLawyer", $jurisdiction: "jurisdiction", $expertise: "expertise"}
+                           schema: { $en_name: "en_name", $ar_name: "ar_name" ,  $isActive: "0", $licenseNumber: "licenseNumber" , $countryId: "countryId" ,$countryTitle:"countryTitle", $langaugeId: "langaugeId",$langaugeTitle:"langaugeTitle",$logo: "logo",$images:"images",$price: "price",$currency: "currency", $rating: "rating" , $experience: "experience", $numOfLawyer: "numOfLawyer", $jurisdiction: "jurisdiction", $expertise: "expertise"}
 
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
