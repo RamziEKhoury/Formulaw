@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 module.exports.createRequest = async (req, res) => {
 	try {
 		// #swagger.tags = ['Requests']
-		console.log(req.body.en_name);
+		console.log(req.body);
 		/*  #swagger.parameters['obj'] = {
             in: 'body',
              description: "Request details for add - firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",

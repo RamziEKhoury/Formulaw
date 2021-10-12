@@ -1,4 +1,5 @@
 const {RequestWorkflow} = require('../enum');
+const DataTypes = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
 		'query',
@@ -40,10 +41,10 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.STRING,
 			},
 			serviceSubcategoryId: {
-				type: Sequelize.UUID,
+				type: DataTypes.ARRAY(DataTypes.STRING(256)),
 			},
 			serviceSubcategoryName: {
-				type: Sequelize.STRING,
+				type: DataTypes.ARRAY(DataTypes.STRING(256)),
 			},
 			budgetMin: {
 				type: Sequelize.INTEGER,
