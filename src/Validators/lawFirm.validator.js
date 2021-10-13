@@ -50,6 +50,16 @@ const addLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage title must be specified.'),
+	
+	body('taxType')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('taxType must be specified.'),
+
+	body('tax')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('tax must be specified.'),
 
 	body('isActive')
 		.isLength({min: 1})
@@ -125,6 +135,16 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage title must be specified.'),
+	
+	body('taxType')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('taxType must be specified.'),
+
+	body('tax')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('tax must be specified.'),
 
 	body('isActive')
 		.isLength({min: 1})
