@@ -1,12 +1,9 @@
-const userController = require('../Controllers/users.controller');
-const {
-	checkDuplicateUsernameOrEmail,
-	validateUsername,
-} = require('../Middlewares/Verified');
+const usersController = require('../Controllers/users.controller');
+const {checkDuplicateEmail, validateEmail} = require('../Middlewares/userVarified');
 const UserAuth = require('../Validators/User.validator');
 
 
-module.exports = function(app) {
+module.exports= function(app) {
 	app.use(function(req, res, next) {
 		res.header(
 			'Access-Control-Allow-Headers',
@@ -16,19 +13,19 @@ module.exports = function(app) {
 	});
 
 	app.post(
-		'/api/v1/auth/signup',
-		[UserAuth.signUpValidator, checkDuplicateUsernameOrEmail],
-		userController.registration,
+		'/api/v1/auth/user/signup',
+		[UserAuth.signUpValidator, checkDuplicateEmail],
+		usersController.registration,
 	);
 
 	app.post(
-		'/api/v1/auth/login',
-		[UserAuth.signInValidate, validateUsername],
-		userController.userLogin,
+		'/api/v1/auth/user/login',
+		[UserAuth.logInValidator, validateEmail],
+		usersController.userLogin,
 	);
 
-	app.delete(
-		'/api/v1/auth/delete-user',
-		userController.deleteUser,
+	app.post(
+		'/api/v1/auth/user/email-check',
+		usersController.emailVarify,
 	);
 };

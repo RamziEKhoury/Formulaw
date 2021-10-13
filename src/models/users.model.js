@@ -1,20 +1,12 @@
-const {Status} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
-	return sequelize.define('users', {
+	return sequelize.define('user', {
 		id: {
 			type: Sequelize.UUID,
 			defaultValue: Sequelize.UUIDV4,
 			allowNull: false,
 			primaryKey: true,
 		},
-		username: {
-			type: Sequelize.STRING,
-			allowNull: false,
-		},
-		firstname: {
-			type: Sequelize.STRING,
-		},
-		lastname: {
+		fullname: {
 			type: Sequelize.STRING,
 		},
 		password: {
@@ -23,20 +15,9 @@ module.exports = (sequelize, Sequelize) => {
 		email: {
 			type: Sequelize.STRING,
 		},
-		status: {
-			type: Sequelize.ENUM(
-				Status.NEW,
-				Status.ONLINE,
-				Status.OFFLINE,
-				Status.DEACTIVATE,
-			),
-			defaultValue: Status.NEW,
-		},
-		roleId: {
-			type: Sequelize.UUID,
-		},
-		roleName: {
-			type: Sequelize.STRING,
+		userType: {
+			type: Sequelize.ENUM('normal', 'google', 'facebook'),
+			defaultValue: 'normal',
 		},
 		isDeleted: {
 			defaultValue: 0,
@@ -46,11 +27,6 @@ module.exports = (sequelize, Sequelize) => {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,
 		},
-		activeDateAndTime: {
-			type: Sequelize.STRING,
-		},
-		deActiveDateAndTime: {
-			type: Sequelize.STRING,
-		},
+
 	});
 };

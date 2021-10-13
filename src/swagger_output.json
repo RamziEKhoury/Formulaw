@@ -5,7 +5,7 @@
     "title": "Formula Admin API",
     "description": ""
   },
-  "host": "15.184.198.65:3002",
+  "host": "localhost:3002",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -3423,6 +3423,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "getstarted": {
+                  "type": "string",
+                  "example": ""
+                },
                 "firstName": {
                   "type": "string",
                   "example": ""
@@ -3485,6 +3489,7 @@
                 }
               },
               "required": [
+                "getstarted",
                 "firstName",
                 "lastName",
                 "email",
@@ -3522,6 +3527,10 @@
               "type": "object",
               "properties": {
                 "id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "getstarted": {
                   "type": "string",
                   "example": ""
                 },
@@ -3588,6 +3597,7 @@
               },
               "required": [
                 "id",
+                "getstarted",
                 "firstName",
                 "lastName",
                 "email",
@@ -3613,6 +3623,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "getstarted": {
+                  "type": "string",
+                  "example": "getstarted"
+                },
                 "firstName": {
                   "type": "string",
                   "example": "firstName"
@@ -3675,6 +3689,7 @@
                 }
               },
               "required": [
+                "getstarted",
                 "firstName",
                 "lastName",
                 "email",

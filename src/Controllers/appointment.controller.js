@@ -13,38 +13,35 @@ module.exports.addAppointment = (async (req, res) => {
             } */
 		Appointment.create({
 
-                queryId:req.body.queryId,
-                adminId:req.body.adminId,
-                customerId:req.body.customerId,
-                shifts:req.body.shifts,
-                date:req.body.date,
-                time:req.body.time,
-            
-            })
-                .then((appointment) =>{
+			queryId: req.body.queryId,
+			adminId: req.body.adminId,
+			customerId: req.body.customerId,
+			shifts: req.body.shifts,
+			date: req.body.date,
+			time: req.body.time,
 
-                    const appointmentData = {
-                        id: appointment.id,
-                        queryId: appointment.queryId,
-                        adminId: appointment.adminId,
-                        customerId: appointment.customerId,
-                        shifts: appointment.shifts,
-                        date: appointment.date,
-                        time: appointment.time,
-                        
-                    };
-                    return apiResponses.successResponseWithData(
-                        res,
-                        'appointment registered successfully!',
-                        appointmentData,
-                    );
-                });
+		})
+			.then((appointment) =>{
+				const appointmentData = {
+					id: appointment.id,
+					queryId: appointment.queryId,
+					adminId: appointment.adminId,
+					customerId: appointment.customerId,
+					shifts: appointment.shifts,
+					date: appointment.date,
+					time: appointment.time,
 
-            } catch (err) {
-                return apiResponses.errorResponse(res, err);
-            } 
-        
-    });
+				};
+				return apiResponses.successResponseWithData(
+					res,
+					'appointment registered successfully!',
+					appointmentData,
+				);
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+});
 
 module.exports.getAppointments = (req, res) => {
 	// Get Appointment from Database
@@ -66,7 +63,6 @@ module.exports.getAppointments = (req, res) => {
 			limit: limit,
 		})
 			.then((data) => {
-
 				return apiResponses.successResponseWithData(
 					res, 'success', data,
 				);
@@ -103,10 +99,10 @@ module.exports.getAppointments = (req, res) => {
 				res.status(500).send({
 					message: 'Something Went Wrong',
 				});
-			})
-        }
-    };
-    
+			});
+	}
+};
+
 
 module.exports.getAppointment = (req, res) => {
 	// Get Country from Database

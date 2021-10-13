@@ -1,4 +1,4 @@
-const userValidator = require('./User.validator');
+const adminUserValidator = require('./adminUser.validator');
 const rolesValidator = require('./Role.validator');
 const countriesValidator = require('./Country.validator');
 const languagesValidator = require('./Language.validator');
@@ -7,11 +7,14 @@ const serviceValidator = require('./Services.validator');
 const serviceSubcategoryValidator = require('./Service-subcategories.validator');
 const lawFirmValidator = require('./lawFirm.validator');
 const requestValidator = require('./Request.validator');
+const lawFirmIndustryValidator= require('./LawFirm-industries.validator')
+const lawFirmServiceValidator= require('./lawFirm-service.validator')
+const userValidator = require('./User.validator')
 const appointmentValidator = require('./appointment.validator')
 
 
 module.exports = {
-	userValidator,
+	adminUserValidator,
 	rolesValidator,
 	countriesValidator,
 	languagesValidator,
@@ -20,5 +23,8 @@ module.exports = {
 	serviceSubcategoryValidator,
 	lawFirmValidator,
 	requestValidator,
-	appointmentValidator
+	lawFirmIndustryValidator,
+	lawFirmServiceValidator,
+	userValidator,
+	appointmentValidator,
 };
