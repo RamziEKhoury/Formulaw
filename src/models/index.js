@@ -31,5 +31,7 @@ db.request = require('./requests.model')(sequelize, Sequelize);
 db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize,Sequelize);
 db.lawFirm_service = require('./lawFirm-services.model')(sequelize,Sequelize);
 db.user = require('./users.model')(sequelize,Sequelize);
+db.lawFirm.hasMany(db.lawFirm_service, {sourceKey:"id",foreignKey:"lawFirmId"});
+db.lawFirm.hasMany(db.lawFirm_industry, {sourceKey:"id",foreignKey:"lawFirmId"});
 
 module.exports = db;

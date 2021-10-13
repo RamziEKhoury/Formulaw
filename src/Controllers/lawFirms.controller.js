@@ -1,6 +1,11 @@
 const db = require('../models');
 const LawFirm = db.lawFirm;
+const LawFirmService = db.lawFirm_service;
+const LawFirmIndustry = db.lawFirm_industry;
 const apiResponses = require('../Components/apiresponse');
+const { lawFirm } = require('../models');
+const {lawFirm_service} = require('../models');
+const {lawFirm_industry} =require('../models');
 const Op = db.Sequelize.Op;
 
 module.exports.addLawFirm = async (req, res) => {
@@ -275,3 +280,104 @@ module.exports.deleteLawFirm = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+
+module.exports.getlawFirmsDetails = async (req,res) =>{
+
+	try {
+
+		LawFirm.findAll({
+			include: [
+				{
+			      model: LawFirmService,
+			       },
+				
+				   {
+					model: LawFirmIndustry,
+					 }
+
+			]
+		  })
+		  .then((lawfirms)=>{
+			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		  })
+
+
+		
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+
+};
+
+module.exports.getlawFirmDetails = async (req,res) =>{
+     const lawFirmId = req.params.lawFirmId;
+	try {
+		LawFirm.findOne({
+			where:{id:lawFirmId},
+			include: [
+				{
+			      model: LawFirmService,
+			       },
+				   {
+					model: LawFirmIndustry,
+					 }
+			]
+		  })
+		  .then((lawfirms)=>{
+			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		  })
+
+
+		
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+
+};
+
+// module.exports.getlawFirmsDetails = async (req,res) =>{
+
+// 	try {
+
+// 		LawFirm.findAll({
+// 			include: [
+// 				{
+// 			      model: LawFirmService,
+// 			       }
+// 			]
+// 		  })
+// 		  .then((lawfirms)=>{
+// 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+// 		  })
+
+
+		
+// 	} catch (err) {
+// 		return apiResponses.errorResponse(res, err);
+// 	}
+
+// };
+
+// module.exports.getlawFirmDetails = async (req,res) =>{
+//      const lawFirmId = req.params.lawFirmId;
+// 	try {
+// 		LawFirm.findOne({
+// 			where:{id:lawFirmId},
+// 			include: [
+// 				{
+// 			      model: LawFirmService,
+// 			       }
+// 			]
+// 		  })
+// 		  .then((lawfirms)=>{
+// 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+// 		  })
+
+
+		
+// 	} catch (err) {
+// 		return apiResponses.errorResponse(res, err);
+// 	}
+
+// };
