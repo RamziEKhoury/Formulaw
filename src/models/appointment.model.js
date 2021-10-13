@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
-		'lawfirm-industry',
+		'appointment',
 		{
 			id: {
 				type: Sequelize.UUID,
@@ -8,30 +8,36 @@ module.exports = (sequelize, Sequelize) => {
 				allowNull: false,
 				primaryKey: true,
 			},
-			lawFirmId: {
+
+			queryId: {
 				type: Sequelize.UUID,
 				allowNull: false,
+
 			},
 
-			industryId: {
+			adminId: {
 				type: Sequelize.UUID,
+				allowNull: false,
+
+			},
+			customerId: {
+				type: Sequelize.UUID,
+				allowNull: false,
+
 			},
 
-			title: {
+			shift: {
+				type: Sequelize.ENUM('morning', 'afternoon', 'evening'),
+			},
+
+			date: {
 				type: Sequelize.STRING,
 			},
 
-			discription: {
+			time: {
 				type: Sequelize.STRING,
 			},
 
-			isActive: {
-				type: Sequelize.INTEGER,
-			},
-			isDeleted: {
-				defaultValue: 0,
-				type: Sequelize.INTEGER,
-			},
 		},
 		{
 			timestamps: true,
