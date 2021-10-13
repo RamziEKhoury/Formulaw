@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
-		'lawfirm-services',
+		'lawfirm_services',
 		{
 			id: {
 				type: Sequelize.UUID,

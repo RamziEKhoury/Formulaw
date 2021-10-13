@@ -31,4 +31,7 @@ module.exports = function(app) {
 		'/api/v1/lawfirm/delete-lawfirm/:id',
 		lawFirmController.deleteLawFirm,
 	);
+
+	app.get('/api/v1/lawfirm/get-lawfirmsdetails',lawFirmController.getlawFirmsDetails);
+	app.get('/api/v1/lawfirm/get-lawfirmdetails/:lawFirmId',lawFirmController.getlawFirmDetails);
 };

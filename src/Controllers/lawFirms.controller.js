@@ -1,6 +1,11 @@
 const db = require('../models');
 const LawFirm = db.lawFirm;
+const LawFirmService = db.lawFirm_service;
+const LawFirmIndustry = db.lawFirm_industry;
 const apiResponses = require('../Components/apiresponse');
+const {lawFirm} = require('../models');
+const {lawFirm_service} = require('../models');
+const {lawFirm_industry} =require('../models');
 const Op = db.Sequelize.Op;
 
 module.exports.addLawFirm = async (req, res) => {
@@ -152,65 +157,48 @@ module.exports.getLawFirms = (req, res) => {
 	// #swagger.tags = ['LawFirm']
 
 	const limit = req.params.limit;
-	const search = req.params.searchText;
 
-	if (!!search) {
-		LawFirm.findAndCountAll({
-			where: {
-				[Op.or]: [
-					{
-						en_name: {[Op.like]: `%${search}%`},
-					},
-					{
-						ar_name: {[Op.like]: `%${search}%`},
-					},
-				],
-				isDeleted: 0,
-				isActive: 1,
+	LawFirm.findAll({
+		include: [
+			{
+				model: LawFirmService,
 			},
-			limit: limit,
+
+			{
+				model: LawFirmIndustry,
+			},
+
+		],
+		limit: limit,
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			return apiResponses.successResponseWithData(res, 'success', data);
 		})
-			.then((data) => {
-				// res.status(200).send({
-				//   status: "200",
-				//   user: data,
-				// });
-				return apiResponses.successResponseWithData(res, 'success', data);
-			})
-			.catch((err) => {
-				/* #swagger.responses[500] = {
+		.catch((err) => {
+			/* #swagger.responses[500] = {
                                 description: "Error message",
                                 schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
                             } */
-				// return res.status(500).send({ message: err.message });
-				res.status(500).send({
-					message:
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
             err.message || 'Some error occurred while retrieving Lawfirm.',
-				});
 			});
-	} else {
-		LawFirm.findAndCountAll({
-			where: {isDeleted: 0, isActive: 1},
-			limit: limit,
 		})
-			.then((result) => {
-				// res.status(200).send({
-				//   status: "200",
-				//   user: result,
-				// });
-				return apiResponses.successResponseWithData(res, 'success', result);
-			})
-			.catch((err) => {
-				/* #swagger.responses[500] = {
+		.catch((err) => {
+			/* #swagger.responses[500] = {
                     description: "Error message",
                     schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
                 } */
-				// return res.status(500).send({ message: err.message });
-				res.status(500).send({
-					message: 'Something Went Wrong',
-				});
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
 			});
-	}
+		});
 };
 
 module.exports.getLawFirm = (req, res) => {
@@ -218,6 +206,16 @@ module.exports.getLawFirm = (req, res) => {
 	// #swagger.tags = ['LawFirm']
 	LawFirm.findOne({
 		where: {id: req.params.id, isDeleted: 0},
+		include: [
+			{
+				model: LawFirmService,
+			},
+
+			{
+				model: LawFirmIndustry,
+			},
+
+		],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -275,3 +273,92 @@ module.exports.deleteLawFirm = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+
+module.exports.getlawFirmsDetails = async (req, res) =>{
+	try {
+		LawFirm.findAll({
+			include: [
+				{
+			      model: LawFirmService,
+			       },
+
+				   {
+					model: LawFirmIndustry,
+					 },
+
+			],
+		  })
+		  .then((lawfirms)=>{
+			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		  });
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.getlawFirmDetails = async (req, res) =>{
+	const lawFirmId = req.params.lawFirmId;
+	try {
+		LawFirm.findOne({
+			where: {id: lawFirmId},
+			include: [
+				{
+			      model: LawFirmService,
+			       },
+				   {
+					model: LawFirmIndustry,
+					 },
+			],
+		  })
+		  .then((lawfirms)=>{
+			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		  });
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+// module.exports.getlawFirmsDetails = async (req,res) =>{
+
+// 	try {
+
+// 		LawFirm.findAll({
+// 			include: [
+// 				{
+// 			      model: LawFirmService,
+// 			       }
+// 			]
+// 		  })
+// 		  .then((lawfirms)=>{
+// 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+// 		  })
+
+
+// 	} catch (err) {
+// 		return apiResponses.errorResponse(res, err);
+// 	}
+
+// };
+
+// module.exports.getlawFirmDetails = async (req,res) =>{
+//      const lawFirmId = req.params.lawFirmId;
+// 	try {
+// 		LawFirm.findOne({
+// 			where:{id:lawFirmId},
+// 			include: [
+// 				{
+// 			      model: LawFirmService,
+// 			       }
+// 			]
+// 		  })
+// 		  .then((lawfirms)=>{
+// 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+// 		  })
+
+
+// 	} catch (err) {
+// 		return apiResponses.errorResponse(res, err);
+// 	}
+
+// };
