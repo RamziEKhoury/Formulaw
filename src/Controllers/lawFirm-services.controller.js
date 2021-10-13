@@ -1,7 +1,6 @@
 const db = require('../models');
 const LawFirmService = db.lawFirm_service;
 const apiResponses = require('../Components/apiresponse');
-const Op = db.Sequelize.Op;
 
 
 module.exports.addLawFirmService = async (req, res) => {

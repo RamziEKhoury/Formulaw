@@ -26,7 +26,7 @@ module.exports = (sequelize, Sequelize) => {
 
 			},
 
-			shifts: {
+			shift: {
 				type: Sequelize.ENUM('morning', 'afternoon', 'evening'),
 			},
 

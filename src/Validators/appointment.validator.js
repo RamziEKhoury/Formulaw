@@ -14,22 +14,22 @@ const addAppointmentValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('customerId must be specified.'),
-	body('shifts')
+	body('shift')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('shifts must be specified.'),
-    body('date')
+	body('date')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('date must be specified.'),
-    body('time')
+	body('time')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('time must be specified.'),
 
 	sanitizeBody('queryId').escape(),
-    sanitizeBody('adminId').escape(),
-    sanitizeBody('customerId').escape(),
+	sanitizeBody('adminId').escape(),
+	sanitizeBody('customerId').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -45,10 +45,9 @@ const addAppointmentValidator = [
 ];
 
 
-
 const appointmentValidator = {
 	addAppointmentValidator: addAppointmentValidator,
-	
+
 };
 
 module.exports = appointmentValidator;
