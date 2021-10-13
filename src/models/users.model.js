@@ -1,4 +1,3 @@
-const {Status} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define('user', {
 		id: {
@@ -18,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
 		},
 		userType: {
 			type: Sequelize.ENUM('normal', 'google', 'facebook'),
-			defaultValue:'normal',
+			defaultValue: 'normal',
 		},
 		isDeleted: {
 			defaultValue: 0,
@@ -28,6 +27,6 @@ module.exports = (sequelize, Sequelize) => {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,
 		},
-	
+
 	});
 };

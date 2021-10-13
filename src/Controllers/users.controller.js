@@ -3,10 +3,6 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const {createToken} = require('../Middlewares/userAuthentications');
 const bcrypt = require('bcryptjs');
-const {Status} = require('../enum');
-const moment = require('moment');
-const { model } = require('mongoose');
-
 
 
 module.exports.registration = (async (req, res) => {
@@ -21,8 +17,8 @@ module.exports.registration = (async (req, res) => {
 			fullname: req.body.fullname,
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 8),
-            userType:'normal',
-			isActive:req.body.isActive,
+			userType: 'normal',
+			isActive: req.body.isActive,
 		})
 			.then((user) => {
 				/* #swagger.responses[200] = {
@@ -38,7 +34,7 @@ module.exports.registration = (async (req, res) => {
 					fullname: user.fullname,
 					email: user.email,
 					userType: user.userType,
-					isActive:user.isActive,
+					isActive: user.isActive,
 					token: token,
 
 				};
@@ -109,7 +105,7 @@ module.exports.userLogin = (req, res) => {
 					res, 'User not available', null,
 				);
 			}
-			
+
 			const token = createToken(
 				user.id,
 				user.email,
@@ -132,7 +128,7 @@ module.exports.userLogin = (req, res) => {
 				token: token,
 			};
 			return apiResponses.successResponseWithData(
-				res, 'Successfully login',obj
+				res, 'Successfully login', obj,
 			);
 		})
 		.catch((err) => {
@@ -143,35 +139,31 @@ module.exports.userLogin = (req, res) => {
 			// return res.status(500).send({ message: err.message });
 			return apiResponses.errorResponse(res, err.message, {});
 		});
-	};
+};
 
-	module.exports.emailVarify = async (req,res) => {
-
-		try {
-
-			User.findOne({
-				where:{
-					email:req.body.email,
-				}
-			})
-			.then(async(result) =>{
-				
-					/* #swagger.responses[404] = {
+module.exports.emailVarify = async (req, res) => {
+	try {
+		User.findOne({
+			where: {
+				email: req.body.email,
+			},
+		})
+			.then(async (result) =>{
+				console.log('result---->', result);
+				/* #swagger.responses[404] = {
                    description: "Email Not found.",
                    schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
                } */
 				// return res.status(404).send({ message: "Email Not found." });
-					
-				return apiResponses.successResponseWithData(
-					res, 'Email is Already in use!',result
-				);
-			}
-			
-			
-			)
-			
-		} catch (err) {
-			return apiResponses.errorResponse(res, err);
-		}
 
+				return apiResponses.successResponseWithData(
+					res, 'Email is Already in use!', result,
+				);
+			},
+
+
+			);
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
 	}
+};

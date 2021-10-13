@@ -1,4 +1,5 @@
 const db = require('../models');
+const apiResponses = require('../Components/apiresponse');
 const User = db.user;
 
 
@@ -10,16 +11,14 @@ module.exports = {
 			},
 		}).then((user) => {
 			if (user) {
-				res.status(400).send({
-					message: 'Failed! email is already in use!',
-				});
-				return;
+				return apiResponses.validationErrorWithData(
+					res, 'Failed! email is already in use!',
+					user,
+				);
 			}
-            next();
-			
-        })
-				
-    },
+			next();
+		});
+	},
 
 	validateEmail: (req, res, next) => {
 		User.findOne({
@@ -28,12 +27,12 @@ module.exports = {
 			},
 		}).then((user) => {
 			if (!user) {
-				res.status(400).send({
-					message: 'Failed! Email does not exists!',
-				});
-				return;
+				return apiResponses.validationErrorWithData(
+					res, 'Failed! Email does not exists!',
+					user,
+				);
 			}
 			next();
 		});
-	}
+	},
 };

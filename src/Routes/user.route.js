@@ -1,5 +1,5 @@
 const usersController = require('../Controllers/users.controller');
-const {checkDuplicateEmail,validateEmail} = require('../Middlewares/userVarified');
+const {checkDuplicateEmail, validateEmail} = require('../Middlewares/userVarified');
 const UserAuth = require('../Validators/User.validator');
 
 
@@ -17,16 +17,15 @@ module.exports= function(app) {
 		[UserAuth.signUpValidator, checkDuplicateEmail],
 		usersController.registration,
 	);
-   
+
 	app.post(
 		'/api/v1/auth/user/login',
 		[UserAuth.logInValidator, validateEmail],
 		usersController.userLogin,
 	);
 
-	app.get(
-		'/api/v1/auth/user/emailvarify',
-		[UserAuth.emailValidator, validateEmail],
-		usersController.emailVarify
-	)
+	app.post(
+		'/api/v1/auth/user/email-check',
+		usersController.emailVarify,
+	);
 };

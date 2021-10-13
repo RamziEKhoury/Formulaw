@@ -1,6 +1,6 @@
 const {Status} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
-	return sequelize.define('adminusers', {
+	return sequelize.define('adminuser', {
 		id: {
 			type: Sequelize.UUID,
 			defaultValue: Sequelize.UUIDV4,

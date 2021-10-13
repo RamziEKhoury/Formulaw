@@ -27,6 +27,11 @@ module.exports = function(app) {
 		userController.userLogin,
 	);
 
+	app.get(
+		'/api/v1/auth/admins',
+		userController.admins,
+	);
+
 	app.delete(
 		'/api/v1/auth/delete-user',
 		userController.deleteUser,
