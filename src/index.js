@@ -34,3 +34,4 @@ require('../src/Routes/service.route')(app);
 require('../src/Routes/service-subcategory.route')(app);
 require('../src/Routes/lawFirm.route')(app);
 require('../src/Routes/request.route')(app);
+require('../src/Routes/appointment.route')(app);

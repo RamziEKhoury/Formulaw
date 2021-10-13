@@ -8,4 +8,5 @@ module.exports=(app)=> {
 	require('./service-subcategory.route')(app);
 	require('./lawFirm.route')(app);
 	require('./request.route')(app);
+	require('./appointment.route')(app);
 };

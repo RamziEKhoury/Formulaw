@@ -7,6 +7,7 @@ const serviceValidator = require('./Services.validator');
 const serviceSubcategoryValidator = require('./Service-subcategories.validator');
 const lawFirmValidator = require('./lawFirm.validator');
 const requestValidator = require('./Request.validator');
+const appointmentValidator = require('./appointment.validator')
 
 
 module.exports = {
@@ -19,4 +20,5 @@ module.exports = {
 	serviceSubcategoryValidator,
 	lawFirmValidator,
 	requestValidator,
+	appointmentValidator
 };
