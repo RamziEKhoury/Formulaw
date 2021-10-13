@@ -11,4 +11,5 @@ module.exports=(app)=> {
 	require('./lawFirm-service.route')(app);
 	require('./adminUser.route')(app);
 	require('./user.route')(app);
+	require('./appointment.route')(app);
 };

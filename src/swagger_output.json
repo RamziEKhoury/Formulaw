@@ -5,7 +5,7 @@
     "title": "Formula Admin API",
     "description": ""
   },
-  "host": "localhost:3002",
+  "host": "15.184.198.65:3002",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -35,41 +35,25 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/auth/signup": {
+    "/api/v1/auth/user/signup": {
       "post": {
         "tags": [
-          "Auth"
+          "UserAuth"
         ],
         "description": "",
         "parameters": [
           {
             "name": "obj",
             "in": "body",
-            "description": "User details for registration - firstname, lastname, username, email, password and roles",
+            "description": "User details for registration - fullname, email, password andisActive",
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
+                "fullname": {
                   "type": "string",
                   "example": ""
                 },
                 "email": {
-                  "type": "string",
-                  "example": ""
-                },
-                "firstname": {
-                  "type": "string",
-                  "example": ""
-                },
-                "lastname": {
-                  "type": "string",
-                  "example": ""
-                },
-                "roleName": {
-                  "type": "string",
-                  "example": ""
-                },
-                "roleId": {
                   "type": "string",
                   "example": ""
                 },
@@ -79,12 +63,8 @@
                 }
               },
               "required": [
-                "username",
+                "fullname",
                 "email",
-                "firstname",
-                "lastname",
-                "roleName",
-                "roleId",
                 "password"
               ]
             }
@@ -123,54 +103,43 @@
                 "name": "main"
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
     },
-    "/api/v1/auth/login": {
+    "/api/v1/auth/user/login": {
       "post": {
         "tags": [
-          "Auth"
+          "UserAuth"
         ],
         "description": "",
         "parameters": [
           {
             "name": "obj",
             "in": "body",
-            "description": "User details for login - username and password",
+            "description": "User details for login - email and password",
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
+                "email": {
                   "type": "string",
                   "example": ""
                 },
                 "password": {
                   "type": "string",
                   "example": ""
-                },
-                "roleId": {
-                  "type": "string",
-                  "example": ""
                 }
               },
               "required": [
-                "username",
-                "password",
-                "roleId"
+                "email",
+                "password"
               ]
             }
           }
         ],
         "responses": {
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
-            "description": "User is not activated, please contact to super admin.",
+            "description": "Your email is not verified, please verify before logging in.",
             "schema": {
               "type": "object",
               "properties": {
@@ -180,7 +149,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "User is not activated, please contact to super admin."
+                  "example": "Your email is not verified, please verify before logging in."
                 }
               },
               "required": [
@@ -261,19 +230,27 @@
         }
       }
     },
-    "/api/v1/auth/delete-user": {
-      "delete": {
-        "tags": [
-          "Auth"
-        ],
+    "/api/v1/auth/user/email-check": {
+      "post": {
+        "tags": [],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "success!"
-          },
           "404": {
-            "description": "User Not found.",
+            "description": "Email Not found.",
             "schema": {
               "type": "object",
               "properties": {
@@ -287,40 +264,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Not found."
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "required": [
-                "statusCode",
-                "status",
-                "message",
-                "data"
-              ],
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "Error message",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "statusCode": {
-                  "type": "string",
-                  "example": "500"
-                },
-                "status": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Error Message"
+                  "example": "User Not found."
                 },
                 "data": {
                   "type": "object",
@@ -2725,7 +2669,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,industryId,industryTitle,price,currency,numOfLawyer,jurisdiction,,serviceId,serviceTitle,subCategoryId,subCategoryTitle,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,currency,numOfLawyer,jurisdiction,expertise,rating, isActive",
             "schema": {
               "type": "object",
               "properties": {
@@ -2761,14 +2705,6 @@
                   "type": "string",
                   "example": ""
                 },
-                "industryTitle": {
-                  "type": "string",
-                  "example": ""
-                },
-                "industryId": {
-                  "type": "string",
-                  "example": ""
-                },
                 "logo": {
                   "type": "string",
                   "example": ""
@@ -2777,27 +2713,11 @@
                   "type": "string",
                   "example": ""
                 },
-                "price": {
-                  "type": "string",
-                  "example": ""
-                },
                 "currency": {
                   "type": "string",
                   "example": ""
                 },
                 "serviceId": {
-                  "type": "string",
-                  "example": ""
-                },
-                "serviceTitle": {
-                  "type": "string",
-                  "example": ""
-                },
-                "subCategoryTitle": {
-                  "type": "string",
-                  "example": ""
-                },
-                "subCategoryId": {
                   "type": "string",
                   "example": ""
                 },
@@ -2831,16 +2751,10 @@
                 "countryTitle",
                 "langaugeId",
                 "langaugeTitle",
-                "industryTitle",
-                "industryId",
                 "logo",
                 "images",
-                "price",
                 "currency",
                 "serviceId",
-                "serviceTitle",
-                "subCategoryTitle",
-                "subCategoryId",
                 "rating",
                 "experience",
                 "numOfLawyer",
@@ -2897,7 +2811,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,industryId,industryTitle,price,currency,numOfLawyer,jurisdiction,,serviceId,serviceTitle,subCategoryId,subCategoryTitle,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,price,currency,numOfLawyer,jurisdiction,expertise,rating, isActive",
             "schema": {
               "type": "object",
               "properties": {
@@ -2929,18 +2843,6 @@
                   "type": "string",
                   "example": ""
                 },
-                "langaugeTitle": {
-                  "type": "string",
-                  "example": ""
-                },
-                "industryTitle": {
-                  "type": "string",
-                  "example": ""
-                },
-                "industryId": {
-                  "type": "string",
-                  "example": ""
-                },
                 "logo": {
                   "type": "string",
                   "example": ""
@@ -2954,22 +2856,6 @@
                   "example": ""
                 },
                 "currency": {
-                  "type": "string",
-                  "example": ""
-                },
-                "serviceId": {
-                  "type": "string",
-                  "example": ""
-                },
-                "serviceTitle": {
-                  "type": "string",
-                  "example": ""
-                },
-                "subCategoryTitle": {
-                  "type": "string",
-                  "example": ""
-                },
-                "subCategoryId": {
                   "type": "string",
                   "example": ""
                 },
@@ -3002,17 +2888,10 @@
                 "countryId",
                 "countryTitle",
                 "langaugeId",
-                "langaugeTitle",
-                "industryTitle",
-                "industryId",
                 "logo",
                 "images",
                 "price",
                 "currency",
-                "serviceId",
-                "serviceTitle",
-                "subCategoryTitle",
-                "subCategoryId",
                 "rating",
                 "experience",
                 "numOfLawyer",
@@ -3060,14 +2939,6 @@
                   "type": "string",
                   "example": "langaugeTitle"
                 },
-                "industryTitle": {
-                  "type": "string",
-                  "example": "industryTitle"
-                },
-                "industryId": {
-                  "type": "string",
-                  "example": "industryId"
-                },
                 "logo": {
                   "type": "string",
                   "example": "logo"
@@ -3083,22 +2954,6 @@
                 "currency": {
                   "type": "string",
                   "example": "currency"
-                },
-                "serviceId": {
-                  "type": "string",
-                  "example": "serviceId"
-                },
-                "serviceTitle": {
-                  "type": "string",
-                  "example": "serviceTitle"
-                },
-                "subCategoryTitle": {
-                  "type": "string",
-                  "example": "subCategoryTitle"
-                },
-                "subCategoryId": {
-                  "type": "string",
-                  "example": "subCategoryId"
                 },
                 "rating": {
                   "type": "string",
@@ -3130,16 +2985,10 @@
                 "countryTitle",
                 "langaugeId",
                 "langaugeTitle",
-                "industryTitle",
-                "industryId",
                 "logo",
                 "images",
                 "price",
                 "currency",
-                "serviceId",
-                "serviceTitle",
-                "subCategoryTitle",
-                "subCategoryId",
                 "rating",
                 "experience",
                 "numOfLawyer",

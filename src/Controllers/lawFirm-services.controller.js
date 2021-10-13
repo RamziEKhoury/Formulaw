@@ -1,58 +1,49 @@
 const db = require('../models');
 const LawFirmService = db.lawFirm_service;
 const apiResponses = require('../Components/apiresponse');
-const Op = db.Sequelize.Op;
 
 
-module.exports.addLawFirmService = async(req, res) => {
-
-	//get input values from reqeust.
+module.exports.addLawFirmService = async (req, res) => {
+	// get input values from reqeust.
 	const serviceData = req.body.values;
 	const lawFirmId = req.body.lawFirmId;
-	// console.log(lawFirmId);
 
-	//validation on inputdata.
-    try {
+	try {
+		if (serviceData === undefined || serviceData === '') {
+			res.send({status: 409, msg: 'Service Data should not be empty.',
+			});
+		}
+		// console.log(serviceData);
+		// Loop over service data to get individual fields. like title and id.
+		serviceData.map((service, i)=>{
+			const services={
+				title: service.title,
+				discription: service.discription,
+				price: service.price,
+				currency: service.currency,
+				 lawFirmId: lawFirmId,
+				 isActive: 1,
 
-	//Industry data should not be empty or undefined.
-	if(serviceData == undefined || serviceData == ""){
-		res.send({status: 409,msg: 'Service Data should not be empty.',
-		});
-	}
-	// console.log(serviceData);
-	//Loop over service data to get individual fields. like title and id.
-	serviceData.map((service,i)=>{
-        const services={
-             title : service.title,
-             discription : service.discription,
-             price : service.price,
-             currency : service.currency,
-			 lawFirmId:lawFirmId,
-
-        }
-// #swagger.tags = ['LawFirmService']
+			};
+			// #swagger.tags = ['LawFirmService']
 			/*  #swagger.parameters['obj'] = {
 						  in: 'body',
 						  description: "LawFirmService details for add -lawFirmId,title,price,currency,discription,isActive",
 						  schema: {$lawFirmId:"",$title:"",$price:"",$currency:"", $discription:"",$isActive:""}
 			} */
 
-			//Execute FindAndCreate query on table 
+			// Execute FindAndCreate query on table
 		    LawFirmService.create(services)
-            .then((lawFirmService) => {})
-        })
-        
-			
-            
-    return apiResponses.successResponseWithData(res,'success!');
+				.then((lawFirmService) => {});
+		});
 
-			
-		} catch (err) {
-			//Error response of Query.
-			return apiResponses.errorResponse(res, err);
-		};
-	
-}
+
+		return apiResponses.successResponseWithData(res, 'success!');
+	} catch (err) {
+		// Error response of Query.
+		return apiResponses.errorResponse(res, err);
+	}
+};
 
 
 module.exports.lawFirmServiceUpdate = async (req, res) => {
@@ -67,13 +58,13 @@ module.exports.lawFirmServiceUpdate = async (req, res) => {
 		await LawFirmService.update(
 			{
 				id: req.body.id,
-                lawFirmId:req.body.lawFirmId,
-                title:req.body.title,
-                price:req.body.title,
-                currency:req.body.currency,
-                discription:req.body.discription,
+				lawFirmId: req.body.lawFirmId,
+				title: req.body.title,
+				price: req.body.title,
+				currency: req.body.currency,
+				discription: req.body.discription,
 				isActive: req.body.isActive,
-				
+
 			},
 			{where: {id: req.body.id}},
 		)
@@ -110,73 +101,46 @@ module.exports.lawFirmServiceUpdate = async (req, res) => {
 module.exports.getLawFirmServices = (req, res) => {
 	// Get Lawfirm data from Database
 	// #swagger.tags = ['LawFirmIndustry']
-
-	const limit = req.params.limit;
-	const search = req.params.searchText;
-
-	if (!!search) {
-		LawFirmService.findAndCountAll({
-			where: {
-				[Op.or]: [
-					{lawFirmId: {[Op.eq]: req.body.lawFirmId}},
-					{
-						title: {[Op.like]: `%${search}%`},
-					},
-				],
-				isDeleted: 0,
-				isActive: 1,
-			},
-			limit: limit,
+	LawFirmService.findAll({
+		where: {lawFirmId: req.body.lawFirmId},
+		isDeleted: 0,
+		isActive: 1,
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			return apiResponses.successResponseWithData(res, 'success', data);
 		})
-			.then((data) => {
-				// res.status(200).send({
-				//   status: "200",
-				//   user: data,
-				// });
-				return apiResponses.successResponseWithData(res, 'success', data);
-			})
-			.catch((err) => {
-				/* #swagger.responses[500] = {
+		.catch((err) => {
+			/* #swagger.responses[500] = {
                                 description: "Error message",
                                 schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
                             } */
-				// return res.status(500).send({ message: err.message });
-				res.status(500).send({
-					message:
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
             err.message || 'Some error occurred while retrieving LawFirmService.',
-				});
 			});
-	} else {
-		LawFirmService.findAndCountAll({
-			where: {isDeleted: 0, isActive: 1},
-			limit: limit,
 		})
-			.then((result) => {
-				// res.status(200).send({
-				//   status: "200",
-				//   user: result,
-				// });
-				return apiResponses.successResponseWithData(res, 'success', result);
-			})
-			.catch((err) => {
-				/* #swagger.responses[500] = {
+		.catch((err) => {
+			/* #swagger.responses[500] = {
                     description: "Error message",
                     schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
                 } */
-				// return res.status(500).send({ message: err.message });
-				res.status(500).send({
-					message: 'Something Went Wrong',
-				});
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
 			});
-	}
+		});
 };
 
 module.exports.getLawFirmService = (req, res) => {
 	// Get Country from Database
 	// #swagger.tags = ['LawFirmIndustry']
-	const lawFirmId = req.body.lawFirmId;
 	LawFirmService.findOne({
-		where: {id: req.params.lawFirmId, isDeleted: 0},
+		where: {id: req.params.id, isDeleted: 0},
 	})
 		.then((data) => {
 			// res.status(200).send({
