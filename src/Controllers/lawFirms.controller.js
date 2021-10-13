@@ -206,6 +206,16 @@ module.exports.getLawFirm = (req, res) => {
 	// #swagger.tags = ['LawFirm']
 	LawFirm.findOne({
 		where: {id: req.params.id, isDeleted: 0},
+		include: [
+			{
+				model: LawFirmService,
+			},
+
+			{
+				model: LawFirmIndustry,
+			},
+
+		],
 	})
 		.then((data) => {
 			// res.status(200).send({
