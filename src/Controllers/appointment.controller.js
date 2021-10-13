@@ -1,5 +1,8 @@
 const db = require('../models');
 const Appointment = db.appointment;
+const Request = db.request;
+const Admin = db.adminUser;
+const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const Op = db.Sequelize.Op;
 
@@ -80,7 +83,13 @@ module.exports.getAppointments = (req, res) => {
 				});
 			});
 	} else {
-		Appointment.findAll()
+		Appointment.findAll({
+			include: [
+				{model: Request, required: false},
+				{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+				{model: User, required: false, attributes: ['fullname', 'email']},
+			],
+		})
 			.then((result) => {
 				// res.status(200).send({
 				//   status: "200",
