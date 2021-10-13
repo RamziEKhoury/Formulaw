@@ -1,29 +1,24 @@
 const db = require('../models');
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
-const {createToken} = require('../Middlewares/Authentications');
+const {createToken} = require('../Middlewares/userAuthentications');
 const bcrypt = require('bcryptjs');
-const {Status} = require('../enum');
-const moment = require('moment');
 
 
 module.exports.registration = (async (req, res) => {
 	try {
-		console.log(req.body.firstname + req.body.lastname);
-		// #swagger.tags = ['Auth']
+		// #swagger.tags = ['UserAuth']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
-                    description: "User details for registration - firstname, lastname, username, email, password and roles",
-                    schema: { $username: "", $email: "", $firstname: "", $lastname: "", $roleName: "", $roleId: "", $password: ""}
+                    description: "User details for registration - fullname, email, password andisActive",
+                    schema: { $fullname: "", $email: "", $password: "",}
             } */
 		User.create({
-			username: req.body.username,
+			fullname: req.body.fullname,
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 8),
-			firstname: req.body.firstname,
-			lastname: req.body.lastname,
-			roleName: req.body.roleName,
-			roleId: req.body.roleId,
+			userType: 'normal',
+			isActive: req.body.isActive,
 		})
 			.then((user) => {
 				/* #swagger.responses[200] = {
@@ -32,18 +27,14 @@ module.exports.registration = (async (req, res) => {
                         } */
 				const token = createToken(
 					user.id,
-					user.username,
-					user.roleName,
+					user.email,
 				);
 				const userData = {
 					id: user.id,
-					username: user.username,
+					fullname: user.fullname,
 					email: user.email,
-					firstname: user.firstname,
-					lastname: user.lastname,
-					roleName: user.roleName,
-					roleId: user.roleId,
-					status: user.status,
+					userType: user.userType,
+					isActive: user.isActive,
 					token: token,
 
 				};
@@ -59,18 +50,16 @@ module.exports.registration = (async (req, res) => {
 	}
 });
 
-
 module.exports.userLogin = (req, res) => {
-	// #swagger.tags = ['Auth']
+	// #swagger.tags = ['UserAuth']
 	/*  #swagger.parameters['obj'] = {
             in: 'body',
-            description: "User details for login - username and password",
-            schema: { $username: "", $password: "", $roleId: ""}
+            description: "User details for login - email and password",
+            schema: { $email: "", $password: ""}
     } */
 	User.findOne({
 		where: {
-			username: req.body.username,
-			roleId: req.body.roleId,
+			email: req.body.email,
 		},
 	})
 		.then(async (user) => {
@@ -116,50 +105,26 @@ module.exports.userLogin = (req, res) => {
 					res, 'User not available', null,
 				);
 			}
-			if (user.status === 'deactivate') {
-				/* #swagger.responses[401] = {
-                    description: "User is not activated, please contact to super admin.",
-                    schema: { $accessToken: "", $message: "User is not activated, please contact to super admin." }
-                } */
-				// return res.status(401).send({
-				//   accessToken: null,
-				//   message: "User is not activated, please contact to super admin."
-				// });
-				return apiResponses.unauthorizedResponse(
-					res,
-					'User is not activated, please contact to super admin.',
-					null,
-				);
-			}
+
 			const token = createToken(
 				user.id,
-				user.username,
-				user.roleName,
+				user.email,
 			);
 			/* #swagger.responses[500] = {
                     description: "User logged in!",
-                    schema: { $id: "user id", $username: "username", $email: "user email", $status: "user status", $roles: "user roles", $accessToken: "user token"}
+                    schema: { $id: "user id", $email: "user email",  $accessToken: "user token"}
                 } */
 			// return res.status(200).send({
 			//   id: user.id,
-			//   username: user.username,
 			//   email: user.email,
-			//   status: user.status,
 			//   accessToken: token
 			// });
-			const dateAndTime = moment().format()
-			await User.update({
-				status: Status.ONLINE,
-				activeDateAndTime: dateAndTime,
-				isActive: 1,
-			}, {where: {id: user.id}});
 			const obj = {
 				id: user.id,
-				username: user.username,
-				firstName: user.firstname,
-				lastName: user.lastname,
 				email: user.email,
-				status: user.status,
+				fullname: user.fullname,
+				userType: user.userType,
+				isActive: user.isActive,
 				token: token,
 			};
 			return apiResponses.successResponseWithData(
@@ -176,78 +141,28 @@ module.exports.userLogin = (req, res) => {
 		});
 };
 
-
-module.exports.userProfile = (req, res) => {
-	// Get User from Database
-	// #swagger.tags = ['Auth']
-	User.findOne({
-		where: {
-			userId: req.params.userId,
-		},
-	})
-		.then(async (user) => {
-			if (!user) {
+module.exports.emailVarify = async (req, res) => {
+	try {
+		User.findOne({
+			where: {
+				email: req.body.email,
+			},
+		})
+			.then(async (result) =>{
+				console.log('result---->', result);
 				/* #swagger.responses[404] = {
-                   description: "User Not found.",
+                   description: "Email Not found.",
                    schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
                } */
-				// return res.status(404).send({ message: "User Not found." });
-				return apiResponses.notFoundResponse(
-					res, 'User Not found.', {},
-				);
-			}
-			// res.status(200).send({
-			//   status: "200",
-			//   user: user,
-			// });
-			return apiResponses.successResponseWithData(
-				res, 'success', user,
-			);
-		})
-		.catch((err) => {
-			/* #swagger.responses[500] = {
-                description: "Error message",
-                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-            } */
-			// return res.status(500).send({ message: err.message });
-			return apiResponses.errorResponse(res, err.message, {});
-		});
-};
+				// return res.status(404).send({ message: "Email Not found." });
 
-
-module.exports.deleteUser = async (req, res) => {
-	// #swagger.tags = ['Auth']
-	try {
-		await User.update({
-			isDeleted: 1,
-		}, {where: {id: req.params.id}})
-			.then((user) => {
-				if (!user) {
-					/* #swagger.responses[404] = {
-                               description: "User Not found.",
-                               schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
-                           } */
-					// return res.status(404).send({ message: "Not found." });
-					return apiResponses.notFoundResponse(
-						res, 'Not found.', {},
-					);
-				}
-				/* #swagger.responses[200] = {
-                            description: "success!",
-                        } */
-				// return res.status(200).send({ status:'200', message: "success!" , data: industrial });
 				return apiResponses.successResponseWithData(
-					res, 'Success', user,
+					res, 'Email is Already in use!', result,
 				);
-			})
-			.catch((err) => {
-				/* #swagger.responses[500] = {
-                            description: "Error message",
-                            schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-                        } */
-				// return res.status(500).send({ message: err.message });
-				return apiResponses.errorResponse(res, err.message, {});
-			});
+			},
+
+
+			);
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

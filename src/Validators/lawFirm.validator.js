@@ -30,10 +30,6 @@ const addLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('experience must be specified.'),
-	// body('logo')
-	//   .isLength({ min: 1 })
-	//   .trim()
-	//   .withMessage('logo must be specified.'),
 
 	body('numOfLawyer')
 		.isLength({min: 1})
@@ -45,36 +41,6 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('jurisdiction must be specified.'),
 
-	body('industryId')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('industry must be specified.'),
-
-	body('industryTitle')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('industry Title must be specified.'),
-
-	body('subCategoryId')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('subCategory Id must be specified.'),
-
-	body('subCategoryTitle')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('subCategory title must be specified.'),
-
-	body('serviceId')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('service Id must be specified.'),
-
-	body('serviceTitle')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('service title must be specified.'),
-
 	body('languageId')
 		.isLength({min: 1})
 		.trim()
@@ -85,11 +51,6 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('lanuage title must be specified.'),
 
-	body('price')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('price must be specified.'),
-
 	body('isActive')
 		.isLength({min: 1})
 		.trim()
@@ -97,7 +58,6 @@ const addLawFirmValidator = [
 
 	sanitizeBody('languageId').escape(),
 	sanitizeBody('subCategoryId').escape(),
-	//   sanitizeBody('username').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -145,10 +105,6 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('experience must be specified.'),
-	body('logo')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('logo must be specified.'),
 
 	body('numOfLawyer')
 		.isLength({min: 1})
@@ -160,37 +116,7 @@ const updateLawFirmValidator = [
 		.trim()
 		.withMessage('jurisdiction must be specified.'),
 
-	body('industryId')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('industry must be specified.'),
-
-	body('industryTitle')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('industry Title must be specified.'),
-
-	body('subCategoryId')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('subCategory Id must be specified.'),
-
-	body('subCategoryTitle')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('subCategory title must be specified.'),
-
-	body('serviceId')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('service Id must be specified.'),
-
-	body('serviceTitle')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('service title must be specified.'),
-
-	body('languageId')
+    body('languageId')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage Id must be specified.'),
@@ -199,11 +125,6 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage title must be specified.'),
-
-	body('price')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('price must be specified.'),
 
 	body('isActive')
 		.isLength({min: 1})
