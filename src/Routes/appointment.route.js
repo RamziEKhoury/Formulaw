@@ -25,5 +25,4 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/appointment/get-appointment/:id',
 		appointmentController.getAppointment);
-
 };
