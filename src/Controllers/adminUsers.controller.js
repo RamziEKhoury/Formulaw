@@ -1,5 +1,5 @@
 const db = require('../models');
-const User = db.user;
+const Admin = db.adminUser;
 const apiResponses = require('../Components/apiresponse');
 const {createToken} = require('../Middlewares/adminUserAuthentications');
 const bcrypt = require('bcryptjs');
@@ -16,7 +16,7 @@ module.exports.registration = (async (req, res) => {
                     description: "User details for registration - firstname, lastname, username, email, password and roles",
                     schema: { $username: "", $email: "", $firstname: "", $lastname: "", $roleName: "", $roleId: "", $password: ""}
             } */
-		User.create({
+		Admin.create({
 			username: req.body.username,
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 8),
@@ -67,7 +67,7 @@ module.exports.userLogin = (req, res) => {
             description: "User details for login - username and password",
             schema: { $username: "", $password: "", $roleId: ""}
     } */
-	User.findOne({
+	Admin.findOne({
 		where: {
 			username: req.body.username,
 			roleId: req.body.roleId,
@@ -148,7 +148,7 @@ module.exports.userLogin = (req, res) => {
 			//   accessToken: token
 			// });
 			const dateAndTime = moment().format()
-			await User.update({
+			await Admin.update({
 				status: Status.ONLINE,
 				activeDateAndTime: dateAndTime,
 				isActive: 1,
@@ -180,7 +180,7 @@ module.exports.userLogin = (req, res) => {
 module.exports.userProfile = (req, res) => {
 	// Get User from Database
 	// #swagger.tags = ['Auth']
-	User.findOne({
+	Admin.findOne({
 		where: {
 			userId: req.params.userId,
 		},
@@ -218,7 +218,7 @@ module.exports.userProfile = (req, res) => {
 module.exports.admins = (req, res) => {
 	// Get User from Database
 	// #swagger.tags = ['Auth']
-	User.findAll()
+	Admin.findAll()
 		.then(async (users) => {
 			if (users.length === 0) {
 				/* #swagger.responses[404] = {
@@ -252,7 +252,7 @@ module.exports.admins = (req, res) => {
 module.exports.deleteUser = async (req, res) => {
 	// #swagger.tags = ['Auth']
 	try {
-		await User.update({
+		await Admin.update({
 			isDeleted: 1,
 		}, {where: {id: req.params.id}})
 			.then((user) => {
