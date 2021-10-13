@@ -51,9 +51,13 @@ module.exports = (sequelize, Sequelize) => {
       //   ),
       //   allowNull: false,
       // },
-     
-
-      experience: {
+      taxType:{
+        type: Sequelize.STRING,
+      },
+      tax:{
+        type: Sequelize.STRING,
+      },
+     experience: {
         type: Sequelize.INTEGER,
       },
       numOfLawyer: {
