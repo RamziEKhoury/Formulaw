@@ -10,7 +10,6 @@ module.exports = (sequelize, Sequelize) => {
 			},
 			lawFirmId: {
 				type: Sequelize.UUID,
-				allowNull: false,
 			},
 
 			industryId: {

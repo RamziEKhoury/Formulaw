@@ -11,18 +11,15 @@ module.exports = (sequelize, Sequelize) => {
 
 			queryId: {
 				type: Sequelize.UUID,
-				allowNull: false,
 
 			},
 
 			adminId: {
 				type: Sequelize.UUID,
-				allowNull: false,
 
 			},
 			customerId: {
 				type: Sequelize.UUID,
-				allowNull: false,
 
 			},
 
