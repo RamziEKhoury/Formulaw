@@ -17,11 +17,11 @@ module.exports = function(app) {
 		lawFirmController.addLawFirm,
 	);
 
-	app.post(
-		'/api/v1/lawfirm/update-lawfirm',
-		[LawFirmValidator.updateLawFirmValidator],
-		lawFirmController.lawFirmUpdate,
-	);
+	// app.post(
+	// 	'/api/v1/lawfirm/update-lawfirm',
+	// 	[LawFirmValidator.updateLawFirmValidator],
+	// 	lawFirmController.lawFirmUpdate,
+	// );
 
 	app.get('/api/v1/lawfirm/get-lawfirms/:limit', lawFirmController.getLawFirms);
 

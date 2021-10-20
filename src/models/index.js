@@ -39,7 +39,8 @@ db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
 db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize,Sequelize);
 db.lawFirm_service = require('./lawFirm-services.model')(sequelize,Sequelize);
 db.user = require('./users.model')(sequelize,Sequelize);
+db.lawFirm_tax = require('./lawFirm-taxes.model')(sequelize,Sequelize);
 db.lawFirm.hasMany(db.lawFirm_service, {sourceKey:"id",foreignKey:"lawFirmId"});
 db.lawFirm.hasMany(db.lawFirm_industry, {sourceKey:"id",foreignKey:"lawFirmId"});
-
+db.lawFirm.hasMany(db.lawFirm_tax, {sourceKey:"id",foreignKey:"lawFirmId"});
 module.exports = db;

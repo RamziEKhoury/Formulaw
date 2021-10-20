@@ -17,11 +17,11 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('licenseNumber must be specified.'),
 
-	body('countryId')
+	body('countryId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('country Id must be specified.'),
-	body('countryTitle')
+	body('countryTitle.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('country title must be specified.'),
@@ -36,38 +36,26 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('numOfLawyer must be specified.'),
 
-	body('jurisdiction')
+	body('jurisdiction.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('jurisdiction must be specified.'),
 
-	body('languageId')
+	body('languageId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage Id must be specified.'),
 
-	body('languageTitle')
+	body('languageTitle.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage title must be specified.'),
-	
-	body('taxType')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('taxType must be specified.'),
-
-	body('tax')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('tax must be specified.'),
-
 	body('isActive')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('isActive must be specified.'),
 
 	sanitizeBody('languageId').escape(),
-	sanitizeBody('subCategoryId').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -101,12 +89,11 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('licenseNumber must be specified.'),
-
-	body('countryId')
+	body('countryId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('country Id must be specified.'),
-	body('countryTitle')
+	body('countryTitle.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('country title must be specified.'),
@@ -121,30 +108,21 @@ const updateLawFirmValidator = [
 		.trim()
 		.withMessage('numOfLawyer must be specified.'),
 
-	body('jurisdiction')
+	body('jurisdiction.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('jurisdiction must be specified.'),
 
-    body('languageId')
+    body('languageId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage Id must be specified.'),
 
-	body('languageTitle')
+	body('languageTitle.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('lanuage title must be specified.'),
 	
-	body('taxType')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('taxType must be specified.'),
-
-	body('tax')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('tax must be specified.'),
 
 	body('isActive')
 		.isLength({min: 1})

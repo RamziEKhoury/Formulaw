@@ -1,3 +1,4 @@
+const DataTypes = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define(
     'lawfirm',
@@ -19,20 +20,16 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       countryId: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        allowNull: false,
+        type: DataTypes.JSONB,
       },
       countryTitle: {
-        type: Sequelize.STRING,
+        type: DataTypes.JSONB,
       },
       languageId: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        allowNull: false,
-      },
+				type: DataTypes.JSONB,
+			},
       languageTitle: {
-        type: Sequelize.STRING,
+        type: DataTypes.JSONB,
       },
       // logo: {
       //   type: Sequelize.STRING,
@@ -51,12 +48,6 @@ module.exports = (sequelize, Sequelize) => {
       //   ),
       //   allowNull: false,
       // },
-      taxType:{
-        type: Sequelize.STRING,
-      },
-      tax:{
-        type: Sequelize.STRING,
-      },
      experience: {
         type: Sequelize.INTEGER,
       },
@@ -64,7 +55,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
       },
       jurisdiction: {
-        type: Sequelize.STRING,
+        type: DataTypes.JSONB,
       },
 
       expertise: {
