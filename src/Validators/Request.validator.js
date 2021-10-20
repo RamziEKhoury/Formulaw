@@ -19,12 +19,12 @@ const createRequestValidator = [
 	    .isLength({min: 1})
 	    .trim()
 	    .withMessage('email must be specified.'),
-	body('jurisdictionId')
+	body('jurisdictionId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('jurisdictionId must be specified.'),
 
-	body('languageId')
+	body('languageId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('languageId must be specified.'),
@@ -112,12 +112,12 @@ const updateRequestValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('email must be specified.'),
-	body('jurisdictionId')
+	body('jurisdictionId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('jurisdictionId must be specified.'),
 
-	body('languageId')
+	body('languageId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('languageId must be specified.'),
@@ -132,12 +132,12 @@ const updateRequestValidator = [
 		.trim()
 		.withMessage('legalFieldName must be specified.'),
 
-	body('serviceSubcategoryId')
+	body('serviceSubcategoryId.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('serviceSubcategoryId must be specified.'),
 
-	body('serviceSubcategoryName')
+	body('serviceSubcategoryName.*')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('serviceSubcategoryName must be specified.'),

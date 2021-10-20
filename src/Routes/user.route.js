@@ -20,7 +20,7 @@ module.exports= function(app) {
 
 	app.post(
 		'/api/v1/auth/user/login',
-		[UserAuth.logInValidator, validateEmail],
+		UserAuth.logInValidator,
 		usersController.userLogin,
 	);
 

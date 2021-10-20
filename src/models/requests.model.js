@@ -22,17 +22,23 @@ module.exports = (sequelize, Sequelize) => {
 			getstarted: {
 				type: Sequelize.STRING,
 			},
-			jurisdictionId: {
-			  type: Sequelize.UUID,
-			},
-			jurisdictionName: {
+			industryTitle: {
 				type: Sequelize.STRING,
 			},
-			languageId: {
+			industryId: {
 				type: Sequelize.UUID,
 			},
+			jurisdictionId: {
+				type: DataTypes.ARRAY(DataTypes.STRING(256)),
+			},
+			jurisdictionName: {
+				type: DataTypes.ARRAY(DataTypes.STRING(256)),
+			},
+			languageId: {
+				type: DataTypes.ARRAY(DataTypes.STRING(256)),
+			},
 			languageName: {
-				type: Sequelize.STRING,
+				type: DataTypes.ARRAY(DataTypes.STRING(256)),
 			},
 			legalFieldId: {
 				type: Sequelize.UUID,
