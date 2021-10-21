@@ -10,13 +10,15 @@ module.exports.createRequest = async (req, res) => {
 		/*  #swagger.parameters['obj'] = {
             in: 'body',
              description: "Request details for add - firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",
-            schema: { $getstarted: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
+            schema: { $industryId: "", $industryTitle: "", $getstarted: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
             } */
 
 		Request.create(req.body).then((request) => {
 			const createdRequest = {
 				id: request.id,
 				getstarted: request.getstarted,
+				industryId: request.industryId,
+				industryTitle: request.industryTitle,
 				firstName: request.firstName,
 				lastName: request.lastName,
 				email: request.email,
@@ -59,6 +61,8 @@ module.exports.requestUpdate = async (req, res) => {
 		await Request.update(
 			{
 				getstarted: req.body.getstarted,
+				industryId: req.body.industryId,
+				industryTitle: req.body.industryTitle,
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: req.body.email,
@@ -136,6 +140,9 @@ module.exports.getRequests = (req, res) => {
 				isDeleted: 0,
 				isActive: 1,
 			},
+			order: [
+				[Request, 'createdAt', 'ASC'],
+			],
 			limit: limit,
 		})
 			.then((data) => {

@@ -5,7 +5,7 @@
     "title": "Formula Admin API",
     "description": ""
   },
-  "host": "15.184.198.65:3002",
+  "host": "localhost:3002",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -117,11 +117,15 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "User details for login - email and password",
+            "description": "User details for login - email, userType and password",
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
+                  "type": "string",
+                  "example": ""
+                },
+                "userType": {
                   "type": "string",
                   "example": ""
                 },
@@ -132,6 +136,7 @@
               },
               "required": [
                 "email",
+                "userType",
                 "password"
               ]
             }
@@ -2669,7 +2674,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,currency,numOfLawyer,jurisdiction,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,currency,numOfLawyer,jurisdiction,expertise,rating,taxType,tax, isActive",
             "schema": {
               "type": "object",
               "properties": {
@@ -2733,6 +2738,14 @@
                   "type": "string",
                   "example": ""
                 },
+                "taxType": {
+                  "type": "string",
+                  "example": ""
+                },
+                "tax": {
+                  "type": "string",
+                  "example": ""
+                },
                 "expertise": {
                   "type": "string",
                   "example": ""
@@ -2758,6 +2771,8 @@
                 "rating",
                 "experience",
                 "numOfLawyer",
+                "taxType",
+                "tax",
                 "expertise",
                 "jurisdiction"
               ]
@@ -2811,7 +2826,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,price,currency,numOfLawyer,jurisdiction,expertise,rating, isActive",
+            "description": "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,price,currency,numOfLawyer,jurisdiction,expertise,rating,taxType,tax, isActive",
             "schema": {
               "type": "object",
               "properties": {
@@ -2867,6 +2882,14 @@
                   "type": "string",
                   "example": ""
                 },
+                "taxType": {
+                  "type": "string",
+                  "example": ""
+                },
+                "tax": {
+                  "type": "string",
+                  "example": ""
+                },
                 "numOfLawyer": {
                   "type": "string",
                   "example": ""
@@ -2894,6 +2917,8 @@
                 "currency",
                 "rating",
                 "experience",
+                "taxType",
+                "tax",
                 "numOfLawyer",
                 "jurisdiction",
                 "expertise"
@@ -2947,14 +2972,6 @@
                   "type": "string",
                   "example": "images"
                 },
-                "price": {
-                  "type": "string",
-                  "example": "price"
-                },
-                "currency": {
-                  "type": "string",
-                  "example": "currency"
-                },
                 "rating": {
                   "type": "string",
                   "example": "rating"
@@ -2974,6 +2991,14 @@
                 "expertise": {
                   "type": "string",
                   "example": "expertise"
+                },
+                "taxtype": {
+                  "type": "string",
+                  "example": "taxType"
+                },
+                "tax": {
+                  "type": "string",
+                  "example": "tax"
                 }
               },
               "required": [
@@ -2987,13 +3012,13 @@
                 "langaugeTitle",
                 "logo",
                 "images",
-                "price",
-                "currency",
                 "rating",
                 "experience",
                 "numOfLawyer",
                 "jurisdiction",
-                "expertise"
+                "expertise",
+                "taxtype",
+                "tax"
               ],
               "xml": {
                 "name": "main"
@@ -3256,6 +3281,29 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/lawfirm/get-lawfirmsdetails": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/lawfirm/get-lawfirmdetails/{lawFirmId}": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "lawFirmId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
       }
     },
     "/api/v1/request/create-request": {

@@ -19,6 +19,9 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.ENUM('normal', 'google', 'facebook'),
 			defaultValue: 'normal',
 		},
+		facebooktoken: {
+			type: Sequelize.STRING,
+		},
 		isDeleted: {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,

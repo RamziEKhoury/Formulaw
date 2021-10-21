@@ -20,12 +20,17 @@ module.exports= function(app) {
 
 	app.post(
 		'/api/v1/auth/user/login',
-		[UserAuth.logInValidator, validateEmail],
+		UserAuth.logInValidator,
 		usersController.userLogin,
 	);
 
 	app.post(
 		'/api/v1/auth/user/email-check',
 		usersController.emailVarify,
+	);
+
+	app.get(
+		'/api/v1/auth/user/users/:limit',
+		usersController.users,
 	);
 };
