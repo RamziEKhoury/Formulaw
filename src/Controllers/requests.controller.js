@@ -140,6 +140,9 @@ module.exports.getRequests = (req, res) => {
 				isDeleted: 0,
 				isActive: 1,
 			},
+			order: [
+				[Request, 'createdAt', 'ASC'],
+			],
 			limit: limit,
 		})
 			.then((data) => {

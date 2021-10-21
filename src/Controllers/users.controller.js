@@ -279,3 +279,24 @@ module.exports.emailVarify = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+
+module.exports.users = async (req, res) => {
+	try {
+		const limit = req.params.limit;
+		User.findAll({limit: limit})
+			.then(async (result) =>{
+				/* #swagger.responses[404] = {
+                       description: "Email Not found.",
+                       schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+                   } */
+				// return res.status(404).send({ message: "User Not found." });
+
+				return apiResponses.successResponseWithData(
+					res, 'success!', result,
+				);
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};

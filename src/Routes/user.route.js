@@ -28,4 +28,9 @@ module.exports= function(app) {
 		'/api/v1/auth/user/email-check',
 		usersController.emailVarify,
 	);
+
+	app.get(
+		'/api/v1/auth/user/users/:limit',
+		usersController.users,
+	);
 };
