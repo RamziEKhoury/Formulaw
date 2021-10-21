@@ -8,8 +8,10 @@ module.exports.Status = {
 
 module.exports.RequestWorkflow = {
 	NEW: 'NEW',
-	APPROVED: 'APPROVED',
+	APPROVE: 'APPROVE',
 	COMPLETED: 'COMPLETED',
 	PENDING: 'PENDING',
-	REJECTED: 'REJECTED',
+	DRAFT:"DRAFT",
+	REVIEW:"REVIEW",
+	REJECT: 'REJECT',
 };

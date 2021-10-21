@@ -1,4 +1,5 @@
 const DataTypes = require('sequelize');
+const {RequestWorkflow} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define(
     'lawfirm',
@@ -61,6 +62,16 @@ module.exports = (sequelize, Sequelize) => {
       expertise: {
         type: Sequelize.STRING,
       },
+      workflow: {
+        type: Sequelize.ENUM(
+          RequestWorkflow.APPROVE,
+          RequestWorkflow.REVIEW,
+          RequestWorkflow.DRAFT,
+          RequestWorkflow.REJECT,
+        ),
+        defaultValue: RequestWorkflow.APPROVED,
+      },
+
       rating: {
         type: Sequelize.INTEGER,
         allowNull: false,

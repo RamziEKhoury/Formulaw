@@ -1,4 +1,4 @@
-const {body, sanitizeBody, validationResult} = require('express-validator');
+const {body, sanitizeBody, validationResult,param} = require('express-validator');
 const {isNumber} = require('underscore');
 const apiResponses = require('../Components/apiresponse');
 
@@ -84,7 +84,6 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('ar_name must be specified.'),
-
 	body('licenseNumber')
 		.isLength({min: 1})
 		.trim()
@@ -97,6 +96,10 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('country title must be specified.'),
+	body('workflow')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('workflow value is not valid.'),
 
 	body('experience')
 		.isLength({min: 1})
@@ -145,9 +148,35 @@ const updateLawFirmValidator = [
 	},
 ];
 
+const updateLawFirmWorkflowStatusValidator = [
+	param('lawFirmId')
+		.isLength({min: 10})
+		.trim()
+		.withMessage('lawFirmId must be valid.'),
+	param('workflow')
+		.isLength({min: 3})
+		.trim()
+		.withMessage('workflow value is not valid.'),
+
+	sanitizeBody('lawFirmId').escape(),
+	sanitizeBody('workflow').escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return apiResponses.validationErrorWithData(
+				res,
+				'Validation Error.',
+				errors.array(),
+			);
+		} else {
+			next();
+		}
+	},
+];
 const lawFirmValidator = {
 	addLawFirmValidator: addLawFirmValidator,
 	updateLawFirmValidator: updateLawFirmValidator,
+	updateLawFirmWorkflowStatusValidator:updateLawFirmWorkflowStatusValidator,
 };
 
 module.exports = lawFirmValidator;
