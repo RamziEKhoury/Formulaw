@@ -25,6 +25,12 @@ module.exports = (sequelize, Sequelize) => {
 		countryCode: {
 			type: Sequelize.STRING,
 		},
+		taxType:{
+			type: Sequelize.STRING,
+		  },
+		  tax:{
+			type: Sequelize.STRING,
+		  },
 		flag: {
 			type: Sequelize.STRING,
 		},

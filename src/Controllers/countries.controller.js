@@ -5,12 +5,11 @@ const Op = db.Sequelize.Op;
 
 module.exports.addCountry = (async (req, res) => {
 	try {
-		console.log(req.body.en_name);
 		// #swagger.tags = ['Country']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
-                    description: "Country details for add - en_name, ar_name, isActive, countryCode, description, flag",
-                    schema: { $en_name: "", $ar_name: "", $flag: "", $isActive: "", $countryCode: "", $description: ""}
+                    description: "Country details for add - en_name, ar_name, isActive, countryCode,taxType,tax, description, flag",
+                    schema: { $en_name: "", $ar_name: "", $flag: "", $isActive: "", $countryCode: "",$taxType:"",$tax:"", $description: ""}
             } */
 		Country.findOrCreate({
 
@@ -26,6 +25,8 @@ module.exports.addCountry = (async (req, res) => {
 				flag: req.body.flag,
 				countryCode: req.body.countryCode,
 				description: req.body.description,
+				taxType:req.body.taxType,
+				tax:req.body.tax,
 				isActive: req.body.isActive,
 			},
 
@@ -51,6 +52,8 @@ module.exports.addCountry = (async (req, res) => {
 						flag: inserted.flag,
 						countryCode: inserted.countryCode,
 						description: inserted.description,
+						taxType:inserted.taxType,
+						tax:inserted.tax,
 						isActive: inserted.isActive,
 						isDeleted: inserted.isDeleted,
 
@@ -80,6 +83,8 @@ module.exports.countryUpdate = async (req, res) => {
 			ar_name: req.body.ar_name,
 			flag: req.body.flag,
 			description: req.body.description,
+			taxType:req.body.taxType,
+			tax:req.body.tax,
 			isActive: req.body.isActive,
 			countryCode: req.body.countryCode,
 		}, {where: {id: req.body.id}})
@@ -96,7 +101,7 @@ module.exports.countryUpdate = async (req, res) => {
 				}
 				/* #swagger.responses[200] = {
                             description: "success!",
-                            schema: { $en_name: "en_name", $ar_name: "en_name", $description: "description", $isActive: 0, $isDeleted: 1, $countryCode: "countryCode", $flag: "flag"}
+                            schema: { $en_name: "en_name", $ar_name: "en_name", $description: "description", $isActive: 0, $isDeleted: 1, $countryCode: "countryCode",$taxType:"taxType",$tax:"tax", $flag: "flag"}
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: country });
 				return apiResponses.successResponseWithData(

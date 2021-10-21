@@ -68,9 +68,9 @@ module.exports = (sequelize, Sequelize) => {
 				defaultValue: RequestWorkflow.NEW,
 				type: Sequelize.ENUM(
 					RequestWorkflow.NEW,
-					RequestWorkflow.APPROVED,
+					RequestWorkflow.APPROVE,
 					RequestWorkflow.COMPLETED,
-					RequestWorkflow.REJECTED,
+					RequestWorkflow.REJECT,
 					RequestWorkflow.PENDING,
 				),
 			},

@@ -2,10 +2,12 @@ const db = require('../models');
 const LawFirm = db.lawFirm;
 const LawFirmService = db.lawFirm_service;
 const LawFirmIndustry = db.lawFirm_industry;
+const LawFirmTax = db.lawFirm_tax;
 const apiResponses = require('../Components/apiresponse');
 const {lawFirm} = require('../models');
 const {lawFirm_service} = require('../models');
 const {lawFirm_industry} =require('../models');
+const {lawfirm_tax} =require('../models');
 const Op = db.Sequelize.Op;
 
 module.exports.addLawFirm = async (req, res) => {
@@ -39,8 +41,6 @@ module.exports.addLawFirm = async (req, res) => {
 				jurisdiction: req.body.jurisdiction,
 			    rating: req.body.rating,
 				experience: req.body.experience,
-				taxType: req.body.taxType,
-				tax: req.body.tax,
 				isActive: req.body.isActive,
 			},
 		}).then((lawFirm) => {
@@ -73,8 +73,8 @@ module.exports.addLawFirm = async (req, res) => {
 					jurisdiction: inserted.jurisdiction,
 					expertise: inserted.expertise,
 					numOfLawyer: inserted.numOfLawyer,
-					taxType: inserted.taxType,
-					tax: inserted.tax,
+					// taxType: inserted.taxType,
+					// tax: inserted.tax,
 					rating: inserted.rating,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
@@ -116,8 +116,6 @@ module.exports.lawFirmUpdate = async (req, res) => {
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
 				jurisdiction: req.body.jurisdiction,
-				taxType: req.body.taxType,
-				tax: req.body.tax,
 				rating: req.body.rating,
 				experience: req.body.experience,
 				isActive: req.body.isActive,
@@ -289,12 +287,17 @@ module.exports.getlawFirmsDetails = async (req, res) =>{
 					model: LawFirmIndustry,
 					 },
 
+					 {
+						model: LawFirmTax,
+						 },
+
 			],
 		  })
 		  .then((lawfirms)=>{
 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 		  });
 	} catch (err) {
+
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -311,6 +314,9 @@ module.exports.getlawFirmDetails = async (req, res) =>{
 				   {
 					model: LawFirmIndustry,
 					 },
+					 {
+						model: LawFirmTax,
+						 },
 			],
 		  })
 		  .then((lawfirms)=>{
@@ -321,46 +327,91 @@ module.exports.getlawFirmDetails = async (req, res) =>{
 	}
 };
 
-// module.exports.getlawFirmsDetails = async (req,res) =>{
+module.exports.getLawFirms = (req, res) => {
+	// Get Lawfirm data from Database
+	// #swagger.tags = ['LawFirm']
 
-// 	try {
+	const limit = req.params.limit;
 
-// 		LawFirm.findAll({
-// 			include: [
-// 				{
-// 			      model: LawFirmService,
-// 			       }
-// 			]
-// 		  })
-// 		  .then((lawfirms)=>{
-// 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-// 		  })
+	LawFirm.findAll({
+		include: [
+			{
+				model: LawFirmService,
+			},
 
+			{
+				model: LawFirmIndustry,
+			},
 
-// 	} catch (err) {
-// 		return apiResponses.errorResponse(res, err);
-// 	}
+		],
+		limit: limit,
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+            err.message || 'Some error occurred while retrieving Lawfirm.',
+			});
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                    description: "Error message",
+                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
+			});
+		});
+};
 
-// };
+module.exports.lawFirmeWorkflowStatus = async(req, res) => {
+	
+	try {
+		await LawFirm.update(
+			{
+				workflow: req.params.workflow,
+			},
+			{where: {id:req.params.lawFirmId}},
+		)
+			.then((lawFirm) => {
+				if (!lawFirm) {
+					/* #swagger.responses[404] = {
+                               description: "Lawfirm Not found.",
+                               schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
+                           } */
+					// return res.status(404).send({ message: "Not found." });
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				/* #swagger.responses[200] = {
+                            description: "success!",
+                           schema: { $en_name: "en_name", $ar_name: "ar_name" ,  $isActive: "0", $licenseNumber: "licenseNumber" , $countryId: "countryId" ,$countryTitle:"countryTitle", $langaugeId: "langaugeId",$langaugeTitle:"langaugeTitle",$logo: "logo",$images:"images", $rating: "rating" , $experience: "experience", $numOfLawyer: "numOfLawyer", $jurisdiction: "jurisdiction", $expertise: "expertise",$taxtype:"taxType",$tax:"tax"}
 
-// module.exports.getlawFirmDetails = async (req,res) =>{
-//      const lawFirmId = req.params.lawFirmId;
-// 	try {
-// 		LawFirm.findOne({
-// 			where:{id:lawFirmId},
-// 			include: [
-// 				{
-// 			      model: LawFirmService,
-// 			       }
-// 			]
-// 		  })
-// 		  .then((lawfirms)=>{
-// 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-// 		  })
-
-
-// 	} catch (err) {
-// 		return apiResponses.errorResponse(res, err);
-// 	}
-
-// };
+                        } */
+				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
+				return apiResponses.successResponseWithData(res, 'Success', lawFirm);
+			})
+			.catch((err) => {
+				/* #swagger.responses[500] = {
+                            description: "Error message",
+                            schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                        } */
+				// return res.status(500).send({ message: err.message });
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		console.log("errrrrr",err);
+		return apiResponses.errorResponse(res, err);
+	}
+};

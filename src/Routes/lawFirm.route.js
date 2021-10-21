@@ -22,6 +22,11 @@ module.exports = function(app) {
 		[LawFirmValidator.updateLawFirmValidator],
 		lawFirmController.lawFirmUpdate,
 	);
+	app.post(
+		'/api/v1/lawfirm/workflow/:lawFirmId/:workflow',
+		[LawFirmValidator.updateLawFirmWorkflowStatusValidator],
+		lawFirmController.lawFirmeWorkflowStatus,
+	);
 
 	app.get('/api/v1/lawfirm/get-lawfirms/:limit', lawFirmController.getLawFirms);
 
