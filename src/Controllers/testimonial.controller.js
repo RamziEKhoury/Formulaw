@@ -31,3 +31,45 @@ module.exports.addtestimonial = async (req, res) => {
     return apiResponses.errorResponse(res, err);
   }
 };
+
+module.exports.viewtestimonials = (req, res) => {
+  Testimonial.findAll()
+    .then((testimonials) => {
+      if (!testimonials) {
+        return apiResponses.notFoundResponse(res, "Data Not found.", null);
+      }
+
+      return apiResponses.successResponseWithData(
+        res,
+        "successfully found!",
+        testimonials
+      );
+    })
+    .catch((err) => {
+      return apiResponses.errorResponse(res, err.message, err);
+    });
+};
+
+module.exports.viewtestimonial = (req, res) => {
+  console.log(req.params);
+
+  Testimonial.findOne({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((testimonial) => {
+      if (!testimonial) {
+        return apiResponses.notFoundResponse(res, "Data Not found.", null);
+      }
+
+      return apiResponses.successResponseWithData(
+        res,
+        "successfully found!",
+        testimonial
+      );
+    })
+    .catch((err) => {
+      return apiResponses.errorResponse(res, err.message, err);
+    });
+};
