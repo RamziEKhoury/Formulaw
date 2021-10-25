@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon app.js",
+    "start": "nodemon app.js",
     "eslint": "eslint \".{js}\""
   },
   "author": "Jitendra Singh",
@@ -22,6 +22,7 @@
     "fs": "0.0.1-security",
     "moment": "^2.29.1",
     "mongoose": "^5.9.10",
+    "nodemon": "^2.0.14",
     "path": "^0.12.7",
     "pg": "^8.7.1",
     "swagger-autogen": "^2.11.2",
