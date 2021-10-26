@@ -32,10 +32,10 @@ db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize, Sequelize);
 db.lawFirm_service = require('./lawFirm-services.model')(sequelize, Sequelize);
 db.user = require('./users.model')(sequelize, Sequelize);
 db.appointment = require('./appointment.model')(sequelize, Sequelize);
-//
-// db.appointment.hasOne(db.user, {sourceKey: 'customerId', foreignKey: 'id'});
-// db.appointment.hasOne(db.adminUser, {sourceKey: 'adminId', foreignKey: 'id'});
-// db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
+
+db.appointment.hasOne(db.user, {sourceKey: 'customerId', foreignKey: 'id'});
+db.appointment.hasOne(db.adminUser, {sourceKey: 'adminId', foreignKey: 'id'});
+db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
 db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize, Sequelize);
 db.lawFirm_service = require('./lawFirm-services.model')(sequelize, Sequelize);
 db.user = require('./users.model')(sequelize, Sequelize);
