@@ -70,7 +70,7 @@ module.exports.userLogin = (req, res) => {
 	Admin.findOne({
 		where: {
 			username: req.body.username,
-			roleId: req.body.roleId,
+			password: req.body.password,
 		},
 	})
 		.then(async (user) => {
