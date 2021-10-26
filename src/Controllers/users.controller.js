@@ -3,6 +3,7 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const {createToken} = require('../Middlewares/userAuthentications');
 const bcrypt = require('bcryptjs');
+const Mail = require('../Config/Mails');
 
 
 module.exports.registration = (async (req, res) => {
@@ -20,7 +21,7 @@ module.exports.registration = (async (req, res) => {
 			userType: 'normal',
 			isActive: req.body.isActive,
 		})
-			.then((user) => {
+			.then(async (user) => {
 				/* #swagger.responses[200] = {
                             description: "User registered successfully!",
                             schema: { $statusCode : 200 ,$status: true, $message: "User registered successfully!", $data : {}}
@@ -38,7 +39,8 @@ module.exports.registration = (async (req, res) => {
 					token: token,
 
 				};
-					// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
+				await Mail.userRegistration(user.email);
+				// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 				return apiResponses.successResponseWithData(
 					res,
 					'User registered successfully!',
@@ -148,7 +150,7 @@ module.exports.userLogin = (req, res) => {
 						userType: req.body.userType,
 						isActive: req.body.isActive,
 					})
-						.then((user) => {
+						.then(async (user) => {
 							const token = createToken(
 								user.id,
 								user.email,
@@ -162,6 +164,7 @@ module.exports.userLogin = (req, res) => {
 								token: token,
 
 							};
+							await Mail.userRegistration(user.email);
 							// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 							return apiResponses.successResponseWithData(
 								res,
@@ -203,7 +206,7 @@ module.exports.userLogin = (req, res) => {
 						userType: req.body.userType,
 						isActive: req.body.isActive,
 					})
-						.then((user) => {
+						.then(async (user) => {
 							const token = createToken(
 								user.id,
 								user.email,
@@ -217,6 +220,7 @@ module.exports.userLogin = (req, res) => {
 								token: token,
 
 							};
+							await Mail.userRegistration(user.email);
 							// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 							return apiResponses.successResponseWithData(
 								res,
