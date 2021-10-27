@@ -73,3 +73,55 @@ module.exports.viewtestimonial = (req, res) => {
       return apiResponses.errorResponse(res, err.message, err);
     });
 };
+
+module.exports.updatetestimonial = async (req, res) => {
+  try {
+    await Testimonial.update(
+      {
+        // id: req.body.id,
+        // userId: req.body.userId,
+        // orderId: req.body.orderId,
+        // lawFirmId: req.body.lawFirmId,
+        testimonialdata: req.body.testimonialdata,
+        // rating: req.body.rating,
+      },
+      { where: { id: req.body.id } }
+    )
+      .then((testimonial) => {
+        if (!testimonial) {
+          return apiResponses.notFoundResponse(res, "Not found.", {});
+        }
+
+        return apiResponses.successResponseWithData(
+          res,
+          "Success",
+          testimonial
+        );
+      })
+      .catch((err) => {
+        return apiResponses.errorResponse(res, err.message, {});
+      });
+  } catch (err) {
+    return apiResponses.errorResponse(res, err);
+  }
+};
+
+module.exports.deletetestimonial = async (req, res) => {
+  try {
+    await Testimonial.destroy({ where: { id: req.params.id } })
+      .then((testimonial) => {
+        if (!testimonial) {
+          return apiResponses.notFoundResponse(res, "Not found.", {});
+        }
+
+        return apiResponses.successResponseWithData(
+          res,
+          "Success",
+          testimonial
+        );
+      })
+      .catch((err) => {});
+  } catch (err) {
+    return apiResponses.errorResponse(res, err);
+  }
+};

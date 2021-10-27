@@ -23,4 +23,14 @@ module.exports = function (app) {
     "/api/v1/testimonial/view-testimonial/:id",
     testimoinalController.viewtestimonial
   );
+
+  app.put(
+    "/api/v1/testimonial/update-testimonial/:id",
+    [TestimonialValidator.updateTestimonial],
+    testimoinalController.updatetestimonial
+  );
+  app.delete(
+    "/api/v1/testimonial/delete-testimonial/:id",
+    testimoinalController.deletetestimonial
+  );
 };

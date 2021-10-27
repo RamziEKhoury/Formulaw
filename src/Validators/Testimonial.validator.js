@@ -27,8 +27,30 @@ const addTestimonial = [
   },
 ];
 
+const updateTestimonial = [
+  body("testimonialdata")
+    .isLength({ min: 1 })
+    .trim()
+    .withMessage("Teatimonial must be specified."),
+
+  sanitizeBody("testimonialdata").escape(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return apiResponses.validationErrorWithData(
+        res,
+        "Validation Error.",
+        errors.array()
+      );
+    } else {
+      next();
+    }
+  },
+];
+
 const TestimonialValidator = {
   addTestimonial: addTestimonial,
+  updateTestimonial: updateTestimonial,
 };
 
 module.exports = TestimonialValidator;
