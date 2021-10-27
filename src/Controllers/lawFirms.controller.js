@@ -286,7 +286,7 @@ module.exports.getlawFirmsDetails = async (req, res) =>{
 					 },
 
 					 {
-						model: LawFirmTax,
+					model: LawFirmTax,
 						 },
 
 			],
@@ -295,7 +295,6 @@ module.exports.getlawFirmsDetails = async (req, res) =>{
 			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 		  });
 	} catch (err) {
-
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -313,7 +312,7 @@ module.exports.getlawFirmDetails = async (req, res) =>{
 					model: LawFirmIndustry,
 					 },
 					 {
-						model: LawFirmTax,
+					model: LawFirmTax,
 						 },
 			],
 		  })
@@ -325,63 +324,14 @@ module.exports.getlawFirmDetails = async (req, res) =>{
 	}
 };
 
-module.exports.getLawFirms = (req, res) => {
-	// Get Lawfirm data from Database
-	// #swagger.tags = ['LawFirm']
 
-	const limit = req.params.limit;
-
-	LawFirm.findAll({
-		include: [
-			{
-				model: LawFirmService,
-			},
-
-			{
-				model: LawFirmIndustry,
-			},
-
-		],
-		limit: limit,
-	})
-		.then((data) => {
-			// res.status(200).send({
-			//   status: "200",
-			//   user: data,
-			// });
-			return apiResponses.successResponseWithData(res, 'success', data);
-		})
-		.catch((err) => {
-			/* #swagger.responses[500] = {
-                                description: "Error message",
-                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-                            } */
-			// return res.status(500).send({ message: err.message });
-			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving Lawfirm.',
-			});
-		})
-		.catch((err) => {
-			/* #swagger.responses[500] = {
-                    description: "Error message",
-                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-                } */
-			// return res.status(500).send({ message: err.message });
-			res.status(500).send({
-				message: 'Something Went Wrong',
-			});
-		});
-};
-
-module.exports.lawFirmeWorkflowStatus = async(req, res) => {
-	
+module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 	try {
 		await LawFirm.update(
 			{
 				workflow: req.params.workflow,
 			},
-			{where: {id:req.params.lawFirmId}},
+			{where: {id: req.params.lawFirmId}},
 		)
 			.then((lawFirm) => {
 				if (!lawFirm) {
@@ -409,7 +359,7 @@ module.exports.lawFirmeWorkflowStatus = async(req, res) => {
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 	} catch (err) {
-		console.log("errrrrr",err);
+		console.log('errrrrr', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
