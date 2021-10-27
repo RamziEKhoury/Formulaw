@@ -28,7 +28,7 @@ module.exports = function(app) {
 		lawFirmController.lawFirmeWorkflowStatus,
 	);
 
-	app.get('/api/v1/lawfirm/get-lawfirms/:limit', lawFirmController.getLawFirms);
+	app.post('/api/v1/lawfirm/lawfirms', lawFirmController.getLawFirms);
 
 	app.get('/api/v1/lawfirm/get-lawfirm/:id', lawFirmController.getLawFirm);
 
@@ -37,6 +37,6 @@ module.exports = function(app) {
 		lawFirmController.deleteLawFirm,
 	);
 
-	app.get('/api/v1/lawfirm/get-lawfirmsdetails',lawFirmController.getlawFirmsDetails);
-	app.get('/api/v1/lawfirm/get-lawfirmdetails/:lawFirmId',lawFirmController.getlawFirmDetails);
+	app.get('/api/v1/lawfirm/get-lawfirmsdetails', lawFirmController.getlawFirmsDetails);
+	app.get('/api/v1/lawfirm/get-lawfirmdetails/:lawFirmId', lawFirmController.getlawFirmDetails);
 };

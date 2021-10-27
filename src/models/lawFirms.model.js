@@ -75,7 +75,7 @@ module.exports = (sequelize, Sequelize) => {
 			rating: {
 				type: Sequelize.STRING,
 				allowNull: false,
-				
+
 			},
 			isActive: {
 				type: Sequelize.INTEGER,
