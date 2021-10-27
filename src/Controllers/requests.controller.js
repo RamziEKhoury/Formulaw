@@ -1,6 +1,7 @@
 const db = require('../models');
 const Request = db.request;
 const apiResponses = require('../Components/apiresponse');
+const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
 
 module.exports.createRequest = async (req, res) => {
@@ -13,7 +14,7 @@ module.exports.createRequest = async (req, res) => {
             schema: { $industryId: "", $industryTitle: "", $getstarted: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
             } */
 
-		Request.create(req.body).then((request) => {
+		Request.create(req.body).then(async (request) => {
 			const createdRequest = {
 				id: request.id,
 				getstarted: request.getstarted,
@@ -36,7 +37,8 @@ module.exports.createRequest = async (req, res) => {
 				isActive: request.isActive,
 				isDeleted: request.isDeleted,
 			};
-				// return res.status(200).send({ status:'200', message: "success!" , $data: createdRequest });
+			await Mail.userLeadSubmitted(request.email, request.getstarted );
+			// return res.status(200).send({ status:'200', message: "success!" , $data: createdRequest });
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
