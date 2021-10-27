@@ -1,5 +1,6 @@
 const db = require('../models');
 const Testimonial = db.testimonial;
+const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addtestimonial = async (req, res) => {
@@ -33,7 +34,11 @@ module.exports.addtestimonial = async (req, res) => {
 };
 
 module.exports.viewtestimonials = (req, res) => {
-	Testimonial.findAll()
+	Testimonial.findAll({
+		include: [
+			{model: User, required: false, attributes: ['fullname', 'email']},
+		],
+	})
 		.then((testimonials) => {
 			if (!testimonials) {
 				return apiResponses.notFoundResponse(res, 'Data Not found.', null);

@@ -45,5 +45,6 @@ db.lawFirm_tax = require('./lawFirm-taxes.model')(sequelize, Sequelize);
 db.lawFirm.hasMany(db.lawFirm_service, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.lawFirm.hasMany(db.lawFirm_industry, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.lawFirm.hasMany(db.lawFirm_tax, {sourceKey: 'id', foreignKey: 'lawFirmId'});
+db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 
 module.exports = db;
