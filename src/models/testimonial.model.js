@@ -3,16 +3,16 @@ module.exports = (sequelize, Sequelize) => {
 		'testimonial',
 		{
 			id: {
-				type: Sequelize.STRING,
-				defaultValue: Sequelize.STRING,
+				type: Sequelize.UUID,
+				defaultValue: Sequelize.UUIDV4,
 				allowNull: false,
 				primaryKey: true,
 			},
 			userId: {
-				type: Sequelize.STRING,
+				type: Sequelize.UUID,
 			},
 			orderId: {
-				type: Sequelize.STRING,
+				type: Sequelize.UUID,
 			},
 			lawFirmId: {
 				type: Sequelize.STRING,
