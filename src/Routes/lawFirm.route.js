@@ -28,7 +28,7 @@ module.exports = function(app) {
 		lawFirmController.lawFirmeWorkflowStatus,
 	);
 
-	app.post('/api/v1/lawfirm/lawfirms', lawFirmController.getLawFirms);
+	app.get('/api/v1/lawfirm/get-lawfirms/:limit', lawFirmController.getLawFirms);
 
 	app.get('/api/v1/lawfirm/get-lawfirm/:id', lawFirmController.getLawFirm);
 
