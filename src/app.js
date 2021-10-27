@@ -12,7 +12,16 @@ app.use(bodyParser.urlencoded({limit: '200mb', extended: true, parameterLimit: 1
 app.use(bodyParser.json({limit: '200mb'}));
 const http = require('http');
 
-const httpsServer = http.createServer(app);
+const fs = require('fs');
+const https = require('https');
+const privateKey = fs.readFileSync('privkey.pem', 'utf8');
+const certificate = fs.readFileSync('cert.pem', 'utf8');
+const credentials = {key: privateKey, cert: certificate};
+
+// var httpsServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+// const httpsServer = http.createServer(app);
 
 // log all incoming request
 app.use((req, res, next)=>{

@@ -111,8 +111,6 @@ module.exports.lawFirmUpdate = async (req, res) => {
 				countryTitle: req.body.countryTitle,
 				languageId: req.body.languageId,
 				languageTitle: req.body.languageTitle,
-				// logo: req.body.logo,
-				// images: req.body.images,
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
 				jurisdiction: req.body.jurisdiction,

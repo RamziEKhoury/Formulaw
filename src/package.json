@@ -41,6 +41,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.7.0",
     "sequelize": "^6.6.5"
   }
 }

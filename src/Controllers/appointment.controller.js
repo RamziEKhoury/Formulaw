@@ -4,6 +4,7 @@ const Request = db.request;
 const Admin = db.adminUser;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
+const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
 
 module.exports.addAppointment = (async (req, res) => {
@@ -24,7 +25,7 @@ module.exports.addAppointment = (async (req, res) => {
 			time: req.body.time,
 
 		})
-			.then((appointment) =>{
+			.then(async (appointment) => {
 				const appointmentData = {
 					id: appointment.id,
 					queryId: appointment.queryId,
@@ -35,6 +36,11 @@ module.exports.addAppointment = (async (req, res) => {
 					time: appointment.time,
 
 				};
+				const adminMail = await Admin.findOne({
+					where: {
+						id: appointment.adminId,
+					}});
+				await Mail.adminAppointment(adminMail.email);
 				return apiResponses.successResponseWithData(
 					res,
 					'appointment registered successfully!',
