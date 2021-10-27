@@ -12,10 +12,10 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.UUID,
 			},
 			orderId: {
-				type: Sequelize.UUID,
+				type: Sequelize.STRING,
 			},
 			lawFirmId: {
-				type: Sequelize.STRING,
+				type: Sequelize.UUID,
 			},
 			testimonialdata: {
 				type: Sequelize.STRING,
