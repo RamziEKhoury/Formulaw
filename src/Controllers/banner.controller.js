@@ -1,11 +1,8 @@
 const db = require('../models');
 const Banner = db.banner;
 const apiResponses = require('../Components/apiresponse');
-const {banner} = require('../models');
-const Op = db.Sequelize.Op;
 
 module.exports.addBanner = async (req, res) => {
-	console.log("dfdgsgdfh",req.body);
 	try {
 		// #swagger.tags = ['Banner']
 		console.log(req.body.title);
@@ -15,21 +12,21 @@ module.exports.addBanner = async (req, res) => {
 			          schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$langaugeTitle:"",$serviceId:"", $rating: "" , $experience:"",$numOfLawyer: "", $taxType:"",$tax:"", $expertise: "",$jurisdiction:""}
         } */
 		Banner.create({
-				titleOne: req.body.titleOne,
-                titleTwo:req.body.titleTwo,
-				description: req.body.description,
-				features: req.body.features,
-				images: req.body.images,
-				logo: req.body.logo,
-			}).then((banner) => {
+			titleOne: req.body.titleOne,
+			titleTwo: req.body.titleTwo,
+			description: req.body.description,
+			features: req.body.features,
+			images: req.body.images,
+			logo: req.body.logo,
+		}).then((banner) => {
 			console.log('banner--->', banner);
-				// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
-				return apiResponses.successResponseWithData(
-					res,
-					'success!',
-					banner,
-				);
-			}
+			// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
+			return apiResponses.successResponseWithData(
+				res,
+				'success!',
+				banner,
+			);
+		},
 		);
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
@@ -37,11 +34,8 @@ module.exports.addBanner = async (req, res) => {
 };
 
 
-
 module.exports.getBanners = (req, res) => {
-
-    const limit = req.params.limit;
-	Banner.findAll({limit: limit})
+	Banner.findAll()
 		.then((data) => {
 			// res.status(200).send({
 			//   status: "200",
@@ -77,7 +71,7 @@ module.exports.getBanner = (req, res) => {
 	// #swagger.tags = ['Banner']
 	Banner.findOne({
 		where: {id: req.params.id},
-		
+
 	})
 		.then((data) => {
 			// res.status(200).send({

@@ -13,22 +13,22 @@ module.exports = (sequelize, Sequelize) => {
 		description: {
 			type: Sequelize.STRING,
 		},
-        durationType: {
-			type: Sequelize.ENUM("Monthly","Yearly" ),
+		durationType: {
+			type: Sequelize.ENUM('Monthly', 'Yearly' ),
 		},
-        discountPercent: {
+		discountPercent: {
 			type: Sequelize.STRING,
 		},
-        subscriptionType: {
-			type: Sequelize.ENUM("Startup","Enterprise" ),
+		subscriptionType: {
+			type: Sequelize.ENUM('Startup', 'Enterprise' ),
 		},
-        price: {
+		price: {
 			type: Sequelize.INTEGER,
 		},
-        currency: {
+		currency: {
 			type: Sequelize.STRING,
 		},
-        features: {
+		features: {
 			type: DataTypes.JSONB,
 		},
 		images: {
@@ -37,8 +37,8 @@ module.exports = (sequelize, Sequelize) => {
 		logo: {
 			type: DataTypes.JSONB,
 		},
-		
-		
+
+
 	}, {
 		timestamps: true,
 	},

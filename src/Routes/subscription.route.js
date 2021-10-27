@@ -16,9 +16,8 @@ module.exports = function(app) {
 		[SubscriptionValidator.addSubscriptionValidator],
 		subscriptionController.addSubscription,
 	);
-	app.get('/api/v1/subscription/get-subscriptionstype/:durationType', subscriptionController.getSubscriptions);
+	app.get('/api/v1/subscription/get-subscriptionstype/:durationType', subscriptionController.getSubscriptionsType);
 	app.get('/api/v1/subscription/get-subscriptions/:limit', subscriptionController.getSubscriptions);
 
 	app.get('/api/v1/subscription/get-subscription/:id', subscriptionController.getSubscription);
-
 };

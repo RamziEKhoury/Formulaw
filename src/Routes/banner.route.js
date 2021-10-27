@@ -16,7 +16,6 @@ module.exports = function(app) {
 		[BannerValidator.addBannerValidator],
 		bannerController.addBanner,
 	);
-	app.get('/api/v1/banner/get-banners/:limit', bannerController.getBanners);
+	app.get('/api/v1/banner/get-banners', bannerController.getBanners);
 	app.get('/api/v1/banner/get-banner/:id', bannerController.getBanner);
-
 };
