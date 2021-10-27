@@ -12,6 +12,7 @@ const lawFirmServiceValidator= require('./lawFirm-service.validator')
 const userValidator = require('./User.validator')
 const appointmentValidator = require('./appointment.validator')
 const lawFirmTaxValidator = require('./LawFirm-taxes.validator')
+const lawyerValidator = require('./Lawyer.validator')
 
 module.exports = {
 	adminUserValidator,
@@ -28,4 +29,5 @@ module.exports = {
 	userValidator,
 	appointmentValidator,
 	lawFirmTaxValidator,
+	lawyerValidator,
 };

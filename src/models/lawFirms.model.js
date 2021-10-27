@@ -69,16 +69,13 @@ module.exports = (sequelize, Sequelize) => {
 					RequestWorkflow.DRAFT,
 					RequestWorkflow.REJECT,
 				),
-				defaultValue: RequestWorkflow.APPROVED,
+				defaultValue: RequestWorkflow.APPROVE,
 			},
 
 			rating: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false,
-				validate: {
-					min: 1,
-					max: 10,
-				},
+				
 			},
 			isActive: {
 				type: Sequelize.INTEGER,
