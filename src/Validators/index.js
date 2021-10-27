@@ -14,6 +14,8 @@ const appointmentValidator = require('./appointment.validator')
 const lawFirmTaxValidator = require('./LawFirm-taxes.validator')
 const lawyerValidator = require('./Lawyer.validator')
 const TestimonialValidator = require("./Testimonial.validator");
+const subscriptionValidator = require('./subscription.validator');
+const bannerValidator = require('./banner.validator')
 
 module.exports = {
 	adminUserValidator,
@@ -31,5 +33,7 @@ module.exports = {
 	appointmentValidator,
 	lawFirmTaxValidator,
 	lawyerValidator,
+	subscriptionValidator,
+	bannerValidator,
 	TestimonialValidator,
 };

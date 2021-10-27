@@ -15,4 +15,6 @@ module.exports=(app)=> {
 	require('./lawFirm-tax.route')(app);
 	require('./lawyer.route')(app);
 	require("./testimonial.route")(app);
+	require('./banner.route')(app);
+	require('./subscription.route')(app);
 };
