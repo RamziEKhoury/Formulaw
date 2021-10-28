@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
 	secure: true,
 	auth: {
 		user: 'formulawauth@gmail.com', // email ID
-		pass: 'formula@1997', // Password
+		pass: 'Formulaw@1997', // Password
 	},
 });
 
