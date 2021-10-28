@@ -40,7 +40,7 @@ module.exports.addAppointment = (async (req, res) => {
 					where: {
 						id: appointment.adminId,
 					}});
-				await Mail.adminAppointment(adminMail.email);
+				await Mail.adminAppointment(adminMail.email, appointment.time, appointment.date);
 				return apiResponses.successResponseWithData(
 					res,
 					'appointment registered successfully!',
