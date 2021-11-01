@@ -23,8 +23,22 @@ module.exports = (sequelize, Sequelize) => {
 
 			},
 
+			orderId: {
+				type: Sequelize.INTEGER
+			},
+
 			shift: {
 				type: Sequelize.ENUM('morning', 'afternoon', 'evening'),
+			},
+
+			status: {
+				defaultValue: 'pending',
+				type: Sequelize.ENUM('pending', 'approved'),
+			},
+
+			workflow: {
+				defaultValue: 'free_consultation',
+				type: Sequelize.ENUM('free_consultation', 'approved', 'payment', 'consultation', 'completed'),
 			},
 
 			date: {

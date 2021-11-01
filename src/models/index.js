@@ -38,6 +38,9 @@ db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize, Sequelize);
 db.lawFirm_service = require('./lawFirm-services.model')(sequelize, Sequelize);
 db.user = require('./users.model')(sequelize, Sequelize);
 db.lawFirm_tax = require('./lawFirm-taxes.model')(sequelize, Sequelize);
+db.subscription = require('./subscription.model')(sequelize, Sequelize);
+db.banner = require('./banner.model')(sequelize, Sequelize);
+db.room = require('./Room.model')(sequelize, Sequelize);
 
 db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.appointment.hasOne(db.user, {sourceKey: 'customerId', foreignKey: 'id'});
@@ -46,6 +49,4 @@ db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
 db.lawFirm.hasMany(db.lawFirm_service, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.lawFirm.hasMany(db.lawFirm_industry, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.lawFirm.hasMany(db.lawFirm_tax, {sourceKey: 'id', foreignKey: 'lawFirmId'});
-db.subscription = require('./subscription.model')(sequelize, Sequelize);
-db.banner = require('./banner.model')(sequelize, Sequelize);
 module.exports = db;
