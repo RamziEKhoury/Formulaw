@@ -48,4 +48,5 @@ db.lawFirm.hasMany(db.lawFirm_industry, {sourceKey: 'id', foreignKey: 'lawFirmId
 db.lawFirm.hasMany(db.lawFirm_tax, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.subscription = require('./subscription.model')(sequelize, Sequelize);
 db.banner = require('./banner.model')(sequelize, Sequelize);
+db.journey = require('./journey.model')(sequelize,Sequelize);
 module.exports = db;

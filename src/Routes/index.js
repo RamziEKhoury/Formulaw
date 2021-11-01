@@ -17,4 +17,5 @@ module.exports=(app)=> {
 	require("./testimonial.route")(app);
 	require('./banner.route')(app);
 	require('./subscription.route')(app);
+	require('./journey.route')(app);
 };
