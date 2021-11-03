@@ -2,6 +2,7 @@ const db = require('../models');
 const Appointment = db.appointment;
 const Request = db.request;
 const Room = db.room;
+const LawFirm = db.lawFirm;
 const Admin = db.adminUser;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
@@ -20,6 +21,7 @@ module.exports.addAppointment = (async (req, res) => {
 		Appointment.create({
 
 			queryId: req.body.queryId,
+			lawFirmId: req.body.lawFirmId,
 			adminId: req.body.adminId,
 			customerId: req.body.customerId,
 			shift: req.body.shifts,
@@ -78,15 +80,40 @@ module.exports.changeStatus = async (req, res) => {
 		await Appointment.update({
 			status: req.body.status,
 		}, {where: {id: req.params.id}})
-			.then((appointment) => {
+			.then(async (appointment) => {
 				/* #swagger.responses[200] = {
                             description: "success!",
                             schema: { $en_name: "en_name", $ar_name: "en_name", $description: "description", $isActive: 0, $isDeleted: 1, $countryCode: "countryCode",$taxType:"taxType",$tax:"tax", $flag: "flag"}
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: appointment });
-				return apiResponses.successResponseWithData(
-					res, 'Success', appointment,
-				);
+				if (req.body.status === 'approveds') {
+					const user = await Appointment.findOne({
+						where: {id: req.params.id}, include: [
+							{model: User, required: false, attributes: ['fullname', 'email']},
+							{model: Admin, required: false, attributes: ['firstname', 'lastname', 'email']},
+						],
+					});
+
+					await Mail.adminAppointmentSchedule(
+						user.adminuser.email,
+						user.time,
+						user.date,
+						user.user.fullname,
+					);
+
+					await Mail.userAppointmentSchedule(
+						user.user.email,
+						user.time,
+						user.date,
+					);
+					return apiResponses.successResponseWithData(
+						res, 'Success', appointment,
+					);
+				} else {
+					return apiResponses.successResponseWithData(
+						res, 'Success', appointment,
+					);
+				}
 			})
 			.catch((err) => {
 				/* #swagger.responses[500] = {
@@ -142,6 +169,7 @@ module.exports.getAppointments = (req, res) => {
 		Appointment.findAll({
 			include: [
 				{model: Request, required: false},
+				{model: LawFirm, required: false, attributes: ['en_name']},
 				{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 				{model: User, required: false, attributes: ['fullname', 'email']},
 			],
@@ -176,6 +204,7 @@ module.exports.getAppointment = (req, res) => {
 		where: {id: req.params.id},
 		include: [
 			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
 		],
@@ -204,4 +233,39 @@ module.exports.getAppointment = (req, res) => {
 		});
 };
 
+module.exports.getUserAppointment = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {customerId: req.params.userId},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['fullname', 'email']},
+		],
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(
+				res, 'success', data,
+			);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message ||
+					'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
 

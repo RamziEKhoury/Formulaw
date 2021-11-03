@@ -22,9 +22,12 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.UUID,
 
 			},
+			lawFirmId: {
+				type: Sequelize.UUID,
+			},
 
 			orderId: {
-				type: Sequelize.INTEGER
+				type: Sequelize.INTEGER,
 			},
 
 			shift: {
@@ -37,8 +40,8 @@ module.exports = (sequelize, Sequelize) => {
 			},
 
 			workflow: {
-				defaultValue: 'free_consultation',
-				type: Sequelize.ENUM('free_consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: 'free consultation',
+				type: Sequelize.ENUM('free consultation', 'approved', 'payment', 'consultation', 'completed'),
 			},
 
 			date: {

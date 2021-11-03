@@ -26,6 +26,10 @@ module.exports = function(app) {
 		'/api/v1/appointment/get-appointment/:id',
 		appointmentController.getAppointment);
 
+	app.get(
+		'/api/v1/appointment/my-appointments/:userId',
+		appointmentController.getUserAppointment);
+
 	app.put(
 		'/api/v1/appointment/status/:id',
 		appointmentController.changeStatus);
