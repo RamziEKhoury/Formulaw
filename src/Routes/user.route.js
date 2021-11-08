@@ -17,6 +17,11 @@ module.exports= function(app) {
 		[UserAuth.signUpValidator, checkDuplicateEmail],
 		usersController.registration,
 	);
+	app.post(
+		'/api/v1/auth/user/update-user',
+		UserAuth.updateValidator,
+		usersController.userUpdate,
+	);
 
 	app.post(
 		'/api/v1/auth/user/login',
@@ -32,5 +37,10 @@ module.exports= function(app) {
 	app.get(
 		'/api/v1/auth/user/users/:limit',
 		usersController.users,
+	);
+
+	app.get(
+		'/api/v1/auth/user/get-user/:id',
+		usersController.getUser,
 	);
 };

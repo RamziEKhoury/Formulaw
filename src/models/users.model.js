@@ -15,6 +15,15 @@ module.exports = (sequelize, Sequelize) => {
 		email: {
 			type: Sequelize.STRING,
 		},
+		phoneNumber:{
+			type: Sequelize.INTEGER,
+		},
+		country: {
+			type: Sequelize.STRING,
+		},
+		city: {
+			type: Sequelize.STRING,
+		},
 		userType: {
 			type: Sequelize.ENUM('normal', 'google', 'facebook'),
 			defaultValue: 'normal',
