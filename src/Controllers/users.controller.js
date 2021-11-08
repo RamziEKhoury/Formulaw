@@ -7,6 +7,7 @@ const Mail = require('../Config/Mails');
 
 
 module.exports.registration = (async (req, res) => {
+	console.log("hgvjhgh",req.body);
 	try {
 		// #swagger.tags = ['UserAuth']
 		/*  #swagger.parameters['obj'] = {
@@ -19,6 +20,9 @@ module.exports.registration = (async (req, res) => {
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 8),
 			userType: 'normal',
+			country:req.body.country,
+			city:req.body.city,
+			phoneNumber:req.body.phoneNumber,
 			isActive: req.body.isActive,
 		})
 			.then(async (user) => {
@@ -33,12 +37,17 @@ module.exports.registration = (async (req, res) => {
 				const userData = {
 					id: user.id,
 					fullname: user.fullname,
+					lastname:user.lastname,
 					email: user.email,
 					userType: user.userType,
+					country:user.country,
+					city:user.city,
+					phoneNumber:user.phoneNumber,
 					isActive: user.isActive,
 					token: token,
 
 				};
+				console.log("jhgjh",userData);
 				await Mail.userRegistration(user.email);
 				// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 				return apiResponses.successResponseWithData(
@@ -48,6 +57,7 @@ module.exports.registration = (async (req, res) => {
 				);
 			});
 	} catch (err) {
+		console.log("err",err);
 		return apiResponses.errorResponse(res, err);
 	}
 });
@@ -126,7 +136,11 @@ module.exports.userLogin = (req, res) => {
 				const obj = {
 					id: user.id,
 					email: user.email,
+					country:user.country,
+					city:user.city,
+					phoneNumber:user.phoneNumber,
 					fullname: user.fullname,
+					lastname: user.lastname,
 					userType: user.userType,
 					isActive: user.isActive,
 					token: token,
@@ -146,8 +160,12 @@ module.exports.userLogin = (req, res) => {
 				if (!user) {
 					User.create({
 						fullname: req.body.fullname,
+						lastname:req.body.lastname,
 						email: req.body.email,
 						userType: req.body.userType,
+						country:req.body.country,
+						city:req.body.city,
+						phoneNumber:req.body.phoneNumber,
 						isActive: req.body.isActive,
 					})
 						.then(async (user) => {
@@ -158,7 +176,11 @@ module.exports.userLogin = (req, res) => {
 							const userData = {
 								id: user.id,
 								fullname: user.fullname,
+								lastname: user.lastname,
 								email: user.email,
+								country:user.country,
+								city:user.city,
+								phoneNumber:user.phoneNumber,
 								userType: user.userType,
 								isActive: user.isActive,
 								token: token,
@@ -180,6 +202,10 @@ module.exports.userLogin = (req, res) => {
 					const obj = {
 						id: user.id,
 						email: user.email,
+						lastname: user.lastname,
+						country:user.country,
+						city:user.city,
+						phoneNumber:user.phoneNumber,
 						fullname: user.fullname,
 						userType: user.userType,
 						isActive: user.isActive,
@@ -203,6 +229,9 @@ module.exports.userLogin = (req, res) => {
 						fullname: req.body.fullname,
 						facebooktoken: req.body.facebooktoken,
 						email: req.body.email,
+						country:req.body.country,
+						city:req.body.city,
+						phoneNumber:req.body.phoneNumber,
 						userType: req.body.userType,
 						isActive: req.body.isActive,
 					})
@@ -215,6 +244,10 @@ module.exports.userLogin = (req, res) => {
 								id: user.id,
 								fullname: user.fullname,
 								email: user.email,
+								lastname: user.lastname,
+								country:user.country,
+								city:user.city,
+								phoneNumber:user.phoneNumber,
 								userType: user.userType,
 								isActive: user.isActive,
 								token: token,
@@ -236,6 +269,10 @@ module.exports.userLogin = (req, res) => {
 					const obj = {
 						id: user.id,
 						email: user.email,
+						lastname: user.lastname,
+						country:user.country,
+						city:user.city,
+						phoneNumber:user.phoneNumber,
 						fullname: user.fullname,
 						userType: user.userType,
 						isActive: user.isActive,
@@ -285,10 +322,58 @@ module.exports.emailVarify = async (req, res) => {
 };
 
 
+module.exports.userUpdate = (async (req, res) => {
+	console.log("hgvjhgh",req.body);
+	try {
+		
+		User.update({
+			fullname: req.body.fullname,
+			email: req.body.email,
+			country:req.body.country,
+			city:req.body.city,
+			phoneNumber:req.body.phoneNumber,
+		},{where: {id: req.body.id}})
+			.then(async (user) => {
+				if (!user) {
+					return apiResponses.notFoundResponse(
+						res, 'Not found.', {},
+					);
+				}
+				return apiResponses.successResponseWithData(
+					res, 'Success', user,
+				);
+			})
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+});
+
 module.exports.users = async (req, res) => {
 	try {
 		const limit = req.params.limit;
 		User.findAll({limit: limit})
+			.then(async (result) =>{
+				/* #swagger.responses[404] = {
+                       description: "Email Not found.",
+                       schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+                   } */
+				// return res.status(404).send({ message: "User Not found." });
+
+				return apiResponses.successResponseWithData(
+					res, 'success!', result,
+				);
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+module.exports.getUser = async (req, res) => {
+	try {
+		
+		User.findOne({where:{id: req.params.id}})
 			.then(async (result) =>{
 				/* #swagger.responses[404] = {
                        description: "Email Not found.",

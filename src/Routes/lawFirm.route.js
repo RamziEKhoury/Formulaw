@@ -11,11 +11,11 @@ module.exports = function(app) {
 		next();
 	});
 
-	app.post(
-		'/api/v1/lawfirm/add-lawfirm',
-		[LawFirmValidator.addLawFirmValidator],
-		lawFirmController.addLawFirm,
-	);
+	// app.post(
+	// 	'/api/v1/lawfirm/add-lawfirm',
+	// 	[LawFirmValidator.addLawFirmValidator],
+	// 	lawFirmController.addLawFirm,
+	// );
 
 	app.post(
 		'/api/v1/lawfirm/update-lawfirm',

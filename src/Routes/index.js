@@ -18,4 +18,5 @@ module.exports = (app) => {
   require("./banner.route")(app);
   require("./subscription.route")(app);
   require("./community.route")(app);
+  require('./journey.route')(app);
 };
