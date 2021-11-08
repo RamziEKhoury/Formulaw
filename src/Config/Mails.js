@@ -77,7 +77,7 @@ module.exports = {
 		const details = {
 			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
-			subject: 'Regarding receiving new lead', // Subject of the mail.
+			subject: 'Regarding appointment', // Subject of the mail.
 			html: '<div><span>Dear Admin,</span><div><p>Hi, You have an appointment with someone at <b> '+moment(date).format('DD/MM/YYYY')+' </b> Time <b> '+time+'</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' + email + '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {

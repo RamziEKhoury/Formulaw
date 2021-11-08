@@ -86,7 +86,7 @@ module.exports.changeStatus = async (req, res) => {
                             schema: { $en_name: "en_name", $ar_name: "en_name", $description: "description", $isActive: 0, $isDeleted: 1, $countryCode: "countryCode",$taxType:"taxType",$tax:"tax", $flag: "flag"}
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: appointment });
-				if (req.body.status === 'approveds') {
+				if (req.body.status === 'approved') {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id}, include: [
 							{model: User, required: false, attributes: ['fullname', 'email']},
