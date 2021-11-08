@@ -14,9 +14,11 @@ module.exports=(app)=> {
 	require('./appointment.route')(app);
 	require('./lawFirm-tax.route')(app);
 	require('./lawyer.route')(app);
-	require('./testimonial.route')(app);
+	require("./testimonial.route")(app);
 	require('./banner.route')(app);
 	require('./subscription.route')(app);
 	require('./Rooms.route')(app);
 	require('./Streams.route')(app);
+	require("./community.route")(app);
+	require('./journey.route')(app);
 };
