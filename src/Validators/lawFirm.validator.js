@@ -54,8 +54,6 @@ const addLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('isActive must be specified.'),
-
-	,
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
