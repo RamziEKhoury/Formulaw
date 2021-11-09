@@ -19,7 +19,7 @@ module.exports.addBanner = async (req, res) => {
 			images: req.body.images,
 			logo: req.body.logo,
 		}).then((banner) => {
-			console.log('banner--->', banner);
+			// console.log('banner--->', banner);
 			// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
 			return apiResponses.successResponseWithData(
 				res,
