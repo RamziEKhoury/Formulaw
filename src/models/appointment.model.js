@@ -22,9 +22,26 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.UUID,
 
 			},
+			lawFirmId: {
+				type: Sequelize.UUID,
+			},
+
+			orderId: {
+				type: Sequelize.INTEGER,
+			},
 
 			shift: {
 				type: Sequelize.ENUM('morning', 'afternoon', 'evening'),
+			},
+
+			status: {
+				defaultValue: 'pending',
+				type: Sequelize.ENUM('pending', 'approved'),
+			},
+
+			workflow: {
+				defaultValue: 'free consultation',
+				type: Sequelize.ENUM('free consultation', 'approved', 'payment', 'consultation', 'completed'),
 			},
 
 			date: {
