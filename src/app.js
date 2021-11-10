@@ -23,10 +23,10 @@ const privateKey = fs.readFileSync("privkey.pem", "utf8");
 const certificate = fs.readFileSync("cert.pem", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
-//var httpsServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
+// var httpsServer = http.createServer(app);
+// const httpsServer = https.createServer(credentials, app);
 
-// const httpsServer = http.createServer(app);
+const httpsServer = http.createServer(app);
 
 // log all incoming request
 app.use((req, res, next) => {
