@@ -17,6 +17,7 @@ const TestimonialValidator = require("./Testimonial.validator");
 const subscriptionValidator = require("./subscription.validator");
 const bannerValidator = require("./banner.validator");
 const CommunityValidator = require("./Community.validator");
+const kycValidator = require('./kyc.validator')
 
 module.exports = {
   adminUserValidator,
@@ -38,4 +39,5 @@ module.exports = {
   bannerValidator,
   TestimonialValidator,
   CommunityValidator,
+  kycValidator,
 };

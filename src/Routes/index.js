@@ -21,4 +21,5 @@ module.exports=(app)=> {
 	require('./Streams.route')(app);
 	require("./community.route")(app);
 	require('./journey.route')(app);
+	require('./kyc.route')(app);
 };
