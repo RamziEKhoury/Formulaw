@@ -34,6 +34,26 @@ module.exports = {
 		});
 	},
 
+
+	userRegistrationAdminMail: (email)=>{
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
+			html: '<div><span>Dear User,</span><div><p>New user has been register with FORMULAW.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If the above OTP does not work, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' + email + '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with UKM. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' +JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
 	userLeadSubmitted: (email, title)=>{
 		console.log('logIn_Mail====>' + email);
 		const details = {

@@ -1,5 +1,6 @@
 const db = require('../models');
 const User = db.user;
+const Admin = db.adminUser;
 const apiResponses = require('../Components/apiresponse');
 const {createToken} = require('../Middlewares/userAuthentications');
 const bcrypt = require('bcryptjs');
@@ -7,7 +8,7 @@ const Mail = require('../Config/Mails');
 
 
 module.exports.registration = (async (req, res) => {
-	console.log("hgvjhgh",req.body);
+	console.log('hgvjhgh', req.body);
 	try {
 		// #swagger.tags = ['UserAuth']
 		/*  #swagger.parameters['obj'] = {
@@ -20,9 +21,9 @@ module.exports.registration = (async (req, res) => {
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 8),
 			userType: 'normal',
-			country:req.body.country,
-			city:req.body.city,
-			phoneNumber:req.body.phoneNumber,
+			country: req.body.country,
+			city: req.body.city,
+			phoneNumber: req.body.phoneNumber,
 			isActive: req.body.isActive,
 		})
 			.then(async (user) => {
@@ -37,18 +38,24 @@ module.exports.registration = (async (req, res) => {
 				const userData = {
 					id: user.id,
 					fullname: user.fullname,
-					lastname:user.lastname,
+					lastname: user.lastname,
 					email: user.email,
 					userType: user.userType,
-					country:user.country,
-					city:user.city,
-					phoneNumber:user.phoneNumber,
+					country: user.country,
+					city: user.city,
+					phoneNumber: user.phoneNumber,
 					isActive: user.isActive,
 					token: token,
 
 				};
-				console.log("jhgjh",userData);
+
 				await Mail.userRegistration(user.email);
+
+				const adminMail = await Admin.findAll();
+				for (let i=0; i< adminMail.length; i++) {
+					await Mail.userRegistrationAdminMail(adminMail[i].email);
+				}
+
 				// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 				return apiResponses.successResponseWithData(
 					res,
@@ -57,7 +64,7 @@ module.exports.registration = (async (req, res) => {
 				);
 			});
 	} catch (err) {
-		console.log("err",err);
+		console.log('err', err);
 		return apiResponses.errorResponse(res, err);
 	}
 });
@@ -136,9 +143,9 @@ module.exports.userLogin = (req, res) => {
 				const obj = {
 					id: user.id,
 					email: user.email,
-					country:user.country,
-					city:user.city,
-					phoneNumber:user.phoneNumber,
+					country: user.country,
+					city: user.city,
+					phoneNumber: user.phoneNumber,
 					fullname: user.fullname,
 					lastname: user.lastname,
 					userType: user.userType,
@@ -160,12 +167,12 @@ module.exports.userLogin = (req, res) => {
 				if (!user) {
 					User.create({
 						fullname: req.body.fullname,
-						lastname:req.body.lastname,
+						lastname: req.body.lastname,
 						email: req.body.email,
 						userType: req.body.userType,
-						country:req.body.country,
-						city:req.body.city,
-						phoneNumber:req.body.phoneNumber,
+						country: req.body.country,
+						city: req.body.city,
+						phoneNumber: req.body.phoneNumber,
 						isActive: req.body.isActive,
 					})
 						.then(async (user) => {
@@ -178,9 +185,9 @@ module.exports.userLogin = (req, res) => {
 								fullname: user.fullname,
 								lastname: user.lastname,
 								email: user.email,
-								country:user.country,
-								city:user.city,
-								phoneNumber:user.phoneNumber,
+								country: user.country,
+								city: user.city,
+								phoneNumber: user.phoneNumber,
 								userType: user.userType,
 								isActive: user.isActive,
 								token: token,
@@ -203,9 +210,9 @@ module.exports.userLogin = (req, res) => {
 						id: user.id,
 						email: user.email,
 						lastname: user.lastname,
-						country:user.country,
-						city:user.city,
-						phoneNumber:user.phoneNumber,
+						country: user.country,
+						city: user.city,
+						phoneNumber: user.phoneNumber,
 						fullname: user.fullname,
 						userType: user.userType,
 						isActive: user.isActive,
@@ -229,9 +236,9 @@ module.exports.userLogin = (req, res) => {
 						fullname: req.body.fullname,
 						facebooktoken: req.body.facebooktoken,
 						email: req.body.email,
-						country:req.body.country,
-						city:req.body.city,
-						phoneNumber:req.body.phoneNumber,
+						country: req.body.country,
+						city: req.body.city,
+						phoneNumber: req.body.phoneNumber,
 						userType: req.body.userType,
 						isActive: req.body.isActive,
 					})
@@ -245,9 +252,9 @@ module.exports.userLogin = (req, res) => {
 								fullname: user.fullname,
 								email: user.email,
 								lastname: user.lastname,
-								country:user.country,
-								city:user.city,
-								phoneNumber:user.phoneNumber,
+								country: user.country,
+								city: user.city,
+								phoneNumber: user.phoneNumber,
 								userType: user.userType,
 								isActive: user.isActive,
 								token: token,
@@ -270,9 +277,9 @@ module.exports.userLogin = (req, res) => {
 						id: user.id,
 						email: user.email,
 						lastname: user.lastname,
-						country:user.country,
-						city:user.city,
-						phoneNumber:user.phoneNumber,
+						country: user.country,
+						city: user.city,
+						phoneNumber: user.phoneNumber,
 						fullname: user.fullname,
 						userType: user.userType,
 						isActive: user.isActive,
@@ -323,16 +330,15 @@ module.exports.emailVarify = async (req, res) => {
 
 
 module.exports.userUpdate = (async (req, res) => {
-	console.log("hgvjhgh",req.body);
+	console.log('hgvjhgh', req.body);
 	try {
-		
 		User.update({
 			fullname: req.body.fullname,
 			email: req.body.email,
-			country:req.body.country,
-			city:req.body.city,
-			phoneNumber:req.body.phoneNumber,
-		},{where: {id: req.body.id}})
+			country: req.body.country,
+			city: req.body.city,
+			phoneNumber: req.body.phoneNumber,
+		}, {where: {id: req.body.id}})
 			.then(async (user) => {
 				if (!user) {
 					return apiResponses.notFoundResponse(
@@ -372,8 +378,7 @@ module.exports.users = async (req, res) => {
 };
 module.exports.getUser = async (req, res) => {
 	try {
-		
-		User.findOne({where:{id: req.params.id}})
+		User.findOne({where: {id: req.params.id}})
 			.then(async (result) =>{
 				/* #swagger.responses[404] = {
                        description: "Email Not found.",
