@@ -269,3 +269,43 @@ module.exports.getUserAppointment = (req, res) => {
 		});
 };
 
+
+module.exports.getUserAppointmentMonthly = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {customerId: req.params.userId,
+			date: {
+				[Op.between]: [req.params.startDate, req.params.endDate],
+			}},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['fullname', 'email']},
+		],
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(
+				res, 'success', data,
+			);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message ||
+					'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
