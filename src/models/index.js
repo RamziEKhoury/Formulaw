@@ -48,15 +48,17 @@ db.subscription = require('./subscription.model')(sequelize, Sequelize);
 db.banner = require('./banner.model')(sequelize, Sequelize);
 db.journey = require('./journey.model')(sequelize, Sequelize);
 db.room = require('./Room.model')(sequelize, Sequelize);
+db.kyc = require('./kyc.model')(sequelize, Sequelize);
 
+db.kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.appointment.hasOne(db.user, {sourceKey: 'customerId', foreignKey: 'id'});
 db.appointment.hasOne(db.adminUser, {sourceKey: 'adminId', foreignKey: 'id'});
 db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
 db.appointment.hasOne(db.lawFirm, {sourceKey: 'lawFirmId', foreignKey: 'id'});
-
 db.lawFirm.hasMany(db.lawFirm_service, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.lawFirm.hasMany(db.lawFirm_industry, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.lawFirm.hasMany(db.lawFirm_tax, {sourceKey: 'id', foreignKey: 'lawFirmId'});
+
 
 module.exports = db;
