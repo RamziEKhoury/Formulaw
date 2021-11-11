@@ -30,7 +30,12 @@ module.exports = function(app) {
 		'/api/v1/appointment/my-appointments/:userId',
 		appointmentController.getUserAppointment);
 
+	app.get(
+		'/api/v1/appointment/my-appointments-monthly/:userId/:startDate/:endDate',
+		appointmentController.getUserAppointmentMonthly);
+
 	app.put(
 		'/api/v1/appointment/status/:id',
 		appointmentController.changeStatus);
 };
+
