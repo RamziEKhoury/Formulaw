@@ -46,8 +46,18 @@ module.exports.addAppointment = (async (req, res) => {
 					shifts: appointment.shifts,
 					date: appointment.date,
 					time: appointment.time,
-
 				};
+
+				const userMail = await User.findOne({
+					where: {
+						id: appointment.customerId,
+					}});
+				await Mail.userAppointment(
+					userMail.email,
+					appointment.time,
+					appointment.date,
+				);
+
 				const adminMail = await Admin.findOne({
 					where: {
 						id: appointment.adminId,
