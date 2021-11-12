@@ -26,8 +26,8 @@ const multi_upload = multer({
     // },
 }).array('myfile')
 
-module.exports = function(app) {
-  app.post('/api/uploads', (req, res) => {
+module.exports.fileUpload = async (req, res) => {
+  
     multi_upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
@@ -53,7 +53,7 @@ req.files.map((file,i)=>{
             res, 'Files uploaded successfully!', uploadedFiles,
         );
     })
-})
+
 }
 
 // for single upload
