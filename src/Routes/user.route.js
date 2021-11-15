@@ -1,5 +1,5 @@
 const usersController = require('../Controllers/users.controller');
-const {checkDuplicateEmail, validateEmail} = require('../Middlewares/userVarified');
+const {checkDuplicateEmail} = require('../Middlewares/userVarified');
 const UserAuth = require('../Validators/User.validator');
 
 

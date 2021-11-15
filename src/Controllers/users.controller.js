@@ -20,7 +20,7 @@ module.exports.registration = (async (req, res) => {
 			fullname: req.body.fullname,
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 8),
-			userType: 'normal',
+			userType: req.body.userType,
 			country: req.body.country,
 			city: req.body.city,
 			phoneNumber: req.body.phoneNumber,
@@ -317,7 +317,7 @@ module.exports.emailVarify = async (req, res) => {
 				// return res.status(404).send({ message: "Email Not found." });
 
 				return apiResponses.successResponseWithData(
-					res, 'Email is Already in use!', result,
+					res, 'success!', result,
 				);
 			},
 
