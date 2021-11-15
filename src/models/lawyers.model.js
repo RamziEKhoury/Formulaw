@@ -8,15 +8,18 @@ module.exports = (sequelize, Sequelize) => {
 				allowNull: false,
 				primaryKey: true,
 			},
-            lawFirmId:{
-                type: Sequelize.UUID,
-            },
+			lawFirmId: {
+				type: Sequelize.UUID,
+			},
 			en_name: {
 				type: Sequelize.STRING,
 			},
-            ar_name:{
-                type: Sequelize.STRING,
-            },
+			ar_name: {
+				type: Sequelize.STRING,
+			},
+			email: {
+				type: Sequelize.STRING,
+			},
 			licenseNumber: {
 				type: Sequelize.STRING,
 			},
@@ -35,13 +38,13 @@ module.exports = (sequelize, Sequelize) => {
 			industryId: {
 				type: Sequelize.STRING,
 			},
-			industryTitle:{
+			industryTitle: {
 				type: Sequelize.STRING,
 			},
 			serviceId: {
 				type: Sequelize.STRING,
 			},
-			serviceTitle:{
+			serviceTitle: {
 				type: Sequelize.STRING,
 			},
 			experience: {
@@ -56,7 +59,6 @@ module.exports = (sequelize, Sequelize) => {
 			rating: {
 				type: Sequelize.STRING,
 				allowNull: false,
-				
 			},
 			isActive: {
 				type: Sequelize.INTEGER,
