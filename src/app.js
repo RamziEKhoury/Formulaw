@@ -10,7 +10,7 @@ require('dotenv').config();
 app.use(cors());
 app.use(bodyParser.urlencoded({limit: '200mb', extended: true, parameterLimit: 1000000}));
 app.use(bodyParser.json({limit: '200mb'}));
-const http = require('http');
+// const http = require('http');
 
 const fs = require('fs');
 const https = require('https');
@@ -34,7 +34,6 @@ const SocketService = require('./Config/socket');
 db.sequelize.sync();
 
 require('./Routes')(app);
-require('./Components/multerFileUpload')(app);
 
 const jsn = {'Status': 'Your Server Is Started Now'};
 app.get('/*', (req, res) => {
