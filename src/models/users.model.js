@@ -1,3 +1,4 @@
+const {UserRole} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define('user', {
 		id: {
@@ -15,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
 		email: {
 			type: Sequelize.STRING,
 		},
-		phoneNumber:{
+		phoneNumber: {
 			type: Sequelize.STRING,
 		},
 		country: {
@@ -27,6 +28,14 @@ module.exports = (sequelize, Sequelize) => {
 		userType: {
 			type: Sequelize.ENUM('normal', 'google', 'facebook'),
 			defaultValue: 'normal',
+		},
+		role: {
+			type: Sequelize.ENUM(
+				UserRole.USER,
+				UserRole.LAWYER,
+				UserRole.OTHERS,
+			),
+			defaultValue: UserRole.USER,
 		},
 		facebooktoken: {
 			type: Sequelize.STRING,

@@ -1,14 +1,27 @@
 const db = require('../models');
 const Lawyer = db.lawyer;
+const User = db.user;
 const apiResponses = require('../Components/apiresponse');
-const {lawyer} = require('../models');
+const bcrypt = require('bcryptjs');
+const Mail = require('../Config/Mails');
+const {UserRole} = require("../enum");
 const Op = db.Sequelize.Op;
 
+// eslint-disable-next-line require-jsdoc
+function generatePassword() {
+	const length = 8;
+	const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	let retVal = '';
+	for (let i = 0, n = charset.length; i < length; ++i) {
+		retVal += charset.charAt(Math.floor(Math.random() * n));
+	}
+	return retVal;
+}
+
 module.exports.addLawyer = async (req, res) => {
-	console.log("dfdgsgdfh",req.body);
+	console.log('dfdgsgdfh', req.body);
 	try {
 		// #swagger.tags = ['Lawyer']
-		console.log(req.body.countryTitle);
 		/*  #swagger.parameters['obj'] = {
 			          in: 'body',
 			          description: "Lawyer details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,experience,jurisdiction,expertise,rating,isActive",
@@ -24,7 +37,8 @@ module.exports.addLawyer = async (req, res) => {
 			defaults: {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
-                lawFirmId:req.body.lawFirmId,
+				email: req.body.email,
+				lawFirmId: req.body.lawFirmId,
 				licenseNumber: req.body.licenseNumber,
 				countryId: req.body.countryId,
 				countryTitle: req.body.countryTitle,
@@ -40,7 +54,7 @@ module.exports.addLawyer = async (req, res) => {
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
-		}).then((lawyer) => {
+		}).then(async (lawyer) => {
 			// console.log('lawyer--->', lawyer);
 			const isAlready = lawyer[1];
 			const inserted = lawyer[0];
@@ -55,18 +69,29 @@ module.exports.addLawyer = async (req, res) => {
 					msg: 'Lawyer already exist',
 				});
 			} else {
+				const password = generatePassword();
+				await User.create({
+					fullname: inserted.en_name,
+					email: inserted.email,
+					role: UserRole.LAWYER,
+					username: inserted.email,
+					password: bcrypt.hashSync(password, 8),
+					userType: 'normal',
+					isActive: req.body.isActive,
+				});
+				await Mail.lawyerRegistration(inserted.email, password);
 				const lawyerData = {
 					id: inserted.id,
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
-                    lawFirmId:inserted.lawFirmId,
+					lawFirmId: inserted.lawFirmId,
 					licenseNumber: inserted.licenseNumber,
 					countryId: inserted.countryId,
 					countryTitle: inserted.countryTitle,
 					industryId: inserted.industryId,
-				    industryTitle: inserted.industryTitle,
-				    serviceId: inserted.serviceId,
-				    serviceTitle: inserted.serviceTitle,
+					industryTitle: inserted.industryTitle,
+					serviceId: inserted.serviceId,
+					serviceTitle: inserted.serviceTitle,
 					languageId: inserted.languageId,
 					languageTitle: inserted.languageTitle,
 					experience: inserted.experience,
@@ -157,10 +182,10 @@ module.exports.getLawyers = (req, res) => {
 	const limit = req.params.limit;
 
 	Lawyer.findAll({
-        where: {lawFirmId: req.params.lawFirmId},
+		where: {lawFirmId: req.params.lawFirmId},
 		isDeleted: 0,
 		isActive: 1,
-		
+
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -197,7 +222,7 @@ module.exports.getLawyer = (req, res) => {
 	// #swagger.tags = ['LawFirm']
 	Lawyer.findOne({
 		where: {id: req.params.id, isDeleted: 0},
-		
+
 	})
 		.then((data) => {
 			// res.status(200).send({
