@@ -64,6 +64,9 @@ module.exports = (sequelize, Sequelize) => {
 			experience: {
 				type: Sequelize.STRING,
 			},
+			cost:{
+				type: Sequelize.INTEGER,
+			},
 			status: {
 				defaultValue: RequestWorkflow.NEW,
 				type: Sequelize.ENUM(
