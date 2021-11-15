@@ -121,6 +121,10 @@ const updateRequestValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('languageId must be specified.'),
+	body('languageName.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('languageName must be specified.'),
 
 	body('legalFieldId')
 		.isLength({min: 1})
