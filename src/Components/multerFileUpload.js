@@ -26,6 +26,34 @@ const multi_upload = multer({
 	// },
 }).array('myfile');
 
+module.exports.fileUpload = async (req, res) => {
+    multi_upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            // A Multer error occurred when uploading.
+            console.log(err);
+            res.status(500).send({ error: { message: `Multer uploading error: ${err.message}` } }).end();
+            return;
+        } else if (err) {
+            // An unknown error occurred when uploading.
+            if (err.name == 'ExtensionError') {
+                res.status(413).send({ error: { message: err.message } }).end();
+            } else {
+                res.status(500).send({ error: { message: `unknown uploading error: ${err.message}` } }).end();
+            }
+            return;
+        } 
+let uploadedFiles = [];
+if(!!req.files){
+req.files.map((file,i)=>{
+    uploadedFiles.push(file.filename)
+})
+}
+        return apiResponses.successResponseWithData(
+            res, 'Files uploaded successfully!', uploadedFiles,
+        );
+    })
+
+}
 module.exports = function(app) {
 	app.post('/api/uploads', (req, res) => {
 		multi_upload(req, res, function(err) {

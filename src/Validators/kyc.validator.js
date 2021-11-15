@@ -21,7 +21,7 @@ const addKycDetailsValidator = [
 	body('addressProof')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('addressProof must be specified.'),
+		.withMessage('addressProof  must be specified.'),
 
 	sanitizeBody('userId').escape(),
 	(req, res, next) => {
@@ -39,6 +39,10 @@ const addKycDetailsValidator = [
 ];
 
 const updateKycDetailsValidator = [
+	body('id')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('kycId must be specified.'),
 		body('userId')
 		.isLength({min: 1})
 		.trim()
@@ -58,7 +62,7 @@ const updateKycDetailsValidator = [
 	body('addressProof')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('addressProof Type must be specified.'),
+		.withMessage('addressProof  must be specified.'),
 
 	sanitizeBody('userId').escape(),
 	(req, res, next) => {

@@ -13,7 +13,7 @@ module.exports = function(app) {
 
 	app.post(
 		'/api/v1/kyc/add-kycDetails',
-		[KycValidator.addKycDetailsValidator],
+		KycValidator.addKycDetailsValidator,
 		kycController.addKycDetails,
 	);
 
