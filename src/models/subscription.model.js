@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 		},
 		subscriptionType: {
-			type: Sequelize.ENUM('Startup', 'Enterprise' ),
+			type: Sequelize.ENUM('Startup', 'Enterprise','Enterprise +' ),
 		},
 		price: {
 			type: Sequelize.INTEGER,
