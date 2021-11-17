@@ -49,6 +49,8 @@ db.banner = require('./banner.model')(sequelize, Sequelize);
 db.journey = require('./journey.model')(sequelize, Sequelize);
 db.room = require('./Room.model')(sequelize, Sequelize);
 db.kyc = require('./kyc.model')(sequelize, Sequelize);
+db.chat = require('./chat.model')(sequelize, Sequelize);
+db.message = require('./messages.model')(sequelize, Sequelize);
 
 db.kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
