@@ -4,7 +4,7 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const bcrypt = require('bcryptjs');
 const Mail = require('../Config/Mails');
-const {UserRole} = require("../enum");
+const {UserRole} = require('../enum');
 const Op = db.Sequelize.Op;
 
 // eslint-disable-next-line require-jsdoc
@@ -77,6 +77,7 @@ module.exports.addLawyer = async (req, res) => {
 					username: inserted.email,
 					password: bcrypt.hashSync(password, 8),
 					userType: 'normal',
+					lawfirmid: req.body.lawFirmId,
 					isActive: req.body.isActive,
 				});
 				await Mail.lawyerRegistration(inserted.email, password);

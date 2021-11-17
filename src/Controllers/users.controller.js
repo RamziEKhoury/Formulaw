@@ -150,6 +150,8 @@ module.exports.userLogin = (req, res) => {
 					lastname: user.lastname,
 					userType: user.userType,
 					isActive: user.isActive,
+					role: user.role,
+					lawfirmid: user.lawfirmid,
 					token: token,
 				};
 				return apiResponses.successResponseWithData(
@@ -190,6 +192,8 @@ module.exports.userLogin = (req, res) => {
 								phoneNumber: user.phoneNumber,
 								userType: user.userType,
 								isActive: user.isActive,
+								role: user.role,
+								lawfirmid: user.lawfirmid,
 								token: token,
 
 							};
@@ -216,6 +220,8 @@ module.exports.userLogin = (req, res) => {
 						fullname: user.fullname,
 						userType: user.userType,
 						isActive: user.isActive,
+						role: user.role,
+						lawfirmid: user.lawfirmid,
 						token: token,
 					};
 					return apiResponses.successResponseWithData(
@@ -257,6 +263,8 @@ module.exports.userLogin = (req, res) => {
 								phoneNumber: user.phoneNumber,
 								userType: user.userType,
 								isActive: user.isActive,
+								role: user.role,
+								lawfirmid: user.lawfirmid,
 								token: token,
 
 							};
@@ -283,6 +291,8 @@ module.exports.userLogin = (req, res) => {
 						fullname: user.fullname,
 						userType: user.userType,
 						isActive: user.isActive,
+						role: user.role,
+						lawfirmid: user.lawfirmid,
 						token: token,
 					};
 					return apiResponses.successResponseWithData(

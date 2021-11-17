@@ -31,6 +31,18 @@ module.exports = function(app) {
 		appointmentController.getUserAppointment);
 
 	app.get(
+		'/api/v1/appointment/lawyer-appointments/:lawyerId',
+		appointmentController.getLawyerAppointment);
+
+	app.get(
+		'/api/v1/appointment/lawyer-appointments/:lawyerId',
+		appointmentController.getLawyerAppointment);
+
+	app.get(
+		'/api/v1/appointment/lawyer-appointments-monthly/:lawFirmId/:startDate/:endDate',
+		appointmentController.getLawyerAppointmentMonthly);
+
+	app.get(
 		'/api/v1/appointment/my-appointments-monthly/:userId/:startDate/:endDate',
 		appointmentController.getUserAppointmentMonthly);
 

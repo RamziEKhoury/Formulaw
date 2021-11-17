@@ -7,6 +7,9 @@ module.exports = (sequelize, Sequelize) => {
 			allowNull: false,
 			primaryKey: true,
 		},
+		lawfirmid: {
+			type: Sequelize.UUID,
+		},
 		fullname: {
 			type: Sequelize.STRING,
 		},

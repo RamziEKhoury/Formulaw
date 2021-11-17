@@ -36,7 +36,7 @@ module.exports = (sequelize, Sequelize) => {
 
 			status: {
 				defaultValue: 'pending',
-				type: Sequelize.ENUM('pending', 'approved'),
+				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
 			},
 
 			workflow: {
