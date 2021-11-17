@@ -96,7 +96,7 @@ module.exports.changeStatus = async (req, res) => {
                             schema: { $en_name: "en_name", $ar_name: "en_name", $description: "description", $isActive: 0, $isDeleted: 1, $countryCode: "countryCode",$taxType:"taxType",$tax:"tax", $flag: "flag"}
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: appointment });
-				if (req.body.status === 'approved') {
+				if (req.body.status === 'free consultation') {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id}, include: [
 							{model: User, required: false, attributes: ['fullname', 'email']},
@@ -116,6 +116,75 @@ module.exports.changeStatus = async (req, res) => {
 						user.time,
 						user.date,
 					);
+
+					await Appointment.update({
+						status: req.body.status,
+						workflow: req.body.status,
+					}, {where: {id: req.params.id}});
+					return apiResponses.successResponseWithData(
+						res, 'Success', appointment,
+					);
+				} else if (req.body.status === 'approved') {
+					const user = await Appointment.findOne({
+						where: {id: req.params.id}, include: [
+							{model: User, required: false, attributes: ['fullname', 'email']},
+							{model: Admin, required: false, attributes: ['firstname', 'lastname', 'email']},
+						],
+					});
+
+					await Appointment.update({
+						status: req.body.status,
+						workflow: req.body.status,
+					}, {where: {id: req.params.id}});
+
+					return apiResponses.successResponseWithData(
+						res, 'Success', appointment,
+					);
+				} else if (req.body.status === 'payment') {
+					const user = await Appointment.findOne({
+						where: {id: req.params.id}, include: [
+							{model: User, required: false, attributes: ['fullname', 'email']},
+							{model: Admin, required: false, attributes: ['firstname', 'lastname', 'email']},
+						],
+					});
+
+					await Appointment.update({
+						status: req.body.status,
+						workflow: req.body.status,
+					}, {where: {id: req.params.id}});
+
+					return apiResponses.successResponseWithData(
+						res, 'Success', appointment,
+					);
+				} else if (req.body.status === 'consultation') {
+					const user = await Appointment.findOne({
+						where: {id: req.params.id}, include: [
+							{model: User, required: false, attributes: ['fullname', 'email']},
+							{model: Admin, required: false, attributes: ['firstname', 'lastname', 'email']},
+						],
+					});
+
+					await Appointment.update({
+						status: req.body.status,
+						workflow: req.body.status,
+					}, {where: {id: req.params.id}});
+
+					return apiResponses.successResponseWithData(
+						res, 'Success', appointment,
+					);
+				} else if (req.body.status === 'completed') {
+					const user = await Appointment.findOne({
+						where: {id: req.params.id}, include: [
+							{model: User, required: false, attributes: ['fullname', 'email']},
+							{model: Admin, required: false, attributes: ['firstname', 'lastname', 'email']},
+						],
+					});
+
+					await Appointment.update({
+						status: req.body.status,
+						workflow: req.body.status,
+					}, {where: {id: req.params.id}});
+
 					return apiResponses.successResponseWithData(
 						res, 'Success', appointment,
 					);
@@ -279,12 +348,87 @@ module.exports.getUserAppointment = (req, res) => {
 		});
 };
 
+module.exports.getLawyerAppointment = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {lawFirmId: req.params.lawFirmId},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['fullname', 'email']},
+		],
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(
+				res, 'success', data,
+			);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message ||
+					'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
 
 module.exports.getUserAppointmentMonthly = (req, res) => {
 	// Get Appointment from Database
 	// #swagger.tags = ['Appointment']
 	Appointment.findAll({
 		where: {customerId: req.params.userId,
+			date: {
+				[Op.between]: [req.params.startDate, req.params.endDate],
+			}},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['fullname', 'email']},
+		],
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(
+				res, 'success', data,
+			);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message ||
+					'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
+module.exports.getLawyerAppointmentMonthly = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {lawFirmId: req.params.lawFirmId,
 			date: {
 				[Op.between]: [req.params.startDate, req.params.endDate],
 			}},

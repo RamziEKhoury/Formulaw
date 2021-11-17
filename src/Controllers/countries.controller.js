@@ -25,8 +25,8 @@ module.exports.addCountry = (async (req, res) => {
 				flag: req.body.flag,
 				countryCode: req.body.countryCode,
 				description: req.body.description,
-				taxType:req.body.taxType,
-				tax:req.body.tax,
+				taxType: req.body.taxType,
+				tax: req.body.tax,
 				isActive: req.body.isActive,
 			},
 
@@ -52,8 +52,8 @@ module.exports.addCountry = (async (req, res) => {
 						flag: inserted.flag,
 						countryCode: inserted.countryCode,
 						description: inserted.description,
-						taxType:inserted.taxType,
-						tax:inserted.tax,
+						taxType: inserted.taxType,
+						tax: inserted.tax,
 						isActive: inserted.isActive,
 						isDeleted: inserted.isDeleted,
 
@@ -83,8 +83,8 @@ module.exports.countryUpdate = async (req, res) => {
 			ar_name: req.body.ar_name,
 			flag: req.body.flag,
 			description: req.body.description,
-			taxType:req.body.taxType,
-			tax:req.body.tax,
+			taxType: req.body.taxType,
+			tax: req.body.tax,
 			isActive: req.body.isActive,
 			countryCode: req.body.countryCode,
 		}, {where: {id: req.body.id}})
