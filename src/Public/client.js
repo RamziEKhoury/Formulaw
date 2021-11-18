@@ -26,10 +26,14 @@ function sendMessage(message) {
 	let msg = {
 		user: name,
 		reciever: to,
-		message: message.trim(),
-		currency: '$',
-		amount: 140,
-		messageType: 'counter',
+		message,
+		messageType: 'TEXT',
+		image: null,
+		file: null,
+		appointmentId: 'llklk',
+		requestId: 'kjkjk',
+		fullName: 'kjkjkj',
+		date: new Date(),
 	};
 
 	// Append
@@ -95,6 +99,7 @@ socket.on('stopTyping', function(msg) {
 
 // Recieve messages
 socket.on('message', (msg) => {
+	alert('hy')
 	appendMessage(msg, 'incoming');
 	scrollToBottom();
 });

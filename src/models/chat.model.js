@@ -11,6 +11,15 @@ module.exports = (sequelize, Sequelize) => {
 		senderId: {
 			type: Sequelize.UUID,
 		},
+		fullName: {
+			type: Sequelize.STRING,
+		},
+		source: {
+			type: Sequelize.STRING,
+		},
+		message: {
+			type: Sequelize.STRING,
+		},
 		receiverId: {
 			type: Sequelize.UUID,
 		},
