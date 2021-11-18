@@ -11,6 +11,29 @@ module.exports = (sequelize, Sequelize) => {
 		chatId: {
 			type: Sequelize.UUID,
 		},
+		senderId: {
+			type: Sequelize.UUID,
+		},
+		fullName: {
+			type: Sequelize.STRING,
+		},
+		source: {
+			type: Sequelize.STRING,
+		},
+		message: {
+			type: Sequelize.STRING,
+		},
+		receiverId: {
+			type: Sequelize.UUID,
+		},
+		appointmentId: {
+			type: DataTypes.UUID,
+			defaultValue: null,
+		},
+		requestId: {
+			type: DataTypes.UUID,
+			defaultValue: null,
+		},
 		messageType: {
 			type: Sequelize.ENUM(
 				MessageType.TEXT,

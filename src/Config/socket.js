@@ -1,5 +1,7 @@
 const socket = require('socket.io');
-const moment = require('moment');
+const db = require('../models');
+const Chat = db.chat;
+const Message = db.message;
 
 const users={};
 // eslint-disable-next-line require-jsdoc
@@ -8,179 +10,112 @@ function getKeyByValue(object, value) {
 		object[key] === value);
 }
 
-// eslint-disable-next-line require-jsdoc
-function saveMessage(senderId, receiverId, text, currency, amount, messageType, senderType, productName, productPrice, productImage, productOwnerId, images, file) {
-	const outgoingInfo = {
-		'senderId': senderId,
-		'receiverId': receiverId,
-		'productOwnerId': productOwnerId,
-		'message': [{
-			'type': 'outgoing',
-			'images': images,
-			'file': file,
-			'text': text,
-			'currency': currency,
-			'amount': amount,
-			'productName': productName,
-			'productPrice': productPrice,
-			'productImage': productImage,
-			'messageType': messageType,
-			'time': moment(new Date()).utc().format('YYYY-MM-DD HH:mm:ss A'),
-		}],
-	};
-	const incomingInfo = {
-		'senderId': receiverId,
-		'receiverId': senderId,
-		'productOwnerId': productOwnerId,
-		'message': [{
-			'type': 'incoming',
-			'images': images,
-			'file': file,
-			'text': text,
-			'currency': currency,
-			'amount': amount,
-			'productName': productName,
-			'productPrice': productPrice,
-			'productImage': productImage,
-			'messageType': messageType,
-			'time': moment(new Date()).utc().format('YYYY-MM-DD HH:mm:ss A'),
-		}],
-	};
-	const updateOutgoingInfo = {
-		'type': 'outgoing',
-		'images': images,
-		'file': file,
-		'text': text,
-		'currency': currency,
-		'amount': amount,
-		'productName': productName,
-		'productPrice': productPrice,
-		'productImage': productImage,
-		'messageType': messageType,
-		'time': moment(new Date()).utc().format('YYYY-MM-DD HH:mm:ss A'),
-	};
-	const updateIncomingInfo = {
-		'type': 'incoming',
-		'images': images,
-		'file': file,
-		'text': text,
-		'currency': currency,
-		'amount': amount,
-		'productName': productName,
-		'productPrice': productPrice,
-		'productImage': productImage,
-		'messageType': messageType,
-		'time': moment(new Date()).utc().format('YYYY-MM-DD HH:mm:ss A'),
-	};
-	// registrDb.find({'messages.senderId': senderId, 'messages.receiverId': receiverId}).exec((err, succ)=>{
-	// 	if (err) {
-	// 	} else if (succ.length == 0) {
-	// 		registrDb
-	// 			.updateOne({_id: senderId},
-	// 				{$push: {'messages': outgoingInfo}, status: 'unread'})
-	// 			.exec((errr, succc)=>{
-	// 				registrDb
-	// 					.updateOne({_id: receiverId},
-	// 						{$push: {'messages': incomingInfo},
-	// 							status: 'unread'})
-	// 					.exec((errr, succc)=>{
-	// 						// Recent
-	// 						registrDb
-	// 							.updateOne({messages:
-	//        {$elemMatch:
-	//          {senderId: senderId,
-	//          	receiverId: receiverId}}},
-	// 							{$set:
-	//              {'messages.$.text': text,
-	//              	'messages.$.currency': currency,
-	//              	'messages.$.messageType': messageType,
-	//              	'messages.$.amount': amount,
-	//              	'messages.$.productName': productName,
-	//              	'messages.$.productPrice': productPrice,
-	//              	'messages.$.productImage': productImage,
-	//              },
-	// 							})
-	// 							.exec((errr, suc)=>{
-	// 								registrDb
-	// 									.updateOne({messages:
-	//        {$elemMatch:
-	//          {senderId: receiverId,
-	//          	receiverId: senderId}}},
-	// 									{$set:
-	//              {'messages.$.text': text,
-	//              	'messages.$.currency': currency,
-	//              	'messages.$.messageType': messageType,
-	//              	'messages.$.amount': amount,
-	//              	'messages.$.productName': productName,
-	//              	'messages.$.productPrice': productPrice,
-	//              	'messages.$.productImage': productImage,
-	//              },
-	// 									})
-	// 									.exec((errr, suc)=>{
-	// 									});
-	// 							});
-	// 					});
-	// 			});
-	// 	} else {
-	// 		registrDb
-	// 			.updateOne({messages:
-	//        {$elemMatch:
-	//          {senderId: receiverId,
-	//          	receiverId: senderId}}},
-	// 			{$push:
-	//              {'messages.$.message': updateIncomingInfo},
-	// 			status: 'unread',
-	// 			})
-	// 			.exec((errr, succc)=>{
-	// 				registrDb
-	// 					.updateOne({messages:
-	//        {$elemMatch:
-	//          {senderId: senderId,
-	//          	receiverId: receiverId}}},
-	// 					{$push: {'messages.$.message': updateOutgoingInfo},
-	// 						status: 'unread',
-	// 					})
-	// 					.exec((errr, succc)=>{
-	// 					});
-	// 			});
-	//
-	// 		// Recent
-	// 		registrDb
-	// 			.updateOne({messages:
-	//        {$elemMatch:
-	//          {senderId: senderId,
-	//          	receiverId: receiverId}}},
-	// 			{$set:
-	//              {'messages.$.text': text,
-	//              	'messages.$.currency': currency,
-	//              	'messages.$.messageType': messageType,
-	//              	'messages.$.amount': amount,
-	//              	'messages.$.productName': productName,
-	//              	'messages.$.productPrice': productPrice,
-	//              	'messages.$.productImage': productImage,
-	//              },
-	// 			})
-	// 			.exec((errr, suc)=>{
-	// 				registrDb
-	// 					.updateOne({messages:
-	//        {$elemMatch:
-	//          {senderId: receiverId,
-	//          	receiverId: senderId}}},
-	// 					{$set:
-	//              {'messages.$.text': text,
-	//              	'messages.$.currency': currency,
-	//              	'messages.$.messageType': messageType,
-	//              	'messages.$.amount': amount,
-	//              	'messages.$.productName': productName,
-	//              	'messages.$.productPrice': productPrice,
-	//              	'messages.$.productImage': productImage,
-	//              },
-	// 					})
-	// 					.exec((errr, suc)=>{
-	// 					});
-	// 			});
-	// 	}
-	// });
+// eslint-disable-next-line require-jsdoc,max-len
+async function saveMessage(senderId, receiverId, message, messageType, image, file, appointmentId, requestId, fullName, date, source) {
+	console.log('messgae--->', senderId, receiverId, message, messageType, image, file, appointmentId, requestId, fullName, date);
+
+	const isChatExist = await Chat.findOne({
+		where: {
+			senderId: senderId,
+			receiverId: receiverId,
+			requestId: requestId,
+		},
+	});
+
+	const isChatExistAnother = await Chat.findOne({
+		where: {
+			senderId: receiverId,
+			receiverId: senderId,
+			requestId: requestId,
+		},
+	});
+
+	if (!!isChatExist) {
+		await Chat.update({
+			message: message,
+			messageType: messageType,
+			image: image,
+			file: file,
+			fullName: fullName,
+			date: date,
+			source,
+		}, {where: {
+			senderId: senderId,
+			receiverId: receiverId,
+			requestId: requestId,
+		}});
+		await Message.create({
+			chatId: isChatExist.id,
+			senderId: senderId,
+			receiverId: receiverId,
+			requestId: requestId,
+			appointmentId: appointmentId,
+			message: message,
+			messageType: messageType,
+			image: image,
+			file: file,
+			fullName: fullName,
+			date: date,
+			source,
+		});
+	} else if (!!isChatExistAnother) {
+		await Chat.update({
+			message: message,
+			messageType: messageType,
+			image: image,
+			file: file,
+			fullName: fullName,
+			date: date,
+			source,
+		}, {where: {
+			senderId: receiverId,
+			receiverId: senderId,
+			requestId: requestId,
+		}});
+		await Message.create({
+			chatId: isChatExistAnother.id,
+			senderId: senderId,
+			receiverId: receiverId,
+			requestId: requestId,
+			appointmentId: appointmentId,
+			message: message,
+			messageType: messageType,
+			image: image,
+			file: file,
+			fullName: fullName,
+			date: date,
+			source,
+		});
+	} else {
+		const createdChat = await Chat.create({
+			senderId: senderId,
+			receiverId: receiverId,
+			requestId: requestId,
+			appointmentId: appointmentId,
+			message: message,
+			messageType: messageType,
+			image: image,
+			file: file,
+			fullName: fullName,
+			date: date,
+			source,
+		});
+
+		await Message.create({
+			chatId: createdChat.id,
+			senderId: senderId,
+			receiverId: receiverId,
+			requestId: requestId,
+			appointmentId: appointmentId,
+			messageType: messageType,
+			message: message,
+			image: image,
+			file: file,
+			fullName: fullName,
+			date: date,
+			source,
+		});
+	}
 }
 
 // eslint-disable-next-line require-jsdoc
@@ -194,16 +129,25 @@ class SocketService {
 			 */
 			socket.on('new-user', (name) => {
 				console.log('new-user----->>', name);
-				users[socket.id] = name;
+				const isUserExist = getKeyByValue(users, name);
+				console.log('exist--->', isUserExist);
+				if (!!isUserExist) {
+					console.log('total users-Already---->>', users);
+					delete users[isUserExist];
+					users[socket.id] = name;
+				} else {
+					users[socket.id] = name;
+					console.log('total users-new---->>', users);
+				}
 			});
 
 			/**
 			 * Send Message
 			 */
 			socket.on('message', (msg) => {
-				console.log('total users----->>', users);
+				console.log('total users---message-->>', users);
 				console.log('message----->>', msg);
-				msg = JSON.parse(msg);
+				// msg = JSON.parse(msg);
 				saveMessage(
 					msg.senderId,
 					msg.receiverId,
@@ -213,8 +157,12 @@ class SocketService {
 					msg.file,
 					msg.appointmentId,
 					msg.requestId,
+					msg.fullName,
+					msg.date,
+					'outgoing',
 				);
-				const receiver = getKeyByValue(users, msg.reciever);
+				const receiver = getKeyByValue(users, msg.receiverId);
+				console.log('receiver----->>', receiver);
 				this.io.to(receiver).emit('message', msg);
 			});
 
@@ -230,16 +178,16 @@ class SocketService {
 				delete users[userSocketId];
 			});
 
-			/**
-			 * Disconnected
-			 */
-			socket.on('disconnect', (id) => {
-				console.log('disconnect----->>', id, 'Total--->', users);
-				const userSocketId = getKeyByValue(users, id);
-				console.log('userSocketId----->>', socket.id);
-				socket.broadcast.emit('user-disconnected', socket.id);
-				delete users[socket.id];
-			});
+			// /**
+			//  * Disconnected
+			//  */
+			// socket.on('disconnect', (id) => {
+			// 	console.log('disconnect----->>', id, 'Total--->', users);
+			// 	const userSocketId = getKeyByValue(users, id);
+			// 	console.log('userSocketId----->>', socket.id);
+			// 	socket.broadcast.emit('user-disconnected', socket.id);
+			// 	delete users[socket.id];
+			// });
 
 			/**
 			 * Typing
