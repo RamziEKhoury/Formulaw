@@ -40,8 +40,8 @@ module.exports = (sequelize, Sequelize) => {
 			},
 
 			workflow: {
-				defaultValue: 'free consultation',
-				type: Sequelize.ENUM('free consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: 'pending',
+				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
 			},
 
 			date: {
