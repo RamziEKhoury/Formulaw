@@ -22,6 +22,8 @@ module.exports=(app)=> {
 	require('./community.route')(app);
 	require('./journey.route')(app);
 	require('./kyc.route')(app);
+	require("./multer.route")(app);
+	require("./companyKyc.route")(app);
 	require('./multer.route')(app);
 	require('./chats.route')(app);
 };

@@ -1,6 +1,6 @@
 const DataTypes = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
-	return sequelize.define('kyc', {
+	return sequelize.define('Company_kyc', {
 		id: {
 			type: Sequelize.UUID,
 			defaultValue: Sequelize.UUIDV4,
@@ -9,6 +9,16 @@ module.exports = (sequelize, Sequelize) => {
 		},
 		userId: {
 			type: Sequelize.UUID,
+		},
+		companyName: {
+			type: Sequelize.STRING,
+		},
+        
+        crNumber: {
+			type: Sequelize.STRING,
+		},
+        officeAddress: {
+			type: Sequelize.STRING,
 		},
 		passport: {
 			type: Sequelize.STRING,
@@ -26,9 +36,7 @@ module.exports = (sequelize, Sequelize) => {
             defaultValue: 'Pending',
             type: Sequelize.ENUM('Pending', 'Approved','Rejected'),
         },
-        reason:{
-            type: Sequelize.STRING,
-        },
+        
 	}, {
 		timestamps: true,
 	},

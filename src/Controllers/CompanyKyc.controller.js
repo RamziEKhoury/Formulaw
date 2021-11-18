@@ -1,49 +1,53 @@
 const db = require('../models');
-const Kyc = db.kyc;
+const Companykyc = db.Company_kyc;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
-module.exports.addKycDetails = async (req, res) => {
+module.exports.addCompanyKycDetails = async (req, res) => {
 	console.log("dfdgsgdfh",req.body);
 	try {
-		console.log(req.body.userId);
-		Kyc.create({
+		Companykyc.create({
 				userId: req.body.userId,
 				passport: req.body.passport,
+                crNumber:req.body.crNumber,
+				companyName: req.body.companyName,
+				officeAddress: req.body.officeAddress,
                 photo:req.body.photo,
 				ParmanentAddress: req.body.ParmanentAddress,
 				PhnNumber: req.body.PhnNumber,
-				reason:req.body.reason,
-			}).then((kycDetail) => {
+			}).then((companyKycDetail) => {
 				return apiResponses.successResponseWithData(
 					res,
 					'success!',
-					kycDetail,
+					companyKycDetail,
 				);
 			}
 		);
 	} catch (err) {
+        console.log("errr===========",err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
 
-module.exports.updateKycDetails = async (req, res) => {
+module.exports.updateCompanyKycDetails = async (req, res) => {
 	try {
-		await kyc.update(
+		await Companykyc.update(
 			{
 				passport: req.body.passport,
+                crNumber:req.body.crNumber,
+				companyName: req.body.companyName,
+				officeAddress: req.body.officeAddress,
                 photo:req.body.photo,
 				ParmanentAddress: req.body.ParmanentAddress,
 				PhnNumber: req.body.PhnNumber,
-				reason:req.body.reason,
 			},
 			{where: {userId: req.body.userId}},
 		)
-			.then((kycDetail) => {
-				if (!kycDetail) {
+			.then((companyKycDetail) => {
+				if (!companyKycDetail) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				return apiResponses.successResponseWithData(res, 'Success', kycDetail);
+				return apiResponses.successResponseWithData(res, 'Success', companyKycDetail);
 			})
 			.catch((err) => {
 				return apiResponses.errorResponse(res, err.message, {});
@@ -53,9 +57,9 @@ module.exports.updateKycDetails = async (req, res) => {
 	}
 };
 
-module.exports.getallUserKycDetails = (req, res) => {
+module.exports.getallUserCompanyKycDetails = (req, res) => {
 	const limit = req.params.limit;
-	Kyc.findAll({
+	Companykyc.findAll({
 		include: [
 			{model: User, required: false, attributes: ['fullname', 'email']},
 		],
@@ -76,8 +80,8 @@ module.exports.getallUserKycDetails = (req, res) => {
 		});
 };
 
-module.exports.getOneUserKycDetails = (req, res) => {
-	Kyc.findOne({
+module.exports.getOneUserCompanyKycDetails = (req, res) => {
+	Companykyc.findOne({
 		include: [
 			{model: User, required: false, attributes: ['fullname', 'email']},
 		],
@@ -93,19 +97,19 @@ module.exports.getOneUserKycDetails = (req, res) => {
 		});
 };
 
-module.exports.kycStatus = async (req, res) => {
+module.exports.CompanykycStatus = async (req, res) => {
 	try {
-		await Kyc.update(
+		await Companykyc.update(
 			{
 				status: req.params.status,
 			},
 			{where: {userId: req.params.userId}},
 		)
-			.then((kycDetail) => {
-				if (!kycDetail) {
+			.then((companyKycDetail) => {
+				if (!companyKycDetail) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				return apiResponses.successResponseWithData(res, 'Success', kycDetail);
+				return apiResponses.successResponseWithData(res, 'Success', companyKycDetail);
 			})
 			.catch((err) => {
 				return apiResponses.errorResponse(res, err.message, {});

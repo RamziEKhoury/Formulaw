@@ -51,8 +51,10 @@ db.room = require('./Room.model')(sequelize, Sequelize);
 db.kyc = require('./kyc.model')(sequelize, Sequelize);
 db.chat = require('./chat.model')(sequelize, Sequelize);
 db.message = require('./messages.model')(sequelize, Sequelize);
+db.Company_kyc = require('./companyKyc.model')(sequelize, Sequelize);
 
 db.kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
+db.Company_kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.appointment.hasOne(db.user, {sourceKey: 'customerId', foreignKey: 'id'});
 db.appointment.hasOne(db.adminUser, {sourceKey: 'adminId', foreignKey: 'id'});
