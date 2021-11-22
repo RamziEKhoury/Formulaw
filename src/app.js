@@ -28,7 +28,6 @@ const httpsServer = https.createServer(credentials, app);
 
 // log all incoming request
 app.use((req, res, next) => {
-	// console.log("appbody=====>>",req)
 	next();
 });
 
