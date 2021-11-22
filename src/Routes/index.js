@@ -26,4 +26,5 @@ module.exports=(app)=> {
 	require("./companyKyc.route")(app);
 	require('./multer.route')(app);
 	require('./chats.route')(app);
+	require('./mobileVerify.route')(app);
 };
