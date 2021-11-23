@@ -27,4 +27,5 @@ module.exports=(app)=> {
 	require('./multer.route')(app);
 	require('./chats.route')(app);
 	require('./mobileVerify.route')(app);
+	require("./policy.route")(app);
 };
