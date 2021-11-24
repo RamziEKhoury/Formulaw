@@ -1,16 +1,16 @@
-const config = require('../Config/db.config');
-const Sequelize = require('sequelize');
+const config = require("../Config/db.config");
+const Sequelize = require("sequelize");
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
-	host: config.HOST,
-	dialect: config.dialect,
-	operatorsAliases: false,
+  host: config.HOST,
+  dialect: config.dialect,
+  operatorsAliases: false,
 
-	pool: {
-		max: config.pool.max,
-		min: config.pool.min,
-		acquire: config.pool.acquire,
-		idle: config.pool.idle,
-	},
+  pool: {
+    max: config.pool.max,
+    min: config.pool.min,
+    acquire: config.pool.acquire,
+    idle: config.pool.idle,
+  },
 });
 
 const db = {};
@@ -18,16 +18,13 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.adminUser = require('./adminUsers.model')(sequelize, Sequelize);
-db.role = require('./roles.model')(sequelize, Sequelize);
-db.country = require('./countries.model')(sequelize, Sequelize);
-db.language = require('./languages.model')(sequelize, Sequelize);
-db.industrial = require('./industrials.model')(sequelize, Sequelize);
-db.service = require('./services.model')(sequelize, Sequelize);
-db.service_subCategory = require('./service-subcategory.model')(
-	sequelize,
-	Sequelize,
-);
+db.adminUser = require("./adminUsers.model")(sequelize, Sequelize);
+db.role = require("./roles.model")(sequelize, Sequelize);
+db.country = require("./countries.model")(sequelize, Sequelize);
+db.language = require("./languages.model")(sequelize, Sequelize);
+db.industrial = require("./industrials.model")(sequelize, Sequelize);
+db.service = require("./services.model")(sequelize, Sequelize);
+db.service_subCategory = require("./service-subcategory.model")(sequelize,Sequelize);
 db.lawFirm = require('./lawFirms.model')(sequelize, Sequelize);
 db.request = require('./requests.model')(sequelize, Sequelize);
 db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize, Sequelize);
@@ -53,7 +50,7 @@ db.chat = require('./chat.model')(sequelize, Sequelize);
 db.message = require('./messages.model')(sequelize, Sequelize);
 db.Company_kyc = require('./companyKyc.model')(sequelize, Sequelize);
 db.preOrder = require('./preOrder.model')(sequelize,Sequelize),
-
+db.policy = require("./policy.model")(sequelize, Sequelize);
 
 db.preOrder.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'})
 db.preOrder.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'})
@@ -68,6 +65,9 @@ db.lawFirm.hasMany(db.lawFirm_service, {sourceKey: 'id', foreignKey: 'lawFirmId'
 db.lawFirm.hasMany(db.lawFirm_industry, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.lawFirm.hasMany(db.lawFirm_tax, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 db.chat.hasMany(db.message, {sourceKey: 'id', foreignKey: 'chatId'});
+
+
+
 
 
 module.exports = db;

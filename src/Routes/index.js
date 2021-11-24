@@ -28,4 +28,5 @@ module.exports=(app)=> {
 	require('./chats.route')(app);
 	require('./mobileVerify.route')(app);
 	require('./preOrder.route')(app);
+	require("./policy.route")(app);
 };
