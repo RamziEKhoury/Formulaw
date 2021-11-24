@@ -52,7 +52,11 @@ db.kyc = require('./kyc.model')(sequelize, Sequelize);
 db.chat = require('./chat.model')(sequelize, Sequelize);
 db.message = require('./messages.model')(sequelize, Sequelize);
 db.Company_kyc = require('./companyKyc.model')(sequelize, Sequelize);
+db.preOrder = require('./preOrder.model')(sequelize,Sequelize),
 
+
+db.preOrder.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'})
+db.preOrder.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'})
 db.kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.Company_kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
