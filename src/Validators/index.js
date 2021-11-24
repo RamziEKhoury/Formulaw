@@ -19,6 +19,7 @@ const bannerValidator = require("./banner.validator");
 const CommunityValidator = require("./Community.validator");
 const kycValidator = require('./kyc.validator')
 const CompanyKycValidor = require('./CompanyKyc.validator')
+const PreOrderValidator = require('./preOrder.validator')
 
 module.exports = {
   adminUserValidator,
@@ -42,4 +43,5 @@ module.exports = {
   CommunityValidator,
   kycValidator,
   CompanyKycValidor,
+  PreOrderValidator,
 };
