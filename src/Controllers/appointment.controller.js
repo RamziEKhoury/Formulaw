@@ -8,6 +8,7 @@ const User = db.user;
 const apiResponses = require("../Components/apiresponse");
 const Mail = require("../Config/Mails");
 const Op = db.Sequelize.Op;
+const moment = require('moment');
 
 module.exports.addAppointment = async (req, res) => {
   try {
@@ -23,7 +24,7 @@ module.exports.addAppointment = async (req, res) => {
       lawFirmId: req.body.lawFirmId,
       adminId: req.body.adminId,
       customerId: req.body.customerId,
-      shift: req.body.shifts,
+      shift: req.body.shift,
       date: req.body.date,
       time: req.body.time,
       orderId: orderId,
@@ -560,6 +561,43 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
       // });
 
       return apiResponses.successResponseWithData(res, "success", data);
+    })
+    .catch((err) => {
+      /* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+      // return res.status(500).send({ message: err.message });
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Appointment.",
+      });
+    });
+};
+
+module.exports.getAppointmentTime = (req, res) => {
+  // Get Appointment from Database
+  // #swagger.tags = ['Appointment']
+  const value = req.query;
+  Appointment.findOne({
+    where: {
+      shift:value.shift,
+      time: value.time,
+    },
+   
+  })
+    .then((responce) => {
+      // res.status(200).send({
+      //   status: "200",
+      //   user: data,
+      // });
+      if(responce){
+        return apiResponses.successResponseWithData(res, "success", true);
+      }
+      return apiResponses.successResponseWithData(res, 'success', false);
+
+
+      
     })
     .catch((err) => {
       /* #swagger.responses[500] = {

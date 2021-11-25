@@ -45,6 +45,10 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/appointment/my-appointments-monthly/:userId/:startDate/:endDate',
 		appointmentController.getUserAppointmentMonthly);
+	
+	app.get(
+		'/api/v1/appointment/selected-appointments-time',
+		appointmentController.getAppointmentTime);
 
 	app.put(
 		'/api/v1/appointment/status/:id',
