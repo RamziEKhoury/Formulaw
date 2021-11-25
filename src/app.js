@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use(express.static(path.join(__dirname, '/Public')));
+app.use('/Images', express.static(path.join(__dirname, 'Public/Images')));
 
 const db = require('../src/models');
 const SocketService = require('./Config/socket');
