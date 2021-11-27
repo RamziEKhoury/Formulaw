@@ -185,6 +185,7 @@ module.exports.getRequests = (req, res) => {
     Request.findAndCountAll({
       where: { isDeleted: 0, isActive: 1 },
       limit: limit,
+      order: [['createdAt', 'DESC']],
     })
       .then((result) => {
         // res.status(200).send({

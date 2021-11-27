@@ -7,108 +7,90 @@ const apiResponses = require('../Components/apiresponse');
 const Op = db.Sequelize.Op;
 
 module.exports.addPreOrder = async (req, res) => {
-    console.log("sfdfgdg",req.body);
-    try {
-		
-		PreOrder.create({
-				appointmentId: req.body.appointmentId,
-                queryId:req.body.queryId,
-				subject: req.body.subject,
-				furtherInformation: req.body.furtherInformation,
-				anyInformation:req.body.anyInformation,
-				document:req.body.document,
-			}).then((preOrder) => {
-				if(preOrder){
-					Request.update(
-						{
-						  getstarted: req.body.subject,
-						},
-						{
-						  where: { id: req.body.queryId },
-						}
-					  ).then((request) => {
-						if (!request) {
-						  return apiResponses.notFoundResponse(res, 'Not found.', {});
-						}
-					  });
-				}
+  console.log('sfdfgdg', req.body);
+  try {
+    PreOrder.create({
+      appointmentId: req.body.appointmentId,
+      queryId: req.body.queryId,
+      subject: req.body.subject,
+      furtherInformation: req.body.furtherInformation,
+      anyInformation: req.body.anyInformation,
+      document: req.body.document,
+    }).then((preOrder) => {
+      if (preOrder) {
+        Request.update(
+          {
+            getstarted: req.body.subject,
+          },
+          {
+            where: { id: req.body.queryId },
+          }
+        ).then((request) => {
+          if (!request) {
+            return apiResponses.notFoundResponse(res, 'Not found.', {});
+          }
+        });
+      }
 
-
-				return apiResponses.successResponseWithData(
-					res,
-					'success!',
-					preOrder,
-				);
-			}
-		);
-	} catch (err) {
-		return apiResponses.errorResponse(res, err);
-	}
+      return apiResponses.successResponseWithData(res, 'success!', preOrder);
+    });
+  } catch (err) {
+    return apiResponses.errorResponse(res, err);
+  }
 };
 
 module.exports.updatePreOrder = async (req, res) => {
-	try {
-		await PreOrder.update({
-			subject: req.body.subject,
-			furtherInformation: req.body.furtherInformation,
-			anyInformation:req.body.anyInformation,
-			document:req.body.document,
-		}, {where: {id: req.body.id}})
-			.then((preOrder) => {
-				if (!preOrder) {
-					return apiResponses.notFoundResponse(
-						res, 'Not found.', {},
-					);
-				}
-				return apiResponses.successResponseWithData(
-					res, 'Success', preOrder,
-				);
-			})
-			.catch((err) => {
-				return apiResponses.errorResponse(res, err.message, {});
-			});
-	} catch (err) {
-		return apiResponses.errorResponse(res, err);
-	}
+  try {
+    await PreOrder.update(
+      {
+        subject: req.body.subject,
+        furtherInformation: req.body.furtherInformation,
+        anyInformation: req.body.anyInformation,
+        document: req.body.document,
+      },
+      { where: { id: req.body.id } }
+    )
+      .then((preOrder) => {
+        if (!preOrder) {
+          return apiResponses.notFoundResponse(res, 'Not found.', {});
+        }
+        return apiResponses.successResponseWithData(res, 'Success', preOrder);
+      })
+      .catch((err) => {
+        return apiResponses.errorResponse(res, err.message, {});
+      });
+  } catch (err) {
+    return apiResponses.errorResponse(res, err);
+  }
 };
 
 module.exports.getPreOrders = (req, res) => {
-	PreOrder.findAll()
-		.then((data) => {
-			return apiResponses.successResponseWithData(res, 'success', data);
-		})
-		.catch((err) => {
-			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving data.',
-			});
-		})
-		.catch((err) => {
-			res.status(500).send({
-				message: 'Something Went Wrong',
-			});
-		});
+  PreOrder.findAll({ order: [['createdAt', 'DESC']] })
+    .then((data) => {
+      return apiResponses.successResponseWithData(res, 'success', data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving data.',
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Something Went Wrong',
+      });
+    });
 };
 
 module.exports.getPreOrder = (req, res) => {
-	PreOrder.findOne({
-		where: {queryId: req.params.queryId},
-	})
-		.then((data) => {
-			return apiResponses.successResponseWithData(res, 'success', data);
-		})
-		.catch((err) => {
-			res.status(500).send({
-				message: err.message || 'Some error occurred while retrieving data.',
-			});
-		});
+  PreOrder.findOne({
+    where: { queryId: req.params.queryId },
+  })
+    .then((data) => {
+      return apiResponses.successResponseWithData(res, 'success', data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving data.',
+      });
+    });
 };
-
-
-
-	
-
-
-
-
-
