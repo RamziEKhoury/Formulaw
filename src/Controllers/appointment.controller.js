@@ -579,10 +579,12 @@ module.exports.getAppointmentTime = (req, res) => {
   // Get Appointment from Database
   // #swagger.tags = ['Appointment']
   const value = req.query;
+  var today = moment(value.date).format("YYYY-MM-DD");
   Appointment.findOne({
     where: {
       shift:value.shift,
       time: value.time,
+      date:{[Op.iLike]: '%' + today + '%'},
     },
    
   })
