@@ -77,6 +77,21 @@ module.exports = (sequelize, Sequelize) => {
 					RequestWorkflow.PENDING,
 				),
 			},
+			questionOne:{
+				type: Sequelize.STRING,
+			},
+			questionTwo:{
+				type: Sequelize.STRING,
+			},
+			questionThree:{
+				type: Sequelize.STRING,
+			},
+			questionFour:{
+				type: Sequelize.STRING,
+			},
+			questionFive:{
+				type: Sequelize.STRING,
+			},
 			isActive: {
 				defaultValue: 0,
 				type: Sequelize.INTEGER,
