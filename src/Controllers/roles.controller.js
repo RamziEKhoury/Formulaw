@@ -1,6 +1,6 @@
-const db = require("../models");
+const db = require('../models');
 const Role = db.role;
-const apiResponses = require("../Components/apiresponse");
+const apiResponses = require('../Components/apiresponse');
 
 module.exports.addRole = async (req, res) => {
   try {
@@ -25,7 +25,7 @@ module.exports.addRole = async (req, res) => {
       // return res.status(200).send({ status:'200', message: "successfully!" , data: RoleInfo });
       return apiResponses.successResponseWithData(
         res,
-        "successfully!",
+        'successfully!',
         RoleInfo
       );
     });
@@ -35,7 +35,7 @@ module.exports.addRole = async (req, res) => {
 };
 
 module.exports.roleById = (req, res) => {
-  console.log("req_params---", req.params);
+  console.log('req_params---', req.params);
   // #swagger.tags = ['Role']
   // Get User from Database
   Role.findOne({
@@ -46,7 +46,7 @@ module.exports.roleById = (req, res) => {
     .then((role) => {
       if (!role) {
         // return res.status(404).send({ message: "Data Not found." });
-        return apiResponses.notFoundResponse(res, "Data Not found.", null);
+        return apiResponses.notFoundResponse(res, 'Data Not found.', null);
       }
       // res.status(200).send({
       //   status: "200",
@@ -54,7 +54,7 @@ module.exports.roleById = (req, res) => {
       // });
       return apiResponses.successResponseWithData(
         res,
-        "successfully found!",
+        'successfully found!',
         role
       );
     })
@@ -67,11 +67,11 @@ module.exports.roleById = (req, res) => {
 module.exports.role_All = (req, res) => {
   // #swagger.tags = ['Role']
   // Get User from Database
-  Role.findAll()
+  Role.findAll({ order: [['createdAt', 'DESC']] })
     .then((roles) => {
       if (!roles) {
         // return res.status(404).send({ message: "Data Not found." });
-        return apiResponses.notFoundResponse(res, "Data Not found.", null);
+        return apiResponses.notFoundResponse(res, 'Data Not found.', null);
       }
       // res.status(200).send({
       //   status: "200",
@@ -79,7 +79,7 @@ module.exports.role_All = (req, res) => {
       // });
       return apiResponses.successResponseWithData(
         res,
-        "successfully found!",
+        'successfully found!',
         roles
       );
     })
@@ -105,13 +105,13 @@ module.exports.deleteRole = async (req, res) => {
                                schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
                            } */
           // return res.status(404).send({ message: "Not found." });
-          return apiResponses.notFoundResponse(res, "Not found.", {});
+          return apiResponses.notFoundResponse(res, 'Not found.', {});
         }
         /* #swagger.responses[200] = {
                             description: "success!",
                         } */
         // return res.status(200).send({ status:'200', message: "success!" , data: industrial });
-        return apiResponses.successResponseWithData(res, "Success", role);
+        return apiResponses.successResponseWithData(res, 'Success', role);
       })
       .catch((err) => {
         /* #swagger.responses[500] = {
