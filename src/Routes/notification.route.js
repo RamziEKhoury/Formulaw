@@ -31,8 +31,8 @@ module.exports = function (app) {
     notificationController.deletenotification
   );
 
-  app.get(
-    '/api/v1/notification/view-read/:id',
+  app.put(
+    '/api/v1/notification/read/:id',
     notificationController.readnotification
   );
   app.get(

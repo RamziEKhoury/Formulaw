@@ -97,31 +97,58 @@ module.exports.deletenotification = async (req, res) => {
   }
 };
 
-module.exports.readnotification = (req, res) => {
-  console.log(req.params);
+module.exports.readnotification = async (req, res) => {
+  try {
+    await Notification.update(
+      {
+        status: true,
+      },
+      { where: { id: req.params.id } }
+    )
+      .then((notification) => {
+        if (!notification) {
+          return apiResponses.notFoundResponse(res, 'Not found.', {});
+        }
 
-  Notification.findAll({
-    where: {
-      receiverid: req.params.id,
-      status: true,
-    },
-    order: [['createdAt', 'DESC']],
-  })
-    .then((notification) => {
-      if (!notification) {
-        return apiResponses.notFoundResponse(res, 'Data Not found.', null);
-      }
-
-      return apiResponses.successResponseWithData(
-        res,
-        'successfully found!',
-        notification
-      );
-    })
-    .catch((err) => {
-      return apiResponses.errorResponse(res, err.message, err);
-    });
+        return apiResponses.successResponseWithData(
+          res,
+          'Success',
+          notification
+        );
+      })
+      .catch((err) => {
+        return apiResponses.errorResponse(res, err.message, {});
+      });
+  } catch (err) {
+    return apiResponses.errorResponse(res, err);
+  }
 };
+
+// module.exports.readnotification = (req, res) => {
+//   console.log(req.params);
+
+//   Notification.findAll({
+//     where: {
+//       receiverid: req.params.id,
+//       status: true,
+//     },
+//     order: [['createdAt', 'DESC']],
+//   })
+//     .then((notification) => {
+//       if (!notification) {
+//         return apiResponses.notFoundResponse(res, 'Data Not found.', null);
+//       }
+
+//       return apiResponses.successResponseWithData(
+//         res,
+//         'successfully found!',
+//         notification
+//       );
+//     })
+//     .catch((err) => {
+//       return apiResponses.errorResponse(res, err.message, err);
+//     });
+// };
 
 module.exports.unreadnotification = (req, res) => {
   console.log(req.params);
