@@ -2,27 +2,23 @@ const db = require('../models');
 const LawFirmIndustry = db.lawFirm_industry;
 const apiResponses = require('../Components/apiresponse');
 
-
 module.exports.addLawFirmIndustry = async (req, res) => {
 	// get input values from reqeust.
 	const industryData = req.body.values;
 	const lawFirmId = req.body.lawFirmId;
 
-
 	try {
 		if (industryData === undefined || industryData === '') {
-			res.send({status: 409, msg: 'Industry Data should not be empty.',
-			});
+			res.send({status: 409, msg: 'Industry Data should not be empty.'});
 		}
-		industryData.map((industry, i)=>{
-			const industries ={
+		industryData.map((industry, i) => {
+			const industries = {
 				title: industry.label,
 				industryId: industry.value,
 				lawFirmId: lawFirmId,
 				discription: '',
 				isActive: 1,
 			};
-
 
 			// #swagger.tags = ['LawFirmIndustry']
 			/*  #swagger.parameters['obj'] = {
@@ -38,7 +34,6 @@ module.exports.addLawFirmIndustry = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
-
 
 module.exports.lawFirmIndustryUpdate = async (req, res) => {
 	// #swagger.tags = ['LawFirmIndustry']
@@ -57,7 +52,6 @@ module.exports.lawFirmIndustryUpdate = async (req, res) => {
 				industryId: req.body.industryId,
 				discription: req.body.discription,
 				isActive: req.body.isActive,
-
 			},
 			{where: {id: req.body.id}},
 		)
@@ -76,7 +70,11 @@ module.exports.lawFirmIndustryUpdate = async (req, res) => {
 
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
-				return apiResponses.successResponseWithData(res, 'Success', lawFirmIndustry);
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					lawFirmIndustry,
+				);
 			})
 			.catch((err) => {
 				/* #swagger.responses[500] = {
@@ -99,6 +97,7 @@ module.exports.getLawFirmIndustries = (req, res) => {
 		where: {lawFirmId: req.body.lawFirmId},
 		isDeleted: 0,
 		isActive: 1,
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -114,9 +113,7 @@ module.exports.getLawFirmIndustries = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-                   err.message ||
-					'Some error occurred while retrieving Lawfirm.',
+				message: err.message || 'Some error occurred while retrieving Lawfirm.',
 			});
 		})
 		.catch((err) => {
@@ -152,7 +149,8 @@ module.exports.getLawFirmIndustry = (req, res) => {
                               } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message: err.message || 'Some error occurred while retrieving LawFirmIdustry.',
+				message:
+          err.message || 'Some error occurred while retrieving LawFirmIdustry.',
 			});
 		});
 };

@@ -35,7 +35,7 @@ module.exports.addpolicy = async (req, res) => {
 };
 
 module.exports.viewPolicys = (req, res) => {
-	Policy.findAll({})
+	Policy.findAll({order: [['createdAt', 'DESC']]})
 		.then((policys) => {
 			if (!policys) {
 				return apiResponses.notFoundResponse(res, 'Data Not found.', null);
@@ -103,23 +103,3 @@ module.exports.updatepolicy = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
-
-// module.exports.deletetestimonial = async (req, res) => {
-//   try {
-//     await Testimonial.destroy({ where: { id: req.params.id } })
-//       .then((testimonial) => {
-//         if (!testimonial) {
-//           return apiResponses.notFoundResponse(res, "Not found.", {});
-//         }
-
-//         return apiResponses.successResponseWithData(
-//           res,
-//           "Success",
-//           testimonial
-//         );
-//       })
-//       .catch((err) => {});
-//   } catch (err) {
-//     return apiResponses.errorResponse(res, err);
-//   }
-// };

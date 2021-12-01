@@ -27,24 +27,21 @@ module.exports.addSubscription = async (req, res) => {
 			images: req.body.images,
 			logo: req.body.logo,
 			features: req.body.features,
-
 		}).then((subscription) => {
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
 				subscription,
 			);
-		},
-		);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
 };
 
-
 module.exports.getSubscriptions = (req, res) => {
 	const limit = req.params.limit;
-	Subscription.findAll({limit: limit})
+	Subscription.findAll({limit: limit, order: [['createdAt', 'DESC']]})
 		.then((data) => {
 			// res.status(200).send({
 			//   status: "200",
@@ -59,8 +56,7 @@ module.exports.getSubscriptions = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving data.',
+				message: err.message || 'Some error occurred while retrieving data.',
 			});
 		})
 		.catch((err) => {
@@ -80,6 +76,13 @@ module.exports.getSubscriptionsType = (req, res) => {
 	Subscription.findAll({where: {
 		durationType: durationType,
 	}})
+	console.log(durationType);
+	Subscription.findAll({
+		where: {
+			durationType: durationType,
+		},
+		order: [['createdAt', 'DESC']],
+	})
 		.then((data) => {
 			// res.status(200).send({
 			//   status: "200",
@@ -94,8 +97,7 @@ module.exports.getSubscriptionsType = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving data.',
+				message: err.message || 'Some error occurred while retrieving data.',
 			});
 		})
 		.catch((err) => {
@@ -114,7 +116,6 @@ module.exports.getSubscription = (req, res) => {
 	// #swagger.tags = ['Subscription']
 	Subscription.findOne({
 		where: {id: req.params.id},
-
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -135,4 +136,3 @@ module.exports.getSubscription = (req, res) => {
 			});
 		});
 };
-

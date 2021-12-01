@@ -3,7 +3,7 @@ const Language = db.language;
 const apiResponses = require('../Components/apiresponse');
 const Op = db.Sequelize.Op;
 
-module.exports.addLanguage = (async (req, res) => {
+module.exports.addLanguage = async (req, res) => {
 	try {
 		console.log(req.body.en_name);
 		// #swagger.tags = ['Language']
@@ -13,9 +13,9 @@ module.exports.addLanguage = (async (req, res) => {
                     schema: { $en_name: "", $ar_name: "", $isActive: ""}
             } */
 		Language.findOrCreate({
-
 			where: {
-				[Op.or]: [{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
+				[Op.or]: [
+					{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
 					{ar_name: {[Op.iLike]: '%' + req.body.ar_name + '%'}},
 				],
 			},
@@ -25,42 +25,40 @@ module.exports.addLanguage = (async (req, res) => {
 				ar_name: req.body.ar_name,
 				isActive: req.body.isActive,
 			},
+		}).then((language) => {
+			console.log('language--->', language);
+			const isAlready = language[1];
+			const inserted = language[0];
 
-		})
-			.then((language) => {
-				console.log('language--->', language);
-				const isAlready = language[1];
-				const inserted = language[0];
-
-				if (!isAlready) {
-					/* #swagger.responses[409] = {
+			if (!isAlready) {
+				/* #swagger.responses[409] = {
                             description: "success!",
                             schema: { $statusCode : 409 ,$status: true, $message: "Language already exist!", $data : {}}
                         } */
-					res.send({
-						status: 409,
-						msg: 'Language already exist',
-					});
-				} else {
-					const languageData = {
-						id: inserted.id,
-						en_name: inserted.en_name,
-						ar_name: inserted.ar_name,
-						isActive: inserted.isActive,
-						isDeleted: inserted.isDeleted,
-
-					};
-					// return res.status(200).send({ status:'200', message: "success!" , data: languageData });
-					return apiResponses.successResponseWithData(
-						res, 'success!', languageData,
-					);
-				}
-			});
+				res.send({
+					status: 409,
+					msg: 'Language already exist',
+				});
+			} else {
+				const languageData = {
+					id: inserted.id,
+					en_name: inserted.en_name,
+					ar_name: inserted.ar_name,
+					isActive: inserted.isActive,
+					isDeleted: inserted.isDeleted,
+				};
+				// return res.status(200).send({ status:'200', message: "success!" , data: languageData });
+				return apiResponses.successResponseWithData(
+					res,
+					'success!',
+					languageData,
+				);
+			}
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
-});
-
+};
 
 module.exports.languageUpdate = async (req, res) => {
 	// #swagger.tags = ['Language']
@@ -70,11 +68,14 @@ module.exports.languageUpdate = async (req, res) => {
                             schema: { $id: "", $en_name: "", $ar_name: "", $isActive: ""}
                     } */
 	try {
-		await Language.update({
-			en_name: req.body.en_name,
-			ar_name: req.body.ar_name,
-			isActive: req.body.isActive,
-		}, {where: {id: req.body.id}})
+		await Language.update(
+			{
+				en_name: req.body.en_name,
+				ar_name: req.body.ar_name,
+				isActive: req.body.isActive,
+			},
+			{where: {id: req.body.id}},
+		)
 			.then((language) => {
 				if (!language) {
 					/* #swagger.responses[404] = {
@@ -82,18 +83,14 @@ module.exports.languageUpdate = async (req, res) => {
                                schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
                            } */
 					// return res.status(404).send({ message: "Not found." });
-					return apiResponses.notFoundResponse(
-						res, 'Not found.', {},
-					);
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
 				/* #swagger.responses[200] = {
                             description: "success!",
                             schema: { $en_name: "en_name", $ar_name: "ar_name", $isActive: "isActive", $isDeleted: "isDeleted"}
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: language });
-				return apiResponses.successResponseWithData(
-					res, 'Success', language,
-				);
+				return apiResponses.successResponseWithData(res, 'Success', language);
 			})
 			.catch((err) => {
 				/* #swagger.responses[500] = {
@@ -107,7 +104,6 @@ module.exports.languageUpdate = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
-
 
 module.exports.getLanguages = (req, res) => {
 	// Get Country from Database
@@ -125,8 +121,12 @@ module.exports.getLanguages = (req, res) => {
 					{
 						ar_name: {[Op.like]: `%${search}%`},
 					},
-				], isDeleted: 0, isActive: 1},
+				],
+				isDeleted: 0,
+				isActive: 1,
+			},
 			limit: limit,
+			order: [['createdAt', 'DESC']],
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -134,9 +134,7 @@ module.exports.getLanguages = (req, res) => {
 				//   user: data,
 				// });
 
-				return apiResponses.successResponseWithData(
-					res, 'success', data,
-				);
+				return apiResponses.successResponseWithData(res, 'success', data);
 			})
 			.catch((err) => {
 				/* #swagger.responses[500] = {
@@ -146,21 +144,21 @@ module.exports.getLanguages = (req, res) => {
 				// return res.status(500).send({ message: err.message });
 				res.status(500).send({
 					message:
-                        err.message ||
-						'Some error occurred while retrieving Country.',
+            err.message || 'Some error occurred while retrieving Country.',
 				});
 			});
 	} else {
 		Language.findAndCountAll({
-			where: {isDeleted: 0, isActive: 1}, limit: limit})
+			where: {isDeleted: 0, isActive: 1},
+			limit: limit,
+			order: [['createdAt', 'DESC']],
+		})
 			.then((result) => {
 				// res.status(200).send({
 				//   status: "200",
 				//   user: result,
 				// });
-				return apiResponses.successResponseWithData(
-					res, 'success', result,
-				);
+				return apiResponses.successResponseWithData(res, 'success', result);
 			})
 			.catch((err) => {
 				/* #swagger.responses[500] = {
@@ -187,9 +185,7 @@ module.exports.getLanguage = (req, res) => {
 			//   user: data,
 			// });
 
-			return apiResponses.successResponseWithData(
-				res, 'success', data,
-			);
+			return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			/* #swagger.responses[500] = {
@@ -198,20 +194,20 @@ module.exports.getLanguage = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-                    err.message ||
-                    'Some error occurred while retrieving Country.',
+				message: err.message || 'Some error occurred while retrieving Country.',
 			});
 		});
 };
 
-
 module.exports.deleteLanguage = async (req, res) => {
 	// #swagger.tags = ['Language']
 	try {
-		await Language.update({
-			isDeleted: 1,
-		}, {where: {id: req.params.id}})
+		await Language.update(
+			{
+				isDeleted: 1,
+			},
+			{where: {id: req.params.id}},
+		)
 			.then((language) => {
 				if (!language) {
 					/* #swagger.responses[404] = {
@@ -219,17 +215,13 @@ module.exports.deleteLanguage = async (req, res) => {
                                schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
                            } */
 					// return res.status(404).send({ message: "Not found." });
-					return apiResponses.notFoundResponse(
-						res, 'Not found.', {},
-					);
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
 				/* #swagger.responses[200] = {
                             description: "success!",
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: industrial });
-				return apiResponses.successResponseWithData(
-					res, 'Success', language,
-				);
+				return apiResponses.successResponseWithData(res, 'Success', language);
 			})
 			.catch((err) => {
 				/* #swagger.responses[500] = {

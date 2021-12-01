@@ -1,4 +1,4 @@
-const { UserRole } = require('../enum');
+const {UserRole} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define('user', {
     id: {
@@ -55,4 +55,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
   });
+	
 };

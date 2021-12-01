@@ -38,6 +38,7 @@ module.exports.viewtestimonials = (req, res) => {
 		include: [
 			{model: User, required: false, attributes: ['fullname', 'email']},
 		],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((testimonials) => {
 			if (!testimonials) {

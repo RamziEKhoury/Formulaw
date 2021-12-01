@@ -30,11 +30,7 @@ module.exports.registration = async (req, res) => {
                             description: "User registered successfully!",
                             schema: { $statusCode : 200 ,$status: true, $message: "User registered successfully!", $data : {}}
                         } */
-			const token = createToken(
-				user.id,
-				user.email,
-				user.role,
-			);
+			const token = createToken(user.id, user.email, user.role);
 			const userData = {
 				id: user.id,
 				fullname: user.fullname,
@@ -47,11 +43,9 @@ module.exports.registration = async (req, res) => {
 				phoneNumber: user.phoneNumber,
 				isActive: user.isActive,
 				token: token,
-
 			};
 
 			await Mail.userRegistration(user.email);
-
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {
 				await Mail.userRegistrationAdminMail(adminMail[i].email);
@@ -108,7 +102,9 @@ module.exports.userLogin = (req, res) => {
 				//   message: "Invalid Password!"
 				// });
 				return apiResponses.unauthorizedResponse(
-					res, 'Invalid Password!', null,
+					res,
+					'Invalid Password!',
+					null,
 				);
 			}
 			if (user.isDeleted) {
@@ -121,16 +117,14 @@ module.exports.userLogin = (req, res) => {
 				//   message: "User not available."
 				// });
 				return apiResponses.unauthorizedResponse(
-					res, 'User not available', null,
+					res,
+					'User not available',
+					null,
 				);
 			}
 
-			const token = createToken(
-				user.id,
-				user.email,
-				user.role,
-			);
-				/* #swagger.responses[500] = {
+			const token = createToken(user.id, user.email, user.role);
+			/* #swagger.responses[500] = {
                         description: "User logged in!",
                         schema: { $id: "user id", $email: "user email",  $accessToken: "user token"}
                     } */
@@ -154,7 +148,9 @@ module.exports.userLogin = (req, res) => {
 				token: token,
 			};
 			return apiResponses.successResponseWithData(
-				res, 'Successfully login', obj,
+				res,
+				'Successfully login',
+				obj,
 			);
 		});
 	} else if (req.body.userType === 'google') {
@@ -163,73 +159,64 @@ module.exports.userLogin = (req, res) => {
 				email: req.body.email,
 				userType: req.body.userType,
 			},
-		})
-			.then(async (user) => {
-				if (!user) {
-					User.create({
-						fullname: req.body.fullname,
-						lastname: req.body.lastname,
-						email: req.body.email,
-						userType: req.body.userType,
-						country: req.body.country,
-						city: req.body.city,
-						phoneNumber: req.body.phoneNumber,
-						isActive: req.body.isActive,
-					})
-						.then(async (user) => {
-							const token = createToken(
-								user.id,
-								user.email,
-								user.role,
-							);
-							const userData = {
-								id: user.id,
-								fullname: user.fullname,
-								lastname: user.lastname,
-								email: user.email,
-								country: user.country,
-								city: user.city,
-								phoneNumber: user.phoneNumber,
-								userType: user.userType,
-								isActive: user.isActive,
-								role: user.role,
-								lawfirmid: user.lawfirmid,
-								token: token,
-
-							};
-							await Mail.userRegistration(user.email);
-							// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
-							return apiResponses.successResponseWithData(
-								res,
-								'Success!',
-								userData,
-							);
-						});
-				} else {
-					const token = createToken(
-						user.id,
-						user.email,
-						user.role,
-					);
-					const obj = {
+		}).then(async (user) => {
+			if (!user) {
+				User.create({
+					fullname: req.body.fullname,
+					lastname: req.body.lastname,
+					email: req.body.email,
+					userType: req.body.userType,
+					country: req.body.country,
+					city: req.body.city,
+					phoneNumber: req.body.phoneNumber,
+					isActive: req.body.isActive,
+				}).then(async (user) => {
+					const token = createToken(user.id, user.email, user.role);
+					const userData = {
 						id: user.id,
-						email: user.email,
+						fullname: user.fullname,
 						lastname: user.lastname,
+						email: user.email,
 						country: user.country,
 						city: user.city,
 						phoneNumber: user.phoneNumber,
-						fullname: user.fullname,
 						userType: user.userType,
 						isActive: user.isActive,
 						role: user.role,
 						lawfirmid: user.lawfirmid,
 						token: token,
 					};
+					await Mail.userRegistration(user.email);
+					// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 					return apiResponses.successResponseWithData(
-						res, 'Successfully login', obj,
+						res,
+						'Success!',
+						userData,
 					);
-				}
-			});
+				});
+			} else {
+				const token = createToken(user.id, user.email, user.role);
+				const obj = {
+					id: user.id,
+					email: user.email,
+					lastname: user.lastname,
+					country: user.country,
+					city: user.city,
+					phoneNumber: user.phoneNumber,
+					fullname: user.fullname,
+					userType: user.userType,
+					isActive: user.isActive,
+					role: user.role,
+					lawfirmid: user.lawfirmid,
+					token: token,
+				};
+				return apiResponses.successResponseWithData(
+					res,
+					'Successfully login',
+					obj,
+				);
+			}
+		});
 	} else {
 		User.findOne({
 			where: {
@@ -248,42 +235,32 @@ module.exports.userLogin = (req, res) => {
 						phoneNumber: req.body.phoneNumber,
 						userType: req.body.userType,
 						isActive: req.body.isActive,
-					})
-						.then(async (user) => {
-							const token = createToken(
-								user.id,
-								user.email,
-								user.role,
-							);
-							const userData = {
-								id: user.id,
-								fullname: user.fullname,
-								email: user.email,
-								lastname: user.lastname,
-								country: user.country,
-								city: user.city,
-								phoneNumber: user.phoneNumber,
-								userType: user.userType,
-								isActive: user.isActive,
-								role: user.role,
-								lawfirmid: user.lawfirmid,
-								token: token,
-
-							};
-							await Mail.userRegistration(user.email);
-							// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
-							return apiResponses.successResponseWithData(
-								res,
-								'Success!',
-								userData,
-							);
-						});
+					}).then(async (user) => {
+						const token = createToken(user.id, user.email, user.role);
+						const userData = {
+							id: user.id,
+							fullname: user.fullname,
+							email: user.email,
+							lastname: user.lastname,
+							country: user.country,
+							city: user.city,
+							phoneNumber: user.phoneNumber,
+							userType: user.userType,
+							isActive: user.isActive,
+							role: user.role,
+							lawfirmid: user.lawfirmid,
+							token: token,
+						};
+						await Mail.userRegistration(user.email);
+						// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
+						return apiResponses.successResponseWithData(
+							res,
+							'Success!',
+							userData,
+						);
+					});
 				} else {
-					const token = createToken(
-						user.id,
-						user.email,
-						user.role,
-					);
+					const token = createToken(user.id, user.email, user.role);
 					const obj = {
 						id: user.id,
 						email: user.email,
@@ -299,7 +276,9 @@ module.exports.userLogin = (req, res) => {
 						token: token,
 					};
 					return apiResponses.successResponseWithData(
-						res, 'Successfully login', obj,
+						res,
+						'Successfully login',
+						obj,
 					);
 				}
 			})
@@ -336,7 +315,6 @@ module.exports.emailVarify = async (req, res) => {
 };
 
 module.exports.userUpdate = async (req, res) => {
-	console.log('hgvjhgh', req.body);
 	try {
 		User.update(
 			{
@@ -366,17 +344,17 @@ module.exports.userUpdate = async (req, res) => {
 module.exports.users = async (req, res) => {
 	try {
 		const limit = req.params.limit;
-		User.findAll({limit: limit}).then(async (result) => {
-			/* #swagger.responses[404] = {
+		User.findAll({limit: limit, order: [['createdAt', 'DESC']]}).then(
+			async (result) => {
+				/* #swagger.responses[404] = {
                        description: "Email Not found.",
                        schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
                    } */
-			// return res.status(404).send({ message: "User Not found." });
+				// return res.status(404).send({ message: "User Not found." });
 
-			return apiResponses.successResponseWithData(
-				res, 'success!', result,
-			);
-		});
+				return apiResponses.successResponseWithData(res, 'success!', result);
+			},
+		);
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
@@ -390,10 +368,31 @@ module.exports.getUser = async (req, res) => {
                    } */
 			// return res.status(404).send({ message: "User Not found." });
 
-			return apiResponses.successResponseWithData(
-				res, 'success!', result,
-			);
+			return apiResponses.successResponseWithData(res, 'success!', result);
 		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+
+module.exports.userDeviceTokenUpdate = async (req, res) => {
+	try {
+		User.update(
+			{
+				deviceToken: req.body.deviceToken,
+			},
+			{where: {id: req.params.id}},
+		)
+			.then(async (user) => {
+				if (!user) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				return apiResponses.successResponseWithData(res, 'Success', user);
+			})
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module.exports=(app)=> {
 	require('./role.route')(app);
 	require('./language.route')(app);
@@ -30,4 +31,5 @@ module.exports=(app)=> {
 	require('./preOrder.route')(app);
 	require("./policy.route")(app);
 	require("./userSubscription.route")(app);
+  require('./notification.route')(app);
 };

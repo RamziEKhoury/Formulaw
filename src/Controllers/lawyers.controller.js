@@ -10,7 +10,8 @@ const Op = db.Sequelize.Op;
 // eslint-disable-next-line require-jsdoc
 function generatePassword() {
 	const length = 8;
-	const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	const charset =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	let retVal = '';
 	for (let i = 0, n = charset.length; i < length; ++i) {
 		retVal += charset.charAt(Math.floor(Math.random() * n));
@@ -50,7 +51,7 @@ module.exports.addLawyer = async (req, res) => {
 				languageTitle: req.body.languageTitle,
 				expertise: req.body.expertise,
 				jurisdiction: req.body.jurisdiction,
-			    rating: req.body.rating,
+				rating: req.body.rating,
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
@@ -186,7 +187,7 @@ module.exports.getLawyers = (req, res) => {
 		where: {lawFirmId: req.params.lawFirmId},
 		isDeleted: 0,
 		isActive: 1,
-
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -202,8 +203,7 @@ module.exports.getLawyers = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving Lawyers.',
+				message: err.message || 'Some error occurred while retrieving Lawyers.',
 			});
 		})
 		.catch((err) => {
@@ -223,7 +223,6 @@ module.exports.getLawyer = (req, res) => {
 	// #swagger.tags = ['LawFirm']
 	Lawyer.findOne({
 		where: {id: req.params.id, isDeleted: 0},
-
 	})
 		.then((data) => {
 			// res.status(200).send({

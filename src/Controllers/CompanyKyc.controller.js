@@ -4,27 +4,26 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addCompanyKycDetails = async (req, res) => {
-	console.log("dfdgsgdfh",req.body);
+	console.log('dfdgsgdfh', req.body);
 	try {
 		Companykyc.create({
-				userId: req.body.userId,
-				passport: req.body.passport,
-                crNumber:req.body.crNumber,
-				companyName: req.body.companyName,
-				officeAddress: req.body.officeAddress,
-                photo:req.body.photo,
-				ParmanentAddress: req.body.ParmanentAddress,
-				PhnNumber: req.body.PhnNumber,
-			}).then((companyKycDetail) => {
-				return apiResponses.successResponseWithData(
-					res,
-					'success!',
-					companyKycDetail,
-				);
-			}
-		);
+			userId: req.body.userId,
+			passport: req.body.passport,
+			crNumber: req.body.crNumber,
+			companyName: req.body.companyName,
+			officeAddress: req.body.officeAddress,
+			photo: req.body.photo,
+			ParmanentAddress: req.body.ParmanentAddress,
+			PhnNumber: req.body.PhnNumber,
+		}).then((companyKycDetail) => {
+			return apiResponses.successResponseWithData(
+				res,
+				'success!',
+				companyKycDetail,
+			);
+		});
 	} catch (err) {
-        console.log("errr===========",err);
+		console.log('errr===========', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -34,10 +33,10 @@ module.exports.updateCompanyKycDetails = async (req, res) => {
 		await Companykyc.update(
 			{
 				passport: req.body.passport,
-                crNumber:req.body.crNumber,
+				crNumber: req.body.crNumber,
 				companyName: req.body.companyName,
 				officeAddress: req.body.officeAddress,
-                photo:req.body.photo,
+				photo: req.body.photo,
 				ParmanentAddress: req.body.ParmanentAddress,
 				PhnNumber: req.body.PhnNumber,
 			},
@@ -47,7 +46,11 @@ module.exports.updateCompanyKycDetails = async (req, res) => {
 				if (!companyKycDetail) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				return apiResponses.successResponseWithData(res, 'Success', companyKycDetail);
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					companyKycDetail,
+				);
 			})
 			.catch((err) => {
 				return apiResponses.errorResponse(res, err.message, {});
@@ -63,14 +66,14 @@ module.exports.getallUserCompanyKycDetails = (req, res) => {
 		include: [
 			{model: User, required: false, attributes: ['fullname', 'email']},
 		],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving data.',
+				message: err.message || 'Some error occurred while retrieving data.',
 			});
 		})
 		.catch((err) => {
@@ -109,7 +112,11 @@ module.exports.CompanykycStatus = async (req, res) => {
 				if (!companyKycDetail) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				return apiResponses.successResponseWithData(res, 'Success', companyKycDetail);
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					companyKycDetail,
+				);
 			})
 			.catch((err) => {
 				return apiResponses.errorResponse(res, err.message, {});

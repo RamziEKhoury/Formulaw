@@ -5,7 +5,7 @@ const Admin = db.adminUser;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
-module.exports.getRooms = (async (req, res) => {
+module.exports.getRooms = async (req, res) => {
 	try {
 		RoomController.findAll({
 			include: [
@@ -26,19 +26,14 @@ module.exports.getRooms = (async (req, res) => {
 				},
 			],
 			isActive: 1,
-		})
-			.then(async (rooms) => {
-				return apiResponses.successResponseWithData(
-					res,
-					'Success!',
-					rooms,
-				);
-			});
+			order: [['createdAt', 'DESC']],
+		}).then(async (rooms) => {
+			return apiResponses.successResponseWithData(res, 'Success!', rooms);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
-});
-
+};
 
 module.exports.getRoomById = (req, res) => {
 	// Get RoomController from Database
@@ -69,9 +64,7 @@ module.exports.getRoomById = (req, res) => {
 			//   user: data,
 			// });
 
-			return apiResponses.successResponseWithData(
-				res, 'success', data,
-			);
+			return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			/* #swagger.responses[500] = {
@@ -81,12 +74,10 @@ module.exports.getRoomById = (req, res) => {
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
 				message:
-                    err.message ||
-                    'Some error occurred while retrieving RoomController.',
+          err.message || 'Some error occurred while retrieving RoomController.',
 			});
 		});
 };
-
 
 module.exports.getRoomByAppointmentId = (req, res) => {
 	// Get RoomController from Database
@@ -117,9 +108,7 @@ module.exports.getRoomByAppointmentId = (req, res) => {
 			//   user: data,
 			// });
 
-			return apiResponses.successResponseWithData(
-				res, 'success', data,
-			);
+			return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			/* #swagger.responses[500] = {
@@ -129,8 +118,7 @@ module.exports.getRoomByAppointmentId = (req, res) => {
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
 				message:
-					err.message ||
-					'Some error occurred while retrieving RoomController.',
+          err.message || 'Some error occurred while retrieving RoomController.',
 			});
 		});
 };

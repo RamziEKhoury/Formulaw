@@ -3,29 +3,26 @@ const Journey = db.journey;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addJourney = async (req, res) => {
-	console.log("dfdgsgdfh",req.body);
+	console.log('dfdgsgdfh', req.body);
 	try {
-        Journey.findAll()
-                .then((data)=>{
-                    const jLength = data.length;
-                    console.log(jLength);
-                     if(jLength <= 2){
-                return Journey.create({
-                            title: req.body.title,
-                            description: req.body.description,
-                            sortNumber: req.body.sortNumber,
-                            icon: req.body.icon,
-                        }).then((journey) => {
-                // console.log('journey--->', journey);
-    
-                // return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
-                            return apiResponses.successResponseWithData(  res, 'success!',journey, );
-            },
-            );
-        } 
-        res.status(209).json("your can not add more than 3!")
-        
-    })
+		Journey.findAll({order: [['createdAt', 'DESC']]}).then((data) => {
+			const jLength = data.length;
+			console.log(jLength);
+			if (jLength <= 2) {
+				return Journey.create({
+					title: req.body.title,
+					description: req.body.description,
+					sortNumber: req.body.sortNumber,
+					icon: req.body.icon,
+				}).then((journey) => {
+					// console.log('journey--->', journey);
+
+					// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
+					return apiResponses.successResponseWithData(res, 'success!', journey);
+				});
+			}
+			res.status(209).json('your can not add more than 3!');
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
@@ -33,21 +30,20 @@ module.exports.addJourney = async (req, res) => {
 
 module.exports.updateJourney = async (req, res) => {
 	try {
-		await Journey.update({
-			title: req.body.title,
-			description: req.body.description,
-			sortNumber: req.body.sortNumber,
-            icon: req.body.icon,
-		}, {where: {id: req.body.id}})
+		await Journey.update(
+			{
+				title: req.body.title,
+				description: req.body.description,
+				sortNumber: req.body.sortNumber,
+				icon: req.body.icon,
+			},
+			{where: {id: req.body.id}},
+		)
 			.then((journey) => {
 				if (!journey) {
-					return apiResponses.notFoundResponse(
-						res, 'Not found.', {},
-					);
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				return apiResponses.successResponseWithData(
-					res, 'Success', journey,
-				);
+				return apiResponses.successResponseWithData(res, 'Success', journey);
 			})
 			.catch((err) => {
 				return apiResponses.errorResponse(res, err.message, {});
@@ -58,14 +54,13 @@ module.exports.updateJourney = async (req, res) => {
 };
 
 module.exports.getJourneys = (req, res) => {
-	Journey.findAll()
+	Journey.findAll({order: [['createdAt', 'DESC']]})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving data.',
+				message: err.message || 'Some error occurred while retrieving data.',
 			});
 		})
 		.catch((err) => {
@@ -92,18 +87,12 @@ module.exports.getJourney = (req, res) => {
 module.exports.deleteJourney = async (req, res) => {
 	// #swagger.tags = ['Country']
 	try {
-		await Journey.destroy(
-			
-		{where: {id: req.params.id}})
+		await Journey.destroy({where: {id: req.params.id}})
 			.then((journey) => {
 				if (!journey) {
-					return apiResponses.notFoundResponse(
-						res, 'Not found.', {},
-					);
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				return apiResponses.successResponseWithData(
-					res, 'Success', journey,
-				);
+				return apiResponses.successResponseWithData(res, 'Success', journey);
 			})
 			.catch((err) => {
 				return apiResponses.errorResponse(res, err.message, {});

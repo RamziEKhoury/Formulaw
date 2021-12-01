@@ -2,7 +2,6 @@ const db = require('../models');
 const LawFirmTax = db.lawFirm_tax;
 const apiResponses = require('../Components/apiresponse');
 
-
 module.exports.addLawFirmTax = async (req, res) => {
 	// get input values from reqeust.
 	const taxData = req.body.values;
@@ -11,15 +10,14 @@ module.exports.addLawFirmTax = async (req, res) => {
 
 	try {
 		if (taxData === undefined || taxData === '') {
-			res.send({status: 409, msg: 'Tax Data should not be empty.',
-			});
+			res.send({status: 409, msg: 'Tax Data should not be empty.'});
 		}
-		taxData.map((tax, i)=>{
-			const taxes ={
+		taxData.map((tax, i) => {
+			const taxes = {
 				taxType: tax.label,
 				countryId: tax.value,
-                tax:tax.tax,
-				countryTitle:tax.countryTitle,
+				tax: tax.tax,
+				countryTitle: tax.countryTitle,
 				lawFirmId: lawFirmId,
 			};
 			// #swagger.tags = ['LawFirmTax']
@@ -33,14 +31,13 @@ module.exports.addLawFirmTax = async (req, res) => {
 		});
 		return apiResponses.successResponseWithData(res, 'success!');
 	} catch (err) {
-        console.log("errgdfhjfgjhgk",err);
+		console.log('errgdfhjfgjhgk', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
 
-
 module.exports.getLawFirmTaxes = (req, res) => {
-    // console.log("kjngf",req.lawFirmId);
+	// console.log("kjngf",req.lawFirmId);
 	// Get Lawfirm data from Database
 	// #swagger.tags = ['LawFirmTax']
 
@@ -48,6 +45,7 @@ module.exports.getLawFirmTaxes = (req, res) => {
 		where: {lawFirmId: req.body.lawFirmId},
 		isDeleted: 0,
 		isActive: 1,
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -63,9 +61,7 @@ module.exports.getLawFirmTaxes = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-                   err.message ||
-					'Some error occurred while retrieving Lawfirm.',
+				message: err.message || 'Some error occurred while retrieving Lawfirm.',
 			});
 		})
 		.catch((err) => {
@@ -101,7 +97,8 @@ module.exports.getLawFirmTax = (req, res) => {
                               } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message: err.message || 'Some error occurred while retrieving LawFirmTax.',
+				message:
+          err.message || 'Some error occurred while retrieving LawFirmTax.',
 			});
 		});
 };

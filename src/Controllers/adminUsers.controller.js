@@ -207,7 +207,7 @@ module.exports.userProfile = (req, res) => {
 module.exports.admins = (req, res) => {
 	// Get User from Database
 	// #swagger.tags = ['Auth']
-	Admin.findAll()
+	Admin.findAll({order: [['createdAt', 'DESC']]})
 		.then(async (users) => {
 			if (users.length === 0) {
 				/* #swagger.responses[404] = {

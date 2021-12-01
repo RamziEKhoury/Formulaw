@@ -32,7 +32,7 @@ module.exports.addcommunity = async (req, res) => {
 };
 
 module.exports.viewcommunities = (req, res) => {
-	Community.findAll()
+	Community.findAll({order: [['createdAt', 'DESC']]})
 		.then((communities) => {
 			if (!communities) {
 				return apiResponses.notFoundResponse(res, 'Data Not found.', null);
@@ -147,6 +147,7 @@ module.exports.viewallcommunity_type = (req, res) => {
 		where: {
 			communityId: req.params.communityId,
 		},
+		order: [['createdAt', 'DESC']],
 	})
 		.then((community_type) => {
 			if (!community_type) {

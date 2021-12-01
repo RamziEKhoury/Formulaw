@@ -21,21 +21,15 @@ module.exports.addBanner = async (req, res) => {
 		}).then((banner) => {
 			// console.log('banner--->', banner);
 			// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
-			return apiResponses.successResponseWithData(
-				res,
-				'success!',
-				banner,
-			);
-		},
-		);
+			return apiResponses.successResponseWithData(res, 'success!', banner);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
 };
 
-
 module.exports.getBanners = (req, res) => {
-	Banner.findAll()
+	Banner.findAll({order: [['createdAt', 'DESC']]})
 		.then((data) => {
 			// res.status(200).send({
 			//   status: "200",
@@ -50,8 +44,7 @@ module.exports.getBanners = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving data.',
+				message: err.message || 'Some error occurred while retrieving data.',
 			});
 		})
 		.catch((err) => {
@@ -71,7 +64,6 @@ module.exports.getBanner = (req, res) => {
 	// #swagger.tags = ['Banner']
 	Banner.findOne({
 		where: {id: req.params.id},
-
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -92,4 +84,3 @@ module.exports.getBanner = (req, res) => {
 			});
 		});
 };
-

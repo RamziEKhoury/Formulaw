@@ -35,7 +35,7 @@ module.exports.addLawFirm = async (req, res) => {
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
 				jurisdiction: req.body.jurisdiction,
-			    rating: req.body.rating,
+				rating: req.body.rating,
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
@@ -161,9 +161,9 @@ module.exports.getLawFirms = (req, res) => {
 			{
 				model: LawFirmIndustry,
 			},
-
 		],
 		limit: limit,
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -179,8 +179,7 @@ module.exports.getLawFirms = (req, res) => {
                             } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message:
-            err.message || 'Some error occurred while retrieving Lawfirm.',
+				message: err.message || 'Some error occurred while retrieving Lawfirm.',
 			});
 		})
 		.catch((err) => {
@@ -208,7 +207,6 @@ module.exports.getLawFirm = (req, res) => {
 			{
 				model: LawFirmIndustry,
 			},
-
 		],
 	})
 		.then((data) => {
@@ -268,58 +266,54 @@ module.exports.deleteLawFirm = async (req, res) => {
 	}
 };
 
-
-module.exports.getlawFirmsDetails = async (req, res) =>{
+module.exports.getlawFirmsDetails = async (req, res) => {
 	try {
 		LawFirm.findAll({
 			include: [
 				{
-			      model: LawFirmService,
-			       },
+					model: LawFirmService,
+				},
 
-				   {
+				{
 					model: LawFirmIndustry,
-					 },
+				},
 
-					 {
+				{
 					model: LawFirmTax,
-						 },
-
+				},
 			],
-		  })
-		  .then((lawfirms)=>{
-			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-		  });
+			order: [['createdAt', 'DESC']],
+		}).then((lawfirms) => {
+			return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
 };
 
-module.exports.getlawFirmDetails = async (req, res) =>{
+module.exports.getlawFirmDetails = async (req, res) => {
 	const lawFirmId = req.params.lawFirmId;
 	try {
 		LawFirm.findOne({
 			where: {id: lawFirmId},
 			include: [
 				{
-			      model: LawFirmService,
-			       },
-				   {
+					model: LawFirmService,
+				},
+				{
 					model: LawFirmIndustry,
-					 },
-					 {
+				},
+				{
 					model: LawFirmTax,
-						 },
+				},
 			],
-		  })
-		  .then((lawfirms)=>{
-			  return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-		  });
+		}).then((lawfirms) => {
+			return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
 };
-
 
 module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 	try {

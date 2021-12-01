@@ -143,6 +143,7 @@ module.exports.getServiceSubcategories = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
+			order: [['createdAt', 'DESC']],
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -171,6 +172,7 @@ module.exports.getServiceSubcategories = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
+			order: [['createdAt', 'DESC']],
 		})
 			.then((result) => {
 				// res.status(200).send({
