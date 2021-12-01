@@ -7,7 +7,6 @@ module.exports.addnotification = async (req, res) => {
 	try {
 		console.log(req.body);
 		Notification.create({
-			id: req.body.id,
 			title: req.body.title,
 			message: req.body.message,
 			senderName: req.body.senderName,
@@ -15,7 +14,6 @@ module.exports.addnotification = async (req, res) => {
 			senderType: req.body.senderType,
 			receiverid: req.body.receiverid,
 			notificationType: req.body.notificationType,
-
 			target: req.body.target,
 		}).then((notification) => {
 			const notificationData = {
@@ -77,9 +75,83 @@ module.exports.updatenotification = async (req, res) => {
 	}
 };
 
+module.exports.markOneRead = async (req, res) => {
+	try {
+		await Notification.update(
+			{
+				status: true,
+			},
+			{where: {id: req.params.id}},
+		)
+			.then((notification) => {
+				if (!notification) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					notification,
+				);
+			})
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.markAllRead = async (req, res) => {
+	try {
+		await Notification.update(
+			{
+				status: true,
+			},
+			{where: {receiverid: req.params.id}},
+		)
+			.then((notification) => {
+				if (!notification) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					notification,
+				);
+			})
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
 module.exports.deletenotification = async (req, res) => {
 	try {
-		await Notification.destroy({where: {id: req.params.id}})
+		await Notification.destroy({where: {receiverid: req.params.id}})
+			.then((notification) => {
+				if (!notification) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					notification,
+				);
+			})
+			.catch((err) => {});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.deleteAll = async (req, res) => {
+	try {
+		await Notification.destroy({where: {receiverid: req.params.id}})
 			.then((notification) => {
 				if (!notification) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
@@ -149,6 +221,31 @@ module.exports.unreadnotification = (req, res) => {
 		});
 };
 
+module.exports.userNotifications = (req, res) => {
+	console.log(req.params);
+
+	Notification.findAll({
+		where: {
+			receiverid: req.params.id,
+		},
+		order: [['createdAt', 'DESC']],
+	})
+		.then((notification) => {
+			if (!notification) {
+				return apiResponses.notFoundResponse(res, 'Data Not found.', null);
+			}
+
+			return apiResponses.successResponseWithData(
+				res,
+				'successfully found!',
+				notification,
+			);
+		})
+		.catch((err) => {
+			return apiResponses.errorResponse(res, err.message, err);
+		});
+};
+
 module.exports.countreadnotification = (req, res) => {
 	console.log(req.params);
 
@@ -193,7 +290,7 @@ module.exports.countunreadnotification = (req, res) => {
 			return apiResponses.successResponseWithData(
 				res,
 				'successfully found!',
-				notification,
+				notification.count,
 			);
 		})
 		.catch((err) => {

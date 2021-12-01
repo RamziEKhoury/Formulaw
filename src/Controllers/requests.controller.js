@@ -2,9 +2,10 @@ const db = require('../models');
 const Request = db.request;
 const Admin = db.adminUser;
 const Appointment = db.appointment;
+const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
-const {appointment} = require('../models');
+const Notifications = require('../Config/Notifications');
 const Op = db.Sequelize.Op;
 
 module.exports.createRequest = async (req, res) => {
@@ -41,6 +42,20 @@ module.exports.createRequest = async (req, res) => {
 				isActive: request.isActive,
 				isDeleted: request.isDeleted,
 			};
+
+			const device = await User.findOne({where: {id: req.body.userId}});
+			const notiData = {
+				title: request.getstarted,
+				message: 'New lead created.',
+				senderName: device.fullname,
+				senderId: req.body.userId,
+				senderType: 'LEAD',
+				receiverid: req.body.userId,
+				notificationType: null,
+				target: 'Lead',
+			};
+			await Notifications.notificationCreate(notiData);
+			await Notifications.notification(device.deviceToken, 'New lead created.');
 			await Mail.userLeadSubmitted(request.email, request.getstarted);
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {

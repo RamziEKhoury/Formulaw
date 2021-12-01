@@ -43,4 +43,9 @@ module.exports= function(app) {
 		'/api/v1/auth/user/get-user/:id',
 		usersController.getUser,
 	);
+
+	app.post(
+		'/api/v1/auth/user/update-deviceToken/:id',
+		usersController.userDeviceTokenUpdate,
+	);
 };

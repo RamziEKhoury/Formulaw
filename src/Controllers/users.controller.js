@@ -45,7 +45,6 @@ module.exports.registration = async (req, res) => {
 			};
 
 			await Mail.userRegistration(user.email);
-
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {
 				await Mail.userRegistrationAdminMail(adminMail[i].email);
@@ -315,7 +314,6 @@ module.exports.emailVarify = async (req, res) => {
 };
 
 module.exports.userUpdate = async (req, res) => {
-	console.log('hgvjhgh', req.body);
 	try {
 		User.update(
 			{
@@ -371,6 +369,29 @@ module.exports.getUser = async (req, res) => {
 
 			return apiResponses.successResponseWithData(res, 'success!', result);
 		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+
+module.exports.userDeviceTokenUpdate = async (req, res) => {
+	try {
+		User.update(
+			{
+				deviceToken: req.body.deviceToken,
+			},
+			{where: {id: req.params.id}},
+		)
+			.then(async (user) => {
+				if (!user) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				return apiResponses.successResponseWithData(res, 'Success', user);
+			})
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

@@ -9,6 +9,7 @@ const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
 const moment = require('moment');
+const Notifications = require('../Config/Notifications');
 
 module.exports.addAppointment = async (req, res) => {
 	try {
@@ -56,6 +57,20 @@ module.exports.addAppointment = async (req, res) => {
 				appointment.time,
 				appointment.date,
 			);
+
+			const device = await User.findOne({where: {id: req.body.customerId}});
+			const notiData = {
+				title: 'Appointment',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ appointment.time+'.',
+				senderName: device.fullname,
+				senderId: req.body.customerId,
+				senderType: 'APPOINTMENT',
+				receiverid: req.body.customerId,
+				notificationType: null,
+				target: 'Appointment',
+			};
+			await Notifications.notificationCreate(notiData);
+			await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ appointment.time+'.');
 
 			const adminMail = await Admin.findOne({
 				where: {
@@ -122,6 +137,27 @@ module.exports.changeStatus = async (req, res) => {
 						user.user.fullname,
 					);
 
+					const device = await User.findOne({where: {id: user.customerId}});
+					const notiData = {
+						title: 'Appointment',
+						message: 'Hi, Your appointment call is approved, Please be ready on time at <b> ' +
+							moment(user.date).format('DD/MM/YYYY') +
+							' </b> Time <b> ' + user.time +
+							'</b> we will connect with you soon.</p>',
+						senderName: device.fullname,
+						senderId: user.customerId,
+						senderType: 'APPOINTMENT',
+						receiverid: user.customerId,
+						notificationType: null,
+						target: 'Appointment',
+					};
+					await Notifications.notificationCreate(notiData);
+					await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved, Please be ready on time at <b> ' +
+						moment(user.date).format('DD/MM/YYYY') +
+						' </b> Time <b> ' + user.time +
+						'</b> we will connect with you soon.</p>');
+
+
 					await Mail.userAppointmentSchedule(
 						user.user.email,
 						user.time,
@@ -156,6 +192,20 @@ module.exports.changeStatus = async (req, res) => {
 							},
 						],
 					});
+
+					const device = await User.findOne({where: {id: user.customerId}});
+					const notiData = {
+						title: 'Appointment',
+						message: 'Hi, Your appointment  is approved now For Next Process',
+						senderName: device.fullname,
+						senderId: user.customerId,
+						senderType: 'APPOINTMENT',
+						receiverid: user.customerId,
+						notificationType: null,
+						target: 'Appointment',
+					};
+					await Notifications.notificationCreate(notiData);
+					await Notifications.notification(device.deviceToken, 'Hi, Your appointment  is approved now For Next Process');
 
 					await Mail.adminAppointmentApproved(
 						user.adminuser.email,

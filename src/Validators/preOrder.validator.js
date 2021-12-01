@@ -1,8 +1,8 @@
-const {body, sanitizeBody, validationResult,param} = require('express-validator');
+const {body, sanitizeBody, validationResult} = require('express-validator');
 const apiResponses = require('../Components/apiresponse');
 
 const addPreOrderValidator = [
-    body('appointmentId')
+	body('appointmentId')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('appointmentId must be specified.'),
@@ -14,19 +14,14 @@ const addPreOrderValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('subject  must be specified.'),
-    body('furtherInformation')
+	body('furtherInformation')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('furtherInformation  must be specified.'),
-    body('anyInformation')
+	body('anyInformation')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('anyInformation  must be specified.'),
-	body('document')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('document  must be specified.'),
-
 	sanitizeBody('userId').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -51,11 +46,11 @@ const updatePreOrderValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('subject  must be specified.'),
-    body('furtherInformation')
+	body('furtherInformation')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('furtherInformation  must be specified.'),
-    body('anyInformation')
+	body('anyInformation')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('anyInformation  must be specified.'),
@@ -80,11 +75,9 @@ const updatePreOrderValidator = [
 ];
 
 
-
-
 const preOrderValidator = {
 	addPreOrderValidator: addPreOrderValidator,
-    updatePreOrderValidator:updatePreOrderValidator,
+	updatePreOrderValidator: updatePreOrderValidator,
 };
 
 module.exports = preOrderValidator;

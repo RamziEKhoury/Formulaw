@@ -1,10 +1,7 @@
 const db = require('../models');
 const PreOrder = db.preOrder;
 const Request = db.request;
-const User = db.user;
-const Appointment = db.appointment;
 const apiResponses = require('../Components/apiresponse');
-const Op = db.Sequelize.Op;
 
 module.exports.addPreOrder = async (req, res) => {
 	console.log('sfdfgdg', req.body);
