@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 module.exports=(app)=> {
 	require('./role.route')(app);
 	require('./language.route')(app);
@@ -23,13 +22,13 @@ module.exports=(app)=> {
 	require('./community.route')(app);
 	require('./journey.route')(app);
 	require('./kyc.route')(app);
-	require("./multer.route")(app);
-	require("./companyKyc.route")(app);
+	require('./multer.route')(app);
+	require('./companyKyc.route')(app);
 	require('./multer.route')(app);
 	require('./chats.route')(app);
 	require('./mobileVerify.route')(app);
 	require('./preOrder.route')(app);
-	require("./policy.route")(app);
-	require("./userSubscription.route")(app);
-  require('./notification.route')(app);
+	require('./policy.route')(app);
+	require('./userSubscription.route')(app);
+	require('./notification.route')(app);
 };
