@@ -29,4 +29,5 @@ module.exports=(app)=> {
 	require('./mobileVerify.route')(app);
 	require('./preOrder.route')(app);
 	require("./policy.route")(app);
+	require("./userSubscription.route")(app);
 };

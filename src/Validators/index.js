@@ -20,6 +20,7 @@ const CommunityValidator = require("./Community.validator");
 const kycValidator = require('./kyc.validator')
 const CompanyKycValidor = require('./CompanyKyc.validator')
 const PreOrderValidator = require('./preOrder.validator')
+const userSubscriptionValidator = require('./userSubscription.validator')
 
 module.exports = {
   adminUserValidator,
@@ -44,4 +45,5 @@ module.exports = {
   kycValidator,
   CompanyKycValidor,
   PreOrderValidator,
+  userSubscriptionValidator
 };

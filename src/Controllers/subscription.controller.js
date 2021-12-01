@@ -3,7 +3,6 @@ const Subscription = db.subscription;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addSubscription = async (req, res) => {
-	// console.log("dfdgsgdfh",req.body);
 	try {
 		// #swagger.tags = ['Subscription']
 		console.log(req.body.title);
@@ -20,14 +19,16 @@ module.exports.addSubscription = async (req, res) => {
 			subscriptionType: req.body.subscriptionType,
 			price: req.body.price,
 			currency: req.body.currency,
+			numberOfMeating:req.body.numberOfMeating,
+			ipAudit:req.body.ipAudit,
+			meatingPlan:req.body.meatingPlan,
+			contractTemplates:req.body.contractTemplates,
+			discount:req.body.discount,
 			images: req.body.images,
 			logo: req.body.logo,
 			features: req.body.features,
 
 		}).then((subscription) => {
-			// console.log('subscription--->', subscription);
-
-			// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
@@ -76,7 +77,6 @@ module.exports.getSubscriptions = (req, res) => {
 
 module.exports.getSubscriptionsType = (req, res) => {
 	const durationType = req.params.durationType;
-	console.log(durationType);
 	Subscription.findAll({where: {
 		durationType: durationType,
 	}})

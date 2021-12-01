@@ -51,7 +51,10 @@ db.message = require('./messages.model')(sequelize, Sequelize);
 db.Company_kyc = require('./companyKyc.model')(sequelize, Sequelize);
 db.preOrder = require('./preOrder.model')(sequelize,Sequelize),
 db.policy = require("./policy.model")(sequelize, Sequelize);
+db.userSubscription = require("./userSubscription.model")(sequelize, Sequelize);
 
+db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'})
+db.userSubscription.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'})
 db.preOrder.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'})
 db.preOrder.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'})
 db.kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});

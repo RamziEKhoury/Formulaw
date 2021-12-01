@@ -46,6 +46,10 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: 0,
       type: Sequelize.INTEGER,
     },
+    isSubscribed: {
+      defaultValue: 0,
+      type: Sequelize.INTEGER,
+    },
     isActive: {
       defaultValue: 0,
       type: Sequelize.INTEGER,
