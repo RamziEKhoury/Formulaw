@@ -35,7 +35,26 @@ const addSubscriptionValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('features must be specified.'),
-	
+	body('discount')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('discount must be specified.'),
+	body('numberOfMeating')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('numberOfMeating must be specified.'),
+	body('meatingPlan')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('meatingPlan must be specified.'),
+	body('ipAudit')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('ipAudit must be specified.'),
+	body('contractTemplates')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('contractTemplates must be specified.'),
 	
 
 	sanitizeBody('title').escape(),
