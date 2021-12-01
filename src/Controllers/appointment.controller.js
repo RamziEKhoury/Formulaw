@@ -140,10 +140,9 @@ module.exports.changeStatus = async (req, res) => {
 					const device = await User.findOne({where: {id: user.customerId}});
 					const notiData = {
 						title: 'Appointment',
-						message: 'Hi, Your appointment call is approved, Please be ready on time at <b> ' +
-							moment(user.date).format('DD/MM/YYYY') +
-							' </b> Time <b> ' + user.time +
-							'</b> we will connect with you soon.</p>',
+						message: 'Hi, Your appointment call is approved, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
+							' time ' + user.time +
+							' we will connect with you soon.',
 						senderName: device.fullname,
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
@@ -152,10 +151,9 @@ module.exports.changeStatus = async (req, res) => {
 						target: 'Appointment',
 					};
 					await Notifications.notificationCreate(notiData);
-					await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved, Please be ready on time at <b> ' +
-						moment(user.date).format('DD/MM/YYYY') +
-						' </b> Time <b> ' + user.time +
-						'</b> we will connect with you soon.</p>');
+					await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
+						' time ' + user.time +
+						' we will connect with you soon.');
 
 
 					await Mail.userAppointmentSchedule(
