@@ -42,12 +42,16 @@ module.exports = (sequelize, Sequelize) => {
 		facebooktoken: {
 			type: Sequelize.STRING,
 		},
-		deviceToken: {
-			type: Sequelize.STRING,
-		},
 		isDeleted: {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,
+		},
+		isSubscribed: {
+			defaultValue: 0,
+			type: Sequelize.INTEGER,
+		},
+		deviceToken: {
+			type: Sequelize.STRING,
 		},
 		isActive: {
 			defaultValue: 0,
