@@ -55,7 +55,9 @@ module.exports.createRequest = async (req, res) => {
 				target: 'Lead',
 			};
 			await Notifications.notificationCreate(notiData);
-			await Notifications.notification(device.deviceToken, 'New lead created.');
+			if (!!device.deviceToken) {
+				await Notifications.notification(device.deviceToken, 'New lead created.');
+			}
 			await Mail.userLeadSubmitted(request.email, request.getstarted);
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {

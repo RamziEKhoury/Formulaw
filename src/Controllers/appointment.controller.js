@@ -70,8 +70,9 @@ module.exports.addAppointment = async (req, res) => {
 				target: 'Appointment',
 			};
 			await Notifications.notificationCreate(notiData);
-			await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ appointment.time+'.');
-
+			if (!!device.deviceToken) {
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' + appointment.time + '.');
+			}
 			const adminMail = await Admin.findOne({
 				where: {
 					id: appointment.adminId,
@@ -151,10 +152,11 @@ module.exports.changeStatus = async (req, res) => {
 						target: 'Appointment',
 					};
 					await Notifications.notificationCreate(notiData);
-					await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-						' time ' + user.time +
-						' we will connect with you soon.');
-
+					if (!!device.deviceToken) {
+						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
+							' time ' + user.time +
+							' we will connect with you soon.');
+					}
 
 					await Mail.userAppointmentSchedule(
 						user.user.email,
@@ -203,8 +205,9 @@ module.exports.changeStatus = async (req, res) => {
 						target: 'Appointment',
 					};
 					await Notifications.notificationCreate(notiData);
-					await Notifications.notification(device.deviceToken, 'Hi, Your appointment  is approved now For Next Process');
-
+					if (!!device.deviceToken) {
+						await Notifications.notification(device.deviceToken, 'Hi, Your appointment  is approved now For Next Process');
+					}
 					await Mail.adminAppointmentApproved(
 						user.adminuser.email,
 						user.time,
