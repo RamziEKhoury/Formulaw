@@ -53,6 +53,10 @@ module.exports = (sequelize, Sequelize) => {
 		deviceToken: {
 			type: Sequelize.STRING,
 		},
+		policy: {
+			type: Sequelize.BOOLEAN,
+			defaultValue: false,
+		},
 		isActive: {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,
