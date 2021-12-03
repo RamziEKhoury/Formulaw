@@ -22,6 +22,7 @@ const CompanyKycValidor = require('./CompanyKyc.validator');
 const PreOrderValidator = require('./preOrder.validator');
 const userSubscriptionValidator = require('./userSubscription.validator');
 const NotificationValidator = require('./Notification.validator');
+const addScheduleCallValidator = require('./scheduleCall.validator');
 
 
 module.exports = {
@@ -49,4 +50,5 @@ module.exports = {
 	PreOrderValidator,
 	userSubscriptionValidator,
 	NotificationValidator,
+	addScheduleCallValidator
 };

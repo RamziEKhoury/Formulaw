@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
-		'appointment',
+		'scheduleCall',
 		{
 			id: {
 				type: Sequelize.UUID,
@@ -51,7 +51,7 @@ module.exports = (sequelize, Sequelize) => {
 			time: {
 				type: Sequelize.STRING,
 			},
-			scheduleAt: {
+            scheduleAt: {
 				type: Sequelize.STRING,
 			},
 

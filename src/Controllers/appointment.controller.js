@@ -29,6 +29,7 @@ module.exports.addAppointment = async (req, res) => {
 			date: req.body.date,
 			time: req.body.time,
 			orderId: orderId,
+			scheduleAt: req.body.scheduleAt,
 		}).then(async (appointment) => {
 			await Room.create({
 				appointmentId: appointment.id,
