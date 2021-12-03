@@ -8,7 +8,7 @@ const signUpValidator = [
 		.trim().withMessage('Email must be specified.')
 		.isEmail().withMessage('Email must be a valid email address.'),
 	body('password').isLength({min: 1})
-		.trim().isAlphanumeric().withMessage('password must be specified.'),
+		.trim().withMessage('password must be specified.'),
 
 	sanitizeBody('fullname').escape(),
 	    sanitizeBody('email').escape(),
