@@ -1,3 +1,4 @@
+const {NotificationType} = require("../enum");
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
 		'notification',
@@ -31,7 +32,12 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.STRING,
 			},
 			notificationType: {
-				type: Sequelize.STRING,
+				type: Sequelize.ENUM(
+					NotificationType.CREAT_LEAD,
+					NotificationType.SCHEDULE_LEAD,
+					NotificationType.APPROVE_LEAD,
+					NotificationType.FURTHER_STATUS,
+				),
 			},
 			status: {
 				type: Sequelize.BOOLEAN,

@@ -10,6 +10,7 @@ const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
 const moment = require('moment');
 const Notifications = require('../Config/Notifications');
+const {NotificationType} = require('../enum');
 
 module.exports.addAppointment = async (req, res) => {
 	try {
@@ -66,8 +67,8 @@ module.exports.addAppointment = async (req, res) => {
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
 				receiverid: req.body.customerId,
-				notificationType: null,
-				target: 'Appointment',
+				notificationType: NotificationType.SCHEDULE_LEAD,
+				target: appointment.id,
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
@@ -141,19 +142,19 @@ module.exports.changeStatus = async (req, res) => {
 					const device = await User.findOne({where: {id: user.customerId}});
 					const notiData = {
 						title: 'Appointment',
-						message: 'Hi, Your appointment call is approved, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
+						message: 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
 							' time ' + user.time +
 							' we will connect with you soon.',
 						senderName: device.fullname,
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
-						notificationType: null,
-						target: 'Appointment',
+						notificationType: NotificationType.FREE_CONSULTATION,
+						target: req.params.id,
 					};
 					await Notifications.notificationCreate(notiData);
 					if (!!device.deviceToken) {
-						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
+						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
 							' time ' + user.time +
 							' we will connect with you soon.');
 					}
@@ -201,8 +202,8 @@ module.exports.changeStatus = async (req, res) => {
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
-						notificationType: null,
-						target: 'Appointment',
+						notificationType: NotificationType.APPROVE_LEAD,
+						target: req.params.id,
 					};
 					await Notifications.notificationCreate(notiData);
 					if (!!device.deviceToken) {
@@ -251,6 +252,22 @@ module.exports.changeStatus = async (req, res) => {
 						],
 					});
 
+					const device = await User.findOne({where: {id: user.customerId}});
+					const notiData = {
+						title: 'Appointment',
+						message: 'Hi, Your appointment payment is done for the next Process',
+						senderName: device.fullname,
+						senderId: user.customerId,
+						senderType: 'APPOINTMENT',
+						receiverid: user.customerId,
+						notificationType: NotificationType.PAYMENT,
+						target: req.params.id,
+					};
+					await Notifications.notificationCreate(notiData);
+					if (!!device.deviceToken) {
+						await Notifications.notification(device.deviceToken, 'Hi, Your appointment payment is done for the next Process');
+					}
+
 					await Mail.adminAppointmentPayment(
 						user.adminuser.email,
 						user.time,
@@ -294,6 +311,21 @@ module.exports.changeStatus = async (req, res) => {
 						],
 					});
 
+					const device = await User.findOne({where: {id: user.customerId}});
+					const notiData = {
+						title: 'Appointment',
+						message: 'Hi, Your appointment have scheduled for consultation with lawyer',
+						senderName: device.fullname,
+						senderId: user.customerId,
+						senderType: 'APPOINTMENT',
+						receiverid: user.customerId,
+						notificationType: NotificationType.CONSULTATION,
+						target: req.params.id,
+					};
+					await Notifications.notificationCreate(notiData);
+					if (!!device.deviceToken) {
+						await Notifications.notification(device.deviceToken, 'Hi, Your appointment have scheduled for consultation with lawyer');
+					}
 					await Mail.adminAppointmentConsult(
 						user.adminuser.email,
 						user.time,
@@ -336,6 +368,22 @@ module.exports.changeStatus = async (req, res) => {
 							},
 						],
 					});
+
+					const device = await User.findOne({where: {id: user.customerId}});
+					const notiData = {
+						title: 'Appointment',
+						message: 'Hi, Your appointment has been completed',
+						senderName: device.fullname,
+						senderId: user.customerId,
+						senderType: 'APPOINTMENT',
+						receiverid: user.customerId,
+						notificationType: NotificationType.COMPLETED,
+						target: req.params.id,
+					};
+					await Notifications.notificationCreate(notiData);
+					if (!!device.deviceToken) {
+						await Notifications.notification(device.deviceToken, 'Hi, Your appointment has been completed');
+					}
 
 					await Mail.adminAppointmentComplete(
 						user.adminuser.email,
