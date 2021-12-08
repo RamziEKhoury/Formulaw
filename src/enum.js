@@ -29,7 +29,8 @@ module.exports.UserRole = {
 	OTHERS: 'OTHERS',
 };
 
-module.exports.NotificationType = {
+module.exports.WorkflowAppointment = {
+	PENDING: 'PENDING',
 	CREAT_LEAD: 'CREAT_LEAD',
 	SCHEDULE_LEAD: 'SCHEDULE_LEAD',
 	FREE_CONSULTATION: 'FREE_CONSULTATION',

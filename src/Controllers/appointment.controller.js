@@ -10,7 +10,8 @@ const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
 const moment = require('moment');
 const Notifications = require('../Config/Notifications');
-const {NotificationType} = require('../enum');
+const {WorkflowAppointment} = require('../enum');
+const _ = require('lodash');
 
 module.exports.addAppointment = async (req, res) => {
 	try {
@@ -30,6 +31,7 @@ module.exports.addAppointment = async (req, res) => {
 			date: req.body.date,
 			time: req.body.time,
 			orderId: orderId,
+			scheduleAt: req.body.scheduleAt,
 		}).then(async (appointment) => {
 			await Room.create({
 				appointmentId: appointment.id,
@@ -46,6 +48,7 @@ module.exports.addAppointment = async (req, res) => {
 				shifts: appointment.shifts,
 				date: appointment.date,
 				time: appointment.time,
+				orderId: appointment.orderId,
 			};
 
 			const userMail = await User.findOne({
@@ -67,7 +70,7 @@ module.exports.addAppointment = async (req, res) => {
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
 				receiverid: req.body.customerId,
-				notificationType: NotificationType.SCHEDULE_LEAD,
+				notificationType: WorkflowAppointment.SCHEDULE_LEAD,
 				target: appointment.id,
 			};
 			await Notifications.notificationCreate(notiData);
@@ -95,6 +98,35 @@ module.exports.addAppointment = async (req, res) => {
 	}
 };
 
+module.exports.addBulkAppointment = async (req, res) => {
+	try {
+		Appointment.bulkCreate(req.body)
+			.then(async (scheduleCall) => {
+				scheduleCall.map(async (schedule)=>{
+					await Room.create({
+						appointmentId: schedule.id,
+						roomName: schedule.id,
+						adminId: schedule.adminId,
+						customerId: schedule.customerId,
+						queryId: schedule.queryId,
+					});
+				});
+
+				if (!scheduleCall) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				console.log('bulkAppointment---->>', scheduleCall);
+				return apiResponses.successResponseWithData(
+					res,
+					'Success!',
+					scheduleCall,
+				);
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
 module.exports.changeStatus = async (req, res) => {
 	// #swagger.tags = ['Appointment']
 	/*  #swagger.parameters['obj'] = {
@@ -115,7 +147,7 @@ module.exports.changeStatus = async (req, res) => {
                             schema: { $en_name: "en_name", $ar_name: "en_name", $description: "description", $isActive: 0, $isDeleted: 1, $countryCode: "countryCode",$taxType:"taxType",$tax:"tax", $flag: "flag"}
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: appointment });
-				if (req.body.status === 'free consultation') {
+				if (req.body.status === WorkflowAppointment.FREE_CONSULTATION) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -149,7 +181,7 @@ module.exports.changeStatus = async (req, res) => {
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
-						notificationType: NotificationType.FREE_CONSULTATION,
+						notificationType: WorkflowAppointment.FREE_CONSULTATION,
 						target: req.params.id,
 					};
 					await Notifications.notificationCreate(notiData);
@@ -177,7 +209,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'approved') {
+				} else if (req.body.status === WorkflowAppointment.APPROVE_LEAD) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -202,7 +234,7 @@ module.exports.changeStatus = async (req, res) => {
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
-						notificationType: NotificationType.APPROVE_LEAD,
+						notificationType: WorkflowAppointment.APPROVE_LEAD,
 						target: req.params.id,
 					};
 					await Notifications.notificationCreate(notiData);
@@ -235,7 +267,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'payment') {
+				} else if (req.body.status === WorkflowAppointment.PAYMENT) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -260,7 +292,7 @@ module.exports.changeStatus = async (req, res) => {
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
-						notificationType: NotificationType.PAYMENT,
+						notificationType: WorkflowAppointment.PAYMENT,
 						target: req.params.id,
 					};
 					await Notifications.notificationCreate(notiData);
@@ -294,7 +326,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'consultation') {
+				} else if (req.body.status === WorkflowAppointment.CONSULTATION) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -319,7 +351,7 @@ module.exports.changeStatus = async (req, res) => {
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
-						notificationType: NotificationType.CONSULTATION,
+						notificationType: WorkflowAppointment.CONSULTATION,
 						target: req.params.id,
 					};
 					await Notifications.notificationCreate(notiData);
@@ -352,7 +384,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'completed') {
+				} else if (req.body.status === WorkflowAppointment.COMPLETED) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -377,7 +409,7 @@ module.exports.changeStatus = async (req, res) => {
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
-						notificationType: NotificationType.COMPLETED,
+						notificationType: WorkflowAppointment.COMPLETED,
 						target: req.params.id,
 					};
 					await Notifications.notificationCreate(notiData);
@@ -412,6 +444,13 @@ module.exports.changeStatus = async (req, res) => {
 						appointment,
 					);
 				} else {
+					await Appointment.update(
+						{
+							status: req.body.status,
+							workflow: req.body.status,
+						},
+						{where: {id: req.params.id}},
+					);
 					return apiResponses.successResponseWithData(
 						res,
 						'Success',
@@ -604,7 +643,7 @@ module.exports.getUserAppointmentMonthly = (req, res) => {
 	Appointment.findAll({
 		where: {
 			customerId: req.params.userId,
-			date: {
+			time: {
 				[Op.between]: [req.params.startDate, req.params.endDate],
 			},
 		},
@@ -706,6 +745,37 @@ module.exports.getAppointmentTime = (req, res) => {
 			res.status(500).send({
 				message:
           err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
+
+module.exports.getUserLastAppointment = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {customerId: req.params.userId},
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			if (_.isEmpty(data)) {
+				return apiResponses.successResponseWithData(res, 'success', data);
+			}
+			const lastElement = data[data.length - 1];
+			return apiResponses.successResponseWithData(res, 'success', lastElement);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Appointment.',
 			});
 		});
 };

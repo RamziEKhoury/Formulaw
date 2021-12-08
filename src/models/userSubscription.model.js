@@ -6,32 +6,32 @@ module.exports = (sequelize, Sequelize) => {
 			allowNull: false,
 			primaryKey: true,
 		},
-        userId: {
-            type: Sequelize.UUID,
-        },
-        subscriptionId: {
-            type: Sequelize.UUID,
-        },
+		userId: {
+			type: Sequelize.UUID,
+		},
+		subscriptionId: {
+			type: Sequelize.UUID,
+		},
 		durationType: {
-            type: Sequelize.STRING,
+			type: Sequelize.STRING,
 		},
 		subscriptionPlan: {
-            type: Sequelize.STRING ,
+			type: Sequelize.STRING,
 		},
-        startingDate: {
-            type: Sequelize.STRING,
-        },
-        endDate: {
-            type: Sequelize.STRING,
-        },
+		startingDate: {
+			type: Sequelize.STRING,
+		},
+		endDate: {
+			type: Sequelize.STRING,
+		},
 		numberOfMeating: {
 			type: Sequelize.INTEGER,
 		},
-		meatingPlan:{
+		meatingPlan: {
 			type: Sequelize.STRING,
 		},
 		ipAudit: {
-			type: Sequelize.BOOLEAN, 
+			type: Sequelize.BOOLEAN,
 		},
 		contractTemplates: {
 			type: Sequelize.BOOLEAN,
@@ -39,7 +39,7 @@ module.exports = (sequelize, Sequelize) => {
 		discount: {
 			type: Sequelize.INTEGER,
 		},
-		
+
 
 	}, {
 		timestamps: true,

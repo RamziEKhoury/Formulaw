@@ -27,12 +27,12 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/userSubscription/get-userSubscription/:userId',
 		userSubscrptionController.getUserSubscription);
-	
-	app.get(
-			'/api/v1/userSubscription/get-allUsersSubscription/:limit',
-			userSubscrptionController.getAllUsersSubscription);
 
 	app.get(
-			'/api/v1/userSubscription/check-userSubscription/:userId',
-			userSubscrptionController.checkSubscription);
+		'/api/v1/userSubscription/get-allUsersSubscription/:limit',
+		userSubscrptionController.getAllUsersSubscription);
+
+	app.get(
+		'/api/v1/userSubscription/check-userSubscription/:userId',
+		userSubscrptionController.checkSubscription);
 };

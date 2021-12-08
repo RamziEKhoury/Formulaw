@@ -1,4 +1,4 @@
-const {NotificationType} = require("../enum");
+const {WorkflowAppointment} = require("../enum");
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
 		'notification',
@@ -33,10 +33,15 @@ module.exports = (sequelize, Sequelize) => {
 			},
 			notificationType: {
 				type: Sequelize.ENUM(
-					NotificationType.CREAT_LEAD,
-					NotificationType.SCHEDULE_LEAD,
-					NotificationType.APPROVE_LEAD,
-					NotificationType.FURTHER_STATUS,
+					WorkflowAppointment.CREAT_LEAD,
+					WorkflowAppointment.PAYMENT,
+					WorkflowAppointment.PENDING,
+					WorkflowAppointment.COMPLETED,
+					WorkflowAppointment.CONSULTATION,
+					WorkflowAppointment.FREE_CONSULTATION,
+					WorkflowAppointment.SCHEDULE_LEAD,
+					WorkflowAppointment.APPROVE_LEAD,
+					WorkflowAppointment.FURTHER_STATUS,
 				),
 			},
 			status: {

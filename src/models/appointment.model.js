@@ -1,3 +1,4 @@
+const {WorkflowAppointment} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
 		'appointment',
@@ -35,13 +36,33 @@ module.exports = (sequelize, Sequelize) => {
 			},
 
 			status: {
-				defaultValue: 'pending',
-				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: WorkflowAppointment.PENDING,
+				type: Sequelize.ENUM(
+					WorkflowAppointment.PENDING,
+					WorkflowAppointment.FREE_CONSULTATION,
+					WorkflowAppointment.CONSULTATION,
+					WorkflowAppointment.COMPLETED,
+					WorkflowAppointment.PAYMENT,
+					WorkflowAppointment.CREAT_LEAD,
+					WorkflowAppointment.SCHEDULE_LEAD,
+					WorkflowAppointment.APPROVE_LEAD,
+					WorkflowAppointment.FURTHER_STATUS,
+				),
 			},
 
 			workflow: {
-				defaultValue: 'pending',
-				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: WorkflowAppointment.PENDING,
+				type: Sequelize.ENUM(
+					WorkflowAppointment.PENDING,
+					WorkflowAppointment.FREE_CONSULTATION,
+					WorkflowAppointment.CONSULTATION,
+					WorkflowAppointment.COMPLETED,
+					WorkflowAppointment.PAYMENT,
+					WorkflowAppointment.CREAT_LEAD,
+					WorkflowAppointment.SCHEDULE_LEAD,
+					WorkflowAppointment.APPROVE_LEAD,
+					WorkflowAppointment.FURTHER_STATUS,
+				),
 			},
 
 			date: {
@@ -49,6 +70,12 @@ module.exports = (sequelize, Sequelize) => {
 			},
 
 			time: {
+				type: Sequelize.STRING,
+			},
+			endTime: {
+				type: Sequelize.STRING,
+			},
+			scheduleAt: {
 				type: Sequelize.STRING,
 			},
 
