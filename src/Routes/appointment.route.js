@@ -18,6 +18,11 @@ module.exports = function(app) {
 		appointmentController.addAppointment,
 	);
 
+	app.post(
+		'/api/v1/appointment/add-bulk-appointment',
+		appointmentController.addBulkAppointment,
+	);
+
 	app.get(
 		'/api/v1/appointment/get-appointments/:limit',
 		appointmentController.getAppointments);
@@ -45,7 +50,7 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/appointment/my-appointments-monthly/:userId/:startDate/:endDate',
 		appointmentController.getUserAppointmentMonthly);
-	
+
 	app.get(
 		'/api/v1/appointment/selected-appointments-time',
 		appointmentController.getAppointmentTime);
@@ -53,5 +58,9 @@ module.exports = function(app) {
 	app.put(
 		'/api/v1/appointment/status/:id',
 		appointmentController.changeStatus);
+
+	app.get(
+		'/api/v1/appointment/user-all-appointments/:userId',
+		appointmentController.getUserLastAppointment);
 };
 

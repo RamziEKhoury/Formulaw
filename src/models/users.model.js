@@ -50,8 +50,15 @@ module.exports = (sequelize, Sequelize) => {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,
 		},
+		subscriptionEndAt: {
+			type: Sequelize.STRING,
+		},
 		deviceToken: {
 			type: Sequelize.STRING,
+		},
+		policy: {
+			type: Sequelize.BOOLEAN,
+			defaultValue: false,
 		},
 		isActive: {
 			defaultValue: 0,

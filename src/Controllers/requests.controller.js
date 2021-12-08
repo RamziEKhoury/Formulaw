@@ -6,6 +6,7 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
 const Notifications = require('../Config/Notifications');
+const {WorkflowAppointment} = require("../enum");
 const Op = db.Sequelize.Op;
 
 module.exports.createRequest = async (req, res) => {
@@ -51,8 +52,8 @@ module.exports.createRequest = async (req, res) => {
 				senderId: req.body.userId,
 				senderType: 'LEAD',
 				receiverid: req.body.userId,
-				notificationType: null,
-				target: 'Lead',
+				notificationType: WorkflowAppointment.CREAT_LEAD,
+				target: req.body.userId,
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {

@@ -23,8 +23,9 @@ module.exports.registration = async (req, res) => {
 			country: req.body.country,
 			city: req.body.city,
 			phoneNumber: req.body.phoneNumber,
+			policy: req.body.policy,
 			isActive: req.body.isActive,
-			isSubscribed:req.body.isSubscribed,
+			isSubscribed: req.body.isSubscribed,
 		}).then(async (user) => {
 			/* #swagger.responses[200] = {
                             description: "User registered successfully!",
@@ -40,6 +41,7 @@ module.exports.registration = async (req, res) => {
 				country: user.country,
 				city: user.city,
 				role: user.role,
+				policy: user.policy,
 				phoneNumber: user.phoneNumber,
 				isActive: user.isActive,
 				token: token,
