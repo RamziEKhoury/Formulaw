@@ -16,7 +16,7 @@ const signUpValidator = [
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return apiResponses.validationErrorWithData(
-				res, 'Validation Error.', errors.array(),
+				res, 'Please enter valid credentials', errors.array(),
 			);
 		} else {
 			next();
@@ -42,7 +42,7 @@ const signUpValidator = [
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
 				return apiResponses.validationErrorWithData(
-					res, 'Validation Error.', errors.array(),
+					res, 'Please enter valid credentials.', errors.array(),
 				);
 			} else {
 				next();
@@ -60,7 +60,7 @@ const logInValidator = [
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return apiResponses.validationErrorWithData(
-				res, 'Validation Error.', errors.array(),
+				res, 'Please enter valid credentials', errors.array(),
 			);
 		} else {
 			next();
@@ -77,7 +77,7 @@ const emailValidator = [
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return apiResponses.validationErrorWithData(
-				res, 'Validation Error.', errors.array(),
+				res, 'Please enter valid credentials.', errors.array(),
 			);
 		} else {
 			next();
