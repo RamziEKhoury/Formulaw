@@ -33,25 +33,28 @@ module.exports = (sequelize, Sequelize) => {
 			shift: {
 				type: Sequelize.ENUM('morning', 'afternoon', 'evening'),
 			},
-
 			status: {
-				defaultValue: 'pending',
-				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: 'PENDING',
+				type: Sequelize.ENUM('CREAT_LEAD', 'PAYMENT', 'APPROVE', 'REJECT', 'COMPLETED', 'PENDING', 'FREE_CONSULTATION', 'CONSULTATION',
+				),
 			},
-
 			workflow: {
-				defaultValue: 'pending',
-				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: 'PENDING',
+				type: Sequelize.ENUM('CREAT_LEAD', 'PAYMENT', 'APPROVE', 'REJECT', 'COMPLETED', 'PENDING', 'FREE_CONSULTATION', 'CONSULTATION',
+				),
 			},
-
 			date: {
 				type: Sequelize.STRING,
 			},
-
 			time: {
 				type: Sequelize.STRING,
 			},
-
+			endTime: {
+				type: Sequelize.STRING,
+			},
+			scheduleAt: {
+				type: Sequelize.STRING,
+			},
 		},
 		{
 			timestamps: true,

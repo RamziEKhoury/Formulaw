@@ -29,6 +29,8 @@ module.exports.addAppointment = async (req, res) => {
 			shift: req.body.shift,
 			date: req.body.date,
 			time: req.body.time,
+			endTime: req.body.endTime,
+			scheduleAt: req.body.scheduleAt,
 			orderId: orderId,
 		}).then(async (appointment) => {
 			await Room.create({
@@ -45,6 +47,7 @@ module.exports.addAppointment = async (req, res) => {
 				customerId: appointment.customerId,
 				shifts: appointment.shifts,
 				date: appointment.date,
+				endTime: appointment.endTime,
 				time: appointment.time,
 			};
 
@@ -62,7 +65,7 @@ module.exports.addAppointment = async (req, res) => {
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ appointment.time+'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time). format('HH:mm')+'.',
 				senderName: device.fullname,
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
@@ -72,7 +75,7 @@ module.exports.addAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' + appointment.time + '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' + moment(appointment.time). format('HH:mm') + '.');
 			}
 			const adminMail = await Admin.findOne({
 				where: {
@@ -115,7 +118,7 @@ module.exports.changeStatus = async (req, res) => {
                             schema: { $en_name: "en_name", $ar_name: "en_name", $description: "description", $isActive: 0, $isDeleted: 1, $countryCode: "countryCode",$taxType:"taxType",$tax:"tax", $flag: "flag"}
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: appointment });
-				if (req.body.status === 'free consultation') {
+				if (req.body.status === NotificationType.FREE_CONSULTATION) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -177,7 +180,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'approved') {
+				} else if (req.body.status === NotificationType.APPROVE_LEAD) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -235,7 +238,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'payment') {
+				} else if (req.body.status === NotificationType.PAYMENT) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -294,7 +297,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'consultation') {
+				} else if (req.body.status === NotificationType.CONSULTATION) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -352,7 +355,7 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === 'completed') {
+				} else if (req.body.status === NotificationType.COMPLETED) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -604,7 +607,7 @@ module.exports.getUserAppointmentMonthly = (req, res) => {
 	Appointment.findAll({
 		where: {
 			customerId: req.params.userId,
-			date: {
+			time: {
 				[Op.between]: [req.params.startDate, req.params.endDate],
 			},
 		},
@@ -642,7 +645,7 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 	Appointment.findAll({
 		where: {
 			lawFirmId: req.params.lawFirmId,
-			date: {
+			time: {
 				[Op.between]: [req.params.startDate, req.params.endDate],
 			},
 		},
@@ -678,7 +681,7 @@ module.exports.getAppointmentTime = (req, res) => {
 	// Get Appointment from Database
 	// #swagger.tags = ['Appointment']
 	const value = req.query;
-	const today = moment(value.date).format('YYYY-MM-DD');
+	const today = moment(value.date).format('MMDDYYYY');
 	Appointment.findOne({
 		where: {
 			shift: value.shift,
