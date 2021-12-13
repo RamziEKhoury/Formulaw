@@ -34,6 +34,26 @@ module.exports = {
 		});
 	},
 
+	userPasswordReset: (email,token) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Regarding Password reset on FORMULAW!', // Subject of the mail.
+			html:
+        `<div><span>Dear User,</span><div><p>this is the Password reset link</p><br><p>Click here to reset password <a href='http://localhost:3000/#/reset-password/${token}'>link</a></p></p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
 	lawyerRegistration: (email, password) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {

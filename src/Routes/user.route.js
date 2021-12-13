@@ -48,4 +48,14 @@ module.exports= function(app) {
 		'/api/v1/auth/user/update-deviceToken/:id',
 		usersController.userDeviceTokenUpdate,
 	);
+
+	app.post(
+		'/api/v1/auth/user/reset-password',
+		usersController.userPasswordReset,
+	);
+
+	app.post(
+		'/api/v1/auth/user/Updatenew-password/:token',
+		usersController.updateNewPassword,
+	);
 };
