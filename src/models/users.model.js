@@ -60,10 +60,10 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.BOOLEAN,
 			defaultValue: false,
 		},
-		resetToken:{
+		resetToken: {
 			type: Sequelize.STRING,
 		},
-        expireToken:{
+		expireToken: {
 		    type: Sequelize.DATE,
 	    },
 		isActive: {

@@ -402,65 +402,64 @@ module.exports.userDeviceTokenUpdate = async (req, res) => {
 	}
 };
 
-module.exports.userPasswordReset = async (req,res) => {
+module.exports.userPasswordReset = async (req, res) => {
 	try {
 	 User.findOne(
-		 {where:{email:req.body.email}
-		})
-		.then((user) => {
-			console.log("user",user);
-			if (!user) {
-				return apiResponses.notFoundResponse(res, 'User dont exists with this email.');
-			}
-			crypto.randomBytes(32,async(err,buffer)=>{
-				if(err){
-					console.log(err)
-				}
-				const token = buffer.toString("hex")
-			User.update(
-				{
-					resetToken: token,
-					expireToken:Date.now() + 3600000
-				},
-				{
-					where: {email: req.body.email}
-				},
-			).then((user) => {
+		 {where: {email: req.body.email},
+			})
+			.then((user) => {
+				console.log('user', user);
 				if (!user) {
-					return apiResponses.notFoundResponse(res, 'Not found.', {});
+					return apiResponses.notFoundResponse(res, 'User dont exists with this email.');
 				}
-			});
+				crypto.randomBytes(32, async (err, buffer)=>{
+					if (err) {
+						console.log(err);
+					}
+					const token = buffer.toString('hex');
+					User.update(
+						{
+							resetToken: token,
+							expireToken: Date.now() + 3600000,
+						},
+						{
+							where: {email: req.body.email},
+						},
+					).then((user) => {
+						if (!user) {
+							return apiResponses.notFoundResponse(res, 'Not found.', {});
+						}
+					});
 
-			await Mail.userPasswordReset(user.email,token);
-		})
-		return apiResponses.successResponseWithData(res, 'Link send to your email ');
-	})
+					await Mail.userPasswordReset(user.email, token);
+				});
+				return apiResponses.successResponseWithData(res, 'Link send to your email ');
+			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
-
 };
 
-module.exports.updateNewPassword = async (req,res) => {
-	const sentToken = req.params.token
+module.exports.updateNewPassword = async (req, res) => {
+	const sentToken = req.params.token;
 	try {
 		User.update({
-			password : await bcrypt.hashSync(req.body.password, 8),
+			password: await bcrypt.hashSync(req.body.password, 8),
 			resetToken: null,
 			expireToken: null,
 		},
-		{where :{resetToken:sentToken,expireToken:{[Op.gt]:Date.now()}}
-	})
-	.then(async (user) => {
-		if (!user) {
-			return apiResponses.notFoundResponse(res, 'Not found.', {});
-		}
-		return apiResponses.successResponseWithData(res, 'Success', user);
-	})
-	.catch((error) => {
-		return apiResponses.errorResponse(res, error.message, {});
-	});
+		{where: {resetToken: sentToken, expireToken: {[Op.gt]: Date.now()}},
+		})
+			.then(async (user) => {
+				if (!user) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				return apiResponses.successResponseWithData(res, 'Success', user);
+			})
+			.catch((error) => {
+				return apiResponses.errorResponse(res, error.message, {});
+			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
-}
+};
