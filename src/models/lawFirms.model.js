@@ -77,6 +77,10 @@ module.exports = (sequelize, Sequelize) => {
 				allowNull: false,
 
 			},
+			assignlawyer: {
+				defaultValue: 1,
+				type: Sequelize.INTEGER,
+			},
 			isActive: {
 				type: Sequelize.INTEGER,
 			},

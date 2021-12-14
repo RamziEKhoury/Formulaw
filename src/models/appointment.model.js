@@ -26,7 +26,10 @@ module.exports = (sequelize, Sequelize) => {
 			lawFirmId: {
 				type: Sequelize.UUID,
 			},
-
+			lawyerId: {
+				defaultValue: null,
+				type: Sequelize.UUID,
+			},
 			orderId: {
 				type: Sequelize.INTEGER,
 			},
