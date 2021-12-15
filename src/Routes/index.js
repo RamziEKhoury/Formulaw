@@ -31,4 +31,5 @@ module.exports=(app)=> {
 	require('./policy.route')(app);
 	require('./userSubscription.route')(app);
 	require('./notification.route')(app);
+	require('./message.router')(app);
 };
