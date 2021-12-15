@@ -5,6 +5,7 @@ const Room = db.room;
 const LawFirm = db.lawFirm;
 const Admin = db.adminUser;
 const User = db.user;
+const Lawyer = db.lawyer;
 const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
@@ -547,6 +548,7 @@ module.exports.getAppointments = (req, res) => {
 					attributes: ['firstname', 'lastname'],
 				},
 				{model: User, required: false, attributes: ['fullname', 'email']},
+
 			],
 		})
 			.then((result) => {
@@ -612,6 +614,7 @@ module.exports.getUserAppointment = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {
@@ -645,6 +648,7 @@ module.exports.getLawyerAppointment = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {
@@ -683,6 +687,7 @@ module.exports.getUserAppointmentMonthly = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {
@@ -722,6 +727,7 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {
