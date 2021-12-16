@@ -11,6 +11,11 @@ module.exports = function(app) {
 
 	app.get(
 		'/api/v1/message/all-messageswithfile/:userId',
-		messageControllers.getMessagesWithFile
+		messageControllers.getUserMessagesWithFile
+	);
+
+	app.get(
+		'/api/v1/message/all-lawyermessageswithfile/:lawyerId',
+		messageControllers.getLawyerMessagesWithFile
 	);
 };
