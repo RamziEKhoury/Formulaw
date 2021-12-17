@@ -1,9 +1,11 @@
 const db = require('../models');
 const UserSubscription = db.userSubscription;
 const User = db.user;
+const Admin = db.adminUser;
 const apiResponses = require('../Components/apiresponse');
 const _ = require('lodash');
 const Op = db.Sequelize.Op;
+const Mail = require('../Config/Mails');
 
 module.exports.addUserSubscription = async (req, res) => {
 	try {
@@ -32,7 +34,7 @@ module.exports.addUserSubscription = async (req, res) => {
 				meatingPlan: req.body.meatingPlan,
 				contractTemplates: req.body.contractTemplates,
 				discount: req.body.discount,
-			}).then((userSubscription) => {
+			}).then(async(userSubscription) => {
 				if (userSubscription) {
 					User.update({
 						isSubscribed: 1,
@@ -45,6 +47,30 @@ module.exports.addUserSubscription = async (req, res) => {
 							}
 						});
 				}
+
+
+// 	const user = await UserSubscription.findOne({
+// 						where: {userId: req.body.userId},
+// 						include: [
+// 							{
+// 								model: User,
+// 								required: false,
+// 								attributes: ['fullname','email', 'id'],
+// 							},
+						
+// 						],
+// });
+
+				
+			
+				
+// 				console.log('user details email---->', user.email);         
+// await Mail.userSubscriptionmail(user.user.email,user.user.fullname,user.user.id);
+// 			const adminMail = await Admin.findAll();
+// 				for (let i = 0; i < adminMail.length; i++) {
+// 					await Mail.adminSubscriptionmail(adminMail[i].email);
+// 				}
+
 				return apiResponses.successResponseWithData(
 					res, 'success!', userSubscription);
 			},
