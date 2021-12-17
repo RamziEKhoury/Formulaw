@@ -243,12 +243,11 @@ module.exports.changeStatus = async (req, res) => {
 
 					var minutesToAdd=15;
 					var currentDate = new Date(userdate);
-					//var currentDate = new Date('2021-12-17T10:00:06.991Z');
-					// console.log('current date----------------------->'   ,  currentDate);
+					
 					var futureDate = new Date(currentDate.getTime() - minutesToAdd*60000);
 					const someDate =futureDate
 					schedule.scheduleJob(someDate, async() => {
-					// console.log('job run---------------------------------->', new Date().toString());
+					
 					await  Mail.userRemindermail(
 						user.user.email,
 						user.user.fullname,

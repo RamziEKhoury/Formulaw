@@ -2,30 +2,26 @@ const nodemailer = require('nodemailer');
 
 const moment = require('moment');
 
-// const transporter = nodemailer.createTransport({
-// 	host: 'smtp.gmail.com',
-// 	port: 465,
-// 	secure: true,
-// 	auth: {
-// 		user: 'formulawauth@gmail.com', // email ID
-// 		pass: 'Formulaw$1997', // Password
-// 	},
-// });
 const transporter = nodemailer.createTransport({
 	host: 'smtp.gmail.com',
 	port: 465,
 	secure: true,
 	auth: {
-		user: 'formulawauth@gmail.com', // email ID
-		pass: 'Formulaw$1997', // Password
+		user: process.env.MAIL_USERNAME, // email ID
+		pass: process.env.MAIL_PASSWORD, // Password
 	},
+
+	
 });
+
+
+
 
 module.exports = {
 	userRegistration: (email,username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
@@ -49,7 +45,7 @@ module.exports = {
 	lawyerRegistration: (email, password) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding Registration as a Lawyer on FORMULAW!', // Subject of the mail.
 			html:
@@ -75,7 +71,7 @@ module.exports = {
 	userRegistrationAdminMail: (email,username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
@@ -101,9 +97,9 @@ module.exports = {
 	adminAppointmentSchedule: (email,username, time, date, name,lead) => {
 		console.log('logIn_Mail====>' + email,time,date);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
-			subject: 'Invitation:', // Subject of the mail.
+			subject: 'Appointment:', // Subject of the mail.
 			html:
     '<div><span>Hi '+ username +'</span></div><div><p>'+ name +' has scheduled a meeting regarding '+ lead+' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '. Go to the Admin panel to view their profile and approve the meeting. </p><br/><p>Thank you.</p><br/>Best Regards, <br/><br/>@formulaw team member</div>'
 		};
@@ -122,9 +118,9 @@ module.exports = {
 	userAppointmentSchedule: (email,fullname, time, date,id,username,orderid,lawfirm) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
-			subject: 'Invitation', // Subject of the mail.
+			subject: 'Appointment', // Subject of the mail.
 			html:
         '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '.</p><br/><p>Prior to starting with '+lawfirm+', a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 15 minutes prior to the meeting Please follow this link to start your consultation.</p><br><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Receipt<br/>'+ orderid +'<br><p>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<p></br><br><p>Thank you and have a great meeting.</p><br>Best Regards,<br><p>'+ username +'</p><br>@formulaw team member<br></div>'
 		};
@@ -149,9 +145,9 @@ module.exports = {
 userRemindermail: (email,fullname, time, date,id,username,orderid,lawfirm)=> {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
-			subject: 'Invitation', // Subject of the mail.
+			subject: 'Reminder', // Subject of the mail.
 			html:
     '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,</br>'+username+'</br>@formulaw team member<br/></div>'	};
 	console.log('user reminder---->',details)	
@@ -170,9 +166,9 @@ userRemindermail: (email,fullname, time, date,id,username,orderid,lawfirm)=> {
 adminRemindermail: (email,username, time, date, name,lead) => {
 		console.log('logIn_Mail====>' + email);
 	const details = {
-		from: 'formulawauth@gmail.com', // sender address same as above
+		from: process.env.SENDER_MAIL, // sender address same as above
 		to: email, // Receiver's email id
-		subject: 'Invitation', // Subject of the mail.
+		subject: 'Reminder', // Subject of the mail.
 		html:
 			'<div><span>Hi '+username+'</span></div><div><span>Reminder <span><p>'+ name +' has scheduled a meeting regarding [Lead title] at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '. Go to the Admin panel to view their profile and approve the meeting. Thank you.</p><br/>Best Regards, <br/>Formula Team<br/>@formulaw team member</div>'
 	};
@@ -200,9 +196,9 @@ adminRemindermail: (email,username, time, date, name,lead) => {
 adminAppointmentApproved: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
-			subject: 'Invitation:', // Subject of the mail.
+			subject: 'Approved', // Subject of the mail.
 			html:
         '<div><span>Dear Admin,</span><div><p>Hi, You Approved This appointment with <b> ' +
         name +
@@ -224,9 +220,9 @@ adminAppointmentApproved: (email, time, date, name) => {
 	userAppointmentApproved: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
-			subject: 'Invitation', // Subject of the mail.
+			subject: 'Approved', // Subject of the mail.
 			html:
         '<div><span>Dear User,</span><div><p>Hi, Your appointment  is approved now For Next Process <b> ' +
         '</b> we will connect with you soon.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
@@ -249,7 +245,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 	adminAppointmentPayment: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Payment:', // Subject of the mail.
 			html:
@@ -277,7 +273,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 	userAppointmentPayment: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Payment', // Subject of the mail.
 			html:
@@ -320,7 +316,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 	adminAppointmentConsult: (email, time, date,username, name,lawyer,lawfirm) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation:', // Subject of the mail.
 			html:
@@ -341,7 +337,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 	userAppointmentConsult: (email,fullname, time, date,lawyer,lawfirm,orderid,id) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
@@ -363,7 +359,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 	lawyerAppointmentConsult: (lawyer,email,lawfirm,user,admin) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
@@ -387,7 +383,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 	adminAppointmentComplete: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead completed', // subject:", // Subject of the mail.
 			html:
@@ -410,7 +406,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 	userAppointmentComplete: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead Completed', // Subject of the mail.
 			html:
@@ -443,7 +439,7 @@ adminAppointmentApproved: (email, time, date, name) => {
 adminSubscriptionmail: (email, fullname, username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'User Subscription:', // Subject of the mail.
 			html:
@@ -462,7 +458,7 @@ adminSubscriptionmail: (email, fullname, username) => {
 	userSubscriptionmail: (email,fullname,id,orderid) => {
 		console.log('subscription====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Subscription', // Subject of the mail.
 			html:

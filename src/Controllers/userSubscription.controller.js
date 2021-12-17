@@ -49,27 +49,6 @@ module.exports.addUserSubscription = async (req, res) => {
 				}
 
 
-// 	const user = await UserSubscription.findOne({
-// 						where: {userId: req.body.userId},
-// 						include: [
-// 							{
-// 								model: User,
-// 								required: false,
-// 								attributes: ['fullname','email', 'id'],
-// 							},
-						
-// 						],
-// });
-
-				
-			
-				
-// 				console.log('user details email---->', user.email);         
-// await Mail.userSubscriptionmail(user.user.email,user.user.fullname,user.user.id);
-// 			const adminMail = await Admin.findAll();
-// 				for (let i = 0; i < adminMail.length; i++) {
-// 					await Mail.adminSubscriptionmail(adminMail[i].email);
-// 				}
 
 				return apiResponses.successResponseWithData(
 					res, 'success!', userSubscription);
