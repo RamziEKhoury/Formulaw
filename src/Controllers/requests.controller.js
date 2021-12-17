@@ -59,11 +59,11 @@ module.exports.createRequest = async (req, res) => {
 			if (!!device.deviceToken) {
 				await Notifications.notification(device.deviceToken, 'New lead created.');
 			}
-			await Mail.userLeadSubmitted(request.email, request.getstarted);
-			const adminMail = await Admin.findAll();
-			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.adminLeadMain(adminMail[i].email);
-			}
+			// await Mail.userLeadSubmitted(request.email, request.getstarted);
+			// const adminMail = await Admin.findAll();
+			// for (let i = 0; i < adminMail.length; i++) {
+			// 	await Mail.adminLeadMain(adminMail[i].email);
+			// }
 
 			// return res.status(200).send({ status:'200', message: "success!" , $data: createdRequest });
 			return apiResponses.successResponseWithData(

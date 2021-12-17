@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+
 const moment = require('moment');
 
 // const transporter = nodemailer.createTransport({
@@ -97,14 +98,14 @@ module.exports = {
 
 	// appointment shedule time mail
 
-	adminAppointmentSchedule: (email,username, time, date, name) => {
+	adminAppointmentSchedule: (email,username, time, date, name,lead) => {
 		console.log('logIn_Mail====>' + email,time,date);
 		const details = {
 			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Invitation:', // Subject of the mail.
 			html:
-    '<div><span>Hi '+ username +'</span></div><div><p>'+ name +' has scheduled a meeting regarding  at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '. Go to the Admin panel to view their profile and approve the meeting. </p><br/><p>Thank you.</p><br/>Best Regards, <br/><br/>@formulaw team member</div>'
+    '<div><span>Hi '+ username +'</span></div><div><p>'+ name +' has scheduled a meeting regarding '+ lead+' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '. Go to the Admin panel to view their profile and approve the meeting. </p><br/><p>Thank you.</p><br/>Best Regards, <br/><br/>@formulaw team member</div>'
 		};
 		console.log("admin apointment", details);
 		transporter.sendMail(details, function (error, data) {
@@ -145,15 +146,16 @@ module.exports = {
 	
 	
 
-userRemindermail: (email,fullname, time, date,id,username) => {
+userRemindermail: (email,fullname, time, date,id,username,orderid,lawfirm)=> {
 		console.log('logIn_Mail====>' + email);
 		const details = {
 			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Invitation', // Subject of the mail.
 			html:
-    '<div><span>Dear [user name],</span></div><div><p>This is a special reminder to confirm your meeting on [date].<br/>Please follow this link to start your consultation. <br/>[link]<br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,</br>[Name]</br>@formulaw team member<br/></div>'	};
-		transporter.sendMail(details, function(error, data) {
+    '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,</br>'+username+'</br>@formulaw team member<br/></div>'	};
+	console.log('user reminder---->',details)	
+	transporter.sendMail(details, function (error, data) {
 			if (error) {
 				console.log('error=========>>>' + error);
 				return true;
@@ -165,14 +167,16 @@ userRemindermail: (email,fullname, time, date,id,username) => {
 	},
 
 	
-adminRemindermail: (email,fullname, time, date,id,username) => {
+adminRemindermail: (email,username, time, date, name,lead) => {
 		console.log('logIn_Mail====>' + email);
-		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
-			to: email, // Receiver's email id
-			subject: 'Invitation', // Subject of the mail.
-			html:
-	'<div><span>Dear [user name],</span></div><div><p>This is a special reminder to confirm your meeting on [date].<br/>Please follow this link to start your consultation. <br/>[link]<br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,</br>[Name]</br>@formulaw team member<br/></div>'	};
+	const details = {
+		from: 'formulawauth@gmail.com', // sender address same as above
+		to: email, // Receiver's email id
+		subject: 'Invitation', // Subject of the mail.
+		html:
+			'<div><span>Hi '+username+'</span></div><div><span>Reminder <span><p>'+ name +' has scheduled a meeting regarding [Lead title] at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '. Go to the Admin panel to view their profile and approve the meeting. Thank you.</p><br/>Best Regards, <br/>Formula Team<br/>@formulaw team member</div>'
+	};
+	console.log('admin reminder----->',details)
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
 				console.log('error=========>>>' + error);
@@ -193,11 +197,117 @@ adminRemindermail: (email,fullname, time, date,id,username) => {
 
 
 
+adminAppointmentApproved: (email, time, date, name) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Invitation:', // Subject of the mail.
+			html:
+        '<div><span>Dear Admin,</span><div><p>Hi, You Approved This appointment with <b> ' +
+        name +
+        '</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        email +
+        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+	userAppointmentApproved: (email, time, date) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Invitation', // Subject of the mail.
+			html:
+        '<div><span>Dear User,</span><div><p>Hi, Your appointment  is approved now For Next Process <b> ' +
+        '</b> we will connect with you soon.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        email +
+        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+	// for Payment
+
+	adminAppointmentPayment: (email, time, date, name) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Payment:', // Subject of the mail.
+			html:
+        '<div><span>Dear Admin,</span><div><p>Hi, Payment is  Done this By  <b> ' +
+        name +
+        '</b> at <b> ' +
+        moment(date).format('DD/MM/YYYY') +
+        ' </b> Time <b> ' +
+        time +
+        '</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        email +
+        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+	userAppointmentPayment: (email, time, date) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Payment', // Subject of the mail.
+			html:
+        '<div><span>Dear User,</span><div><p>Hi, Your Payment is Done  on  <b> ' +
+        moment(date).format('DD/MM/YYYY') +
+        ' </b> Time <b> ' +
+        time +
+        '</b> we will connect with you soon.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        email +
+        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
 
 
 
 
-//approved mail
+
+
+
+
+
 
 
 
@@ -214,7 +324,7 @@ adminRemindermail: (email,fullname, time, date,id,username) => {
 			to: email, // Receiver's email id
 			subject: 'Consultation:', // Subject of the mail.
 			html:
-				'<div><span>Hi '+ username +'</span></div>< div ><p>'+ name +' has been handed over to '+ lawyer + ' at' + lawfirm + '</p><br/>Thank you.< br />Best Regards, < br />[Name] < br />@formulaw team member < br /></ > '
+				'<div><span>Hi '+ username +'</span></div>< div ><p>'+ name +' has been handed over to '+ lawyer + ' at' + lawfirm + '</p><br/>Thank you.< br />Best Regards,  < br />@formulaw team member < br /></ > '
 		};
 	console.log('admin appointment---->' ,details )
 		transporter.sendMail(details, function (error, data) {
@@ -228,14 +338,14 @@ adminRemindermail: (email,fullname, time, date,id,username) => {
 		});
 	},
 
-	userAppointmentConsult: (email,fullname, time, date,lawyer,lawfirm) => {
+	userAppointmentConsult: (email,fullname, time, date,lawyer,lawfirm,orderid,id) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
 			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
-           '<div><span>Dear '+ fullname +',<span></div><div><p>We would like to confirm you have been assigned to '+ lawyer +' at '+ lawfirm +'. Thank you for your booking.</p><br/>Order details<br/>[order number]<br/>Please follow this link to be directed to the chat.<br/>Feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/>Best Regards,<br/>@formulaw team member<br/></div>'};
+           '<div><span>Dear '+ fullname +',<span></div><div><p>We would like to confirm you have been assigned to '+ lawyer +' at '+ lawfirm +'. Thank you for your booking.</p><br/>Order details<br/>'+orderid+'<br/>Please follow this link to be directed to the chat.<br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>join at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '<br/>Feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/>Best Regards,<br/>FORMULAW Team<br/>@formulaw team member<br/></div>'};
 	console.log('admin appointment---->' ,details )
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -269,6 +379,59 @@ adminRemindermail: (email,fullname, time, date,id,username) => {
 			}
 		});
 	},
+
+
+
+
+// completed mail
+	adminAppointmentComplete: (email, time, date, name) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Lead completed', // subject:", // Subject of the mail.
+			html:
+        '<div><span>Dear Admin,</span><div><p>Hi,This  appointment is Completed . <b> ' +
+        '</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        email +
+        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+	userAppointmentComplete: (email, time, date) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: 'formulawauth@gmail.com', // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Lead Completed', // Subject of the mail.
+			html:
+        '<div><span>Dear User,</span><div><p>Hi, Your appointment Status is Completed Now .' +
+        '</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        email +
+        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+
+
 
 
 

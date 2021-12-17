@@ -1,7 +1,6 @@
 const db = require('../models');
 const Appointment = db.appointment;
 const Request = db.request;
-
 const Room = db.room;
 const LawFirm = db.lawFirm;
 const Lawyer = db.lawyer;
@@ -14,6 +13,13 @@ const moment = require('moment');
 const Notifications = require('../Config/Notifications');
 const {WorkflowAppointment} = require('../enum');
 const _ = require('lodash');
+const schedule = require('node-schedule');
+
+
+
+
+
+
 
 module.exports.addAppointment = async (req, res) => {
 	try {
@@ -53,17 +59,7 @@ module.exports.addAppointment = async (req, res) => {
 				orderId: appointment.orderId,
 			};
 
-			// const userMail = await User.findOne({
-			// 	where: {
-			// 		id: appointment.customerId,
-			// 	},
-			// });
-			// await Mail.userSubscriptionmail(
-			// 	userMail.email,
-			// 	userMail.fullname,
-			// 	appointment.customerId,
-			// 	appointment.orderId,
-			// );
+			
 
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
@@ -80,16 +76,7 @@ module.exports.addAppointment = async (req, res) => {
 			if (!!device.deviceToken) {
 				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' + appointment.time + '.');
 			}
-			// const adminMail = await Admin.findOne({
-			// 	where: {
-			// 		id: appointment.adminId,
-			// 	},
-			// });
-			// await Mail.adminSubscriptionmail(
-			// 	adminMail.email,
-			// 	adminMail.firstname,
 			
-			// );
 			return apiResponses.successResponseWithData(
 				res,
 				'appointment registered successfully!',
@@ -139,37 +126,11 @@ module.exports.addBulkAppointment = async (req, res) => {
 			userMail.fullname,
 			);	
 				
-
-
-
 				});
 
 				if (!scheduleCall) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-
-// mail  for subscribed user
-// 	const user = await Appointment.findOne({
-// 						where: {id: req.body.customerId},
-// 						include: [
-// 							{
-// 								model: User,
-// 								required: false,
-// 								attributes: ['fullname','email', 'id'],
-// 							},
-						
-// 						],
-// });
-
-// console.log('user details email---->', user.email);
-// await Mail.userSubscriptionmail(user.user.email,user.user.fullname,user.user.id, user.orderId);
-// 			const adminMail = await Admin.findAll();
-// 				for (let i = 0; i < adminMail.length; i++) {
-// 					await Mail.adminSubscriptionmail(adminMail[i].email);
-// 				}
-
-				
-				
 
 
 				
@@ -181,17 +142,7 @@ module.exports.addBulkAppointment = async (req, res) => {
 				);
 			});
 
-
-
-
-
-
-
-
-
-
-		
-	} catch (err) {
+			} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -233,7 +184,8 @@ module.exports.changeStatus = async (req, res) => {
 							{
 								model: Request,
 								required: false,
-								attributes: ['lastName'],
+							
+								attributes: ['getstarted'],
 							},
 							{
 								model: LawFirm,
@@ -250,9 +202,7 @@ module.exports.changeStatus = async (req, res) => {
 						user.time,
 						user.date,
 						user.user.fullname,
-						// user.request.lastName,
-						
-					
+						user.query.getstarted,
 					);
 
 					const device = await User.findOne({where: {id: user.customerId}});
@@ -286,7 +236,41 @@ module.exports.changeStatus = async (req, res) => {
 						user.lawfirm.en_name,
 					);
 
-					await Appointment.update(
+//reminder message
+
+					if (req.body.status === WorkflowAppointment.FREE_CONSULTATION && user.date === new Date()) {
+
+
+					var minutesToAdd=15;
+					var currentDate = new Date(userdate);
+					//var currentDate = new Date('2021-12-17T10:00:06.991Z');
+					// console.log('current date----------------------->'   ,  currentDate);
+					var futureDate = new Date(currentDate.getTime() - minutesToAdd*60000);
+					const someDate =futureDate
+					schedule.scheduleJob(someDate, async() => {
+					// console.log('job run---------------------------------->', new Date().toString());
+					await  Mail.userRemindermail(
+						user.user.email,
+						user.user.fullname,
+						user.time,
+						user.date,
+						user.user.id,
+						user.adminuser.firstname,
+						user.orderId,
+						user.lawfirm.en_name,
+						);
+						await  Mail.adminRemindermail(
+						user.adminuser.email,
+						user.adminuser.firstname,
+						user.time,
+						user.date,
+						user.user.fullname,
+						user.query.getstarted,
+					);
+				})
+	}
+
+						await Appointment.update(
 						{
 							status: req.body.status,
 							workflow: req.body.status,
@@ -298,7 +282,8 @@ module.exports.changeStatus = async (req, res) => {
 						'Success',
 						appointment,
 					);
-				} else if (req.body.status === WorkflowAppointment.APPROVE_LEAD) {
+				
+					} else if (req.body.status === WorkflowAppointment.APPROVE_LEAD) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
 						include: [
@@ -422,7 +407,7 @@ module.exports.changeStatus = async (req, res) => {
 							{
 								model: User,
 								required: false,
-								attributes: ['fullname', 'email'],
+								attributes: ['fullname', 'email', 'id'],
 							},
 							{
 								model: Admin,
@@ -473,28 +458,32 @@ module.exports.changeStatus = async (req, res) => {
 						user.date,
 						user.adminuser.firstname,
 						user.user.fullname,
-						// user.lawyer.en_name,
+						user.lawyer.en_name,
 						user.lawfirm.en_name,
 					);
 
-					// await Mail.userAppointmentConsult(
-					// 	user.user.email,
-					// 	user.user.fullname,
-					// 	user.time,
-					// 	user.date,
-					// 	user.lawyer.en_name,
-					// 	user.lawfirm.en_name,
-					// );
+					await Mail.userAppointmentConsult(
+						user.user.email,
+						user.user.fullname,
+						user.time,
+						user.date,
+						user.lawyer.en_name,
+						user.lawfirm.en_name,
+						user.orderId,
+						user.user.id,
+						
+
+					);
 
 
-					// await Mail.lawyerAppointmentConsult(
+					await Mail.lawyerAppointmentConsult(
 					
-					// 	user.lawyer.en_name,
-					// 	user.lawyer.email,
-					// 	user.lawfirm.en_name,
-					// 	user.user.fullname,
-					// 	user.adminuser.username,
-					// );
+						user.lawyer.en_name,
+						user.lawyer.email,
+						user.lawfirm.en_name,
+						user.user.fullname,
+						user.adminuser.firstname,
+					);
 
 					await Appointment.update(
 						{
