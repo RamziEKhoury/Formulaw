@@ -6,7 +6,7 @@ const LawFirm = db.lawFirm;
 const Lawyer = db.lawyer;
 const Admin = db.adminUser;
 const User = db.user;
-const Lawyer = db.lawyer;
+
 const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
@@ -15,7 +15,6 @@ const Notifications = require('../Config/Notifications');
 const {WorkflowAppointment} = require('../enum');
 const _ = require('lodash');
 const schedule = require('node-schedule');
-
 
 
 
@@ -240,36 +239,36 @@ module.exports.changeStatus = async (req, res) => {
 
 //reminder message
 
-					if (req.body.status === WorkflowAppointment.FREE_CONSULTATION && user.date === new Date()) {
-
-
+					
 					var minutesToAdd=15;
-					var currentDate = new Date(userdate);
+					var currenttime = new Date(user.time);
+					console.log("user time----->",user.time)
+					var futureDate = new Date(currenttime.getTime() - minutesToAdd*60000);
+					const someDate = futureDate
+			
+						schedule.scheduleJob(someDate, async () => {
+							console.log('send mail---------------->');
+							await Mail.userRemindermail(
+								user.user.email,
+								user.user.fullname,
+								user.time,
+								user.date,
+								user.user.id,
+								user.adminuser.firstname,
+								user.orderId,
+								user.lawfirm.en_name,
+							);
+							await Mail.adminRemindermail(
+								user.adminuser.email,
+								user.adminuser.firstname,
+								user.time,
+								user.date,
+								user.user.fullname,
+								user.query.getstarted,
+							);
+						})
 					
-					var futureDate = new Date(currentDate.getTime() - minutesToAdd*60000);
-					const someDate =futureDate
-					schedule.scheduleJob(someDate, async() => {
-					
-					await  Mail.userRemindermail(
-						user.user.email,
-						user.user.fullname,
-						user.time,
-						user.date,
-						user.user.id,
-						user.adminuser.firstname,
-						user.orderId,
-						user.lawfirm.en_name,
-						);
-						await  Mail.adminRemindermail(
-						user.adminuser.email,
-						user.adminuser.firstname,
-						user.time,
-						user.date,
-						user.user.fullname,
-						user.query.getstarted,
-					);
-				})
-	}
+	
 
 						await Appointment.update(
 						{
