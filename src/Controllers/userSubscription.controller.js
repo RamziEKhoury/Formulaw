@@ -27,10 +27,11 @@ module.exports.addUserSubscription = async (req, res) => {
 				checkSubscription: req.body.checkSubscription,
 				startingDate: req.body.startingDate,
 				endDate: req.body.endDate,
-				numberOfMeating: req.body.numberOfMeating,
+				numberOfMeeting: req.body.numberOfMeeting,
 				ipAudit: req.body.ipAudit,
-				meatingPlan: req.body.meatingPlan,
+				meetingPlan: req.body.meetingPlan,
 				contractTemplates: req.body.contractTemplates,
+				contract_templates: req.body.contract_templates,
 				discount: req.body.discount,
 			}).then((userSubscription) => {
 				if (userSubscription) {
@@ -66,10 +67,11 @@ module.exports.updateUserSubscription = async (req, res) => {
 			checkSubscription: req.body.checkSubscription,
 			startingDate: req.body.startingDate,
 			endDate: req.body.endDate,
-			numberOfMeating: req.body.numberOfMeating,
+			numberOfMeeting: req.body.numberOfMeeting,
 			ipAudit: req.body.ipAudit,
-			meatingPlan: req.body.meatingPlan,
+			meetingPlan: req.body.meetingPlan,
 			contractTemplates: req.body.contractTemplates,
+			contract_templates: req.body.contract_templates,
 			discount: req.body.discount,
 		}, {where: {userId: req.body.userId}})
 			.then((userSubscription) => {

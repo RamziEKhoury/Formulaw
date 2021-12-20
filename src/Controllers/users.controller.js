@@ -9,7 +9,6 @@ const crypto = require('crypto');
 const Op = db.Sequelize.Op;
 
 module.exports.registration = async (req, res) => {
-	console.log('hgvjhgh', req.body);
 	try {
 		// #swagger.tags = ['UserAuth']
 		/*  #swagger.parameters['obj'] = {
@@ -63,7 +62,6 @@ module.exports.registration = async (req, res) => {
 			);
 		});
 	} catch (err) {
-		console.log('err', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -304,7 +302,6 @@ module.exports.emailVarify = async (req, res) => {
 				email: req.body.email,
 			},
 		}).then(async (result) => {
-			console.log('result---->', result);
 			/* #swagger.responses[404] = {
                    description: "Email Not found.",
                    schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
@@ -405,10 +402,9 @@ module.exports.userDeviceTokenUpdate = async (req, res) => {
 module.exports.userPasswordReset = async (req, res) => {
 	try {
 	 User.findOne(
-		 {where: {email: req.body.email},
+		 {where: {email: req.body.email,userType: 'normal'},
 			})
 			.then((user) => {
-				console.log('user', user);
 				if (!user) {
 					return apiResponses.notFoundResponse(res, 'User dont exists with this email.');
 				}
