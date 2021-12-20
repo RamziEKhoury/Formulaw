@@ -31,7 +31,7 @@ module.exports = {
 		'class-methods-use-this': 'off',
 		'no-void': 'off',
 		'no-restricted-syntax': 'off',
-		'max-len': ['warn', {code: 80, ignoreComments: true, ignoreUrls: true}],
+		'max-len': ['warn', {code: 120, ignoreComments: true, ignoreUrls: true}],
 		'indent': [2, 'tab'],
 		'no-tabs': 0,
 		'no-mixed-spaces-and-tabs': 0,

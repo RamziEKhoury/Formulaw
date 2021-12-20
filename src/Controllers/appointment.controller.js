@@ -6,6 +6,7 @@ const LawFirm = db.lawFirm;
 const Lawyer = db.lawyer;
 const Admin = db.adminUser;
 const User = db.user;
+const Lawyer = db.lawyer;
 const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
@@ -38,6 +39,7 @@ module.exports.addAppointment = async (req, res) => {
 			shift: req.body.shift,
 			date: req.body.date,
 			time: req.body.time,
+			endTime: req.body.endTime,
 			orderId: orderId,
 			scheduleAt: req.body.scheduleAt,
 		}).then(async (appointment) => {
@@ -64,7 +66,7 @@ module.exports.addAppointment = async (req, res) => {
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ appointment.time+'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm') +'.',
 				senderName: device.fullname,
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
@@ -74,7 +76,7 @@ module.exports.addAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' + appointment.time + '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' + moment(appointment.time).format('HH:mm') + '.');
 			}
 			
 			return apiResponses.successResponseWithData(
@@ -221,7 +223,7 @@ module.exports.changeStatus = async (req, res) => {
 					await Notifications.notificationCreate(notiData);
 					if (!!device.deviceToken) {
 						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' + user.time +
+							' time ' + moment(user.time).format('HH:mm') +
 							' we will connect with you soon.');
 					}
 
@@ -492,6 +494,36 @@ module.exports.changeStatus = async (req, res) => {
 						{where: {id: req.params.id}},
 					);
 
+					const lawFirm = await LawFirm.findOne({where: {id: user.lawFirmId}});
+					const lawyers = await User.findAll({where: {lawfirmid: user.lawFirmId}, order: [['createdAt', 'ASC']]});
+					if (lawyers.length === 1) {
+						const lawyer = _.get(lawyers, [0], null);
+						await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+						return apiResponses.successResponseWithData(
+							res,
+							'Success',
+							appointment,
+						);
+					}
+					if (lawyers.length > 1) {
+						if (lawyers.length > lawFirm.assignlawyer) {
+							const lawyer = _.get(lawyers, [lawyers.length-1], null);
+							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+							return apiResponses.successResponseWithData(
+								res,
+								'Success',
+								appointment,
+							);
+						} else {
+							const lawyer = _.get(lawyers, [0], null);
+							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+							return apiResponses.successResponseWithData(
+								res,
+								'Success',
+								appointment,
+							);
+						}
+					}
 					return apiResponses.successResponseWithData(
 						res,
 						'Success',
@@ -629,6 +661,7 @@ module.exports.getAppointments = (req, res) => {
 					attributes: ['firstname', 'lastname'],
 				},
 				{model: User, required: false, attributes: ['fullname', 'email']},
+
 			],
 		})
 			.then((result) => {
@@ -694,6 +727,7 @@ module.exports.getUserAppointment = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {
@@ -727,6 +761,7 @@ module.exports.getLawyerAppointment = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {
@@ -765,6 +800,7 @@ module.exports.getUserAppointmentMonthly = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {
@@ -793,8 +829,9 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 	// #swagger.tags = ['Appointment']
 	Appointment.findAll({
 		where: {
-			lawFirmId: req.params.lawFirmId,
-			date: {
+			lawyerId: req.params.lawyerId,
+			status: WorkflowAppointment.CONSULTATION,
+			time: {
 				[Op.between]: [req.params.startDate, req.params.endDate],
 			},
 		},
@@ -803,6 +840,7 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 			{model: LawFirm, required: false, attributes: ['en_name']},
 			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
 			{model: User, required: false, attributes: ['fullname', 'email']},
+
 		],
 	})
 		.then((data) => {

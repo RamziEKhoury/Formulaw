@@ -44,7 +44,7 @@ module.exports = function(app) {
 		appointmentController.getLawyerAppointment);
 
 	app.get(
-		'/api/v1/appointment/lawyer-appointments-monthly/:lawFirmId/:startDate/:endDate',
+		'/api/v1/appointment/lawyer-appointments-monthly/:lawyerId/:startDate/:endDate',
 		appointmentController.getLawyerAppointmentMonthly);
 
 	app.get(

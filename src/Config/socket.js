@@ -11,8 +11,8 @@ function getKeyByValue(object, value) {
 }
 
 // eslint-disable-next-line require-jsdoc,max-len
-async function saveMessage(senderId, receiverId, message, messageType, image, file, appointmentId, requestId, fullName, date, source) {
-	console.log('messgae--->', senderId, receiverId, message, messageType, image, file, appointmentId, requestId, fullName, date);
+async function saveMessage(senderId, receiverId, message, messageType, imageUrl, fileUrl, appointmentId, requestId, fullName, date, source) {
+	console.log('messgae--->', senderId, receiverId, message, messageType, imageUrl, fileUrl, appointmentId, requestId, fullName, date);
 
 	const isChatExist = await Chat.findOne({
 		where: {
@@ -34,8 +34,8 @@ async function saveMessage(senderId, receiverId, message, messageType, image, fi
 		await Chat.update({
 			message: message,
 			messageType: messageType,
-			image: image,
-			file: file,
+			imageUrl: imageUrl,
+			fileUrl: fileUrl,
 			fullName: fullName,
 			date: date,
 			source,
@@ -52,8 +52,8 @@ async function saveMessage(senderId, receiverId, message, messageType, image, fi
 			appointmentId: appointmentId,
 			message: message,
 			messageType: messageType,
-			image: image,
-			file: file,
+			imageUrl: imageUrl,
+			fileUrl: fileUrl,
 			fullName: fullName,
 			date: date,
 			source,
@@ -62,8 +62,8 @@ async function saveMessage(senderId, receiverId, message, messageType, image, fi
 		await Chat.update({
 			message: message,
 			messageType: messageType,
-			image: image,
-			file: file,
+			imageUrl: imageUrl,
+			fileUrl: fileUrl,
 			fullName: fullName,
 			date: date,
 			source,
@@ -80,8 +80,8 @@ async function saveMessage(senderId, receiverId, message, messageType, image, fi
 			appointmentId: appointmentId,
 			message: message,
 			messageType: messageType,
-			image: image,
-			file: file,
+			imageUrl: imageUrl,
+			fileUrl: fileUrl,
 			fullName: fullName,
 			date: date,
 			source,
@@ -94,8 +94,8 @@ async function saveMessage(senderId, receiverId, message, messageType, image, fi
 			appointmentId: appointmentId,
 			message: message,
 			messageType: messageType,
-			image: image,
-			file: file,
+			imageUrl: imageUrl,
+			fileUrl: fileUrl,
 			fullName: fullName,
 			date: date,
 			source,
@@ -109,8 +109,8 @@ async function saveMessage(senderId, receiverId, message, messageType, image, fi
 			appointmentId: appointmentId,
 			messageType: messageType,
 			message: message,
-			image: image,
-			file: file,
+			imageUrl: imageUrl,
+			fileUrl: fileUrl,
 			fullName: fullName,
 			date: date,
 			source,
@@ -153,8 +153,8 @@ class SocketService {
 					msg.receiverId,
 					msg.message,
 					msg.messageType,
-					msg.image,
-					msg.file,
+					msg.imageUrl,
+					msg.fileUrl,
 					msg.appointmentId,
 					msg.requestId,
 					msg.fullName,
