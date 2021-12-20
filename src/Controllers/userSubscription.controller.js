@@ -1,9 +1,11 @@
 const db = require('../models');
 const UserSubscription = db.userSubscription;
 const User = db.user;
+const Admin = db.adminUser;
 const apiResponses = require('../Components/apiresponse');
 const _ = require('lodash');
 const Op = db.Sequelize.Op;
+const Mail = require('../Config/Mails');
 
 module.exports.addUserSubscription = async (req, res) => {
 	try {
@@ -32,7 +34,7 @@ module.exports.addUserSubscription = async (req, res) => {
 				meatingPlan: req.body.meatingPlan,
 				contractTemplates: req.body.contractTemplates,
 				discount: req.body.discount,
-			}).then((userSubscription) => {
+			}).then(async(userSubscription) => {
 				if (userSubscription) {
 					User.update({
 						isSubscribed: 1,
@@ -45,6 +47,9 @@ module.exports.addUserSubscription = async (req, res) => {
 							}
 						});
 				}
+
+
+
 				return apiResponses.successResponseWithData(
 					res, 'success!', userSubscription);
 			},
