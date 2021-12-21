@@ -64,7 +64,6 @@ const updateServiceSubcategoryValidator = [
     .isLength({ min: 1 })
     .trim()
     .withMessage("isActive must be specified."),
-  sanitizeBody("en_name").escape(),
   sanitizeBody("isActive").escape(),
   (req, res, next) => {
     const errors = validationResult(req);

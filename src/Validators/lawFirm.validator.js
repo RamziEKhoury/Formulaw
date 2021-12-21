@@ -44,12 +44,20 @@ const addLawFirmValidator = [
 	body('languageId.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage Id must be specified.'),
+		.withMessage('language Id must be specified.'),
 
 	body('languageTitle.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage title must be specified.'),
+		.withMessage('language title must be specified.'),
+	body('logo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('logo  must be specified.'),
+	body('images.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('images must be specified.'),
 	body('isActive')
 		.isLength({min: 1})
 		.trim()
@@ -113,12 +121,20 @@ const updateLawFirmValidator = [
     body('languageId.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage Id must be specified.'),
+		.withMessage('language Id must be specified.'),
 
 	body('languageTitle.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage title must be specified.'),
+		.withMessage('language title must be specified.'),
+	body('logo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('logo  must be specified.'),
+	body('images.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('images must be specified.'),
 	
 
 	body('isActive')

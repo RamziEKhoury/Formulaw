@@ -6,7 +6,7 @@ const LawFirm = db.lawFirm;
 const Lawyer = db.lawyer;
 const Admin = db.adminUser;
 const User = db.user;
-const Lawyer = db.lawyer;
+// const Lawyer = db.lawyer;
 const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
@@ -929,4 +929,30 @@ module.exports.getUserLastAppointment = (req, res) => {
 					err.message || 'Some error occurred while retrieving Appointment.',
 			});
 		});
+};
+
+module.exports.getAllAppointmentByDay = (req, res) => {
+	const today = moment(req.params.time).format('YYYY-MM-DD');
+	Appointment.findAll({
+		where: {time: {[Op.iLike]: '%' + today + '%'}},
+	})
+	.then((data) => {
+		// res.status(200).send({
+		//   status: "200",
+		//   user: data,
+		// });
+
+		return apiResponses.successResponseWithData(res, 'success', data);
+	})
+	.catch((err) => {
+		/* #swagger.responses[500] = {
+							description: "Error message",
+							schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+						} */
+		// return res.status(500).send({ message: err.message });
+		res.status(500).send({
+			message:
+	  err.message || 'Some error occurred while retrieving Appointment.',
+		});
+	});
 };
