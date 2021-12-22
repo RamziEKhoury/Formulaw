@@ -437,40 +437,6 @@ module.exports.changeStatus = async (req, res) => {
 						await Notifications.notification(device.deviceToken, 'Hi, Your appointment have scheduled for consultation with lawyer');
 					}
 
-
-					await Mail.adminAppointmentConsult(
-						user.adminuser.email,
-						user.time,
-						user.date,
-						user.adminuser.firstname,
-						user.user.fullname,
-						user.lawyer.en_name,
-						user.lawfirm.en_name,
-					);
-
-					await Mail.userAppointmentConsult(
-						user.user.email,
-						user.user.fullname,
-						user.time,
-						user.date,
-						user.lawyer.en_name,
-						user.lawfirm.en_name,
-						user.orderId,
-						user.user.id,
-
-
-					);
-
-
-					await Mail.lawyerAppointmentConsult(
-
-						user.lawyer.en_name,
-						user.lawyer.email,
-						user.lawfirm.en_name,
-						user.user.fullname,
-						user.adminuser.firstname,
-					);
-
 					await Appointment.update(
 						{
 							status: req.body.status,
@@ -509,11 +475,50 @@ module.exports.changeStatus = async (req, res) => {
 							);
 						}
 					}
-					return apiResponses.successResponseWithData(
+					
+
+				await Mail.adminAppointmentConsult(
+						user.adminuser.email,
+						user.time,
+						user.date,
+						user.adminuser.firstname,
+						user.user.fullname,
+						user.lawyer.en_name,
+						user.lawfirm.en_name,
+					);
+
+					await Mail.userAppointmentConsult(
+						user.user.email,
+						user.user.fullname,
+						user.time,
+						user.date,
+						user.lawyer.en_name,
+						user.lawfirm.en_name,
+						user.orderId,
+						user.user.id,
+
+
+					);
+
+
+					await Mail.lawyerAppointmentConsult(
+
+						user.lawyer.en_name,
+						user.lawyer.email,
+						user.lawfirm.en_name,
+						user.user.fullname,
+						user.adminuser.firstname,
+					);
+
+return apiResponses.successResponseWithData(
 						res,
 						'Success',
 						appointment,
 					);
+
+
+
+					
 				} else if (req.body.status === WorkflowAppointment.COMPLETED) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
