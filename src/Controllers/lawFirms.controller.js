@@ -3,8 +3,25 @@ const LawFirm = db.lawFirm;
 const LawFirmService = db.lawFirm_service;
 const LawFirmIndustry = db.lawFirm_industry;
 const LawFirmTax = db.lawFirm_tax;
+const User = db.user;
+const Lawyer = db.lawyer;
 const apiResponses = require('../Components/apiresponse');
+const {UserRole} = require('../enum');
+const bcrypt = require('bcryptjs');
+const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
+
+// eslint-disable-next-line require-jsdoc
+function generatePassword() {
+	const length = 8;
+	const charset =
+		'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	let retVal = '';
+	for (let i = 0, n = charset.length; i < length; ++i) {
+		retVal += charset.charAt(Math.floor(Math.random() * n));
+	}
+	return retVal;
+}
 
 module.exports.addLawFirm = async (req, res) => {
 	try {
@@ -25,6 +42,7 @@ module.exports.addLawFirm = async (req, res) => {
 			defaults: {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
+				email: req.body.email,
 				licenseNumber: req.body.licenseNumber,
 				countryId: req.body.countryId,
 				countryTitle: req.body.countryTitle,
@@ -39,8 +57,7 @@ module.exports.addLawFirm = async (req, res) => {
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
-		}).then((lawFirm) => {
-			console.log('lawFirm--->', lawFirm);
+		}).then(async (lawFirm) => {
 			const isAlready = lawFirm[1];
 			const inserted = lawFirm[0];
 
@@ -54,6 +71,42 @@ module.exports.addLawFirm = async (req, res) => {
 					msg: 'Lawfirm already exist',
 				});
 			} else {
+				console.log('lawFirm--->'+JSON.stringify(inserted));
+				// Register lawyer
+				const lawFirmFormData = {
+					id: inserted.id,
+					en_name: inserted.en_name,
+					ar_name: inserted.ar_name,
+					licenseNumber: inserted.licenseNumber,
+					countryId: inserted.countryId[0],
+					countryTitle: inserted.countryTitle[0],
+					languageId: inserted.languageId[0],
+					languageTitle: inserted.languageTitle[0],
+					experience: inserted.experience,
+					jurisdiction: inserted.jurisdiction[0],
+					expertise: inserted.expertise,
+					numOfLawyer: inserted.numOfLawyer,
+					rating: inserted.rating,
+					lawFirmId: inserted.id,
+					isActive: inserted.isActive,
+					isDeleted: inserted.isDeleted,
+				};
+
+				const lawyer = await Lawyer.create(lawFirmFormData);
+				const password = generatePassword();
+				await User.create({
+					fullname: inserted.en_name,
+					email: inserted.email,
+					role: UserRole.LAWFIRM_ADMIN,
+					username: inserted.email,
+					password: bcrypt.hashSync(password, 8),
+					userType: 'normal',
+					lawyer_id: lawyer.id,
+					lawfirmid: inserted.id,
+					isActive: req.body.isActive,
+				});
+				await Mail.lawyerRegistration(inserted.email, password);
+
 				const lawFirmData = {
 					id: inserted.id,
 					en_name: inserted.en_name,

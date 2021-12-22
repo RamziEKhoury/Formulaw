@@ -16,7 +16,9 @@ module.exports = (sequelize, Sequelize) => {
 			ar_name: {
 				type: Sequelize.STRING,
 			},
-
+			email: {
+				type: Sequelize.STRING,
+			},
 			licenseNumber: {
 				type: Sequelize.STRING,
 			},

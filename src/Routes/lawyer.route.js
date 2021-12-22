@@ -22,10 +22,10 @@ module.exports = function(app) {
 		[LawyerValidator.updateLawyerValidator],
 		lawyerController.lawyerUpdate,
 	);
-	
+
 	app.get('/api/v1/lawyer/get-lawyers/:lawFirmId', lawyerController.getLawyers);
 
 	app.get('/api/v1/lawyer/get-lawyer/:id', lawyerController.getLawyer);
 
-	app.delete('/api/v1/lawyer/delete-lawyer/:id',lawyerController.deleteLawyer);
+	app.delete('/api/v1/lawyer/delete-lawyer/:id', lawyerController.deleteLawyer);
 };

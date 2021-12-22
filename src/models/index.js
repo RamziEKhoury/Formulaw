@@ -38,7 +38,6 @@ db.testimonial = require('./testimonial.model')(sequelize, Sequelize);
 db.lawyer = require('./lawyers.model')(sequelize, Sequelize);
 db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize, Sequelize);
 db.lawFirm_service = require('./lawFirm-services.model')(sequelize, Sequelize);
-db.user = require('./users.model')(sequelize, Sequelize);
 db.lawFirm_tax = require('./lawFirm-taxes.model')(sequelize, Sequelize);
 db.community = require('./community.model')(sequelize, Sequelize);
 db.communityType = require('./communityType.model')(sequelize, Sequelize);

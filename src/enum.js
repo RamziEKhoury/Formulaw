@@ -26,6 +26,7 @@ module.exports.MessageType = {
 module.exports.UserRole = {
 	USER: 'USER',
 	LAWYER: 'LAWYER',
+	LAWFIRM_ADMIN: 'LAWFIRM_ADMIN',
 	OTHERS: 'OTHERS',
 };
 

@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
 		lawfirmid: {
 			type: Sequelize.UUID,
 		},
+		lawyer_id: {
+			type: Sequelize.UUID,
+		},
 		fullname: {
 			type: Sequelize.STRING,
 		},
@@ -36,7 +39,7 @@ module.exports = (sequelize, Sequelize) => {
 			defaultValue: 'normal',
 		},
 		role: {
-			type: Sequelize.ENUM(UserRole.USER, UserRole.LAWYER, UserRole.OTHERS),
+			type: Sequelize.ENUM(UserRole.USER, UserRole.LAWYER, UserRole.LAWFIRM_ADMIN, UserRole.OTHERS),
 			defaultValue: UserRole.USER,
 		},
 		facebooktoken: {

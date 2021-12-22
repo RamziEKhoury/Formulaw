@@ -73,6 +73,7 @@ module.exports.addLawyer = async (req, res) => {
 				const password = generatePassword();
 				await User.create({
 					fullname: inserted.en_name,
+					lawyer_id: inserted.id,
 					email: inserted.email,
 					role: UserRole.LAWYER,
 					username: inserted.email,
