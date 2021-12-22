@@ -1,10 +1,11 @@
 const db = require('../models');
 const Lawyer = db.lawyer;
 const User = db.user;
+const Appointment = db.appointment;
 const apiResponses = require('../Components/apiresponse');
 const bcrypt = require('bcryptjs');
 const Mail = require('../Config/Mails');
-const {UserRole} = require('../enum');
+const {UserRole, WorkflowAppointment} = require('../enum');
 const Op = db.Sequelize.Op;
 
 // eslint-disable-next-line require-jsdoc
@@ -71,8 +72,9 @@ module.exports.addLawyer = async (req, res) => {
 				});
 			} else {
 				const password = generatePassword();
-				await User.create({
+				const user = await User.create({
 					fullname: inserted.en_name,
+					lawyer_id: inserted.id,
 					email: inserted.email,
 					role: UserRole.LAWYER,
 					username: inserted.email,
@@ -81,9 +83,9 @@ module.exports.addLawyer = async (req, res) => {
 					lawfirmid: req.body.lawFirmId,
 					isActive: req.body.isActive,
 				});
+				await Lawyer.update({user_id: user.id}, {where: {id: inserted.id}});
 				await Mail.lawyerRegistration(inserted.email, password);
 				const lawyerData = {
-					id: inserted.id,
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
 					lawFirmId: inserted.lawFirmId,
@@ -189,11 +191,12 @@ module.exports.getLawyers = (req, res) => {
 		isActive: 1,
 		order: [['createdAt', 'DESC']],
 	})
-		.then((data) => {
+		.then(async (data) => {
 			// res.status(200).send({
 			//   status: "200",
 			//   user: data,
 			// });
+
 			return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
@@ -279,4 +282,125 @@ module.exports.deleteLawyer = async (req, res) => {
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
+};
+
+
+module.exports.getLawyerStatuses = (req, res) => {
+	// Get Lawyer data from Database
+	// #swagger.tags = ['Lawyer']
+
+	Lawyer.findAll({
+		where: {lawFirmId: req.params.lawFirmId},
+		isDeleted: 0,
+		isActive: 1,
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async (data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const lawyerStatuses = [];
+			for (let i = 0; i < data.length; i++) {
+				const appointmentsPending = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+						status: WorkflowAppointment.CONSULTATION,
+					},
+				});
+				const appointmentsOpen = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+						status: WorkflowAppointment.CONSULTATION,
+					},
+				});
+				const appointmentsComplete = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+						status: WorkflowAppointment.COMPLETED,
+					},
+				});
+				const obj = {
+					lawyer: data[i],
+					appointmentsPending,
+					appointmentsOpen,
+					appointmentsComplete,
+				};
+				lawyerStatuses.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', lawyerStatuses);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving Lawyers.',
+			});
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                    description: "Error message",
+                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
+			});
+		});
+};
+
+
+module.exports.getLawyerTotalCases = (req, res) => {
+	// Get Lawyer data from Database
+	// #swagger.tags = ['Lawyer']
+
+	Lawyer.findAll({
+		where: {lawFirmId: req.params.lawFirmId},
+		isDeleted: 0,
+		isActive: 1,
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async (data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const lawyerTotalCase = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalCases = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+					},
+				});
+				const obj = {
+					lawyer: data[i],
+					totalCases,
+				};
+				lawyerTotalCase.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', lawyerTotalCase);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving Lawyers.',
+			});
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                    description: "Error message",
+                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
+			});
+		});
 };

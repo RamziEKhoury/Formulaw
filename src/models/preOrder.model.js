@@ -6,22 +6,22 @@ module.exports = (sequelize, Sequelize) => {
 			allowNull: false,
 			primaryKey: true,
 		},
-		
+
 		queryId: {
 			type: Sequelize.UUID,
 		},
-        appointmentId: {
+		appointmentId: {
 			type: Sequelize.UUID,
 		},
-        topic: {
+		topic: {
 			type: Sequelize.STRING,
 		},
-        furtherInformation: {
+		furtherInformation: {
 			type: Sequelize.STRING,
 		},
-		document:{
+		document: {
 			type: Sequelize.STRING,
-		}
+		},
 
 	}, {
 		timestamps: true,

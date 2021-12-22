@@ -35,7 +35,7 @@ module.exports.addUserSubscription = async (req, res) => {
 				contractTemplates: req.body.contractTemplates,
 				contract_templates: req.body.contract_templates,
 				discount: req.body.discount,
-			}).then(async(userSubscription) => {
+			}).then(async (userSubscription) => {
 				if (userSubscription) {
 					User.update({
 						isSubscribed: 1,
@@ -48,7 +48,6 @@ module.exports.addUserSubscription = async (req, res) => {
 							}
 						});
 				}
-
 
 
 				return apiResponses.successResponseWithData(

@@ -48,10 +48,10 @@ module.exports.registration = async (req, res) => {
 				token: token,
 			};
 
-			await Mail.userRegistration(user.email,user.fullname);
+			await Mail.userRegistration(user.email, user.fullname);
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.userRegistrationAdminMail(adminMail[i].email,user.fullname);
+				await Mail.userRegistrationAdminMail(adminMail[i].email, user.fullname);
 			}
 
 			// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
@@ -402,7 +402,7 @@ module.exports.userDeviceTokenUpdate = async (req, res) => {
 module.exports.userPasswordReset = async (req, res) => {
 	try {
 	 User.findOne(
-		 {where: {email: req.body.email,userType: 'normal'},
+		 {where: {email: req.body.email, userType: 'normal'},
 			})
 			.then((user) => {
 				if (!user) {

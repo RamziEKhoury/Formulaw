@@ -22,10 +22,14 @@ module.exports = function(app) {
 		[LawyerValidator.updateLawyerValidator],
 		lawyerController.lawyerUpdate,
 	);
-	
+
 	app.get('/api/v1/lawyer/get-lawyers/:lawFirmId', lawyerController.getLawyers);
 
 	app.get('/api/v1/lawyer/get-lawyer/:id', lawyerController.getLawyer);
 
-	app.delete('/api/v1/lawyer/delete-lawyer/:id',lawyerController.deleteLawyer);
+	app.get('/api/v1/lawyer/get-lawyer-statuses/:lawFirmId', lawyerController.getLawyerStatuses);
+
+	app.get('/api/v1/lawyer/get-lawyer-cases/:lawFirmId', lawyerController.getLawyerTotalCases);
+
+	app.delete('/api/v1/lawyer/delete-lawyer/:id', lawyerController.deleteLawyer);
 };

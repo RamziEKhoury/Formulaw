@@ -14,7 +14,7 @@ const addUserSubscriptionValidator = [
 		.trim().withMessage('startingDate must be specified.'),
 	body('endDate').isLength({min: 1})
 		.trim().withMessage('endDate must be specified.'),
-		body('discount')
+	body('discount')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('discount must be specified.'),
@@ -54,7 +54,7 @@ const addUserSubscriptionValidator = [
 const UpdateUserSubscriptionValidator = [
 	body('userId').isLength({min: 1})
 		.trim().withMessage('userId must be specified.'),
-        body('durationType').isLength({min: 1})
+	body('durationType').isLength({min: 1})
 		.trim().withMessage('durationType must be specified.'),
 	body('subscriptionPlan').isLength({min: 1})
 		.trim().withMessage('subscription Plan must be specified.'),
@@ -62,7 +62,7 @@ const UpdateUserSubscriptionValidator = [
 		.trim().withMessage('startingDate must be specified.'),
 	body('endDate').isLength({min: 1})
 		.trim().withMessage('endDate must be specified.'),
-		body('discount')
+	body('discount')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('discount must be specified.'),
@@ -86,7 +86,7 @@ const UpdateUserSubscriptionValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('contract_templates must be specified.'),
-		
+
 	sanitizeBody('countryCode').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
