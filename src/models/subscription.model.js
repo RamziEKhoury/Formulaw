@@ -31,10 +31,10 @@ module.exports = (sequelize, Sequelize) => {
 		features: {
 			type: DataTypes.JSONB,
 		},
-		numberOfMeating: {
+		numberOfMeeting: {
 			type: Sequelize.INTEGER,
 		},
-		meatingPlan:{
+		meetingPlan:{
 			type: Sequelize.ENUM('Monthly', 'Yearly' ),
 		},
 		ipAudit: {
@@ -42,6 +42,9 @@ module.exports = (sequelize, Sequelize) => {
 		},
 		contractTemplates: {
 			type: Sequelize.BOOLEAN,
+		},
+		contract_templates: {
+			type: DataTypes.JSONB,
 		},
 		discount: {
 			type: Sequelize.INTEGER,

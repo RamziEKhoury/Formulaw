@@ -5,7 +5,6 @@ const apiResponses = require('../Components/apiresponse');
 module.exports.addSubscription = async (req, res) => {
 	try {
 		// #swagger.tags = ['Subscription']
-		console.log(req.body.title);
 		/*  #swagger.parameters['obj'] = {
 			          in: 'body',
 			          description: "Subscription details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,experience,jurisdiction,expertise,rating,isActive",
@@ -19,11 +18,12 @@ module.exports.addSubscription = async (req, res) => {
 			subscriptionType: req.body.subscriptionType,
 			price: req.body.price,
 			currency: req.body.currency,
-			numberOfMeating:req.body.numberOfMeating,
-			ipAudit:req.body.ipAudit,
-			meatingPlan:req.body.meatingPlan,
-			contractTemplates:req.body.contractTemplates,
-			discount:req.body.discount,
+			numberOfMeeting: req.body.numberOfMeeting,
+			ipAudit: req.body.ipAudit,
+			meetingPlan: req.body.meetingPlan,
+			contractTemplates: req.body.contractTemplates,
+			contract_templates: req.body.contract_templates,
+			discount: req.body.discount,
 			images: req.body.images,
 			logo: req.body.logo,
 			features: req.body.features,
@@ -76,7 +76,6 @@ module.exports.getSubscriptionsType = (req, res) => {
 	Subscription.findAll({where: {
 		durationType: durationType,
 	}})
-	console.log(durationType);
 	Subscription.findAll({
 		where: {
 			durationType: durationType,
