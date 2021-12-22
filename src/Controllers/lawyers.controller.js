@@ -52,6 +52,8 @@ module.exports.addLawyer = async (req, res) => {
 				languageTitle: req.body.languageTitle,
 				expertise: req.body.expertise,
 				jurisdiction: req.body.jurisdiction,
+				logo: req.body.logo,
+				images: req.body.images,
 				rating: req.body.rating,
 				experience: req.body.experience,
 				isActive: req.body.isActive,

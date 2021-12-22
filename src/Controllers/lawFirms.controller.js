@@ -74,7 +74,6 @@ module.exports.addLawFirm = async (req, res) => {
 				console.log('lawFirm--->'+JSON.stringify(inserted));
 				// Register lawyer
 				const lawFirmFormData = {
-					id: inserted.id,
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
 					licenseNumber: inserted.licenseNumber,
@@ -87,6 +86,8 @@ module.exports.addLawFirm = async (req, res) => {
 					expertise: inserted.expertise,
 					numOfLawyer: inserted.numOfLawyer,
 					rating: inserted.rating,
+					logo: inserted.logo,
+					images: inserted.images,
 					lawFirmId: inserted.id,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,

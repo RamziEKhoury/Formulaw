@@ -1,3 +1,4 @@
+const DataTypes = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
 		'lawyer',
@@ -65,6 +66,12 @@ module.exports = (sequelize, Sequelize) => {
 			},
 			isActive: {
 				type: Sequelize.INTEGER,
+			},
+			logo: {
+				type: Sequelize.STRING,
+			},
+			images: {
+				type: DataTypes.JSONB,
 			},
 			isDeleted: {
 				defaultValue: 0,
