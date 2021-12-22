@@ -62,5 +62,9 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/appointment/user-all-appointments/:userId',
 		appointmentController.getUserLastAppointment);
+
+	app.get(
+		'/api/v1/appointment/all-appointmentsbyday/:time',
+		appointmentController.getAllAppointmentByDay);
 };
 
