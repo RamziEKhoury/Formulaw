@@ -9,15 +9,14 @@ module.exports.addPreOrder = async (req, res) => {
 		PreOrder.create({
 			appointmentId: req.body.appointmentId,
 			queryId: req.body.queryId,
-			subject: req.body.subject,
+			topic: req.body.topic,
 			furtherInformation: req.body.furtherInformation,
-			anyInformation: req.body.anyInformation,
 			document: req.body.document,
 		}).then((preOrder) => {
 			if (preOrder) {
 				Request.update(
 					{
-						getstarted: req.body.subject,
+						getstarted: req.body.topic,
 					},
 					{
 						where: {id: req.body.queryId},
@@ -40,9 +39,8 @@ module.exports.updatePreOrder = async (req, res) => {
 	try {
 		await PreOrder.update(
 			{
-				subject: req.body.subject,
+				topic: req.body.topic,
 				furtherInformation: req.body.furtherInformation,
-				anyInformation: req.body.anyInformation,
 				document: req.body.document,
 			},
 			{where: {id: req.body.id}},

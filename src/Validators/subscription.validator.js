@@ -1,4 +1,4 @@
-const {body, sanitizeBody, validationResult,param} = require('express-validator');
+const {body, sanitizeBody, validationResult, param} = require('express-validator');
 const {isNumber} = require('underscore');
 const apiResponses = require('../Components/apiresponse');
 
@@ -11,7 +11,7 @@ const addSubscriptionValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('description must be specified.'),
-    body('durationType')
+	body('durationType')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('durationType must be specified.'),
@@ -39,14 +39,14 @@ const addSubscriptionValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('discount must be specified.'),
-	body('numberOfMeating')
+	body('numberOfMeeting')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('numberOfMeating must be specified.'),
-	body('meatingPlan')
+		.withMessage('numberOfMeeting must be specified.'),
+	body('meetingPlan')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('meatingPlan must be specified.'),
+		.withMessage('meetingPlan must be specified.'),
 	body('ipAudit')
 		.isLength({min: 1})
 		.trim()
@@ -55,7 +55,11 @@ const addSubscriptionValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('contractTemplates must be specified.'),
-	
+	body('contract_templates.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('contract_templates must be specified.'),
+
 
 	sanitizeBody('title').escape(),
 	(req, res, next) => {
@@ -73,11 +77,9 @@ const addSubscriptionValidator = [
 ];
 
 
-
-
 const subscriptionValidator = {
 	addSubscriptionValidator: addSubscriptionValidator,
-	
+
 };
 
 module.exports = subscriptionValidator;

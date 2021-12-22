@@ -1,9 +1,11 @@
 const db = require('../models');
 const UserSubscription = db.userSubscription;
 const User = db.user;
+const Admin = db.adminUser;
 const apiResponses = require('../Components/apiresponse');
 const _ = require('lodash');
 const Op = db.Sequelize.Op;
+const Mail = require('../Config/Mails');
 
 module.exports.addUserSubscription = async (req, res) => {
 	try {
@@ -27,12 +29,13 @@ module.exports.addUserSubscription = async (req, res) => {
 				checkSubscription: req.body.checkSubscription,
 				startingDate: req.body.startingDate,
 				endDate: req.body.endDate,
-				numberOfMeating: req.body.numberOfMeating,
+				numberOfMeeting: req.body.numberOfMeeting,
 				ipAudit: req.body.ipAudit,
-				meatingPlan: req.body.meatingPlan,
+				meetingPlan: req.body.meetingPlan,
 				contractTemplates: req.body.contractTemplates,
+				contract_templates: req.body.contract_templates,
 				discount: req.body.discount,
-			}).then((userSubscription) => {
+			}).then(async (userSubscription) => {
 				if (userSubscription) {
 					User.update({
 						isSubscribed: 1,
@@ -45,6 +48,8 @@ module.exports.addUserSubscription = async (req, res) => {
 							}
 						});
 				}
+
+
 				return apiResponses.successResponseWithData(
 					res, 'success!', userSubscription);
 			},
@@ -66,10 +71,11 @@ module.exports.updateUserSubscription = async (req, res) => {
 			checkSubscription: req.body.checkSubscription,
 			startingDate: req.body.startingDate,
 			endDate: req.body.endDate,
-			numberOfMeating: req.body.numberOfMeating,
+			numberOfMeeting: req.body.numberOfMeeting,
 			ipAudit: req.body.ipAudit,
-			meatingPlan: req.body.meatingPlan,
+			meetingPlan: req.body.meetingPlan,
 			contractTemplates: req.body.contractTemplates,
+			contract_templates: req.body.contract_templates,
 			discount: req.body.discount,
 		}, {where: {userId: req.body.userId}})
 			.then((userSubscription) => {

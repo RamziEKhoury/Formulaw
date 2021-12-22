@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 		},
 		subscriptionType: {
-			type: Sequelize.ENUM('Startup', 'Enterprise','Enterprise+' ),
+			type: Sequelize.ENUM('Startup', 'Enterprise', 'Enterprise+' ),
 		},
 		price: {
 			type: Sequelize.INTEGER,
@@ -31,17 +31,20 @@ module.exports = (sequelize, Sequelize) => {
 		features: {
 			type: DataTypes.JSONB,
 		},
-		numberOfMeating: {
+		numberOfMeeting: {
 			type: Sequelize.INTEGER,
 		},
-		meatingPlan:{
+		meetingPlan: {
 			type: Sequelize.ENUM('Monthly', 'Yearly' ),
 		},
 		ipAudit: {
-			type: Sequelize.BOOLEAN, 
+			type: Sequelize.BOOLEAN,
 		},
 		contractTemplates: {
 			type: Sequelize.BOOLEAN,
+		},
+		contract_templates: {
+			type: DataTypes.JSONB,
 		},
 		discount: {
 			type: Sequelize.INTEGER,

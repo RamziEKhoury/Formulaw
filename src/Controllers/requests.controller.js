@@ -1,12 +1,10 @@
 const db = require('../models');
 const Request = db.request;
-const Admin = db.adminUser;
 const Appointment = db.appointment;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
-const Mail = require('../Config/Mails');
 const Notifications = require('../Config/Notifications');
-const {WorkflowAppointment} = require("../enum");
+const {WorkflowAppointment} = require('../enum');
 const Op = db.Sequelize.Op;
 
 module.exports.createRequest = async (req, res) => {
@@ -59,13 +57,7 @@ module.exports.createRequest = async (req, res) => {
 			if (!!device.deviceToken) {
 				await Notifications.notification(device.deviceToken, 'New lead created.');
 			}
-			await Mail.userLeadSubmitted(request.email, request.getstarted);
-			const adminMail = await Admin.findAll();
-			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.adminLeadMain(adminMail[i].email);
-			}
 
-			// return res.status(200).send({ status:'200', message: "success!" , $data: createdRequest });
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',

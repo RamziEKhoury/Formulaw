@@ -1,3 +1,4 @@
+const DataTypes = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define('userSubScription', {
 		id: {
@@ -24,10 +25,10 @@ module.exports = (sequelize, Sequelize) => {
 		endDate: {
 			type: Sequelize.STRING,
 		},
-		numberOfMeating: {
+		numberOfMeeting: {
 			type: Sequelize.INTEGER,
 		},
-		meatingPlan: {
+		meetingPlan: {
 			type: Sequelize.STRING,
 		},
 		ipAudit: {
@@ -38,6 +39,9 @@ module.exports = (sequelize, Sequelize) => {
 		},
 		discount: {
 			type: Sequelize.INTEGER,
+		},
+		contract_templates: {
+			type: DataTypes.JSONB,
 		},
 
 

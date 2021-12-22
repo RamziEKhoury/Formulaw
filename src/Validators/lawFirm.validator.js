@@ -1,5 +1,4 @@
-const {body, sanitizeBody, validationResult,param} = require('express-validator');
-const {isNumber} = require('underscore');
+const {body, sanitizeBody, validationResult, param} = require('express-validator');
 const apiResponses = require('../Components/apiresponse');
 
 const addLawFirmValidator = [
@@ -44,12 +43,20 @@ const addLawFirmValidator = [
 	body('languageId.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage Id must be specified.'),
+		.withMessage('language Id must be specified.'),
 
 	body('languageTitle.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage title must be specified.'),
+		.withMessage('language title must be specified.'),
+	body('logo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('logo  must be specified.'),
+	body('images.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('images must be specified.'),
 	body('isActive')
 		.isLength({min: 1})
 		.trim()
@@ -94,7 +101,7 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('country title must be specified.'),
-	
+
 	body('experience')
 		.isLength({min: 1})
 		.trim()
@@ -110,16 +117,24 @@ const updateLawFirmValidator = [
 		.trim()
 		.withMessage('jurisdiction must be specified.'),
 
-    body('languageId.*')
+	body('languageId.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage Id must be specified.'),
+		.withMessage('language Id must be specified.'),
 
 	body('languageTitle.*')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('lanuage title must be specified.'),
-	
+		.withMessage('language title must be specified.'),
+	body('logo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('logo  must be specified.'),
+	body('images.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('images must be specified.'),
+
 
 	body('isActive')
 		.isLength({min: 1})
@@ -127,7 +142,7 @@ const updateLawFirmValidator = [
 		.withMessage('isActive must be specified.'),
 
 	sanitizeBody('countryId').escape(),
-	
+
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -170,7 +185,7 @@ const updateLawFirmWorkflowStatusValidator = [
 const lawFirmValidator = {
 	addLawFirmValidator: addLawFirmValidator,
 	updateLawFirmValidator: updateLawFirmValidator,
-	updateLawFirmWorkflowStatusValidator:updateLawFirmWorkflowStatusValidator,
+	updateLawFirmWorkflowStatusValidator: updateLawFirmWorkflowStatusValidator,
 };
 
 module.exports = lawFirmValidator;

@@ -10,18 +10,14 @@ const addPreOrderValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('queryId must be specified.'),
-	body('subject')
+	body('topic')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('subject  must be specified.'),
+		.withMessage('topic  must be specified.'),
 	body('furtherInformation')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('furtherInformation  must be specified.'),
-	body('anyInformation')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('anyInformation  must be specified.'),
 	sanitizeBody('userId').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -42,18 +38,14 @@ const updatePreOrderValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('kycId must be specified.'),
-	body('subject')
+	body('topic')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('subject  must be specified.'),
+		.withMessage('topic  must be specified.'),
 	body('furtherInformation')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('furtherInformation  must be specified.'),
-	body('anyInformation')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('anyInformation  must be specified.'),
 	body('document')
 		.isLength({min: 1})
 		.trim()

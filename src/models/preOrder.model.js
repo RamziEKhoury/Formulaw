@@ -13,13 +13,10 @@ module.exports = (sequelize, Sequelize) => {
 		appointmentId: {
 			type: Sequelize.UUID,
 		},
-		subject: {
+		topic: {
 			type: Sequelize.STRING,
 		},
 		furtherInformation: {
-			type: Sequelize.STRING,
-		},
-    	anyInformation: {
 			type: Sequelize.STRING,
 		},
 		document: {
