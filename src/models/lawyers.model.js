@@ -20,6 +20,9 @@ module.exports = (sequelize, Sequelize) => {
 			email: {
 				type: Sequelize.STRING,
 			},
+			user_id: {
+				type: Sequelize.UUID,
+			},
 			licenseNumber: {
 				type: Sequelize.STRING,
 			},

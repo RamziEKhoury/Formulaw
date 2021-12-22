@@ -94,7 +94,7 @@ module.exports.addLawFirm = async (req, res) => {
 
 				const lawyer = await Lawyer.create(lawFirmFormData);
 				const password = generatePassword();
-				await User.create({
+				const user = await User.create({
 					fullname: inserted.en_name,
 					email: inserted.email,
 					role: UserRole.LAWFIRM_ADMIN,
@@ -107,6 +107,7 @@ module.exports.addLawFirm = async (req, res) => {
 				});
 				await Mail.lawyerRegistration(inserted.email, password);
 
+				await Lawyer.update({user_id: user.id}, {where: {id: lawyer.id}});
 				const lawFirmData = {
 					id: inserted.id,
 					en_name: inserted.en_name,
