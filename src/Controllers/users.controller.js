@@ -188,7 +188,12 @@ module.exports.userLogin = (req, res) => {
 						lawfirmid: user.lawfirmid,
 						token: token,
 					};
-					await Mail.userRegistration(user.email);
+				await Mail.userRegistration(user.email, user.fullname);
+			const adminMail = await Admin.findAll();
+			for (let i = 0; i < adminMail.length; i++) {
+				await Mail.userRegistrationAdminMail(adminMail[i].email, user.fullname);
+			}
+
 					// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 					return apiResponses.successResponseWithData(
 						res,
