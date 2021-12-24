@@ -139,6 +139,9 @@ module.exports.addBulkAppointment = async (req, res) => {
 	}
 };
 
+
+
+
 module.exports.changeStatus = async (req, res) => {
 	// #swagger.tags = ['Appointment']
 	/*  #swagger.parameters['obj'] = {
@@ -405,11 +408,6 @@ module.exports.changeStatus = async (req, res) => {
 							},
 
 
-							{
-								model: Lawyer,
-								required: false,
-								attributes: ['en_name', 'email'],
-							},
 
 							{
 								model: LawFirm,
@@ -450,6 +448,42 @@ module.exports.changeStatus = async (req, res) => {
 					if (lawyers.length === 1) {
 						const lawyer = _.get(lawyers, [0], null);
 						await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+						
+							const userdetail = await User.findOne({
+							where: { id: lawyer.id }
+								})
+							
+						console.log('detail lawyer====>',userdetail.fullname,userdetail.email,)
+						await Mail.adminAppointmentConsult(
+						user.adminuser.email,
+						user.time,
+						user.date,
+						user.adminuser.firstname,
+						user.user.fullname,
+						userdetail.fullname,
+						user.lawfirm.en_name,
+					);
+
+					await Mail.userAppointmentConsult(
+						user.user.email,
+						user.user.fullname,
+						user.time,
+						user.date,
+						userdetail.fullname,
+						user.lawfirm.en_name,
+						user.orderId,
+						user.user.id,
+						);
+
+
+					await Mail.lawyerAppointmentConsult(
+						userdetail.fullname,
+						userdetail.email,
+						user.user.fullname,
+						user.adminuser.firstname,
+					);
+
+
 						return apiResponses.successResponseWithData(
 							res,
 							'Success',
@@ -460,30 +494,18 @@ module.exports.changeStatus = async (req, res) => {
 						if (lawyers.length > lawFirm.assignlawyer) {
 							const lawyer = _.get(lawyers, [lawyers.length-1], null);
 							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
-							return apiResponses.successResponseWithData(
-								res,
-								'Success',
-								appointment,
-							);
-						} else {
-							const lawyer = _.get(lawyers, [0], null);
-							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
-							return apiResponses.successResponseWithData(
-								res,
-								'Success',
-								appointment,
-							);
-						}
-					}
+							const userdetail = await User.findOne({
+							where: { id: lawyer.id }
+								})
+							
 					
-
-				await Mail.adminAppointmentConsult(
+						await Mail.adminAppointmentConsult(
 						user.adminuser.email,
 						user.time,
 						user.date,
 						user.adminuser.firstname,
 						user.user.fullname,
-						user.lawyer.en_name,
+						userdetail.fullname,
 						user.lawfirm.en_name,
 					);
 
@@ -492,7 +514,48 @@ module.exports.changeStatus = async (req, res) => {
 						user.user.fullname,
 						user.time,
 						user.date,
-						user.lawyer.en_name,
+						userdetail.fullname,
+						user.lawfirm.en_name,
+						user.orderId,
+						user.user.id,
+
+
+					);
+					await Mail.lawyerAppointmentConsult(
+						userdetail.fullname,
+						userdetail.email,
+						user.user.fullname,
+						user.adminuser.firstname,
+					);
+						return apiResponses.successResponseWithData(
+								res,
+								'Success',
+								appointment,
+							);
+						} else {
+							const lawyer = _.get(lawyers, [0], null);
+							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+							const userdetail = await User.findOne({
+							where: { id: lawyer.id }
+								})
+							
+						console.log('detail lawyer====>',userdetail.fullname,userdetail.email,)
+						await Mail.adminAppointmentConsult(
+						user.adminuser.email,
+						user.time,
+						user.date,
+						user.adminuser.firstname,
+						user.user.fullname,
+						userdetail.fullname,
+						user.lawfirm.en_name,
+					);
+
+					await Mail.userAppointmentConsult(
+						user.user.email,
+						user.user.fullname,
+						user.time,
+						user.date,
+						userdetail.fullname,
 						user.lawfirm.en_name,
 						user.orderId,
 						user.user.id,
@@ -502,14 +565,23 @@ module.exports.changeStatus = async (req, res) => {
 
 
 					await Mail.lawyerAppointmentConsult(
-
-						user.lawyer.en_name,
-						user.lawyer.email,
-						user.lawfirm.en_name,
+						userdetail.fullname,
+						userdetail.email,
 						user.user.fullname,
 						user.adminuser.firstname,
 					);
 
+
+							return apiResponses.successResponseWithData(
+								res,
+								'Success',
+								appointment,
+							);
+						}
+					}
+					
+
+			
 return apiResponses.successResponseWithData(
 						res,
 						'Success',
