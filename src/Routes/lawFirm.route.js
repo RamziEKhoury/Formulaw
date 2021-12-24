@@ -39,4 +39,5 @@ module.exports = function(app) {
 
 	app.get('/api/v1/lawfirm/get-lawfirmsdetails', lawFirmController.getlawFirmsDetails);
 	app.get('/api/v1/lawfirm/get-lawfirmdetails/:lawFirmId', lawFirmController.getlawFirmDetails);
+	app.get('/api/v1/lawfirm/get-filterlawfirmdetails', lawFirmController.getFilterlawFirmsDetails);
 };

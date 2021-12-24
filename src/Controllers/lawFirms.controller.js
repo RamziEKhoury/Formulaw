@@ -408,3 +408,55 @@ module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+module.exports.getFilterlawFirmsDetails = async (req, res) => {
+	try {
+		let price = [];
+		console.log("dsaaaaaaaaaaaaaaaaaaaaaaa",req.body);
+		LawFirm.findAll({
+			where : {
+				[Op.or]: [
+					{languageId: {[Op.contains]: req.body.languageId}},
+					{countryId: {[Op.contains]: req.body.countryId}},
+				]
+			},
+			include: [
+				{
+					model: LawFirmService,
+				},
+				{
+					model: LawFirmIndustry,
+				},
+				{
+					model: LawFirmTax,
+				},
+			],
+		  }).then((lawfirms) => {
+			  
+			  lawfirms.map((lawfirm) => {
+		 const	lawFirmServices = lawfirm.lawfirm_services
+				lawFirmServices.map((lawfirmService) => {
+					const lawfirmServicesTitle = lawfirmService.title
+					req.body.serviceSubcategoryName.map( async (serviceSubcategory) => {
+						if(lawfirmServicesTitle === serviceSubcategory) {
+                       const lawFirmServices =  await LawFirmService.findOne({
+							 where :{title: lawfirmServicesTitle}
+						 })
+						 const lawFirmDetail =  await LawFirm.findOne({
+							where :{id: lawFirmServices.lawFirmId},
+							include: [
+								{
+									model: LawFirmService,required: false, attributes: ['title', 'price']
+								},
+							],
+						})
+						}
+					})
+				})
+			  })
+			return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
