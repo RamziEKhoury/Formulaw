@@ -69,7 +69,7 @@ module.exports = (sequelize, Sequelize) => {
 
 			},
 			assignlawyer: {
-				defaultValue: 1,
+				defaultValue: 0,
 				type: Sequelize.INTEGER,
 			},
 			isActive: {

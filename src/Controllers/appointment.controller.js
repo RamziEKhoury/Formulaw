@@ -236,12 +236,10 @@ module.exports.changeStatus = async (req, res) => {
 
 					const minutesToAdd=15;
 					const currenttime = new Date(user.time);
-					console.log('user time----->', user.time);
 					const futureDate = new Date(currenttime.getTime() - minutesToAdd*60000);
 					const someDate = futureDate;
 
 					schedule.scheduleJob(someDate, async () => {
-						console.log('send mail---------------->');
 						await Mail.userRemindermail(
 							user.user.email,
 							user.user.fullname,
@@ -408,6 +406,11 @@ module.exports.changeStatus = async (req, res) => {
 							},
 
 
+							{
+								model: Lawyer,
+								required: false,
+								attributes: ['en_name', 'email'],
+							},
 
 							{
 								model: LawFirm,
@@ -447,42 +450,41 @@ module.exports.changeStatus = async (req, res) => {
 					const lawyers = await User.findAll({where: {lawfirmid: user.lawFirmId}, order: [['createdAt', 'ASC']]});
 					if (lawyers.length === 1) {
 						const lawyer = _.get(lawyers, [0], null);
-						await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
-						
-							const userdetail = await User.findOne({
+						await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+						await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
+						const userdetail = await User.findOne({
 							where: { id: lawyer.id }
-								})
-							
+						})
+
 						console.log('detail lawyer====>',userdetail.fullname,userdetail.email,)
 						await Mail.adminAppointmentConsult(
-						user.adminuser.email,
-						user.time,
-						user.date,
-						user.adminuser.firstname,
-						user.user.fullname,
-						userdetail.fullname,
-						user.lawfirm.en_name,
-					);
+							user.adminuser.email,
+							user.time,
+							user.date,
+							user.adminuser.firstname,
+							user.user.fullname,
+							userdetail.fullname,
+							user.lawfirm.en_name,
+						);
 
-					await Mail.userAppointmentConsult(
-						user.user.email,
-						user.user.fullname,
-						user.time,
-						user.date,
-						userdetail.fullname,
-						user.lawfirm.en_name,
-						user.orderId,
-						user.user.id,
+						await Mail.userAppointmentConsult(
+							user.user.email,
+							user.user.fullname,
+							user.time,
+							user.date,
+							userdetail.fullname,
+							user.lawfirm.en_name,
+							user.orderId,
+							user.user.id,
 						);
 
 
-					await Mail.lawyerAppointmentConsult(
-						userdetail.fullname,
-						userdetail.email,
-						user.user.fullname,
-						user.adminuser.firstname,
-					);
-
+						await Mail.lawyerAppointmentConsult(
+							userdetail.fullname,
+							userdetail.email,
+							user.user.fullname,
+							user.adminuser.firstname,
+						);
 
 						return apiResponses.successResponseWithData(
 							res,
@@ -492,84 +494,86 @@ module.exports.changeStatus = async (req, res) => {
 					}
 					if (lawyers.length > 1) {
 						if (lawyers.length > lawFirm.assignlawyer) {
-							const lawyer = _.get(lawyers, [lawyers.length-1], null);
-							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+							const lawyer = _.get(lawyers, [lawFirm.assignlawyer], null);
+							await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+							await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 							const userdetail = await User.findOne({
-							where: { id: lawyer.id }
-								})
-							
-					
-						await Mail.adminAppointmentConsult(
-						user.adminuser.email,
-						user.time,
-						user.date,
-						user.adminuser.firstname,
-						user.user.fullname,
-						userdetail.fullname,
-						user.lawfirm.en_name,
-					);
-
-					await Mail.userAppointmentConsult(
-						user.user.email,
-						user.user.fullname,
-						user.time,
-						user.date,
-						userdetail.fullname,
-						user.lawfirm.en_name,
-						user.orderId,
-						user.user.id,
+								where: { id: lawyer.id }
+							})
 
 
-					);
-					await Mail.lawyerAppointmentConsult(
-						userdetail.fullname,
-						userdetail.email,
-						user.user.fullname,
-						user.adminuser.firstname,
-					);
-						return apiResponses.successResponseWithData(
+							await Mail.adminAppointmentConsult(
+								user.adminuser.email,
+								user.time,
+								user.date,
+								user.adminuser.firstname,
+								user.user.fullname,
+								userdetail.fullname,
+								user.lawfirm.en_name,
+							);
+
+							await Mail.userAppointmentConsult(
+								user.user.email,
+								user.user.fullname,
+								user.time,
+								user.date,
+								userdetail.fullname,
+								user.lawfirm.en_name,
+								user.orderId,
+								user.user.id,
+
+
+							);
+							await Mail.lawyerAppointmentConsult(
+								userdetail.fullname,
+								userdetail.email,
+								user.user.fullname,
+								user.adminuser.firstname,
+							);
+							return apiResponses.successResponseWithData(
 								res,
 								'Success',
 								appointment,
 							);
 						} else {
 							const lawyer = _.get(lawyers, [0], null);
-							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+							await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+							await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 							const userdetail = await User.findOne({
-							where: { id: lawyer.id }
-								})
-							
-						console.log('detail lawyer====>',userdetail.fullname,userdetail.email,)
-						await Mail.adminAppointmentConsult(
-						user.adminuser.email,
-						user.time,
-						user.date,
-						user.adminuser.firstname,
-						user.user.fullname,
-						userdetail.fullname,
-						user.lawfirm.en_name,
-					);
+								where: { id: lawyer.id }
+							})
 
-					await Mail.userAppointmentConsult(
-						user.user.email,
-						user.user.fullname,
-						user.time,
-						user.date,
-						userdetail.fullname,
-						user.lawfirm.en_name,
-						user.orderId,
-						user.user.id,
+							console.log('detail lawyer====>',userdetail.fullname,userdetail.email,)
+							await Mail.adminAppointmentConsult(
+								user.adminuser.email,
+								user.time,
+								user.date,
+								user.adminuser.firstname,
+								user.user.fullname,
+								userdetail.fullname,
+								user.lawfirm.en_name,
+							);
 
-
-					);
+							await Mail.userAppointmentConsult(
+								user.user.email,
+								user.user.fullname,
+								user.time,
+								user.date,
+								userdetail.fullname,
+								user.lawfirm.en_name,
+								user.orderId,
+								user.user.id,
 
 
-					await Mail.lawyerAppointmentConsult(
-						userdetail.fullname,
-						userdetail.email,
-						user.user.fullname,
-						user.adminuser.firstname,
-					);
+							);
+
+
+							await Mail.lawyerAppointmentConsult(
+								userdetail.fullname,
+								userdetail.email,
+								user.user.fullname,
+								user.adminuser.firstname,
+							);
 
 
 							return apiResponses.successResponseWithData(
@@ -579,9 +583,9 @@ module.exports.changeStatus = async (req, res) => {
 							);
 						}
 					}
-					
 
-			
+
+
 return apiResponses.successResponseWithData(
 						res,
 						'Success',
