@@ -447,9 +447,12 @@ module.exports.changeStatus = async (req, res) => {
 
 					const lawFirm = await LawFirm.findOne({where: {id: user.lawFirmId}});
 					const lawyers = await User.findAll({where: {lawfirmid: user.lawFirmId}, order: [['createdAt', 'ASC']]});
+					console.log("sadsadaaaaaaaaaaaa",lawyers.length);
 					if (lawyers.length === 1) {
+						console.log("dsf455555555555555555555555555555555555555555555555555555555555");
 						const lawyer = _.get(lawyers, [0], null);
-						await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+						await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+						await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 						return apiResponses.successResponseWithData(
 							res,
 							'Success',
@@ -457,9 +460,13 @@ module.exports.changeStatus = async (req, res) => {
 						);
 					}
 					if (lawyers.length > 1) {
+						console.log("dssssssssssssssssadsssssssssssssssssss");
 						if (lawyers.length > lawFirm.assignlawyer) {
-							const lawyer = _.get(lawyers, [lawyers.length-1], null);
-							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+							const lawyer = _.get(lawyers, [lawFirm.assignlawyer], null);
+							console.log("lawyer==========================111111111111>",lawFirm);
+							console.log("lawyer==========================>",lawyer);
+							await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+							await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 							return apiResponses.successResponseWithData(
 								res,
 								'Success',
@@ -467,7 +474,8 @@ module.exports.changeStatus = async (req, res) => {
 							);
 						} else {
 							const lawyer = _.get(lawyers, [0], null);
-							await Appointment.update({lawyerId: lawyer.id, assignlawyer: lawFirm.assignlawyer+1}, {where: {id: req.params.id}});
+							await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+							await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 							return apiResponses.successResponseWithData(
 								res,
 								'Success',
