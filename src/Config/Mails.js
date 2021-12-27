@@ -164,7 +164,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
-    '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,</br>'+username+'</br>@formulaw team member<br/></div>'};
+    '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,<br/>'+username+'<br/>@formulaw team member<br/></div>'};
 		console.log('user reminder---->', details);
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -349,7 +349,7 @@ module.exports = {
 	},
 
 
-	lawyerAppointmentConsult: (lawyer, email, lawfirm, user, admin) => {
+	lawyerAppointmentConsult: (lawyer, email, user, admin) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
 			from: process.env.SENDER_MAIL, // sender address same as above
