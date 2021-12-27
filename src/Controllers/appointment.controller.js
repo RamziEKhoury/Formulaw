@@ -140,8 +140,6 @@ module.exports.addBulkAppointment = async (req, res) => {
 };
 
 
-
-
 module.exports.changeStatus = async (req, res) => {
 	// #swagger.tags = ['Appointment']
 	/*  #swagger.parameters['obj'] = {
@@ -453,10 +451,10 @@ module.exports.changeStatus = async (req, res) => {
 						await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
 						await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 						const userdetail = await User.findOne({
-							where: { id: lawyer.id }
-						})
+							where: {id: lawyer.id},
+						});
 
-						console.log('detail lawyer====>',userdetail.fullname,userdetail.email,)
+						console.log('detail lawyer====>', userdetail.fullname, userdetail.email);
 						await Mail.adminAppointmentConsult(
 							user.adminuser.email,
 							user.time,
@@ -498,8 +496,8 @@ module.exports.changeStatus = async (req, res) => {
 							await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
 							await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 							const userdetail = await User.findOne({
-								where: { id: lawyer.id }
-							})
+								where: {id: lawyer.id},
+							});
 
 
 							await Mail.adminAppointmentConsult(
@@ -540,10 +538,10 @@ module.exports.changeStatus = async (req, res) => {
 							await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
 							await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
 							const userdetail = await User.findOne({
-								where: { id: lawyer.id }
-							})
+								where: {id: lawyer.id},
+							});
 
-							console.log('detail lawyer====>',userdetail.fullname,userdetail.email,)
+							console.log('detail lawyer====>', userdetail.fullname, userdetail.email);
 							await Mail.adminAppointmentConsult(
 								user.adminuser.email,
 								user.time,
@@ -585,16 +583,11 @@ module.exports.changeStatus = async (req, res) => {
 					}
 
 
-
-return apiResponses.successResponseWithData(
+					return apiResponses.successResponseWithData(
 						res,
 						'Success',
 						appointment,
 					);
-
-
-
-					
 				} else if (req.body.status === WorkflowAppointment.COMPLETED) {
 					const user = await Appointment.findOne({
 						where: {id: req.params.id},
