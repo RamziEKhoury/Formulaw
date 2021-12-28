@@ -127,7 +127,6 @@ module.exports.addBulkAppointment = async (req, res) => {
 				}
 
 
-				console.log('bulkAppointment---->>', scheduleCall);
 				return apiResponses.successResponseWithData(
 					res,
 					'Success!',
@@ -454,7 +453,6 @@ module.exports.changeStatus = async (req, res) => {
 							where: {id: lawyer.id},
 						});
 
-						console.log('detail lawyer====>', userdetail.fullname, userdetail.email);
 						await Mail.adminAppointmentConsult(
 							user.adminuser.email,
 							user.time,
@@ -541,7 +539,6 @@ module.exports.changeStatus = async (req, res) => {
 								where: {id: lawyer.id},
 							});
 
-							console.log('detail lawyer====>', userdetail.fullname, userdetail.email);
 							await Mail.adminAppointmentConsult(
 								user.adminuser.email,
 								user.time,
