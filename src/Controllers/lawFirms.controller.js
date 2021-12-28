@@ -257,6 +257,8 @@ module.exports.getLawFirm = (req, res) => {
 		include: [
 			{
 				model: LawFirmService,
+				as: 'lawfirm_services',
+				where: {title: {[Op.in]: req.body.serviceSubcategoryName}},
 			},
 
 			{
@@ -411,18 +413,21 @@ module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 
 module.exports.getFilterlawFirmsDetails = async (req, res) => {
 	try {
-		let price = [];
-		console.log("dsaaaaaaaaaaaaaaaaaaaaaaa",req.body);
+		const limit = 1000;
+		console.log('dsaaaaaaaaaaaaaaaaaaaaaaa', req.body);
 		LawFirm.findAll({
-			where : {
+			where: {
 				[Op.or]: [
 					{languageId: {[Op.contains]: req.body.languageId}},
 					{countryId: {[Op.contains]: req.body.countryId}},
-				]
+					{jurisdiction: {[Op.contains]: req.body.jurisdiction}},
+				],
 			},
 			include: [
 				{
 					model: LawFirmService,
+					as: 'lawfirm_services',
+					where: {title: {[Op.in]: req.body.services}},
 				},
 				{
 					model: LawFirmIndustry,
@@ -431,31 +436,11 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					model: LawFirmTax,
 				},
 			],
+			limit: limit,
+			order: [['createdAt', 'DESC']],
 		  }).then((lawfirms) => {
-			  
-			  lawfirms.map((lawfirm) => {
-		 const	lawFirmServices = lawfirm.lawfirm_services
-				lawFirmServices.map((lawfirmService) => {
-					const lawfirmServicesTitle = lawfirmService.title
-					req.body.serviceSubcategoryName.map( async (serviceSubcategory) => {
-						if(lawfirmServicesTitle === serviceSubcategory) {
-                       const lawFirmServices =  await LawFirmService.findOne({
-							 where :{title: lawfirmServicesTitle}
-						 })
-						 const lawFirmDetail =  await LawFirm.findOne({
-							where :{id: lawFirmServices.lawFirmId},
-							include: [
-								{
-									model: LawFirmService,required: false, attributes: ['title', 'price']
-								},
-							],
-						})
-						}
-					})
-				})
-			  })
 			return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-			});
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
