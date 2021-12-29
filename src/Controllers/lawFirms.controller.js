@@ -52,6 +52,7 @@ module.exports.addLawFirm = async (req, res) => {
 				images: req.body.images,
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
+				jurisdictionid: req.body.jurisdictionid,
 				jurisdiction: req.body.jurisdiction,
 				rating: req.body.rating,
 				experience: req.body.experience,
@@ -82,6 +83,7 @@ module.exports.addLawFirm = async (req, res) => {
 					languageId: inserted.languageId[0],
 					languageTitle: inserted.languageTitle[0],
 					experience: inserted.experience,
+					jurisdictionid: inserted.jurisdictionid[0],
 					jurisdiction: inserted.jurisdiction[0],
 					expertise: inserted.expertise,
 					numOfLawyer: inserted.numOfLawyer,
@@ -155,6 +157,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
 				id: req.body.id,
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
+				email: req.body.email,
 				licenseNumber: req.body.licenseNumber,
 				countryId: req.body.countryId,
 				countryTitle: req.body.countryTitle,
@@ -162,6 +165,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
 				languageTitle: req.body.languageTitle,
 				expertise: req.body.expertise,
 				numOfLawyer: req.body.numOfLawyer,
+				jurisdictionid: req.body.jurisdictionid,
 				jurisdiction: req.body.jurisdiction,
 				rating: req.body.rating,
 				experience: req.body.experience,
@@ -414,13 +418,11 @@ module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 module.exports.getFilterlawFirmsDetails = async (req, res) => {
 	try {
 		const limit = 1000;
-		console.log('dsaaaaaaaaaaaaaaaaaaaaaaa', req.body);
 		LawFirm.findAll({
 			where: {
-				[Op.or]: [
+				[Op.and]: [
 					{languageId: {[Op.contains]: req.body.languageId}},
-					{countryId: {[Op.contains]: req.body.countryId}},
-					{jurisdiction: {[Op.contains]: req.body.jurisdiction}},
+					{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
 				],
 			},
 			include: [
