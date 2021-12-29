@@ -31,7 +31,6 @@ db.service_subCategory = require('./service-subcategory.model')(
 db.lawFirm = require('./lawFirms.model')(sequelize, Sequelize);
 db.request = require('./requests.model')(sequelize, Sequelize);
 db.lawFirm_industry = require('./lawFirm-industry.model')(sequelize, Sequelize);
-db.lawFirm_service = require('./lawFirm-services.model')(sequelize, Sequelize);
 db.user = require('./users.model')(sequelize, Sequelize);
 db.appointment = require('./appointment.model')(sequelize, Sequelize);
 db.testimonial = require('./testimonial.model')(sequelize, Sequelize);

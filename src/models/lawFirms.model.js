@@ -46,6 +46,9 @@ module.exports = (sequelize, Sequelize) => {
 			numOfLawyer: {
 				type: Sequelize.INTEGER,
 			},
+			jurisdictionid: {
+				type: DataTypes.JSONB,
+			},
 			jurisdiction: {
 				type: DataTypes.JSONB,
 			},

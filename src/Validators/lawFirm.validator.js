@@ -34,6 +34,11 @@ const addLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('numOfLawyer must be specified.'),
+		
+	body('jurisdictionid.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('jurisdictionid must be specified.'),
 
 	body('jurisdiction.*')
 		.isLength({min: 1})
@@ -93,10 +98,10 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('licenseNumber must be specified.'),
-	body('countryId.*')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('country Id must be specified.'),
+	// body('countryId.*')
+	// 	.isLength({min: 1})
+	// 	.trim()
+	// 	.withMessage('country Id must be specified.'),
 	body('countryTitle.*')
 		.isLength({min: 1})
 		.trim()
@@ -111,6 +116,11 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('numOfLawyer must be specified.'),
+	
+	body('jurisdictionid.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('jurisdictionid must be specified.'),
 
 	body('jurisdiction.*')
 		.isLength({min: 1})
@@ -134,8 +144,6 @@ const updateLawFirmValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('images must be specified.'),
-
-
 	body('isActive')
 		.isLength({min: 1})
 		.trim()
@@ -144,6 +152,7 @@ const updateLawFirmValidator = [
 	sanitizeBody('countryId').escape(),
 
 	(req, res, next) => {
+
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return apiResponses.validationErrorWithData(
