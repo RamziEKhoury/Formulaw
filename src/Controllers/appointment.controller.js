@@ -691,6 +691,7 @@ module.exports.getAppointments = (req, res) => {
 				],
 			},
 			limit: limit,
+			order: [['createdAt', 'DESC']],
 		})
 			.then((data) => {
 				return apiResponses.successResponseWithData(res, 'success', data);
@@ -719,6 +720,7 @@ module.exports.getAppointments = (req, res) => {
 				{model: User, required: false, attributes: ['fullname', 'email']},
 
 			],
+			order: [['createdAt', 'DESC']],
 		})
 			.then((result) => {
 				// res.status(200).send({
@@ -785,6 +787,7 @@ module.exports.getUserAppointment = (req, res) => {
 			{model: User, required: false, attributes: ['fullname', 'email']},
 
 		],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -819,6 +822,7 @@ module.exports.getLawyerAppointment = (req, res) => {
 			{model: User, required: false, attributes: ['fullname', 'email']},
 
 		],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -858,6 +862,7 @@ module.exports.getUserAppointmentMonthly = (req, res) => {
 			{model: User, required: false, attributes: ['fullname', 'email']},
 
 		],
+		order: [['time', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -898,6 +903,7 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 			{model: User, required: false, attributes: ['fullname', 'email']},
 
 		],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -1029,6 +1035,7 @@ module.exports.getLawyerOpenCases = (req, res) => {
 			{model: User, required: false, attributes: ['fullname', 'email']},
 
 		],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -1067,6 +1074,7 @@ module.exports.getLawyerCompletedCases = (req, res) => {
 			{model: User, required: false, attributes: ['fullname', 'email']},
 
 		],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
