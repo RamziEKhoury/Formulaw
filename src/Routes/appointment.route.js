@@ -78,5 +78,9 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/appointment/change-Lawyer/:lawyerId/:newLawyerId',
 		appointmentController.changesLawyer);
+
+	app.post(
+			'/api/v1/appointment/reschedule-appointment',
+			appointmentController.RescheduleAppointment);
 };
 
