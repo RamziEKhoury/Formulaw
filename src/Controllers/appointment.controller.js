@@ -1124,3 +1124,30 @@ module.exports.changesLawyer = (req, res) => {
 			});
 		});
 };
+
+module.exports.RescheduleAppointment = async (req, res) => {
+	try {
+		await Appointment.update(
+			{
+				time: req.body.time,
+			    endTime: req.body.endTime,
+				shift: req.body.shift,
+			},
+			{where: {id: req.body.id}},
+		)
+			.then((data) => {
+				if (!data) {
+					
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				
+				return apiResponses.successResponseWithData(res, 'Success', data);
+			})
+			.catch((err) => {
+				
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
