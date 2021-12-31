@@ -68,6 +68,10 @@ module.exports = function(app) {
 		appointmentController.getAllAppointmentByDay);
 
 	app.get(
+			'/api/v1/appointment/all-cases/:lawyerId',
+			appointmentController.getAllLawyerCases);
+
+	app.get(
 		'/api/v1/appointment/all-open-cases/:lawyerId',
 		appointmentController.getLawyerOpenCases);
 
