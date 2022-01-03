@@ -64,7 +64,7 @@ module.exports.getallUserCompanyKycDetails = (req, res) => {
 	const limit = req.params.limit;
 	Companykyc.findAll({
 		include: [
-			{model: User, required: false, attributes: ['fullname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 		],
 		order: [['createdAt', 'DESC']],
 	})
@@ -86,7 +86,7 @@ module.exports.getallUserCompanyKycDetails = (req, res) => {
 module.exports.getOneUserCompanyKycDetails = (req, res) => {
 	Companykyc.findOne({
 		include: [
-			{model: User, required: false, attributes: ['fullname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 		],
 		where: {userId: req.params.userId},
 	})

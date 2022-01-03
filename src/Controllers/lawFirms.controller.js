@@ -98,7 +98,8 @@ module.exports.addLawFirm = async (req, res) => {
 				const lawyer = await Lawyer.create(lawFirmFormData);
 				const password = generatePassword();
 				const user = await User.create({
-					fullname: inserted.en_name,
+					firstname: inserted.en_name,
+					lastname : " ",
 					email: inserted.email,
 					role: UserRole.LAWFIRM_ADMIN,
 					username: inserted.email,

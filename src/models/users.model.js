@@ -13,7 +13,10 @@ module.exports = (sequelize, Sequelize) => {
 		lawyer_id: {
 			type: Sequelize.UUID,
 		},
-		fullname: {
+		firstname: {
+			type: Sequelize.STRING,
+		},
+		lastname: {
 			type: Sequelize.STRING,
 		},
 		password: {

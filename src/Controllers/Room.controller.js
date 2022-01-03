@@ -22,7 +22,7 @@ module.exports.getRooms = async (req, res) => {
 				{
 					model: User,
 					required: false,
-					attributes: ['fullname', 'email', 'id'],
+					attributes: ['firstname', 'lastname', 'email', 'id'],
 				},
 			],
 			isActive: 1,
@@ -54,7 +54,7 @@ module.exports.getRoomById = (req, res) => {
 			{
 				model: User,
 				required: false,
-				attributes: ['fullname', 'email', 'id'],
+				attributes: ['firstname', 'lastname', 'email', 'id'],
 			},
 		],
 	})
@@ -98,7 +98,7 @@ module.exports.getRoomByAppointmentId = (req, res) => {
 			{
 				model: User,
 				required: false,
-				attributes: ['fullname', 'email', 'id'],
+				attributes: ['firstname', 'lastname', 'email', 'id'],
 			},
 		],
 	})

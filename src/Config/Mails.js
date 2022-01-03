@@ -112,7 +112,7 @@ module.exports = {
 	// appointment shedule time mail
 
 	adminAppointmentSchedule: (email, username, time, date, name, lead) => {
-		console.log('logIn_Mail====>' + email, time, date);
+		console.log('logIn_Mail====>' + email, time, date,username);
 		const details = {
 			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
@@ -308,13 +308,13 @@ module.exports = {
 
 
 	adminAppointmentConsult: (email, time, date, username, name, lawyer, lawfirm) => {
-		console.log('logIn_Mail====>' + email);
+		console.log('logIn_Mail admin====>' + email,time, date, username, name, lawyer, lawfirm);
 		const details = {
 			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation:', // Subject of the mail.
 			html:
-				'<div><span>Hi '+ username +'</span></div>< div ><p>'+ name +' has been handed over to '+ lawyer + ' at' + lawfirm + '</p><br/>Thank you.< br />Best Regards,  < br />@formulaw team member < br /></ > ',
+				'<div><span>Hi '+ username +'</span></div>< div ><p>'+ name +' has been handed over to '+ lawyer +' at ' + lawfirm + '</p><br/>Thank you.< br />Best Regards,  < br />@formulaw team member < br /></ > ',
 		};
 		console.log('admin appointment---->', details );
 		transporter.sendMail(details, function(error, data) {
@@ -329,13 +329,13 @@ module.exports = {
 	},
 
 	userAppointmentConsult: (email, fullname, time, date, lawyer, lawfirm, orderid, id) => {
-		console.log('logIn_Mail====>' + email);
+		console.log('logIn_Mail user====>' + email, fullname, time, date, lawyer, lawfirm, orderid, id);
 		const details = {
 			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
-           '<div><span>Dear '+ fullname +',<span></div><div><p>We would like to confirm you have been assigned to '+ lawyer +' at '+ lawfirm +'. Thank you for your booking.</p><br/>Order details<br/>'+orderid+'<br/>Please follow this link to be directed to the chat.<br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>join at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '<br/>Feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/>Best Regards,<br/>FORMULAW Team<br/>@formulaw team member<br/></div>'};
+           '<div><span>Dear '+ fullname +',<span></div><div><p>We would like to confirm you have been assigned to '+ lawyer + ' at ' + lawfirm +'. Thank you for your booking.</p><br/>Order details<br/>'+orderid+'<br/>Please follow this link to be directed to the chat.<br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>join at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '<br/>Feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/>Best Regards,<br/>FORMULAW Team<br/>@formulaw team member<br/></div>'};
 		console.log('admin appointment---->', details );
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -350,7 +350,7 @@ module.exports = {
 
 
 	lawyerAppointmentConsult: (lawyer, email, user, admin) => {
-		console.log('logIn_Mail====>' + email);
+		console.log('logIn_Mail lawyer====>' + lawyer, email, user, admin);
 		const details = {
 			from: process.env.SENDER_MAIL, // sender address same as above
 			to: email, // Receiver's email id
