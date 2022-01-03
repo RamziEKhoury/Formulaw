@@ -2,15 +2,17 @@ const {body, sanitizeBody, validationResult} = require('express-validator');
 const apiResponses = require('../Components/apiresponse');
 
 const signUpValidator = [
-	body('fullname').isLength({min: 1})
-		.trim().withMessage('Full name must be specified.'),
+	body('firstname').isLength({min: 1})
+		.trim().withMessage('First name must be specified.'),
+	body('lastname').isLength({min: 1})
+		.trim().withMessage('Last name must be specified.'),
 	body('email').isLength({min: 1})
 		.trim().withMessage('Email must be specified.')
 		.isEmail().withMessage('Email must be a valid email address.'),
 	body('password').isLength({min: 1})
 		.trim().withMessage('password must be specified.'),
 
-	sanitizeBody('fullname').escape(),
+	sanitizeBody('firstname').escape(),
 	    sanitizeBody('email').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -23,8 +25,10 @@ const signUpValidator = [
 		}
 	}];
 	const updateValidator = [
-		body('fullname').isLength({min: 1})
-			.trim().withMessage('Full name must be specified.'),
+		body('firstname').isLength({min: 1})
+			.trim().withMessage('First name must be specified.'),
+		body('lastname').isLength({min: 1})
+			.trim().withMessage('Last name must be specified.'),
 		body('email').isLength({min: 1})
 			.trim().withMessage('Email must be specified.')
 			.isEmail().withMessage('Email must be a valid email address.'),
@@ -36,7 +40,7 @@ const signUpValidator = [
 			.trim().withMessage('city must be specified.'),
 			
 	
-		sanitizeBody('fullname').escape(),
+		sanitizeBody('firstname').escape(),
 			sanitizeBody('email').escape(),
 		(req, res, next) => {
 			const errors = validationResult(req);

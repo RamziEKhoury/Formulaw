@@ -13,11 +13,12 @@ module.exports.registration = async (req, res) => {
 		// #swagger.tags = ['UserAuth']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
-                    description: "User details for registration - fullname, email, password andisActive",
-                    schema: { $fullname: "", $email: "", $password: "",}
+                    description: "User details for registration - firstname,,lastname email, password andisActive",
+                    schema: { $firstname: "", $lastname: "", $email: "", $password: "",}
             } */
 		User.create({
-			fullname: req.body.fullname,
+			firstname: req.body.firstname,
+			lastname: req.body.lastname,
 			email: req.body.email,
 			password: bcrypt.hashSync(req.body.password, 8),
 			userType: req.body.userType,
@@ -35,7 +36,7 @@ module.exports.registration = async (req, res) => {
 			const token = createToken(user.id, user.email, user.role);
 			const userData = {
 				id: user.id,
-				fullname: user.fullname,
+				firstname: user.firstname,
 				lastname: user.lastname,
 				email: user.email,
 				userType: user.userType,
@@ -48,10 +49,10 @@ module.exports.registration = async (req, res) => {
 				token: token,
 			};
 
-			await Mail.userRegistration(user.email, user.fullname);
+			await Mail.userRegistration(user.email, user.firstname + " " + user.lastname);
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.userRegistrationAdminMail(adminMail[i].email, user.fullname);
+				await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + " " + user.lastname);
 			}
 
 			// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
@@ -141,7 +142,7 @@ module.exports.userLogin = (req, res) => {
 				country: user.country,
 				city: user.city,
 				phoneNumber: user.phoneNumber,
-				fullname: user.fullname,
+				firstname: user.firstname,
 				lastname: user.lastname,
 				userType: user.userType,
 				isActive: user.isActive,
@@ -164,7 +165,7 @@ module.exports.userLogin = (req, res) => {
 		}).then(async (user) => {
 			if (!user) {
 				User.create({
-					fullname: req.body.fullname,
+					firstname: req.body.firstname,
 					lastname: req.body.lastname,
 					email: req.body.email,
 					userType: req.body.userType,
@@ -176,7 +177,7 @@ module.exports.userLogin = (req, res) => {
 					const token = createToken(user.id, user.email, user.role);
 					const userData = {
 						id: user.id,
-						fullname: user.fullname,
+						firstname: user.firstname,
 						lastname: user.lastname,
 						email: user.email,
 						country: user.country,
@@ -188,10 +189,10 @@ module.exports.userLogin = (req, res) => {
 						lawfirmid: user.lawfirmid,
 						token: token,
 					};
-				await Mail.userRegistration(user.email, user.fullname);
+				await Mail.userRegistration(user.email, user.firstname + " " + user.lastname);
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.userRegistrationAdminMail(adminMail[i].email, user.fullname);
+				await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + " " + user.lastname);
 			}
 
 					// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
@@ -210,7 +211,7 @@ module.exports.userLogin = (req, res) => {
 					country: user.country,
 					city: user.city,
 					phoneNumber: user.phoneNumber,
-					fullname: user.fullname,
+					firstname: user.firstname,
 					userType: user.userType,
 					isActive: user.isActive,
 					role: user.role,
@@ -234,7 +235,8 @@ module.exports.userLogin = (req, res) => {
 			.then(async (user) => {
 				if (!user) {
 					User.create({
-						fullname: req.body.fullname,
+						firstname: req.body.firstname,
+						lastname: req.body.lastname,
 						facebooktoken: req.body.facebooktoken,
 						email: req.body.email,
 						country: req.body.country,
@@ -246,7 +248,7 @@ module.exports.userLogin = (req, res) => {
 						const token = createToken(user.id, user.email, user.role);
 						const userData = {
 							id: user.id,
-							fullname: user.fullname,
+							firstname: user.firstname,
 							email: user.email,
 							lastname: user.lastname,
 							country: user.country,
@@ -275,7 +277,7 @@ module.exports.userLogin = (req, res) => {
 						country: user.country,
 						city: user.city,
 						phoneNumber: user.phoneNumber,
-						fullname: user.fullname,
+						firstname: user.firstname,
 						userType: user.userType,
 						isActive: user.isActive,
 						role: user.role,
@@ -324,7 +326,8 @@ module.exports.userUpdate = async (req, res) => {
 	try {
 		User.update(
 			{
-				fullname: req.body.fullname,
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
 				email: req.body.email,
 				profilePic: req.body.profilePic,
 				country: req.body.country,

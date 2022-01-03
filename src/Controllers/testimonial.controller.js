@@ -36,7 +36,7 @@ module.exports.addtestimonial = async (req, res) => {
 module.exports.viewtestimonials = (req, res) => {
 	Testimonial.findAll({
 		include: [
-			{model: User, required: false, attributes: ['fullname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 		],
 		order: [['createdAt', 'DESC']],
 	})

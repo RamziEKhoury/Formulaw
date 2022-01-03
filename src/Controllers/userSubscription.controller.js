@@ -99,7 +99,7 @@ module.exports.getUserSubscription = (req, res) => {
 	UserSubscription.findOne({
 		include: [
 			{model: User, required: false,
-				attributes: ['fullname', 'email', 'isSubscribed'],
+				attributes: ['firstname', 'lastname', 'email', 'isSubscribed'],
 			},
 		],
 		where: {userId: req.params.userId},
@@ -120,7 +120,7 @@ module.exports.getAllUsersSubscription = (req, res) => {
 	UserSubscription.findAll({
 		include: [
 			{model: User, required: false,
-				attributes: ['fullname', 'email', 'isSubscribed'],
+				attributes: ['firstname', 'lastname', 'email', 'isSubscribed'],
 			},
 		],
 	}, {limit: limit})

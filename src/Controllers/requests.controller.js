@@ -46,7 +46,7 @@ module.exports.createRequest = async (req, res) => {
 			const notiData = {
 				title: request.getstarted,
 				message: 'New lead created.',
-				senderName: device.fullname,
+				senderName: device.firstname + " " + device.lastname,
 				senderId: req.body.userId,
 				senderType: 'LEAD',
 				receiverid: req.body.userId,
