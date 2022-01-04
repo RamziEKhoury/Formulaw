@@ -414,7 +414,7 @@ module.exports.userPasswordReset = async (req, res) => {
 			})
 			.then((user) => {
 				if (!user) {
-					return apiResponses.notFoundResponse(res, 'User dont exists with this email.');
+					return apiResponses.successResponseWithData(res, " User with this email doesn't exists.");
 				}
 				crypto.randomBytes(32, async (err, buffer)=>{
 					if (err) {

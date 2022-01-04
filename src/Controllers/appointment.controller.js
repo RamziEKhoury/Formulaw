@@ -860,7 +860,7 @@ module.exports.getUserAppointmentMonthly = (req, res) => {
 			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 
 		],
-		order: [['time', 'DESC']],
+		order: [['createdAt', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
