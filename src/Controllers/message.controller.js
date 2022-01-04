@@ -12,8 +12,8 @@ module.exports.getUserMessagesWithFile = (req, res) => {
 	})
 	 .then((data) => {
 			return apiResponses.successResponseWithData(
-					res, 'success', data,);
-					})
+				res, 'success', data);
+		})
 		.catch((err) => {
 			res.status(500).send({
 				message:
@@ -32,8 +32,8 @@ module.exports.getLawyerMessagesWithFile = (req, res) => {
 	})
 	 .then((data) => {
 			return apiResponses.successResponseWithData(
-					res, 'success', data,);
-					})
+				res, 'success', data);
+		})
 		.catch((err) => {
 			res.status(500).send({
 				message:

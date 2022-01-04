@@ -14,7 +14,10 @@ module.exports = (sequelize, Sequelize) => {
 		senderId: {
 			type: Sequelize.UUID,
 		},
-		fullName: {
+		firstname: {
+			type: Sequelize.STRING,
+		},
+		lastname: {
 			type: Sequelize.STRING,
 		},
 		source: {
