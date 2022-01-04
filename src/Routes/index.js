@@ -26,9 +26,10 @@ module.exports=(app)=> {
 	require('./companyKyc.route')(app);
 	require('./multer.route')(app);
 	require('./chats.route')(app);
-	require('./mobileVerify.route')(app);
+	//require('./mobileVerify.route')(app);
 	require('./preOrder.route')(app);
 	require('./policy.route')(app);
 	require('./userSubscription.route')(app);
 	require('./notification.route')(app);
+	require('./subUser.route')(app);
 };
