@@ -11,10 +11,7 @@ const createRequestValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('firstName must be specified.'),
-	body('lastName')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('lastName must be specified.'),
+	
 	  body('email')
 	    .isLength({min: 1})
 	    .trim()
@@ -74,10 +71,7 @@ const updateRequestValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('firstName must be specified.'),
-	body('lastName')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('lastName must be specified.'),
+	
 	body('email')
 		.isLength({min: 1})
 		.trim()

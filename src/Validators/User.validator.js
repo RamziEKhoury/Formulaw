@@ -4,8 +4,6 @@ const apiResponses = require('../Components/apiresponse');
 const signUpValidator = [
 	body('firstname').isLength({min: 1})
 		.trim().withMessage('First name must be specified.'),
-	body('lastname').isLength({min: 1})
-		.trim().withMessage('Last name must be specified.'),
 	body('email').isLength({min: 1})
 		.trim().withMessage('Email must be specified.')
 		.isEmail().withMessage('Email must be a valid email address.'),
@@ -27,8 +25,6 @@ const signUpValidator = [
 	const updateValidator = [
 		body('firstname').isLength({min: 1})
 			.trim().withMessage('First name must be specified.'),
-		body('lastname').isLength({min: 1})
-			.trim().withMessage('Last name must be specified.'),
 		body('email').isLength({min: 1})
 			.trim().withMessage('Email must be specified.')
 			.isEmail().withMessage('Email must be a valid email address.'),
