@@ -4,6 +4,8 @@ const apiResponses = require('../Components/apiresponse');
 const signUpValidator = [
 	body('firstname').isLength({min: 1})
 		.trim().withMessage('First name must be specified.'),
+	// body('lastname').isLength({min: 1})
+	// 	.trim().withMessage('Last name must be specified.'),
 	body('email').isLength({min: 1})
 		.trim().withMessage('Email must be specified.')
 		.isEmail().withMessage('Email must be a valid email address.'),
@@ -22,32 +24,34 @@ const signUpValidator = [
 			next();
 		}
 	}];
-	const updateValidator = [
-		body('firstname').isLength({min: 1})
-			.trim().withMessage('First name must be specified.'),
-		body('email').isLength({min: 1})
-			.trim().withMessage('Email must be specified.')
-			.isEmail().withMessage('Email must be a valid email address.'),
-		body('phoneNumber').isLength({min: 1})
-			.trim().withMessage('phoneNumber must be specified.'),
-		body('country').isLength({min: 1})
-			.trim().withMessage('country must be specified.'),
-		body('city').isLength({min: 1})
-			.trim().withMessage('city must be specified.'),
-			
-	
-		sanitizeBody('firstname').escape(),
-			sanitizeBody('email').escape(),
-		(req, res, next) => {
-			const errors = validationResult(req);
-			if (!errors.isEmpty()) {
-				return apiResponses.validationErrorWithData(
-					res, 'Please enter valid credentials.', errors.array(),
-				);
-			} else {
-				next();
-			}
-		}];
+const updateValidator = [
+	body('firstname').isLength({min: 1})
+		.trim().withMessage('First name must be specified.'),
+	// body('lastname').isLength({min: 1})
+	// 	.trim().withMessage('Last name must be specified.'),
+	body('email').isLength({min: 1})
+		.trim().withMessage('Email must be specified.')
+		.isEmail().withMessage('Email must be a valid email address.'),
+	body('phoneNumber').isLength({min: 1})
+		.trim().withMessage('phoneNumber must be specified.'),
+	body('country').isLength({min: 1})
+		.trim().withMessage('country must be specified.'),
+	body('city').isLength({min: 1})
+		.trim().withMessage('city must be specified.'),
+
+
+	sanitizeBody('firstname').escape(),
+	sanitizeBody('email').escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return apiResponses.validationErrorWithData(
+				res, 'Please enter valid credentials.', errors.array(),
+			);
+		} else {
+			next();
+		}
+	}];
 
 const logInValidator = [
 	body('email').isLength({min: 1})

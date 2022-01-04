@@ -60,7 +60,7 @@ module.exports.addAppointment = async (req, res) => {
 			const notiData = {
 				title: 'Appointment',
 				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm') +'.',
-				senderName: (device.firstname ? device.firstname: " " ) + " " + (device.lastname ? device.lastname : " " ),
+				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
 				receiverid: req.body.customerId,
@@ -102,7 +102,7 @@ module.exports.addBulkAppointment = async (req, res) => {
 					});
 					await Mail.userSubscriptionmail(
 						userMail.email,
-						(userMail.firstname ? userMail.firstname : " ") + " " + (userMail.lastname ? userMail.lastname : " "),
+						(userMail.firstname ? userMail.firstname : ' ') + ' ' + (userMail.lastname ? userMail.lastname : ' '),
 						schedule.customerId,
 						schedule.orderId,
 					);
@@ -116,7 +116,7 @@ module.exports.addBulkAppointment = async (req, res) => {
 					await Mail.adminSubscriptionmail(
 						adminMail.email,
 						adminMail.firstname,
-						(userMail.firstname ? userMail.firstname : " ") + " " + (userMail.lastname ? userMail.lastname : " "),
+						(userMail.firstname ? userMail.firstname : ' ') + ' ' + (userMail.lastname ? userMail.lastname : ' '),
 					);
 				});
 
@@ -164,7 +164,7 @@ module.exports.changeStatus = async (req, res) => {
 							{
 								model: User,
 								required: false,
-								attributes: ['firstname','lastname', 'email', 'id'],
+								attributes: ['firstname', 'lastname', 'email', 'id'],
 							},
 							{
 								model: Admin,
@@ -191,7 +191,7 @@ module.exports.changeStatus = async (req, res) => {
 						user.adminuser.firstname,
 						user.time,
 						user.date,
-						(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " ") ,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 						user.query.getstarted,
 					);
 
@@ -201,7 +201,7 @@ module.exports.changeStatus = async (req, res) => {
 						message: 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
 							' time ' + user.time +
 							' we will connect with you soon.',
-						senderName: (device.firstname ? device.firstname: " " ) + " " + (device.lastname ? device.lastname : " " ),
+						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
@@ -217,7 +217,7 @@ module.exports.changeStatus = async (req, res) => {
 
 					await Mail.userAppointmentSchedule(
 						user.user.email,
-						(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 						user.time,
 						user.date,
 						user.user.id,
@@ -237,7 +237,7 @@ module.exports.changeStatus = async (req, res) => {
 					schedule.scheduleJob(someDate, async () => {
 						await Mail.userRemindermail(
 							user.user.email,
-							(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+							(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 							user.time,
 							user.date,
 							user.user.id,
@@ -250,7 +250,7 @@ module.exports.changeStatus = async (req, res) => {
 							user.adminuser.firstname,
 							user.time,
 							user.date,
-							(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+							(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 							user.query.getstarted,
 						);
 					});
@@ -289,7 +289,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment  is approved now For Next Process',
-						senderName: (device.firstname ? device.firstname: " " ) + " " + (device.lastname ? device.lastname : " " ),
+						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
@@ -304,7 +304,7 @@ module.exports.changeStatus = async (req, res) => {
 						user.adminuser.email,
 						user.time,
 						user.date,
-						(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " ")
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 					);
 
 					await Mail.userAppointmentApproved(
@@ -347,7 +347,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment payment is done for the next Process',
-						senderName: (device.firstname ? device.firstname: " " ) + " " + (device.lastname ? device.lastname : " " ),
+						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
@@ -363,7 +363,7 @@ module.exports.changeStatus = async (req, res) => {
 						user.adminuser.email,
 						user.time,
 						user.date,
-						(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " ")
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 					);
 
 					await Mail.userAppointmentPayment(
@@ -421,7 +421,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment have scheduled for consultation with lawyer',
-						senderName: (device.firstname ? device.firstname: " " ) + " " + (device.lastname ? device.lastname : " " ),
+						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
@@ -456,17 +456,17 @@ module.exports.changeStatus = async (req, res) => {
 							user.time,
 							user.date,
 							user.adminuser.firstname,
-							(user.user.lastname? user.user.firstname : "" ) + " " + (user.user.lastname? user.user.lastname : "" ),
-							(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+							(user.user.lastname? user.user.firstname : '' ) + ' ' + (user.user.lastname? user.user.lastname : '' ),
+							(userdetail.firstname? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 							user.lawfirm.en_name,
 						);
 
 						await Mail.userAppointmentConsult(
 							user.user.email,
-							(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+							(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 							user.time,
 							user.date,
-							(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+							(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 							user.lawfirm.en_name,
 							user.orderId,
 							user.user.id,
@@ -474,9 +474,9 @@ module.exports.changeStatus = async (req, res) => {
 
 
 						await Mail.lawyerAppointmentConsult(
-							(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+							(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 							userdetail.email,
-							(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+							(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 							user.adminuser.firstname,
 						);
 
@@ -501,17 +501,17 @@ module.exports.changeStatus = async (req, res) => {
 								user.time,
 								user.date,
 								user.adminuser.firstname,
-								(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
-								(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+								(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+								(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 								user.lawfirm.en_name,
 							);
 
 							await Mail.userAppointmentConsult(
 								user.user.email,
-								(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+								(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 								user.time,
 								user.date,
-								(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+								(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 								user.lawfirm.en_name,
 								user.orderId,
 								user.user.id,
@@ -519,9 +519,9 @@ module.exports.changeStatus = async (req, res) => {
 
 							);
 							await Mail.lawyerAppointmentConsult(
-								(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+								(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 								userdetail.email,
-								(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+								(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 								user.adminuser.firstname,
 							);
 							return apiResponses.successResponseWithData(
@@ -542,17 +542,17 @@ module.exports.changeStatus = async (req, res) => {
 								user.time,
 								user.date,
 								user.adminuser.firstname,
-								(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
-								(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+								(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+								(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 								user.lawfirm.en_name,
 							);
 
 							await Mail.userAppointmentConsult(
 								user.user.email,
-								(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+								(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 								user.time,
 								user.date,
-								(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+								(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 								user.lawfirm.en_name,
 								user.orderId,
 								user.user.id,
@@ -562,9 +562,9 @@ module.exports.changeStatus = async (req, res) => {
 
 
 							await Mail.lawyerAppointmentConsult(
-								(userdetail.firstname ?userdetail?.firstname : " ") + " " + (userdetail.lastname ?userdetail?.lastname : " ") ,
+								(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 								userdetail.email,
-								(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " "),
+								(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 								user.adminuser.firstname,
 							);
 
@@ -604,7 +604,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment has been completed',
-						senderName: (device.firstname ? device.firstname: " " ) + " " + (device.lastname ? device.lastname : " " ),
+						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
 						senderType: 'APPOINTMENT',
 						receiverid: user.customerId,
@@ -620,7 +620,7 @@ module.exports.changeStatus = async (req, res) => {
 						user.adminuser.email,
 						user.time,
 						user.date,
-						(user.user.firstname ? user.user.firstname : " ") + " " + (user.user.lastname ? user.user.lastname : " ")
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 					);
 
 					await Mail.userAppointmentComplete(
@@ -1171,14 +1171,12 @@ module.exports.RescheduleAppointment = async (req, res) => {
 		)
 			.then((data) => {
 				if (!data) {
-					
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				
+
 				return apiResponses.successResponseWithData(res, 'Success', data);
 			})
 			.catch((err) => {
-				
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 	} catch (err) {

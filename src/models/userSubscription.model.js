@@ -43,8 +43,6 @@ module.exports = (sequelize, Sequelize) => {
 		contract_templates: {
 			type: DataTypes.JSONB,
 		},
-
-
 	}, {
 		timestamps: true,
 	},

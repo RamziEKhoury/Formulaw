@@ -11,8 +11,8 @@ function getKeyByValue(object, value) {
 }
 
 // eslint-disable-next-line require-jsdoc,max-len
-async function saveMessage(senderId, receiverId, message, messageType, imageUrl, fileUrl, appointmentId, requestId, fullName, date, source) {
-	console.log('messgae--->', senderId, receiverId, message, messageType, imageUrl, fileUrl, appointmentId, requestId, fullName, date);
+async function saveMessage(senderId, receiverId, message, messageType, imageUrl, fileUrl, appointmentId, requestId, firstname, lastname, date, source) {
+	console.log('messgae--->', senderId, receiverId, message, messageType, imageUrl, fileUrl, appointmentId, requestId, firstname, lastname, date);
 
 	const isChatExist = await Chat.findOne({
 		where: {
@@ -36,7 +36,8 @@ async function saveMessage(senderId, receiverId, message, messageType, imageUrl,
 			messageType: messageType,
 			imageUrl: imageUrl,
 			fileUrl: fileUrl,
-			fullName: fullName,
+			firstname: firstname,
+			lastname: lastname,
 			date: date,
 			source,
 		}, {where: {
@@ -54,7 +55,8 @@ async function saveMessage(senderId, receiverId, message, messageType, imageUrl,
 			messageType: messageType,
 			imageUrl: imageUrl,
 			fileUrl: fileUrl,
-			fullName: fullName,
+			firstname: firstname,
+			lastname: lastname,
 			date: date,
 			source,
 		});
@@ -64,7 +66,8 @@ async function saveMessage(senderId, receiverId, message, messageType, imageUrl,
 			messageType: messageType,
 			imageUrl: imageUrl,
 			fileUrl: fileUrl,
-			fullName: fullName,
+			firstname: firstname,
+			lastname: lastname,
 			date: date,
 			source,
 		}, {where: {
@@ -82,7 +85,8 @@ async function saveMessage(senderId, receiverId, message, messageType, imageUrl,
 			messageType: messageType,
 			imageUrl: imageUrl,
 			fileUrl: fileUrl,
-			fullName: fullName,
+			firstname: firstname,
+			lastname: lastname,
 			date: date,
 			source,
 		});
@@ -96,7 +100,8 @@ async function saveMessage(senderId, receiverId, message, messageType, imageUrl,
 			messageType: messageType,
 			imageUrl: imageUrl,
 			fileUrl: fileUrl,
-			fullName: fullName,
+			firstname: firstname,
+			lastname: lastname,
 			date: date,
 			source,
 		});
@@ -111,7 +116,8 @@ async function saveMessage(senderId, receiverId, message, messageType, imageUrl,
 			message: message,
 			imageUrl: imageUrl,
 			fileUrl: fileUrl,
-			fullName: fullName,
+			firstname: firstname,
+			lastname: lastname,
 			date: date,
 			source,
 		});
@@ -157,7 +163,8 @@ class SocketService {
 					msg.fileUrl,
 					msg.appointmentId,
 					msg.requestId,
-					msg.fullName,
+					msg.firstname,
+					msg.lastname,
 					msg.date,
 					'outgoing',
 				);
