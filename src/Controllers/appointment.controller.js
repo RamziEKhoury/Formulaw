@@ -59,7 +59,7 @@ module.exports.addAppointment = async (req, res) => {
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm') +'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm') +'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
