@@ -532,7 +532,7 @@ module.exports.changeStatus = async (req, res) => {
 						} else {
 							const lawyer = _.get(lawyers, [0], null);
 							await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
-							await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
+							await LawFirm.update({assignlawyer: 1}, {where: {id: lawFirm.id}});
 							const userdetail = await User.findOne({
 								where: {id: lawyer.id},
 							});
