@@ -1166,6 +1166,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				time: req.body.time,
 			    endTime: req.body.endTime,
 				shift: req.body.shift,
+				scheduleAt: req.body.scheduleAt,
 			},
 			{where: {id: req.body.id}},
 		)
