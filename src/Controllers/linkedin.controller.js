@@ -8,7 +8,6 @@ const urlToGetUserEmail = 'https://api.linkedin.com/v2/clientAwareMemberHandles?
 module.exports.getUserCredentialsForCredentials = async (req, res) => {
 	try {
 		const code = req.query.code;
-		console.log('code---->', code);
 		await getAccessToken(code, res);
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);

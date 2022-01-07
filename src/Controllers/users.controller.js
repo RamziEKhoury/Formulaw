@@ -49,10 +49,10 @@ module.exports.registration = async (req, res) => {
 				token: token,
 			};
 
-			await Mail.userRegistration(user.email, user.firstname + " " + user.lastname);
+			await Mail.userRegistration(user.email, user.firstname + ' ' + user.lastname);
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + " " + user.lastname);
+				await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + ' ' + user.lastname);
 			}
 
 			// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
@@ -189,11 +189,11 @@ module.exports.userLogin = (req, res) => {
 						lawfirmid: user.lawfirmid,
 						token: token,
 					};
-				await Mail.userRegistration(user.email, user.firstname + " " + user.lastname);
-			const adminMail = await Admin.findAll();
-			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + " " + user.lastname);
-			}
+					await Mail.userRegistration(user.email, user.firstname + ' ' + user.lastname);
+					const adminMail = await Admin.findAll();
+					for (let i = 0; i < adminMail.length; i++) {
+						await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + ' ' + user.lastname);
+					}
 
 					// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 					return apiResponses.successResponseWithData(
@@ -228,7 +228,7 @@ module.exports.userLogin = (req, res) => {
 	} else {
 		User.findOne({
 			where: {
-				facebooktoken: req.body.facebooktoken,
+				linkedin: req.body.linkedin,
 				userType: req.body.userType,
 			},
 		})
@@ -237,7 +237,7 @@ module.exports.userLogin = (req, res) => {
 					User.create({
 						firstname: req.body.firstname,
 						lastname: req.body.lastname,
-						facebooktoken: req.body.facebooktoken,
+						linkedin: req.body.linkedin,
 						email: req.body.email,
 						country: req.body.country,
 						city: req.body.city,
@@ -414,7 +414,7 @@ module.exports.userPasswordReset = async (req, res) => {
 			})
 			.then((user) => {
 				if (!user) {
-					return apiResponses.successResponseWithData(res, " User with this email doesn't exists.");
+					return apiResponses.successResponseWithData(res, ' User with this email doesn\'t exists.');
 				}
 				crypto.randomBytes(32, async (err, buffer)=>{
 					if (err) {
