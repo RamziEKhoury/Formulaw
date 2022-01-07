@@ -38,7 +38,7 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 		},
 		userType: {
-			type: Sequelize.ENUM('normal', 'google', 'facebook'),
+			type: Sequelize.ENUM('normal', 'google', 'facebook', 'linkedin'),
 			defaultValue: 'normal',
 		},
 		role: {
@@ -46,6 +46,9 @@ module.exports = (sequelize, Sequelize) => {
 			defaultValue: UserRole.USER,
 		},
 		facebooktoken: {
+			type: Sequelize.STRING,
+		},
+		linkedin: {
 			type: Sequelize.STRING,
 		},
 		isDeleted: {
