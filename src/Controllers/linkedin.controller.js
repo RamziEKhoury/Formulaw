@@ -26,7 +26,7 @@ function getAccessToken(code, res) {
 	const parameters = {
 		'grant_type': 'authorization_code',
 		'code': code,
-		'redirect_uri': 'https://formu.law/linkedin',
+		'redirect_uri': 'https://formu.law/user-panel/linkedin',
 		'client_id': '7859exqpovqiy5',
 		'client_secret': 'YJ5pLJxt2SN1wPVc',
 	};
