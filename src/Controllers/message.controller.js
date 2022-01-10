@@ -42,3 +42,24 @@ module.exports.getLawyerMessagesWithFile = (req, res) => {
 			});
 		});
 };
+
+
+module.exports.getDocument = (req, res) => {
+	Messages.findAll({
+		where: {
+			appointmentId: req.params.id,
+			messageType: 'FILE',
+		},
+	})
+	 .then((data) => {
+			return apiResponses.successResponseWithData(
+				res, 'success', data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+					err.message ||
+					'Some error occurred while retrieving messages.',
+			});
+		});
+};

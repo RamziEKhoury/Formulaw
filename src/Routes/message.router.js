@@ -18,4 +18,9 @@ module.exports = function(app) {
 		'/api/v1/message/all-lawyermessageswithfile/:lawyerId',
 		messageControllers.getLawyerMessagesWithFile
 	);
+	
+	app.get(
+		'/api/v1/message/all-document/:id',
+		messageControllers.getDocument
+	);
 };
