@@ -57,6 +57,8 @@ db.preOrder = require('./preOrder.model')(sequelize,Sequelize),
 db.policy = require("./policy.model")(sequelize, Sequelize);
 db.userSubscription = require("./userSubscription.model")(sequelize, Sequelize);
 db.subUser = require("./subUser.model")(sequelize, Sequelize);
+db.subscribeUser = require("./subscribeUser.model")(sequelize, Sequelize);
+
 
 db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'})
 db.userSubscription.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'})
