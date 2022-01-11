@@ -17,11 +17,17 @@ module.exports = (sequelize, Sequelize) => {
       lawFirmId: {
         type: Sequelize.UUID,
       },
+      lawyerid: {
+        type: Sequelize.UUID,
+      },
+      appointmentid: {
+        type: Sequelize.UUID,
+      },
       testimonialdata: {
         type: Sequelize.STRING,
       },
       rating: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
     },
     {

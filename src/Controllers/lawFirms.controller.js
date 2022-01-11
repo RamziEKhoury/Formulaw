@@ -26,7 +26,6 @@ function generatePassword() {
 module.exports.addLawFirm = async (req, res) => {
 	try {
 		// #swagger.tags = ['LawFirm']
-		console.log(req.body.en_name);
 		/*  #swagger.parameters['obj'] = {
 			          in: 'body',
 			          description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,currency,numOfLawyer,jurisdiction,expertise,rating,taxType,tax, isActive",
@@ -411,13 +410,38 @@ module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 	} catch (err) {
-		console.log('errrrrr', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
 
 module.exports.getFilterlawFirmsDetails = async (req, res) => {
 	try {
+		if(req.body.serviceName === "Other"){
+			LawFirm.findAll({
+				where: {
+					[Op.and]: [
+						{languageId: {[Op.contains]: req.body.languageId}},
+						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
+					],
+				},
+				include: [
+					{
+						model: LawFirmService,
+					},
+	
+					{
+						model: LawFirmIndustry,
+					},
+	
+					{
+						model: LawFirmTax,
+					},
+				],
+				order: [['createdAt', 'DESC']],
+			}).then((lawfirms) => {
+				return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+			});
+		} else {
 		const limit = 1000;
 		LawFirm.findAll({
 			where: {
@@ -442,6 +466,29 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 			limit: limit,
 			order: [['createdAt', 'DESC']],
 		  }).then((lawfirms) => {
+			return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		})};
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+module.exports.getlawFirmDetails = async (req, res) => {
+	const lawFirmId = req.params.lawFirmId;
+	try {
+		LawFirm.findOne({
+			where: {id: lawFirmId},
+			include: [
+				{
+					model: LawFirmService,
+				},
+				{
+					model: LawFirmIndustry,
+				},
+				{
+					model: LawFirmTax,
+				},
+			],
+		}).then((lawfirms) => {
 			return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 		});
 	} catch (err) {

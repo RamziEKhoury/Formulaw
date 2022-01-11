@@ -11,6 +11,8 @@ module.exports.addtestimonial = async (req, res) => {
 			userId: req.body.userId,
 			orderId: req.body.orderId,
 			lawFirmId: req.body.lawFirmId,
+			lawyerid: req.body.lawyerid,
+			appointmentid: req.body.appointmentid,
 			testimonialdata: req.body.testimonialdata,
 			rating: req.body.rating,
 		}).then((testimonial) => {
@@ -19,6 +21,8 @@ module.exports.addtestimonial = async (req, res) => {
 				userId: testimonial.userId,
 				orderId: testimonial.orderId,
 				lawFirmId: testimonial.lawFirmId,
+				lawyerid: testimonial.lawyerid,
+				appointmentid: testimonial.appointmentid,
 				testimonialdata: testimonial.testimonialdata,
 				rating: testimonial.rating,
 			};
@@ -36,7 +40,7 @@ module.exports.addtestimonial = async (req, res) => {
 module.exports.viewtestimonials = (req, res) => {
 	Testimonial.findAll({
 		include: [
-			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email','profilePic']},
 		],
 		order: [['createdAt', 'DESC']],
 	})
@@ -57,8 +61,6 @@ module.exports.viewtestimonials = (req, res) => {
 };
 
 module.exports.viewtestimonial = (req, res) => {
-	console.log(req.params);
-
 	Testimonial.findOne({
 		where: {
 			id: req.params.id,
@@ -89,7 +91,7 @@ module.exports.updatetestimonial = async (req, res) => {
 				// orderId: req.body.orderId,
 				// lawFirmId: req.body.lawFirmId,
 				testimonialdata: req.body.testimonialdata,
-				// rating: req.body.rating,
+				rating: req.body.rating,
 			},
 			{where: {id: req.body.id}},
 		)
@@ -130,4 +132,50 @@ module.exports.deletetestimonial = async (req, res) => {
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
+};
+
+module.exports.viewOneLawyertestimonials = (req, res) => {
+	Testimonial.findAll({
+		where: {
+			lawyerid: req.params.lawyerid,
+		},
+		order: [['createdAt', 'DESC']],
+	})
+		.then((testimonials) => {
+			if (!testimonials) {
+				return apiResponses.notFoundResponse(res, 'Data Not found.', null);
+			}
+
+			return apiResponses.successResponseWithData(
+				res,
+				'successfully found!',
+				testimonials,
+			);
+		})
+		.catch((err) => {
+			return apiResponses.errorResponse(res, err.message, err);
+		});
+};
+
+module.exports.viewOneLawfirmtestimonials = (req, res) => {
+	Testimonial.findAll({
+		where: {
+			lawFirmId: req.params.lawFirmId,
+		},
+		order: [['createdAt', 'DESC']],
+	})
+		.then((testimonials) => {
+			if (!testimonials) {
+				return apiResponses.notFoundResponse(res, 'Data Not found.', null);
+			}
+
+			return apiResponses.successResponseWithData(
+				res,
+				'successfully found!',
+				testimonials,
+			);
+		})
+		.catch((err) => {
+			return apiResponses.errorResponse(res, err.message, err);
+		});
 };
