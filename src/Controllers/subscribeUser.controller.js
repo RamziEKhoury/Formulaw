@@ -10,18 +10,15 @@ module.exports.addsubscribeUser = async (req, res) => {
 		SubscribeUser.create({
 			userName: req.body.userName,  
             email: req.body.email,
-		}).then(async(subscribeUser) => {
+		},
+			{where:{id:req.body.userId}})
+		.then(async(subscribeUser) => {
 			if(subscribeUser){
-				 User.update({
-					isSubscribed:1
-				},{where:{id:req.body.userId}})
-				.then((user)=>{
-					if (!user) {
-						return apiResponses.notFoundResponse(res, 'Unable to Subscribe.', {});
-					  }
-				})
+				return apiResponses.successResponseWithData(res, 'Subscribed successfully!',subscribeUser
+				);
 			}
-			return apiResponses.successResponseWithData(res,'Subscribed successfully!',subscribeUser);
+			return apiResponses.notFoundResponse(res,'Unable to Subscribe.', {},
+			);
 		},
 		);
 	} catch (err) {
@@ -29,14 +26,13 @@ module.exports.addsubscribeUser = async (req, res) => {
 	}
 }
 
-
-
 module.exports.updatesubscribeUser = async (req, res) => {
 	try {
 		await SubscribeUser.update({
 			userName: req.body.userName,
             email: req.body.email,
-		}, {where: {id: req.body.id}})
+		}, 
+			{where: {id: req.body.id}})
            .then(async (subscribeUser) => {
             if (!subscribeUser) {
                 return apiResponses.notFoundResponse(
@@ -57,6 +53,7 @@ module.exports.getsubscribeUser = (req, res) => {
 	SubscribeUser.findOne({
 		where: {
 			id: req.params.id,
+			isDeleted: 0,
 		},
 	})
 		.then((subscribeUser) => {
@@ -66,7 +63,7 @@ module.exports.getsubscribeUser = (req, res) => {
 
 			return apiResponses.successResponseWithData(
 				res,
-				'successfully found!',
+				'USer found Successfully!',
 				subscribeUser,
 			);
 		})
@@ -78,13 +75,15 @@ module.exports.getsubscribeUser = (req, res) => {
 
 module.exports.getallsubscribeUsers = (req, res) => {
 	SubscribeUser.findAll({
+		where: {
+			isDeleted: 0,
+		},
 		order: [['createdAt', 'ASC']],
 	})
 		.then((subscribeUser) => {
 			if (!subscribeUser) {
 				return apiResponses.notFoundResponse(res, 'Not Found.', null);
 			}
-
 			return apiResponses.successResponseWithData(
 				res,
 				'Successfully found Users!',
@@ -96,24 +95,25 @@ module.exports.getallsubscribeUsers = (req, res) => {
 		});
 };
 
-
-
 module.exports.deletesubscribeUser = async (req, res) => {
 	try {
-		await SubscribeUser.destroy({where: {id: req.params.id}})
+		await SubscribeUser.update(
+			{
+				isDeleted: 1,
+			},
+			{where: {id: req.params.id}},
+		)
 			.then((subscribeUser) => {
 				if (!subscribeUser) {
-					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				return apiResponses.notFoundResponse(res, 'User Not found.', {});				
 				}
-
-				return apiResponses.successResponseWithData(
-					res,
-					'Success',
-					subscribeUser,
-				);
+				return apiResponses.successResponseWithData(res, 'Successfully deleated ', subscribeUser);
 			})
-			.catch((err) => {});
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
