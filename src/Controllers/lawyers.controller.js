@@ -2,6 +2,7 @@ const db = require('../models');
 const Lawyer = db.lawyer;
 const User = db.user;
 const Appointment = db.appointment;
+const Testimonial = db.testimonial;
 const apiResponses = require('../Components/apiresponse');
 const bcrypt = require('bcryptjs');
 const Mail = require('../Config/Mails');
@@ -199,8 +200,22 @@ module.exports.getLawyers = (req, res) => {
 			//   status: "200",
 			//   user: data,
 			// });
+			const lawyerTotalTestimonials = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalTestimonials = await Testimonial.findAll({
+					where: {
+						lawyerid: data[i].user_id,
+					},
+				});
+				const obj = {
+					lawyer: data[i],
+					totalTestimonials,
+				};
+				lawyerTotalTestimonials.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', lawyerTotalTestimonials);
 
-			return apiResponses.successResponseWithData(res, 'success', data);
+			// return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			/* #swagger.responses[500] = {
@@ -229,8 +244,9 @@ module.exports.getLawyer = (req, res) => {
 	// #swagger.tags = ['LawFirm']
 	Lawyer.findOne({
 		where: {id: req.params.id, isDeleted: 0},
+		
 	})
-		.then((data) => {
+		.then((data) => {	
 			// res.status(200).send({
 			//   status: "200",
 			//   user: data,
@@ -323,11 +339,17 @@ module.exports.getLawyerStatuses = (req, res) => {
 						status: WorkflowAppointment.COMPLETED,
 					},
 				});
+				const totalTestimonials = await Testimonial.findAll({
+					where: {
+						lawyerid: data[i].user_id,
+					},
+				});
 				const obj = {
 					lawyer: data[i],
 					appointmentsPending,
 					appointmentsOpen,
 					appointmentsComplete,
+					totalTestimonials,
 				};
 				lawyerStatuses.push(obj);
 			}
@@ -378,9 +400,15 @@ module.exports.getLawyerTotalCases = (req, res) => {
 						lawyerId: data[i].user_id,
 					},
 				});
+				const totalTestimonials = await Testimonial.findAll({
+					where: {
+						lawyerid: data[i].user_id,
+					},
+				});
 				const obj = {
 					lawyer: data[i],
 					totalCases,
+					totalTestimonials,
 				};
 				lawyerTotalCase.push(obj);
 			}
@@ -407,3 +435,5 @@ module.exports.getLawyerTotalCases = (req, res) => {
 			});
 		});
 };
+
+

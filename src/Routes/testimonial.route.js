@@ -24,6 +24,16 @@ module.exports = function(app) {
 		testimoinalController.viewtestimonial,
 	);
 
+	app.get(
+		'/api/v1/testimonial/getOneLawyer-testimonial/:lawyerid',
+		testimoinalController.viewOneLawyertestimonials,
+	);
+
+	app.get(
+		'/api/v1/testimonial/getOneLawfirm-testimonial/:lawFirmId',
+		testimoinalController.viewOneLawfirmtestimonials,
+	);
+
 	app.put(
 		'/api/v1/testimonial/update-testimonial/:id',
 		[TestimonialValidator.updateTestimonial],
