@@ -14,10 +14,27 @@ const addKycDetailsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('photo must be specified.'),
-	body('ParmanentAddress')
+	body('addressone')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('ParmanentAddress must be specified.'),
+		.withMessage('address one must be specified.'),
+	body('addresstwo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('address two must be specified.'),
+	body('country')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('country  must be specified.'),
+	body('city')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('city must be specified.'),
+	body('postalcode')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('postalcode must be specified.'),
+
 	body('PhnNumber')
 		.isLength({min: 1})
 		.trim()
@@ -55,10 +72,26 @@ const updateKycDetailsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('photo must be specified.'),
-	body('ParmanentAddress')
+		body('addressone')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('ParmanentAddress must be specified.'),
+		.withMessage('address one must be specified.'),
+	body('addresstwo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('address two must be specified.'),
+	body('country')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('country  must be specified.'),
+	body('city')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('city must be specified.'),
+	body('postalcode')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('postalcode must be specified.'),
 	body('PhnNumber')
 		.isLength({min: 1})
 		.trim()

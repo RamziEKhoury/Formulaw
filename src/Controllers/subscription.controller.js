@@ -27,7 +27,50 @@ module.exports.addSubscription = async (req, res) => {
 			images: req.body.images,
 			logo: req.body.logo,
 			features: req.body.features,
+			sortnumber: req.body.sortnumber,
 		}).then((subscription) => {
+			return apiResponses.successResponseWithData(
+				res,
+				'success!',
+				subscription,
+			);
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.updateSubscription = async (req, res) => {
+	try {
+		// #swagger.tags = ['Subscription']
+		/*  #swagger.parameters['obj'] = {
+			          in: 'body',
+			          description: "Subscription details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,experience,jurisdiction,expertise,rating,isActive",
+			          schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$langaugeTitle:"",$serviceId:"", $rating: "" , $experience:"",$numOfLawyer: "", $taxType:"",$tax:"", $expertise: "",$jurisdiction:""}
+        } */
+		Subscription.update({
+			// title: req.body.title,
+			// description: req.body.description,
+			// durationType: req.body.durationType,
+			// discountPercent: req.body.discountPercent,
+			// subscriptionType: req.body.subscriptionType,
+			// price: req.body.price,
+			// currency: req.body.currency,
+			// numberOfMeeting: req.body.numberOfMeeting,
+			// ipAudit: req.body.ipAudit,
+			// meetingPlan: req.body.meetingPlan,
+			// contractTemplates: req.body.contractTemplates,
+			// contract_templates: req.body.contract_templates,
+			// discount: req.body.discount,
+			// images: req.body.images,
+			logo: req.body.logo,
+			// features: req.body.features,
+			// sortnumber: req.body.sortnumber,
+		},{where: {id: req.body.id}},
+		).then((subscription) => {
+				if (!subscription) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
@@ -41,7 +84,7 @@ module.exports.addSubscription = async (req, res) => {
 
 module.exports.getSubscriptions = (req, res) => {
 	const limit = req.params.limit;
-	Subscription.findAll({limit: limit, order: [['createdAt', 'DESC']]})
+	Subscription.findAll({limit: limit, order: [['sortnumber', 'ASC']]})
 		.then((data) => {
 			// res.status(200).send({
 			//   status: "200",
@@ -80,7 +123,7 @@ module.exports.getSubscriptionsType = (req, res) => {
 		where: {
 			durationType: durationType,
 		},
-		order: [['createdAt', 'DESC']],
+		order: [['sortnumber', 'ASC']],
 	})
 		.then((data) => {
 			// res.status(200).send({

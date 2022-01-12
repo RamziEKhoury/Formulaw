@@ -5,7 +5,6 @@ const apiResponses = require('../Components/apiresponse');
 
 module.exports.addKycDetails = async (req, res) => {
 	try {
-		console.log(req.body.userId);
 		Kyc.create({
 			userId: req.body.userId,
 			passport: req.body.passport,
@@ -13,6 +12,11 @@ module.exports.addKycDetails = async (req, res) => {
 			ParmanentAddress: req.body.ParmanentAddress,
 			PhnNumber: req.body.PhnNumber,
 			reason: req.body.reason,
+			addressone: req.body.addressone,
+			addresstwo: req.body.addresstwo,
+			country: req.body.country,
+			city: req.body.city,
+			postalcode: req.body.postalcode,
 		}).then((kycDetail) => {
 			return apiResponses.successResponseWithData(res, 'success!', kycDetail);
 		});
@@ -31,6 +35,11 @@ module.exports.updateKycDetails = async (req, res) => {
 					ParmanentAddress: req.body.ParmanentAddress,
 					PhnNumber: req.body.PhnNumber,
 					reason: req.body.reason,
+					addressone: req.body.addressone,
+					addresstwo: req.body.addresstwo,
+					country: req.body.country,
+					city: req.body.city,
+					postalcode: req.body.postalcode,
 				},
 				{where: {userId: req.body.userId}},
 			)
@@ -106,7 +115,6 @@ module.exports.kycStatus = async (req, res) => {
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 	} catch (err) {
-		console.log('errrrrr', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
