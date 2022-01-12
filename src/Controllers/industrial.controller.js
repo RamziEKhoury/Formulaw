@@ -5,7 +5,6 @@ const Op = db.Sequelize.Op;
 
 module.exports.addIndustrial = async (req, res) => {
 	try {
-		console.log(req.body.en_name);
 		// #swagger.tags = ['Industrial']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
@@ -132,7 +131,7 @@ module.exports.getIndustrials = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -157,7 +156,7 @@ module.exports.getIndustrials = (req, res) => {
 		Industrial.findAndCountAll({
 			where: {isDeleted: 0, isActive: 1},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((result) => {
 				// res.status(200).send({

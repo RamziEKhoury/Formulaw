@@ -22,18 +22,50 @@ const addCompanyKycDetailsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('companyName must be specified.'),
-    body('officeAddress')
+	body('officeaddressone')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('officeAddress must be specified.'),    
+		.withMessage('officeaddress one must be specified.'),
+	body('officeaddresstwo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officeaddress two must be specified.'),
+	body('officecountry')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officecountry  must be specified.'),
+	body('officecity')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officecity must be specified.'),
+	body('officepostalcode')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officepostalcode must be specified.'),    
 	body('photo')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('photo must be specified.'),
-	body('ParmanentAddress')
+	body('addressone')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('ParmanentAddress  must be specified.'),
+		.withMessage('address one must be specified.'),
+	body('addresstwo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('address two must be specified.'),
+	body('country')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('country  must be specified.'),
+	body('city')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('city must be specified.'),
+	body('postalcode')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('postalcode must be specified.'),
     body('PhnNumber')
 		.isLength({min: 1})
 		.trim()
@@ -79,18 +111,50 @@ const updateCompanyKycDetailsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('companyName must be specified.'),
-    body('officeAddress')
+	body('officeaddressone')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('officeAddress must be specified.'),    
+		.withMessage('officeaddress one must be specified.'),
+	body('officeaddresstwo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officeaddress two must be specified.'),
+	body('officecountry')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officecountry  must be specified.'),
+	body('officecity')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officecity must be specified.'),
+	body('officepostalcode')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('officepostalcode must be specified.'),     
 	body('photo')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('photo must be specified.'),
-	body('ParmanentAddress')
+	body('addressone')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('ParmanentAddress  must be specified.'),
+		.withMessage('address one must be specified.'),
+	body('addresstwo')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('address two must be specified.'),
+	body('country')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('country  must be specified.'),
+	body('city')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('city must be specified.'),
+	body('postalcode')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('postalcode must be specified.'),
     body('PhnNumber')
 		.isLength({min: 1})
 		.trim()

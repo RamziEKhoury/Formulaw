@@ -68,6 +68,7 @@ db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
 db.appointment.hasOne(db.lawFirm, {sourceKey: 'lawFirmId', foreignKey: 'id'});
 db.appointment.hasOne(db.lawyer, {sourceKey: 'lawyerId', foreignKey: 'id'});
 db.lawyer.hasOne(db.testimonial, {sourceKey: 'user_id', foreignKey: 'lawyerid'});
+db.lawFirm.hasMany(db.testimonial, {sourceKey: 'id', foreignKey: 'lawFirmId'});
 
 db.lawFirm.hasMany(db.lawFirm_service, {
 	sourceKey: 'id',

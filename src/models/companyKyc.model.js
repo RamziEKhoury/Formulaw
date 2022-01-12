@@ -17,16 +17,40 @@ module.exports = (sequelize, Sequelize) => {
         crNumber: {
 			type: Sequelize.STRING,
 		},
-        officeAddress: {
-			type: Sequelize.STRING,
-		},
 		passport: {
 			type: Sequelize.STRING,
 		},
         photo: {
 			type: Sequelize.STRING,
 		},
-        ParmanentAddress: {
+        officeaddressone: {
+			type: Sequelize.STRING,
+		},
+		officeaddresstwo: {
+			type: Sequelize.STRING,
+		},
+		officecountry: {
+			type: Sequelize.STRING,
+		},
+		officecity: {
+			type: Sequelize.STRING,
+		},
+		officepostalcode: {
+			type: Sequelize.STRING,
+		},
+		addressone: {
+			type: Sequelize.STRING,
+		},
+		addresstwo: {
+			type: Sequelize.STRING,
+		},
+		country: {
+			type: Sequelize.STRING,
+		},
+		city: {
+			type: Sequelize.STRING,
+		},
+		postalcode: {
 			type: Sequelize.STRING,
 		},
         PhnNumber: {

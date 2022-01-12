@@ -4,7 +4,6 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addCompanyKycDetails = async (req, res) => {
-	console.log('dfdgsgdfh', req.body);
 	try {
 		Companykyc.create({
 			userId: req.body.userId,
@@ -15,6 +14,16 @@ module.exports.addCompanyKycDetails = async (req, res) => {
 			photo: req.body.photo,
 			ParmanentAddress: req.body.ParmanentAddress,
 			PhnNumber: req.body.PhnNumber,
+			officeaddressone: req.body.officeaddressone,
+			officeaddresstwo: req.body.officeaddresstwo,
+			officecountry: req.body.officecountry,
+			officecity: req.body.officecity,
+			officepostalcode: req.body.officepostalcode,
+			addressone: req.body.addressone,
+			addresstwo: req.body.addresstwo,
+			country: req.body.country,
+			city: req.body.city,
+			postalcode: req.body.postalcode,
 		}).then((companyKycDetail) => {
 			return apiResponses.successResponseWithData(
 				res,
@@ -23,7 +32,6 @@ module.exports.addCompanyKycDetails = async (req, res) => {
 			);
 		});
 	} catch (err) {
-		console.log('errr===========', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -39,6 +47,16 @@ module.exports.updateCompanyKycDetails = async (req, res) => {
 				photo: req.body.photo,
 				ParmanentAddress: req.body.ParmanentAddress,
 				PhnNumber: req.body.PhnNumber,
+				officeaddressone: req.body.officeaddressone,
+				officeaddresstwo: req.body.officeaddresstwo,
+				officecountry: req.body.officecountry,
+				officecity: req.body.officecity,
+				officepostalcode: req.body.officepostalcode,
+				addressone: req.body.addressone,
+				addresstwo: req.body.addresstwo,
+				country: req.body.country,
+				city: req.body.city,
+				postalcode: req.body.postalcode,
 			},
 			{where: {userId: req.body.userId}},
 		)
@@ -122,7 +140,6 @@ module.exports.CompanykycStatus = async (req, res) => {
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 	} catch (err) {
-		console.log('errrrrr', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };

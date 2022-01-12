@@ -53,8 +53,11 @@ module.exports = (sequelize, Sequelize) => {
 			type: DataTypes.JSONB,
 		},
 		logo: {
-			type: DataTypes.JSONB,
+			type: Sequelize.STRING,
 		},
+		sortnumber: {
+			type: Sequelize.INTEGER,
+		}
 
 
 	}, {

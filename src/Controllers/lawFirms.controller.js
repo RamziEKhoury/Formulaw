@@ -3,6 +3,7 @@ const LawFirm = db.lawFirm;
 const LawFirmService = db.lawFirm_service;
 const LawFirmIndustry = db.lawFirm_industry;
 const LawFirmTax = db.lawFirm_tax;
+const Testimonial = db.testimonial;
 const User = db.user;
 const Lawyer = db.lawyer;
 const apiResponses = require('../Components/apiresponse');
@@ -268,6 +269,49 @@ module.exports.getLawFirm = (req, res) => {
 			{
 				model: LawFirmIndustry,
 			},
+
+			{
+				model: Testimonial,
+			},
+		],
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                  description: "Error message",
+                                  schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                              } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving LawFirm.',
+			});
+		});
+};
+
+module.exports.getLawfirm = (req, res) => {
+	// Get Country from Database
+	// #swagger.tags = ['LawFirm']
+	LawFirm.findOne({
+		where: {id: req.params.id, isDeleted: 0},
+		include: [
+			{
+				model: LawFirmService,
+			},
+
+			{
+				model: LawFirmIndustry,
+			},
+
+			{
+				model: Testimonial,
+			},
 		],
 	})
 		.then((data) => {
@@ -436,9 +480,14 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					{
 						model: LawFirmTax,
 					},
+					
+					{
+						model: Testimonial,
+					},
 				],
 				order: [['createdAt', 'DESC']],
 			}).then((lawfirms) => {
+				
 				return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 			});
 		} else {
@@ -461,6 +510,9 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 				},
 				{
 					model: LawFirmTax,
+				},
+				{
+					model: Testimonial,
 				},
 			],
 			limit: limit,
