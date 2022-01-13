@@ -19,7 +19,7 @@ module.exports = {
 	userRegistration: (email, username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
@@ -43,7 +43,7 @@ module.exports = {
 	userPasswordReset: (email, token) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding Password reset on FORMULAW!', // Subject of the mail.
 			html:
@@ -63,7 +63,7 @@ module.exports = {
 	lawyerRegistration: (email, password) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding Registration as a Lawyer on FORMULAW!', // Subject of the mail.
 			html:
@@ -89,7 +89,7 @@ module.exports = {
 	userRegistrationAdminMail: (email, username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
@@ -114,7 +114,7 @@ module.exports = {
 	adminAppointmentSchedule: (email, username, time, date, name, lead) => {
 		console.log('logIn_Mail====>' + email, time, date,username);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Appointment:', // Subject of the mail.
 			html:
@@ -135,7 +135,7 @@ module.exports = {
 	userAppointmentSchedule: (email, fullname, time, date, id, username, orderid, lawfirm) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Appointment', // Subject of the mail.
 			html:
@@ -160,7 +160,7 @@ module.exports = {
 	userRemindermail: (email, fullname, time, date, id, username, orderid, lawfirm)=> {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
@@ -181,7 +181,7 @@ module.exports = {
 	adminRemindermail: (email, username, time, date, name, lead) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
@@ -203,7 +203,7 @@ module.exports = {
 	adminAppointmentApproved: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Approved', // Subject of the mail.
 			html:
@@ -227,7 +227,7 @@ module.exports = {
 	userAppointmentApproved: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Approved', // Subject of the mail.
 			html:
@@ -252,7 +252,7 @@ module.exports = {
 	adminAppointmentPayment: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Payment:', // Subject of the mail.
 			html:
@@ -280,7 +280,7 @@ module.exports = {
 	userAppointmentPayment: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Payment', // Subject of the mail.
 			html:
@@ -310,7 +310,7 @@ module.exports = {
 	adminAppointmentConsult: (email, time, date, username, name, lawyer, lawfirm) => {
 		console.log('logIn_Mail admin====>' + email,time, date, username, name, lawyer, lawfirm);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation:', // Subject of the mail.
 			html:
@@ -331,7 +331,7 @@ module.exports = {
 	userAppointmentConsult: (email, fullname, time, date, lawyer, lawfirm, orderid, id) => {
 		console.log('logIn_Mail user====>' + email, fullname, time, date, lawyer, lawfirm, orderid, id);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
@@ -352,7 +352,7 @@ module.exports = {
 	lawyerAppointmentConsult: (lawyer, email, user, admin) => {
 		console.log('logIn_Mail lawyer====>' + lawyer, email, user, admin);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
@@ -374,7 +374,7 @@ module.exports = {
 	adminAppointmentComplete: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead completed', // subject:", // Subject of the mail.
 			html:
@@ -397,7 +397,7 @@ module.exports = {
 	userAppointmentComplete: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead Completed', // Subject of the mail.
 			html:
@@ -424,7 +424,7 @@ module.exports = {
 	adminSubscriptionmail: (email, fullname, username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'User Subscription:', // Subject of the mail.
 			html:
@@ -443,7 +443,7 @@ module.exports = {
 	userSubscriptionmail: (email, fullname, id, orderid) => {
 		console.log('subscription====>' + email);
 		const details = {
-			from: 'info@formu.law', // sender address same as above
+			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Subscription', // Subject of the mail.
 			html:
