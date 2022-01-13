@@ -7,8 +7,8 @@ const transporter = nodemailer.createTransport({
 	port: 465,
 	secure: true,
 	auth: {
-		user: 'info@formu.law', // email ID
-		pass: 'WjBQXJ4JRHcu83T', // Password
+		user: 'formulawauth@gmail.com', // email ID
+		pass: 'Formulaw$1997', // Password
 	},
 
 
