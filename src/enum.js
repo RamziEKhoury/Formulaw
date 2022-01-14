@@ -41,3 +41,8 @@ module.exports.WorkflowAppointment = {
 	COMPLETED: 'COMPLETED',
 	FURTHER_STATUS: 'FURTHER_STATUS',
 };
+
+module.exports.DisputeStatus = {
+	PENDING: 'PENDING',
+	RESOLVED: 'RESOLVED',
+};
