@@ -36,6 +36,10 @@ module.exports = function(app) {
 		appointmentController.getUserAppointment);
 
 	app.get(
+		'/api/v1/appointment/my-orders/:userId',
+		appointmentController.getUserAllOrders);
+
+	app.get(
 		'/api/v1/appointment/lawyer-appointments/:lawyerId',
 		appointmentController.getLawyerAppointment);
 
@@ -85,6 +89,7 @@ module.exports = function(app) {
 
 	app.post(
 			'/api/v1/appointment/reschedule-appointment',
+			[AppointmentValidator.rescheduleAppointmentValidator],
 			appointmentController.RescheduleAppointment);
 };
 
