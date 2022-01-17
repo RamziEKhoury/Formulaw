@@ -31,7 +31,6 @@ const addTestimonial = [
     .trim()
     .withMessage("appointmentid must be specified."),
 
-  sanitizeBody("testimonialdata").escape(),
   sanitizeBody("rating").escape(),
   (req, res, next) => {
     const errors = validationResult(req);

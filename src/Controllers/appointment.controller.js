@@ -5,6 +5,7 @@ const Room = db.room;
 const LawFirm = db.lawFirm;
 const Lawyer = db.lawyer;
 const Admin = db.adminUser;
+const LawFirmService = db.lawFirm_service;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
@@ -808,6 +809,54 @@ module.exports.getUserAppointment = (req, res) => {
 		});
 };
 
+module.exports.getUserAllOrders = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {customerId: req.params.userId},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
+
+		],
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async(data) => {
+			// console.log("fgf",data);
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const userTotalOrders = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalOrders = await LawFirmService.findAll({
+							where: {title: {[Op.in]: data[i].query.serviceSubcategoryName},
+						            lawFirmId: data[i].lawFirmId
+								},
+				});
+				const obj = {
+					appointment: data[i],
+					totalOrders,
+				};
+				userTotalOrders.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', userTotalOrders);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+          err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
 module.exports.getLawyerAppointment = (req, res) => {
 	// Get Appointment from Database
 	// #swagger.tags = ['Appointment']
@@ -1184,3 +1233,227 @@ module.exports.RescheduleAppointment = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+module.exports.Consultation = async (req,res) => {
+	if(req.params.paymentstatus === "fail") {
+		res.status(400).json("payment authorization failed")
+	}
+	Appointment.update(
+		{
+			ispayment: 1,
+			status: WorkflowAppointment.CONSULTATION,
+			workflow: WorkflowAppointment.CONSULTATION,
+		},
+		{
+			where: {id: req.params.id},
+		},
+	).then(async(appointment) => {
+		if (!appointment) {
+			return apiResponses.notFoundResponse(res, 'Not found.', {});
+		} else {
+			const user = await Appointment.findOne({
+				where: {id: req.params.id},
+				include: [
+					{
+						model: User,
+						required: false,
+						attributes: ['firstname', 'lastname', 'email', 'id'],
+					},
+					{
+						model: Admin,
+						required: false,
+						attributes: ['firstname', 'lastname', 'email'],
+					},
+		
+		
+					{
+						model: Lawyer,
+						required: false,
+						attributes: ['en_name', 'email'],
+					},
+		
+					{
+						model: LawFirm,
+						required: false,
+						attributes: ['en_name'],
+					},
+		
+		
+				],
+			});
+		
+			const device = await User.findOne({where: {id: user.customerId}});
+			const notiData = {
+				title: 'Appointment',
+				message: 'Hi, Your appointment have scheduled for consultation with lawyer',
+				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
+				senderId: user.customerId,
+				senderType: 'APPOINTMENT',
+				receiverid: user.customerId,
+				notificationType: WorkflowAppointment.CONSULTATION,
+				target: req.params.id,
+			};
+			await Notifications.notificationCreate(notiData);
+			if (!!device.deviceToken) {
+				await Notifications.notification(device.deviceToken, 'Hi, Your appointment have scheduled for consultation with lawyer');
+			}
+		
+			await Appointment.update(
+				{
+					status: req.body.status,
+					workflow: req.body.status,
+				},
+				{where: {id: req.params.id}},
+			);
+		
+			const lawFirm = await LawFirm.findOne({where: {id: user.lawFirmId}});
+			const lawyers = await User.findAll({where: {lawfirmid: user.lawFirmId}, order: [['createdAt', 'ASC']]});
+			if (lawyers.length === 1) {
+				const lawyer = _.get(lawyers, [0], null);
+				await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+				await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
+				const userdetail = await User.findOne({
+					where: {id: lawyer.id},
+				});
+		
+				await Mail.adminAppointmentConsult(
+					user.adminuser.email,
+					user.time,
+					user.date,
+					user.adminuser.firstname,
+					(user.user.lastname? user.user.firstname : '' ) + ' ' + (user.user.lastname? user.user.lastname : '' ),
+					(userdetail.firstname? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+					user.lawfirm.en_name,
+				);
+		
+				await Mail.userAppointmentConsult(
+					user.user.email,
+					(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+					user.time,
+					user.date,
+					(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+					user.lawfirm.en_name,
+					user.orderId,
+					user.user.id,
+				);
+		
+		
+				await Mail.lawyerAppointmentConsult(
+					(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+					userdetail.email,
+					(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+					user.adminuser.firstname,
+				);
+		
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					appointment,
+				);
+			}
+			if (lawyers.length > 1) {
+				if (lawyers.length > lawFirm.assignlawyer) {
+					const lawyer = _.get(lawyers, [lawFirm.assignlawyer], null);
+					await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+					await LawFirm.update({assignlawyer: lawFirm.assignlawyer+1}, {where: {id: lawFirm.id}});
+					const userdetail = await User.findOne({
+						where: {id: lawyer.id},
+					});
+		
+		
+					await Mail.adminAppointmentConsult(
+						user.adminuser.email,
+						user.time,
+						user.date,
+						user.adminuser.firstname,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+						user.lawfirm.en_name,
+					);
+		
+					await Mail.userAppointmentConsult(
+						user.user.email,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+						user.time,
+						user.date,
+						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+						user.lawfirm.en_name,
+						user.orderId,
+						user.user.id,
+		
+		
+					);
+					await Mail.lawyerAppointmentConsult(
+						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+						userdetail.email,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+						user.adminuser.firstname,
+					);
+					return apiResponses.successResponseWithData(
+						res,
+						'Success',
+						appointment,
+					);
+				} else {
+					const lawyer = _.get(lawyers, [0], null);
+					await Appointment.update({lawyerId: lawyer.id}, {where: {id: req.params.id}});
+					await LawFirm.update({assignlawyer: 1}, {where: {id: lawFirm.id}});
+					const userdetail = await User.findOne({
+						where: {id: lawyer.id},
+					});
+		
+					await Mail.adminAppointmentConsult(
+						user.adminuser.email,
+						user.time,
+						user.date,
+						user.adminuser.firstname,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+						user.lawfirm.en_name,
+					);
+		
+					await Mail.userAppointmentConsult(
+						user.user.email,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+						user.time,
+						user.date,
+						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+						user.lawfirm.en_name,
+						user.orderId,
+						user.user.id,
+		
+		
+					);
+		
+		
+					await Mail.lawyerAppointmentConsult(
+						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
+						userdetail.email,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+						user.adminuser.firstname,
+					);
+		
+		
+					return apiResponses.successResponseWithData(
+						res,
+						'Success',
+						appointment,
+					);
+				}
+			}
+		
+		
+			return apiResponses.successResponseWithData(
+				res,
+				'Success',
+				appointment,
+			);
+		}
+		})
+		.catch((err) => {
+			return apiResponses.errorResponse(res, err.message, {});
+		});
+	}
+	
+
+	

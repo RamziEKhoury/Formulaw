@@ -44,9 +44,40 @@ const addAppointmentValidator = [
 	},
 ];
 
+const rescheduleAppointmentValidator = [
+	body('shift')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('shifts must be specified.'),
+	body('date')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('date must be specified.'),
+	body('time')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('time must be specified.'),
+
+	
+	sanitizeBody('date').escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return apiResponses.validationErrorWithData(
+				res,
+				'Validation Error.',
+				errors.array(),
+			);
+		} else {
+			next();
+		}
+	},
+];
+
 
 const appointmentValidator = {
 	addAppointmentValidator: addAppointmentValidator,
+	rescheduleAppointmentValidator: rescheduleAppointmentValidator,
 
 };
 
