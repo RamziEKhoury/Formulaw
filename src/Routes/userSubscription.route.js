@@ -1,6 +1,7 @@
 const userSubscrptionController = require('../Controllers/userSubscription.controller');
 
 const UserSubscrptionValidator = require('../Validators/userSubscription.validator');
+const {createCharge} = require('../Controllers/stripe');
 
 
 module.exports = function(app) {
@@ -35,4 +36,9 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/userSubscription/check-userSubscription/:userId',
 		userSubscrptionController.checkSubscription);
+
+	// Stripe
+	app.post(
+		'/api/v1/payment/create-charge',
+		createCharge);
 };
