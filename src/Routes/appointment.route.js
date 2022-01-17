@@ -63,6 +63,10 @@ module.exports = function(app) {
 		'/api/v1/appointment/status/:id',
 		appointmentController.changeStatus);
 
+	app.put(
+		'/api/v1/appointment/consultation/:id/:paymentstatus',
+		appointmentController.Consultation);
+
 	app.get(
 		'/api/v1/appointment/user-all-appointments/:userId',
 		appointmentController.getUserLastAppointment);

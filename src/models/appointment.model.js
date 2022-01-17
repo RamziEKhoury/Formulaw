@@ -78,6 +78,10 @@ module.exports = (sequelize, Sequelize) => {
 			endTime: {
 				type: Sequelize.STRING,
 			},
+			ispayment: {
+				type: Sequelize.INTEGER,
+				defaultValue: 0,
+			},
 			scheduleAt: {
 				type: Sequelize.STRING,
 			},
