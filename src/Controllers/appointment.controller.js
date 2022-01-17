@@ -824,6 +824,7 @@ module.exports.getUserAllOrders = (req, res) => {
 		order: [['createdAt', 'DESC']],
 	})
 		.then(async(data) => {
+			// console.log("fgf",data);
 			// res.status(200).send({
 			//   status: "200",
 			//   user: data,
@@ -831,7 +832,9 @@ module.exports.getUserAllOrders = (req, res) => {
 			const userTotalOrders = [];
 			for (let i = 0; i < data.length; i++) {
 				const totalOrders = await LawFirmService.findAll({
-							where: {title: {[Op.in]: data[i].query.serviceSubcategoryName}},
+							where: {title: {[Op.in]: data[i].query.serviceSubcategoryName},
+						            lawFirmId: data[i].lawFirmId
+								},
 				});
 				const obj = {
 					appointment: data[i],
