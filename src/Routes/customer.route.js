@@ -1,8 +1,5 @@
 const customerController = require('../Controllers/customer.controller');
 
-// const CountryValidator = require('../Validators/Country.validator');
-
-
 module.exports = function(app) {
 	app.use(function(req, res, next) {
 		res.header(
