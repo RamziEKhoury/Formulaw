@@ -27,7 +27,6 @@ module.exports.createCharge = (async (req, res) => {
 				});
 			})
 			.then((charge) => {
-				console.log('charge--->', charge);
 				const data = {
 					customerIn,
 					charge,
