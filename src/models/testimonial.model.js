@@ -1,3 +1,4 @@
+const {TestimonialStatus} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define(
     "testimonial",
@@ -29,6 +30,13 @@ module.exports = (sequelize, Sequelize) => {
       rating: {
         type: Sequelize.INTEGER,
       },
+      status: {
+        defaultValue: TestimonialStatus.PENDING,
+       type: Sequelize.ENUM(
+        TestimonialStatus.PENDING,
+        TestimonialStatus.APPROVED,
+       )
+    },
     },
     {
       timestamps: true,
