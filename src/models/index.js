@@ -54,7 +54,7 @@ db.notification = require('./notification.model')(sequelize, Sequelize);
 db.preOrder = require('./preOrder.model')(sequelize, Sequelize);
 db.policy = require('./policy.model')(sequelize, Sequelize);
 db.userSubscription = require('./userSubscription.model')(sequelize, Sequelize);
-db.dispute = require('./dispute.model')(sequelize,Sequelize);
+db.dispute = require('./dispute.model')(sequelize, Sequelize);
 
 db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.userSubscription.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'});
@@ -71,7 +71,7 @@ db.appointment.hasOne(db.lawyer, {sourceKey: 'lawyerId', foreignKey: 'id'});
 db.appointment.hasOne(db.lawFirm_service, {sourceKey: 'lawFirmId', foreignKey: 'lawFirmId'});
 db.lawyer.hasOne(db.testimonial, {sourceKey: 'user_id', foreignKey: 'lawyerid'});
 db.lawFirm.hasMany(db.testimonial, {sourceKey: 'id', foreignKey: 'lawFirmId'});
-db.dispute.hasMany(db.user,{sourceKey: 'userId', foreignKey: 'id'})
+db.dispute.hasMany(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 
 db.lawFirm.hasMany(db.lawFirm_service, {
 	sourceKey: 'id',
