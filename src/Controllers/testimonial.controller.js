@@ -179,3 +179,25 @@ module.exports.viewOneLawfirmtestimonials = (req, res) => {
 			return apiResponses.errorResponse(res, err.message, err);
 		});
 };
+
+module.exports.TestimonialStatus = async (req, res) => {
+	try {
+		await Testimonial.update(
+			{
+				status: req.params.status,
+			},
+			{where: {id: req.params.id}},
+		)
+			.then((testimonial) => {
+				if (!testimonial) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				return apiResponses.successResponseWithData(res, 'Success', testimonial);
+			})
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};

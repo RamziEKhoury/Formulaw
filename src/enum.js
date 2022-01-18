@@ -46,3 +46,8 @@ module.exports.DisputeStatus = {
 	PENDING: 'PENDING',
 	RESOLVED: 'RESOLVED',
 };
+
+module.exports.TestimonialStatus = {
+	PENDING: 'PENDING',
+	APPROVED: 'APPROVED',
+};

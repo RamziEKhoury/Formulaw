@@ -15,6 +15,10 @@ module.exports = function(app) {
 		[TestimonialValidator.addTestimonial],
 		testimoinalController.addtestimonial,
 	);
+	app.post(
+		'/api/v1/testimonial/status/:id/:status',
+		testimoinalController.TestimonialStatus,
+	);
 	app.get(
 		'/api/v1/testimonial/view-testimonials',
 		testimoinalController.viewtestimonials,

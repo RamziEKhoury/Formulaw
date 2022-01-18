@@ -33,4 +33,6 @@ module.exports=(app)=> {
 	require('./notification.route')(app);
 	require('./message.router')(app);
 	require('./dispute.route')(app);
+	require('./customer.route')(app);
+	require('./charge.route')(app);
 };
