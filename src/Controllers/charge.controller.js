@@ -1,5 +1,7 @@
 const db = require('../models');
 const Charge = db.charge;
+const Customer = db.customer;
+const Request = db.request;
 const apiResponses = require('../Components/apiresponse');
 const Op = db.Sequelize.Op;
 
@@ -67,6 +69,15 @@ module.exports.addCharge = async (req, res) => {
 module.exports.getCharges = (req, res) => {
 	const limit = req.params.limit;
 	Charge.findAll({
+		include: [
+			{
+				model: Customer,
+				required: false,
+			},
+			{
+				model: Request,
+				required: false,
+			}],
 		limit: limit,
 		order: [['createdAt', 'DESC']],
 	})
@@ -91,6 +102,15 @@ module.exports.getCharges = (req, res) => {
 
 module.exports.getCharge = (req, res) => {
 	Charge.findOne({
+		include: [
+			{
+				model: Customer,
+				required: false,
+			},
+			{
+				model: Request,
+				required: false,
+			}],
 		where: {id: req.params.id},
 	})
 		.then((data) => {
