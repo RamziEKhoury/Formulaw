@@ -124,12 +124,14 @@ module.exports.addcommunity_type = async (req, res) => {
 			communityId: req.body.communityId,
 			title: req.body.title,
 			instruction: req.body.instruction,
+			image: req.body.image,
 		}).then((communitytype) => {
 			const communitytypeData = {
 				id: communitytype.id,
 				communityId: communitytype.communityId,
 				title: communitytype.title,
 				instruction: communitytype.instruction,
+				image: communitytype.image,
 			};
 			return apiResponses.successResponseWithData(
 				res,
@@ -195,6 +197,8 @@ module.exports.updatecommunity_type = async (req, res) => {
 				comunityId: req.body.communityId,
 				title: req.body.title,
 				instruction: req.body.instruction,
+				image: req.body.image,
+				
 			},
 			{where: {id: req.body.id}},
 		)
