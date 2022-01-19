@@ -59,6 +59,31 @@ module.exports.viewtestimonials = (req, res) => {
 			return apiResponses.errorResponse(res, err.message, err);
 		});
 };
+module.exports.getApprovedtestimonials = (req, res) => {
+	Testimonial.findAll({
+		where : {
+			status: "APPROVED",
+		},
+		include: [
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email','profilePic']},
+		],
+		order: [['createdAt', 'DESC']],
+	})
+		.then((testimonials) => {
+			if (!testimonials) {
+				return apiResponses.notFoundResponse(res, 'Data Not found.', null);
+			}
+
+			return apiResponses.successResponseWithData(
+				res,
+				'successfully found!',
+				testimonials,
+			);
+		})
+		.catch((err) => {
+			return apiResponses.errorResponse(res, err.message, err);
+		});
+};
 
 module.exports.viewtestimonial = (req, res) => {
 	Testimonial.findOne({
@@ -86,10 +111,10 @@ module.exports.updatetestimonial = async (req, res) => {
 	try {
 		await Testimonial.update(
 			{
-				// id: req.body.id,
-				// userId: req.body.userId,
-				// orderId: req.body.orderId,
-				// lawFirmId: req.body.lawFirmId,
+				id: req.body.id,
+				userId: req.body.userId,
+				orderId: req.body.orderId,
+				lawFirmId: req.body.lawFirmId,
 				testimonialdata: req.body.testimonialdata,
 				rating: req.body.rating,
 			},

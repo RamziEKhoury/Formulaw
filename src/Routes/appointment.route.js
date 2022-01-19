@@ -76,8 +76,8 @@ module.exports = function(app) {
 		appointmentController.getAllAppointmentByDay);
 
 	app.get(
-			'/api/v1/appointment/all-cases/:lawyerId',
-			appointmentController.getAllLawyerCases);
+		'/api/v1/appointment/all-cases/:lawyerId',
+		appointmentController.getAllLawyerCases);
 
 	app.get(
 		'/api/v1/appointment/all-open-cases/:lawyerId',
@@ -92,8 +92,8 @@ module.exports = function(app) {
 		appointmentController.changesLawyer);
 
 	app.post(
-			'/api/v1/appointment/reschedule-appointment',
-			[AppointmentValidator.rescheduleAppointmentValidator],
-			appointmentController.RescheduleAppointment);
+		'/api/v1/appointment/reschedule-appointment',
+		[AppointmentValidator.rescheduleAppointmentValidator],
+		appointmentController.RescheduleAppointment);
 };
 

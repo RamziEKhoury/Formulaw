@@ -1,7 +1,6 @@
 const chargeController = require('../Controllers/charge.controller');
 
 
-
 module.exports = function(app) {
 	app.use(function(req, res, next) {
 		res.header(
@@ -21,7 +20,5 @@ module.exports = function(app) {
 
 	app.get(
 		'/api/v1/charge/get-charge/:id',
-		chargeController.getCharge)
-
-	
+		chargeController.getCharge);
 };
