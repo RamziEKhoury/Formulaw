@@ -35,4 +35,5 @@ module.exports=(app)=> {
 	require('./dispute.route')(app);
 	require('./customer.route')(app);
 	require('./charge.route')(app);
+	require('./allCountry.route')(app);
 };
