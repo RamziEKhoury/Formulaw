@@ -49,10 +49,6 @@ const rescheduleAppointmentValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('shifts must be specified.'),
-	body('date')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('date must be specified.'),
 	body('time')
 		.isLength({min: 1})
 		.trim()
