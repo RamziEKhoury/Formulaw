@@ -6,32 +6,32 @@ module.exports = (sequelize, Sequelize) => {
 			allowNull: false,
 			primaryKey: true,
 		},
-        customerId:{
-            type: Sequelize.STRING,
-        },
-        appointmentId: {
-            type: Sequelize.UUID,
-        },
-        queryId: {
-            type: Sequelize.UUID,
-        },
+		customerId: {
+			type: Sequelize.STRING,
+		},
+		appointmentId: {
+			type: Sequelize.UUID,
+		},
+		queryId: {
+			type: Sequelize.UUID,
+		},
 		object: {
 			type: Sequelize.STRING,
 		},
 		address: {
 			type: Sequelize.JSON,
-            allowNull: false,
-        get() {
-          return JSON.parse(this.getDataValue("address"));
-        }, 
-        set(value) {
-          return this.setDataValue("address", JSON.stringify(value));
-        }
+			allowNull: false,
+			get() {
+				return JSON.parse(this.getDataValue('address'));
+			},
+			set(value) {
+				return this.setDataValue('address', JSON.stringify(value));
+			},
 		},
 		balance: {
 			type: Sequelize.INTEGER,
 		},
-        currency: {
+		currency: {
 			type: Sequelize.STRING,
 		},
 		default_source: {
@@ -43,51 +43,51 @@ module.exports = (sequelize, Sequelize) => {
 		description: {
 			type: Sequelize.STRING,
 		},
-		discount:{
+		discount: {
 			type: Sequelize.INTEGER,
 		  },
-		email:{
+		email: {
 			type: Sequelize.STRING,
 		  },
-        invoice_prefix: {
+		invoice_prefix: {
 			type: Sequelize.STRING,
 		},
-        invoice_setting: {
+		invoice_setting: {
 			type: Sequelize.JSON,
-        get() {
-          return JSON.parse(this.getDataValue("invoice_setting"));
-        }, 
-        set(value) {
-          return this.setDataValue("invoice_setting", JSON.stringify(value));
-        }
+			get() {
+				return JSON.parse(this.getDataValue('invoice_setting'));
+			},
+			set(value) {
+				return this.setDataValue('invoice_setting', JSON.stringify(value));
+			},
 		},
-        livemode: {
+		livemode: {
 			type: Sequelize.BOOLEAN,
 		},
-        metadata: {
+		metadata: {
 			type: Sequelize.JSON,
-        get() {
-          return JSON.parse(this.getDataValue("metadata"));
-        }, 
-        set(value) {
-          return this.setDataValue("metadata", JSON.stringify(value));
-        }
+			get() {
+				return JSON.parse(this.getDataValue('metadata'));
+			},
+			set(value) {
+				return this.setDataValue('metadata', JSON.stringify(value));
+			},
 		},
-        name: {
+		name: {
 			type: Sequelize.STRING,
 		},
-        phone: {
+		phone: {
 			type: Sequelize.INTEGER,
 		},
-        preferred_locales: {
+		preferred_locales: {
 			type: Sequelize.JSONB,
 		},
-        shipping :{
-            type: Sequelize.STRING,
-        },
-        tax_exempt :{
-            type: Sequelize.STRING,
-        },
+		shipping: {
+			type: Sequelize.STRING,
+		},
+		tax_exempt: {
+			type: Sequelize.STRING,
+		},
 	}, {
 		timestamps: true,
 	},

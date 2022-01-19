@@ -823,7 +823,7 @@ module.exports.getUserAllOrders = (req, res) => {
 		],
 		order: [['createdAt', 'DESC']],
 	})
-		.then(async(data) => {
+		.then(async (data) => {
 			// console.log("fgf",data);
 			// res.status(200).send({
 			//   status: "200",
@@ -832,9 +832,9 @@ module.exports.getUserAllOrders = (req, res) => {
 			const userTotalOrders = [];
 			for (let i = 0; i < data.length; i++) {
 				const totalOrders = await LawFirmService.findAll({
-							where: {title: {[Op.in]: data[i].query.serviceSubcategoryName},
-						            lawFirmId: data[i].lawFirmId
-								},
+					where: {title: {[Op.in]: data[i].query.serviceSubcategoryName},
+						            lawFirmId: data[i].lawFirmId,
+					},
 				});
 				const obj = {
 					appointment: data[i],
@@ -1234,9 +1234,9 @@ module.exports.RescheduleAppointment = async (req, res) => {
 	}
 };
 
-module.exports.Consultation = async (req,res) => {
-	if(req.params.paymentstatus === "fail") {
-		res.status(400).json("payment authorization failed")
+module.exports.Consultation = async (req, res) => {
+	if (req.params.paymentstatus === 'fail') {
+		return apiResponses.errorResponse(res, 'Payment was not done')
 	}
 	Appointment.update(
 		{
@@ -1247,7 +1247,7 @@ module.exports.Consultation = async (req,res) => {
 		{
 			where: {id: req.params.id},
 		},
-	).then(async(appointment) => {
+	).then(async (appointment) => {
 		if (!appointment) {
 			return apiResponses.notFoundResponse(res, 'Not found.', {});
 		} else {
@@ -1264,24 +1264,24 @@ module.exports.Consultation = async (req,res) => {
 						required: false,
 						attributes: ['firstname', 'lastname', 'email'],
 					},
-		
-		
+
+
 					{
 						model: Lawyer,
 						required: false,
 						attributes: ['en_name', 'email'],
 					},
-		
+
 					{
 						model: LawFirm,
 						required: false,
 						attributes: ['en_name'],
 					},
-		
-		
+
+
 				],
 			});
-		
+
 			const device = await User.findOne({where: {id: user.customerId}});
 			const notiData = {
 				title: 'Appointment',
@@ -1297,7 +1297,7 @@ module.exports.Consultation = async (req,res) => {
 			if (!!device.deviceToken) {
 				await Notifications.notification(device.deviceToken, 'Hi, Your appointment have scheduled for consultation with lawyer');
 			}
-		
+
 			await Appointment.update(
 				{
 					status: req.body.status,
@@ -1305,7 +1305,7 @@ module.exports.Consultation = async (req,res) => {
 				},
 				{where: {id: req.params.id}},
 			);
-		
+
 			const lawFirm = await LawFirm.findOne({where: {id: user.lawFirmId}});
 			const lawyers = await User.findAll({where: {lawfirmid: user.lawFirmId}, order: [['createdAt', 'ASC']]});
 			if (lawyers.length === 1) {
@@ -1315,7 +1315,7 @@ module.exports.Consultation = async (req,res) => {
 				const userdetail = await User.findOne({
 					where: {id: lawyer.id},
 				});
-		
+
 				await Mail.adminAppointmentConsult(
 					user.adminuser.email,
 					user.time,
@@ -1325,7 +1325,7 @@ module.exports.Consultation = async (req,res) => {
 					(userdetail.firstname? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 					user.lawfirm.en_name,
 				);
-		
+
 				await Mail.userAppointmentConsult(
 					user.user.email,
 					(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
@@ -1336,15 +1336,15 @@ module.exports.Consultation = async (req,res) => {
 					user.orderId,
 					user.user.id,
 				);
-		
-		
+
+
 				await Mail.lawyerAppointmentConsult(
 					(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 					userdetail.email,
 					(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 					user.adminuser.firstname,
 				);
-		
+
 				return apiResponses.successResponseWithData(
 					res,
 					'Success',
@@ -1359,8 +1359,8 @@ module.exports.Consultation = async (req,res) => {
 					const userdetail = await User.findOne({
 						where: {id: lawyer.id},
 					});
-		
-		
+
+
 					await Mail.adminAppointmentConsult(
 						user.adminuser.email,
 						user.time,
@@ -1370,7 +1370,7 @@ module.exports.Consultation = async (req,res) => {
 						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 						user.lawfirm.en_name,
 					);
-		
+
 					await Mail.userAppointmentConsult(
 						user.user.email,
 						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
@@ -1380,8 +1380,8 @@ module.exports.Consultation = async (req,res) => {
 						user.lawfirm.en_name,
 						user.orderId,
 						user.user.id,
-		
-		
+
+
 					);
 					await Mail.lawyerAppointmentConsult(
 						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
@@ -1401,7 +1401,7 @@ module.exports.Consultation = async (req,res) => {
 					const userdetail = await User.findOne({
 						where: {id: lawyer.id},
 					});
-		
+
 					await Mail.adminAppointmentConsult(
 						user.adminuser.email,
 						user.time,
@@ -1411,7 +1411,7 @@ module.exports.Consultation = async (req,res) => {
 						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 						user.lawfirm.en_name,
 					);
-		
+
 					await Mail.userAppointmentConsult(
 						user.user.email,
 						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
@@ -1421,19 +1421,19 @@ module.exports.Consultation = async (req,res) => {
 						user.lawfirm.en_name,
 						user.orderId,
 						user.user.id,
-		
-		
+
+
 					);
-		
-		
+
+
 					await Mail.lawyerAppointmentConsult(
 						(userdetail.firstname ? userdetail.firstname : ' ') + ' ' + (userdetail.lastname ? userdetail.lastname : ' '),
 						userdetail.email,
 						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 						user.adminuser.firstname,
 					);
-		
-		
+
+
 					return apiResponses.successResponseWithData(
 						res,
 						'Success',
@@ -1441,19 +1441,18 @@ module.exports.Consultation = async (req,res) => {
 					);
 				}
 			}
-		
-		
+
+
 			return apiResponses.successResponseWithData(
 				res,
 				'Success',
 				appointment,
 			);
 		}
-		})
+	})
 		.catch((err) => {
 			return apiResponses.errorResponse(res, err.message, {});
 		});
-	}
-	
+};
 
-	
+
