@@ -24,6 +24,10 @@ module.exports = function(app) {
 		testimoinalController.viewtestimonials,
 	);
 	app.get(
+		'/api/v1/testimonial/get-approvedtestimonials',
+		testimoinalController.getApprovedtestimonials,
+	);
+	app.get(
 		'/api/v1/testimonial/view-testimonial/:id',
 		testimoinalController.viewtestimonial,
 	);
