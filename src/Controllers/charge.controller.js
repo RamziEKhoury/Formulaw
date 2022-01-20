@@ -2,6 +2,7 @@ const db = require('../models');
 const Charge = db.charge;
 const Customer = db.customer;
 const Request = db.request;
+const Appointment = db.appointment;
 const apiResponses = require('../Components/apiresponse');
 const Op = db.Sequelize.Op;
 
@@ -9,6 +10,7 @@ module.exports.addCharge = async (req, res) => {
 	try {
 		Charge.create({
 			appointmentId: req.body.appointmentId,
+			customerid: req.body.customerid,
 			queryId: req.body.queryId,
 			customer: req.body.customer,
 			chargeId: req.body.id,
@@ -123,3 +125,42 @@ module.exports.getCharge = (req, res) => {
 		});
 };
 
+module.exports.getUserAllCharges = (req, res) => {
+	const limit = req.params.limit;
+	Charge.findAll({
+		where: {customerid: req.params.customerid},
+		include: [
+			{
+				model: Customer,
+				required: false,
+			},
+			{
+				model: Request,
+				required: false,
+			},
+			{
+				model: Appointment,
+				required: false,
+			}
+		],
+		limit: limit,
+		order: [['createdAt', 'DESC']],
+	})
+		.then((result) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: result,
+			// });
+			return apiResponses.successResponseWithData(res, 'success', result);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                    description: "Error message",
+                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
+			});
+		});
+};
