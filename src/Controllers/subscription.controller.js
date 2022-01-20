@@ -1,5 +1,6 @@
 const db = require('../models');
 const Subscription = db.subscription;
+const SubscriptionPayment = db.subscriptionPayment;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addSubscription = async (req, res) => {
@@ -66,11 +67,11 @@ module.exports.updateSubscription = async (req, res) => {
 			logo: req.body.logo,
 			// features: req.body.features,
 			// sortnumber: req.body.sortnumber,
-		},{where: {id: req.body.id}},
+		}, {where: {id: req.body.id}},
 		).then((subscription) => {
-				if (!subscription) {
-					return apiResponses.notFoundResponse(res, 'Not found.', {});
-				}
+			if (!subscription) {
+				return apiResponses.notFoundResponse(res, 'Not found.', {});
+			}
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
@@ -118,7 +119,7 @@ module.exports.getSubscriptionsType = (req, res) => {
 	const durationType = req.params.durationType;
 	Subscription.findAll({where: {
 		durationType: durationType,
-	}})
+	}});
 	Subscription.findAll({
 		where: {
 			durationType: durationType,
@@ -175,6 +176,47 @@ module.exports.getSubscription = (req, res) => {
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
 				message: err.message || 'Some error occurred while retrieving LawFirm.',
+			});
+		});
+};
+
+module.exports.addSubscriptionPayment = async (req, res) => {
+	try {
+		SubscriptionPayment.create({
+			subscriptionId: req.body.subscriptionId,
+			userId: req.body.userId,
+			subscriptionStripeId: req.body.subscriptionStripeId,
+		}).then((subscriptionPayment) => {
+			return apiResponses.successResponseWithData(
+				res,
+				'success!',
+				subscriptionPayment,
+			);
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.getAllSubscriptionPayment = (req, res) => {
+	const limit = req.params.limit;
+	SubscriptionPayment.findAll({limit: limit, order: [['createdAt', 'DESC']]})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                  description: "Error message",
+                                  schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                              } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving Data.',
 			});
 		});
 };
