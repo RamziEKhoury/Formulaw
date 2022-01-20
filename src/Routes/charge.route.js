@@ -21,4 +21,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/charge/get-charge/:id',
 		chargeController.getCharge);
+
+	app.get(
+		'/api/v1/charge/get-userallcharges/:customerid/:limit',
+		chargeController.getUserAllCharges);
 };
