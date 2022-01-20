@@ -1,7 +1,13 @@
 const userSubscrptionController = require('../Controllers/userSubscription.controller');
 
 const UserSubscrptionValidator = require('../Validators/userSubscription.validator');
-const {createCharge, SubscriptionMonthly, cancelSubscription, getOneSubscription, getSubscriptions} = require('../Controllers/stripe');
+const {
+	createCharge,
+	SubscriptionMonthly,
+	cancelSubscription,
+	getOneSubscription,
+	getSubscriptions,
+} = require('../Controllers/stripe');
 
 
 module.exports = function(app) {
