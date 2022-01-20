@@ -60,7 +60,7 @@ module.exports.addAppointment = async (req, res) => {
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm') +'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format("HH:mm:ss")+'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
@@ -70,7 +70,7 @@ module.exports.addAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' + moment(appointment.time).format('HH:mm') + '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format("HH:mm:ss")+ '.');
 			}
 
 			return apiResponses.successResponseWithData(
@@ -200,7 +200,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' + user.time +
+							' time ' + moment(user.time).format("HH:mm:ss")+
 							' we will connect with you soon.',
 						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
@@ -212,7 +212,7 @@ module.exports.changeStatus = async (req, res) => {
 					await Notifications.notificationCreate(notiData);
 					if (!!device.deviceToken) {
 						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' + moment(user.time).format('HH:mm') +
+							' time ' +moment(user.time).format("HH:mm:ss") +
 							' we will connect with you soon.');
 					}
 
