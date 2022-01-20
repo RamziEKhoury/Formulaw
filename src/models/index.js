@@ -58,6 +58,7 @@ db.dispute = require('./dispute.model')(sequelize,Sequelize);
 db.customer = require('./customer.model')(sequelize,Sequelize);
 db.charge = require('./charge.model')(sequelize,Sequelize);
 db.allcountry = require('./allCountry.model')(sequelize,Sequelize);
+db.subscriptionPayment = require('./subscriptionPayment.model')(sequelize,Sequelize);
 
 
 db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
