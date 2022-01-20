@@ -40,3 +40,89 @@ module.exports.createCharge = (async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 });
+
+
+module.exports.SubscriptionMonthly = (async (req, res) => {
+	try {
+		console.log(req.body);
+		let customerIn = null;
+		let priceIn = null;
+		await stripe.customers.create({
+			email: req.body.email,
+			source: req.body.id,
+		}).then(async (customer) => {
+			customerIn = customer;
+			await stripe.products.create({
+				name: req.body.subscriptionName,
+			}).then(async (product) => {
+				await stripe.prices.create({
+					product: product.id,
+					unit_amount: req.body.amount,
+					currency: req.body.currencyValue,
+					recurring: {
+						interval: 'day', // day and month
+					},
+				}).then(async (price) => {
+					priceIn = price;
+					await stripe.subscriptions.create({
+						customer: customerIn.id,
+						items: [
+							{price: priceIn.id},
+						],
+					}).then(async (subscription) => {
+						return apiResponses.successResponseWithData(res, ' Successfully created.', subscription);
+					}).catch((error) => {
+						return apiResponses.errorResponse(res, error);
+					});
+				});
+			});
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+});
+
+
+module.exports.cancelSubscription = (async (req, res) => {
+	try {
+		console.log(req.body);
+		await stripe.subscriptions.del(
+			req.body.subscriptionId,
+		).then(async (subscription) => {
+			return apiResponses.successResponseWithData(res, ' Successfully created.', subscription);
+		}).catch((error) => {
+			return apiResponses.errorResponse(res, error);
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+});
+
+module.exports.getOneSubscription = (async (req, res) => {
+	try {
+		console.log(req.body);
+		await stripe.subscriptions.retrieve(
+			req.body.subscriptionId,
+		).then(async (subscription) => {
+			return apiResponses.successResponseWithData(res, ' Successfully created.', subscription);
+		}).catch((error) => {
+			return apiResponses.errorResponse(res, error);
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+});
+
+module.exports.getSubscriptions = (async (req, res) => {
+	try {
+		await stripe.subscriptions.list({
+			limit: 1000,
+		}).then(async (subscriptions) => {
+			return apiResponses.successResponseWithData(res, ' Successfully created.', subscriptions);
+		}).catch((error) => {
+			return apiResponses.errorResponse(res, error);
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+});
