@@ -58,8 +58,6 @@ module.exports = (sequelize, Sequelize) => {
 		sortnumber: {
 			type: Sequelize.INTEGER,
 		}
-
-
 	}, {
 		timestamps: true,
 	},

@@ -67,11 +67,11 @@ module.exports.updateSubscription = async (req, res) => {
 			logo: req.body.logo,
 			// features: req.body.features,
 			// sortnumber: req.body.sortnumber,
-		},{where: {id: req.body.id}},
+		}, {where: {id: req.body.id}},
 		).then((subscription) => {
-				if (!subscription) {
-					return apiResponses.notFoundResponse(res, 'Not found.', {});
-				}
+			if (!subscription) {
+				return apiResponses.notFoundResponse(res, 'Not found.', {});
+			}
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
@@ -119,7 +119,7 @@ module.exports.getSubscriptionsType = (req, res) => {
 	const durationType = req.params.durationType;
 	Subscription.findAll({where: {
 		durationType: durationType,
-	}})
+	}});
 	Subscription.findAll({
 		where: {
 			durationType: durationType,
@@ -185,38 +185,7 @@ module.exports.addSubscriptionPayment = async (req, res) => {
 		SubscriptionPayment.create({
 			subscriptionId: req.body.subscriptionId,
 			userId: req.body.userId,
-			paymentId: req.body.paymentId,
-			paymentName: req.body.paymentName,
-			application_fee_percent: req.body.application_fee_percent,
-			billing_cycle_anchor: req.body.billing_cycle_anchor,
-			billing_thresholds: req.body.billing_thresholds,
-			canceled_at: req.body.canceled_at,
-			cancel_at: req.body.cancel_at,
-			cancel_at_period_end: req.body.cancel_at_period_end,
-			collection_method: req.body.collection_method,
-			current_period_end: req.body.current_period_end,
-			current_period_start: req.body.current_period_start,
-			customer: req.body.customer,
-			days_until_due: req.body.days_until_due,
-			default_payment_method: req.body.default_payment_method,
-			default_source: req.body.default_source,
-			discount: req.body.discount,
-			ended_at: req.body.ended_at,
-			latest_invoice: req.body.latest_invoice,
-			livemode: req.body.livemode,
-			next_pending_invoice_item_invoice: req.body.next_pending_invoice_item_invoice,
-			pause_collection: req.body.pause_collection,
-			pending_invoice_item_interval: req.body.pending_invoice_item_interval,
-			pending_setup_intent: req.body.pending_setup_intent,
-			pending_update: req.body.pending_update,
-			plan: req.body.plan,
-			quantity: req.body.quantity,
-			schedule: req.body.schedule,
-			start_date: req.body.start_date,
-			status: req.body.status,
-			transfer_data: req.body.transfer_data,
-			trial_end: req.body.trial_end,
-			trial_start: req.body.trial_start,
+			subscriptionStripeId: req.body.subscriptionStripeId,
 		}).then((subscriptionPayment) => {
 			return apiResponses.successResponseWithData(
 				res,
