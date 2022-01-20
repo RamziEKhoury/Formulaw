@@ -1455,4 +1455,64 @@ module.exports.Consultation = async (req, res) => {
 		});
 };
 
+module.exports.LeadCompleteStatus = async (req, res) => {
+		const user = await Appointment.findOne({
+			where: {id: req.params.id},
+			include: [
+				{
+					model: User,
+					required: false,
+					attributes: ['firstname', 'lastname', 'email'],
+				},
+				{
+					model: Admin,
+					required: false,
+					attributes: ['firstname', 'lastname', 'email'],
+				},
+			],
+		});
+console.log("aaaaaaaaaaaaaaaaaaaa",user);
+		const device = await User.findOne({where: {id: user.customerId}});
+		const notiData = {
+			title: 'Appointment',
+			message: 'Hi, Your appointment has been completed',
+			senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
+			senderId: user.customerId,
+			senderType: 'APPOINTMENT',
+			receiverid: user.customerId,
+			notificationType: WorkflowAppointment.COMPLETED,
+			target: req.params.id,
+		};
+		await Notifications.notificationCreate(notiData);
+		if (!!device.deviceToken) {
+			await Notifications.notification(device.deviceToken, 'Hi, Your appointment has been completed');
+		}
 
+		await Mail.adminAppointmentComplete(
+			user.adminuser.email,
+			user.time,
+			user.date,
+			(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+		);
+
+		await Mail.userAppointmentComplete(
+			user.user.email,
+			user.time,
+			user.date,
+		);
+
+	const appointment =	await Appointment.update(
+			{
+				status: req.body.status,
+				workflow: req.body.status,
+			},
+			{where: {id: req.params.id}},
+		);
+
+		return apiResponses.successResponseWithData(
+			res,
+			'Success',
+			appointment,
+		);
+	
+};

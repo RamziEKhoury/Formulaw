@@ -95,5 +95,9 @@ module.exports = function(app) {
 		'/api/v1/appointment/reschedule-appointment',
 		[AppointmentValidator.rescheduleAppointmentValidator],
 		appointmentController.RescheduleAppointment);
+
+	app.put(
+		'/api/v1/appointment/leadstatuscomplete/:id',
+		appointmentController.LeadCompleteStatus);
 };
 
