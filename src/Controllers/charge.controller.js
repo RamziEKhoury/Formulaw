@@ -128,7 +128,7 @@ module.exports.getCharge = (req, res) => {
 module.exports.getUserAllCharges = (req, res) => {
 	const limit = req.params.limit;
 	Charge.findAll({
-		where: {customer_id: req.params.customerid},
+		where: {customerid: req.params.customerid},
 		include: [
 			{
 				model: Customer,
@@ -160,7 +160,7 @@ module.exports.getUserAllCharges = (req, res) => {
                 } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message: 'Something Went Wrong',
+				message: 'Something Went Wrong', err,
 			});
 		});
 };
