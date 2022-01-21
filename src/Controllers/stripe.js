@@ -1,5 +1,8 @@
 const db = require('../models');
 const apiResponses = require('../Components/apiresponse');
+const SubscriptionPayment = db.subscriptionPayment;
+const User = db.user;
+const Subscription = db.subscription;
 const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
 
 module.exports.createCharge = (async (req, res) => {
@@ -74,7 +77,11 @@ module.exports.SubscriptionMonthly = (async (req, res) => {
 					}).catch((error) => {
 						return apiResponses.errorResponse(res, error);
 					});
+				}).catch((error) => {
+					return apiResponses.errorResponse(res, error);
 				});
+			}).catch((error) => {
+				return apiResponses.errorResponse(res, error);
 			});
 		});
 	} catch (err) {
@@ -115,13 +122,29 @@ module.exports.getOneSubscription = (async (req, res) => {
 
 module.exports.getSubscriptions = (async (req, res) => {
 	try {
-		await stripe.subscriptions.list({
-			limit: 1000,
-		}).then(async (subscriptions) => {
-			return apiResponses.successResponseWithData(res, ' Successfully created.', subscriptions);
-		}).catch((error) => {
-			return apiResponses.errorResponse(res, error);
-		});
+		SubscriptionPayment.findAll({
+			include: [
+				{
+					model: User,
+					required: false,
+				},
+				{
+					model: Subscription,
+					required: false,
+				},
+			],
+		})
+			.then(async (subscriptions) => {
+				subscriptions = await Promise.all(subscriptions.map(async (p)=> {
+					const result = await stripe.subscriptions.retrieve(p.subscriptionStripeId);
+					return p.data = {
+						stripePayment: result,
+						subscription: p.subscription,
+						user: p.user,
+					};
+				}));
+				return apiResponses.successResponseWithData(res, ' Success.', subscriptions);
+			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

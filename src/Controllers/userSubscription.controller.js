@@ -1,11 +1,9 @@
 const db = require('../models');
 const UserSubscription = db.userSubscription;
 const User = db.user;
-const Admin = db.adminUser;
 const apiResponses = require('../Components/apiresponse');
 const _ = require('lodash');
 const Op = db.Sequelize.Op;
-const Mail = require('../Config/Mails');
 
 module.exports.addUserSubscription = async (req, res) => {
 	try {
