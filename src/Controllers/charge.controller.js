@@ -69,7 +69,7 @@ module.exports.addCharge = async (req, res) => {
 	}
 };
 module.exports.getCharges = (req, res) => {
-	const limit = req.params.limit;
+	const limit = req.params.limit || 1000;
 	Charge.findAll({
 		include: [
 			{
@@ -97,7 +97,7 @@ module.exports.getCharges = (req, res) => {
                 } */
 			// return res.status(500).send({ message: err.message });
 			res.status(500).send({
-				message: 'Something Went Wrong',
+				message: 'Something Went Wrong', err,
 			});
 		});
 };
@@ -128,7 +128,7 @@ module.exports.getCharge = (req, res) => {
 module.exports.getUserAllCharges = (req, res) => {
 	const limit = req.params.limit;
 	Charge.findAll({
-		where: {customerid: req.params.customerid},
+		where: {customer_id: req.params.customerid},
 		include: [
 			{
 				model: Customer,
@@ -141,7 +141,7 @@ module.exports.getUserAllCharges = (req, res) => {
 			{
 				model: Appointment,
 				required: false,
-			}
+			},
 		],
 		limit: limit,
 		order: [['createdAt', 'DESC']],

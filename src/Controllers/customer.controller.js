@@ -7,7 +7,7 @@ module.exports.addCustomer = async (req, res) => {
 	try {
 		Customer.create({
 			appointmentId: req.body.appointmentId,
-			customerid: req.body.customerid,
+			customer_id: req.body.customerid,
 			queryId: req.body.queryId,
 			customerId: req.body.id,
 			object: req.body.object,
