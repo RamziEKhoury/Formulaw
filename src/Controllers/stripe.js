@@ -149,3 +149,34 @@ module.exports.getSubscriptions = (async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 });
+
+module.exports.getOneUserSubscriptions = (async (req, res) => {
+	try {
+		SubscriptionPayment.findAll({
+			where: {userId: req.params.userId},
+			include: [
+				{
+					model: User,
+					required: false,
+				},
+				{
+					model: Subscription,
+					required: false,
+				},
+			],
+		})
+			.then(async (subscriptions) => {
+				subscriptions = await Promise.all(subscriptions.map(async (p)=> {
+					const result = await stripe.subscriptions.retrieve(p.subscriptionStripeId);
+					return p.data = {
+						stripePayment: result,
+						subscription: p.subscription,
+						user: p.user,
+					};
+				}));
+				return apiResponses.successResponseWithData(res, ' Success.', subscriptions);
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+});
