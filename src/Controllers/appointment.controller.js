@@ -909,7 +909,7 @@ module.exports.getUserAppointmentMonthly = (req, res) => {
 			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 
 		],
-		order: [['createdAt', 'DESC']],
+		order: [['time', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -950,7 +950,7 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 
 		],
-		order: [['createdAt', 'DESC']],
+		order: [['time', 'DESC']],
 	})
 		.then((data) => {
 			// res.status(200).send({
@@ -1209,6 +1209,7 @@ module.exports.changesLawyer = (req, res) => {
 };
 
 module.exports.RescheduleAppointment = async (req, res) => {
+	console.log("dasddddddddddd",req.body);
 	try {
 		await Appointment.update(
 			{
@@ -1219,10 +1220,30 @@ module.exports.RescheduleAppointment = async (req, res) => {
 			},
 			{where: {id: req.body.id}},
 		)
-			.then((data) => {
+			.then(async(data) => {
 				if (!data) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
+
+				const appointment = await Appointment.findOne({where: {id: req.body.id}})
+				console.log("asd3333333333",appointment);
+				const device = await User.findOne({where: {id: appointment.customerId}});
+				console.log("dddddddddddddd",device);
+			const notiData = {
+				title: 'Appointment',
+				message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format("HH:mm:ss")+'.',
+				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
+				senderId: appointment.customerId,
+				senderType: 'APPOINTMENT',
+				receiverid: appointment.customerId,
+				notificationType: WorkflowAppointment.SCHEDULE_LEAD,
+				target: appointment.id,
+			};
+			console.log("gghvghj",notiData);
+			await Notifications.notificationCreate(notiData);
+			if (!!device.deviceToken) {
+				await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format("HH:mm:ss")+ '.');
+			}
 
 				return apiResponses.successResponseWithData(res, 'Success', data);
 			})
