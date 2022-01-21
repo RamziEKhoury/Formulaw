@@ -15,6 +15,10 @@ module.exports = (sequelize, Sequelize) => {
 		subscriptionStripeId: {
 			type: Sequelize.STRING,
 		},
+		status: {
+			type: Sequelize.ENUM('active', 'cancelled' ),
+			defaultValue: 'active',
+		},
 	}, {
 		timestamps: true,
 	},
