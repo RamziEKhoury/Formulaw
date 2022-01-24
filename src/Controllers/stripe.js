@@ -63,7 +63,7 @@ module.exports.SubscriptionMonthly = (async (req, res) => {
 					unit_amount: req.body.amount,
 					currency: req.body.currencyValue,
 					recurring: {
-						interval: 'day', // day and month
+						interval: req.body.interval, // day and month
 					},
 				}).then(async (price) => {
 					priceIn = price;
