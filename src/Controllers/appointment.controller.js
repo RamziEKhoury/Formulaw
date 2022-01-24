@@ -60,7 +60,7 @@ module.exports.addAppointment = async (req, res) => {
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format("HH:mm:ss")+'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm:ss')+'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
@@ -70,7 +70,7 @@ module.exports.addAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format("HH:mm:ss")+ '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format('HH:mm:ss')+ '.');
 			}
 
 			return apiResponses.successResponseWithData(
@@ -200,7 +200,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' + moment(user.time).format("HH:mm:ss")+
+							' time ' + moment(user.time).format('HH:mm:ss')+
 							' we will connect with you soon.',
 						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
@@ -212,7 +212,7 @@ module.exports.changeStatus = async (req, res) => {
 					await Notifications.notificationCreate(notiData);
 					if (!!device.deviceToken) {
 						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' +moment(user.time).format("HH:mm:ss") +
+							' time ' +moment(user.time).format('HH:mm:ss') +
 							' we will connect with you soon.');
 					}
 
@@ -1236,7 +1236,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 
 module.exports.Consultation = async (req, res) => {
 	if (req.params.paymentstatus === 'fail') {
-		return apiResponses.errorResponse(res, 'Payment was not done')
+		return apiResponses.errorResponse(res, 'Payment was not done');
 	}
 	Appointment.update(
 		{
@@ -1456,63 +1456,62 @@ module.exports.Consultation = async (req, res) => {
 };
 
 module.exports.LeadCompleteStatus = async (req, res) => {
-		const user = await Appointment.findOne({
-			where: {id: req.params.id},
-			include: [
-				{
-					model: User,
-					required: false,
-					attributes: ['firstname', 'lastname', 'email'],
-				},
-				{
-					model: Admin,
-					required: false,
-					attributes: ['firstname', 'lastname', 'email'],
-				},
-			],
-		});
-console.log("aaaaaaaaaaaaaaaaaaaa",user);
-		const device = await User.findOne({where: {id: user.customerId}});
-		const notiData = {
-			title: 'Appointment',
-			message: 'Hi, Your appointment has been completed',
-			senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
-			senderId: user.customerId,
-			senderType: 'APPOINTMENT',
-			receiverid: user.customerId,
-			notificationType: WorkflowAppointment.COMPLETED,
-			target: req.params.id,
-		};
-		await Notifications.notificationCreate(notiData);
-		if (!!device.deviceToken) {
-			await Notifications.notification(device.deviceToken, 'Hi, Your appointment has been completed');
-		}
+	const user = await Appointment.findOne({
+		where: {id: req.params.id},
+		include: [
+			{
+				model: User,
+				required: false,
+				attributes: ['firstname', 'lastname', 'email'],
+			},
+			{
+				model: Admin,
+				required: false,
+				attributes: ['firstname', 'lastname', 'email'],
+			},
+		],
+	});
+	console.log('aaaaaaaaaaaaaaaaaaaa', user);
+	const device = await User.findOne({where: {id: user.customerId}});
+	const notiData = {
+		title: 'Appointment',
+		message: 'Hi, Your appointment has been completed',
+		senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
+		senderId: user.customerId,
+		senderType: 'APPOINTMENT',
+		receiverid: user.customerId,
+		notificationType: WorkflowAppointment.COMPLETED,
+		target: req.params.id,
+	};
+	await Notifications.notificationCreate(notiData);
+	if (!!device.deviceToken) {
+		await Notifications.notification(device.deviceToken, 'Hi, Your appointment has been completed');
+	}
 
-		await Mail.adminAppointmentComplete(
-			user.adminuser.email,
-			user.time,
-			user.date,
-			(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
-		);
+	await Mail.adminAppointmentComplete(
+		user.adminuser.email,
+		user.time,
+		user.date,
+		(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+	);
 
-		await Mail.userAppointmentComplete(
-			user.user.email,
-			user.time,
-			user.date,
-		);
+	await Mail.userAppointmentComplete(
+		user.user.email,
+		user.time,
+		user.date,
+	);
 
 	const appointment =	await Appointment.update(
-			{
-				status: req.body.status,
-				workflow: req.body.status,
-			},
-			{where: {id: req.params.id}},
-		);
+		{
+			status: req.body.status,
+			workflow: req.body.status,
+		},
+		{where: {id: req.params.id}},
+	);
 
-		return apiResponses.successResponseWithData(
-			res,
-			'Success',
-			appointment,
-		);
-	
+	return apiResponses.successResponseWithData(
+		res,
+		'Success',
+		appointment,
+	);
 };
