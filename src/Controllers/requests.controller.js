@@ -1,6 +1,7 @@
 const db = require('../models');
 const Request = db.request;
 const Appointment = db.appointment;
+const Services = db.service;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 const Notifications = require('../Config/Notifications');
@@ -10,7 +11,6 @@ const Op = db.Sequelize.Op;
 module.exports.createRequest = async (req, res) => {
 	try {
 		// #swagger.tags = ['Requests']
-		console.log(req.body);
 		/*  #swagger.parameters['obj'] = {
             in: 'body',
              description: "Request details for add - firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",
@@ -41,6 +41,8 @@ module.exports.createRequest = async (req, res) => {
 				isActive: request.isActive,
 				isDeleted: request.isDeleted,
 			};
+		const service = await Services.findOne({where: {id: request.legalFieldId}})
+			            await Services.update({count: service.count+1}, {where: {id: request.legalFieldId}});
 
 			const device = await User.findOne({where: {id: req.body.userId}});
 			const notiData = {

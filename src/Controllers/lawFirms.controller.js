@@ -547,3 +547,22 @@ module.exports.getlawFirmDetails = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+module.exports.getTopLawFirms = async (req, res) => {
+	const limit = req.body.limit;
+	try {
+		LawFirm.findAll({
+			include: [
+				{
+					model: Testimonial,
+				},
+			],
+			limit: limit,
+			order: [['userrating', 'DESC']],
+		}).then((lawfirms) => {
+			return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};

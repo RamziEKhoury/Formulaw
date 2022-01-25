@@ -41,4 +41,5 @@ module.exports = function(app) {
 	app.get('/api/v1/lawfirm/get-lawfirmsdetails', lawFirmController.getlawFirmsDetails);
 	app.get('/api/v1/lawfirm/get-lawfirmdetails/:lawFirmId', lawFirmController.getlawFirmDetails);
 	app.post('/api/v1/lawfirm/get-filterlawfirmdetails/:limit', lawFirmController.getFilterlawFirmsDetails);
+	app.get('/api/v1/lawfirm/get-toplawfirms/:limit', lawFirmController.getTopLawFirms);
 };

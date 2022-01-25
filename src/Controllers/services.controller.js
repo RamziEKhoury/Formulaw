@@ -246,3 +246,30 @@ module.exports.deleteService = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+module.exports.getTopServices = (req, res) => {
+	// Get Industrial from Database
+	// #swagger.tags = ['Service']
+	const limit = req.params.limit;
+	Services.findAll({ limit: limit,
+		order: [['count', 'DESC']],
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving Country.',
+			});
+		});
+};

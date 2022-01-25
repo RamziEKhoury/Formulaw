@@ -938,7 +938,6 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 	Appointment.findAll({
 		where: {
 			lawyerId: req.params.lawyerId,
-			status: WorkflowAppointment.CONSULTATION,
 			time: {
 				[Op.between]: [req.params.startDate, req.params.endDate],
 			},
@@ -1209,7 +1208,6 @@ module.exports.changesLawyer = (req, res) => {
 };
 
 module.exports.RescheduleAppointment = async (req, res) => {
-	console.log("dasddddddddddd",req.body);
 	try {
 		await Appointment.update(
 			{
@@ -1226,9 +1224,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				}
 
 				const appointment = await Appointment.findOne({where: {id: req.body.id}})
-				console.log("asd3333333333",appointment);
 				const device = await User.findOne({where: {id: appointment.customerId}});
-				console.log("dddddddddddddd",device);
 			const notiData = {
 				title: 'Appointment',
 				message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format("HH:mm:ss")+'.',
@@ -1239,7 +1235,6 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				notificationType: WorkflowAppointment.SCHEDULE_LEAD,
 				target: appointment.id,
 			};
-			console.log("gghvghj",notiData);
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
 				await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format("HH:mm:ss")+ '.');
@@ -1535,4 +1530,33 @@ module.exports.LeadCompleteStatus = async (req, res) => {
 		'Success',
 		appointment,
 	);
+};
+
+module.exports.getAllLawfirmCases = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.count({
+		where: {
+			lawFirmId: req.params.lawFirmId,
+		},
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
 };

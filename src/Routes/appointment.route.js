@@ -99,5 +99,9 @@ module.exports = function(app) {
 	app.put(
 		'/api/v1/appointment/leadstatuscomplete/:id',
 		appointmentController.LeadCompleteStatus);
+
+	app.get(
+		'/api/v1/appointment/all-lawfirmcases/:lawFirmId',
+		appointmentController.getAllLawfirmCases);
 };
 

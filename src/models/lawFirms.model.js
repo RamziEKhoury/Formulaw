@@ -82,6 +82,9 @@ module.exports = (sequelize, Sequelize) => {
 				defaultValue: 0,
 				type: Sequelize.INTEGER,
 			},
+			userrating: {
+				type: Sequelize.INTEGER,
+			}
 		},
 		{
 			timestamps: true,
