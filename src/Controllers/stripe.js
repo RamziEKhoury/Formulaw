@@ -196,3 +196,25 @@ module.exports.getOneUserSubscriptions = (async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 });
+
+
+module.exports.webHooks = (async (req, res) => {
+	console.log('Calling hooks-------------------------------<><><><><><><><>')
+	const sig = req.headers['stripe-signature'];
+	const endpointSecret = 'whsec_hcLpOiphBaV5nKETL2d4WUZV0pze8GY0';
+	let event;
+
+	try {
+		event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+		console.log('event----->>>>>>>', event);
+	} catch (err) {
+		res.status(400).send(`Webhook Error: ${err.message}`);
+		return;
+	}
+
+	// Handle the event
+	console.log(`Unhandled event type ${event.type}`);
+
+	// Return a 200 response to acknowledge receipt of the event
+	res.status(200).send(`Hello calling success`);
+});

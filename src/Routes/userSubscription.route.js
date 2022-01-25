@@ -7,7 +7,7 @@ const {
 	cancelSubscription,
 	getOneSubscription,
 	getSubscriptions,
-	getOneUserSubscriptions,
+	getOneUserSubscriptions, webHooks,
 } = require('../Controllers/stripe');
 
 
@@ -67,4 +67,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/payment/get-oneusersubscriptions/:userId',
 		getOneUserSubscriptions);
+
+	app.post(
+		'/api/v1/payment/hooks',
+		webHooks);
 };
