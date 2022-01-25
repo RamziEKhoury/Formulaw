@@ -938,7 +938,6 @@ module.exports.getLawyerAppointmentMonthly = (req, res) => {
 	Appointment.findAll({
 		where: {
 			lawyerId: req.params.lawyerId,
-			status: WorkflowAppointment.CONSULTATION,
 			time: {
 				[Op.between]: [req.params.startDate, req.params.endDate],
 			},
@@ -1471,7 +1470,6 @@ module.exports.LeadCompleteStatus = async (req, res) => {
 				},
 			],
 		});
-console.log("aaaaaaaaaaaaaaaaaaaa",user);
 		const device = await User.findOne({where: {id: user.customerId}});
 		const notiData = {
 			title: 'Appointment',
@@ -1515,4 +1513,33 @@ console.log("aaaaaaaaaaaaaaaaaaaa",user);
 			appointment,
 		);
 	
+};
+
+module.exports.getAllLawfirmCases = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.count({
+		where: {
+			lawFirmId: req.params.lawFirmId,
+		},
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
 };

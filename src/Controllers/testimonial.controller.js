@@ -1,11 +1,11 @@
 const db = require('../models');
 const Testimonial = db.testimonial;
+const LawFirm = db.lawFirm;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addtestimonial = async (req, res) => {
 	try {
-		console.log(req.body);
 		Testimonial.create({
 			id: req.body.id,
 			userId: req.body.userId,
@@ -15,7 +15,7 @@ module.exports.addtestimonial = async (req, res) => {
 			appointmentid: req.body.appointmentid,
 			testimonialdata: req.body.testimonialdata,
 			rating: req.body.rating,
-		}).then((testimonial) => {
+		}).then(async (testimonial) => {
 			const testimonialData = {
 				id: testimonial.id,
 				userId: testimonial.userId,
@@ -26,6 +26,9 @@ module.exports.addtestimonial = async (req, res) => {
 				testimonialdata: testimonial.testimonialdata,
 				rating: testimonial.rating,
 			};
+const lawFirm = await LawFirm.findOne({where : {id : testimonial.lawFirmId}})
+				await LawFirm.update({userrating: lawFirm.userrating + (testimonial.rating) },{where: {id: testimonial.lawFirmId}})
+ 
 			return apiResponses.successResponseWithData(
 				res,
 				'Testimonial Created successfully!',
