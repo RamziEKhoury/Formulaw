@@ -199,7 +199,7 @@ module.exports.getOneUserSubscriptions = (async (req, res) => {
 
 
 module.exports.webHooks = (async (req, res) => {
-	console.log('Calling hooks-------------------------------<><><><><><><><>', req);
+	console.log('Calling hooks-------------------------------<><><><><><><><>', req.body);
 	const sig = req.headers['stripe-signature'];
 	const endpointSecret = 'whsec_r5eQo2vbbmnQvweLd7GYfLwv2vHa5zQ0';
 	let event;
