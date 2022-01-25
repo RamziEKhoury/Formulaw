@@ -60,10 +60,10 @@ module.exports.SubscriptionMonthly = (async (req, res) => {
 			}).then(async (product) => {
 				await stripe.prices.create({
 					product: product.id,
-					unit_amount: req.body.amount,
+					unit_amount: (parseInt(req.body.amount, 10) * 100),
 					currency: req.body.currencyValue,
 					recurring: {
-						interval: 'day', // day and month
+						interval: req.body.interval, // day and month
 					},
 				}).then(async (price) => {
 					priceIn = price;
@@ -92,14 +92,29 @@ module.exports.SubscriptionMonthly = (async (req, res) => {
 
 module.exports.cancelSubscription = (async (req, res) => {
 	try {
-		console.log(req.body);
-		await stripe.subscriptions.del(
-			req.body.subscriptionId,
-		).then(async (subscription) => {
-			return apiResponses.successResponseWithData(res, ' Successfully created.', subscription);
-		}).catch((error) => {
-			return apiResponses.errorResponse(res, error);
+		const subscriptionData = await SubscriptionPayment.findOne({
+			where: {
+				subscriptionStripeId: req.body.id,
+			},
 		});
+		console.log('subscription-->', subscriptionData);
+		if (!subscriptionData) {
+			return apiResponses.notFoundResponse(res, 'Subscription Not exist', subscriptionData);
+		} else {
+			await stripe.subscriptions.del(
+				subscriptionData.subscriptionStripeId,
+			).then(async (subscription) => {
+				await SubscriptionPayment.update(
+					{
+						status: 'cancelled',
+					},
+					{where: {id: subscriptionData.id}},
+				);
+				return apiResponses.successResponseWithData(res, ' Successfully created.', subscription);
+			}).catch((error) => {
+				return apiResponses.errorResponse(res, error);
+			});
+		}
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
@@ -164,6 +179,7 @@ module.exports.getOneUserSubscriptions = (async (req, res) => {
 					required: false,
 				},
 			],
+			order: [['createdAt', 'DESC']],
 		})
 			.then(async (subscriptions) => {
 				subscriptions = await Promise.all(subscriptions.map(async (p)=> {
@@ -179,4 +195,27 @@ module.exports.getOneUserSubscriptions = (async (req, res) => {
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
+});
+
+
+module.exports.webHooks = (async (req, res) => {
+	console.log('Calling hooks-------------------------------<><><><><><><><>', req.body);
+	const sig = req.headers['stripe-signature'];
+	const endpointSecret = 'whsec_r5eQo2vbbmnQvweLd7GYfLwv2vHa5zQ0';
+	let event;
+
+	console.log('Calling sig-------------------------------<><><><><><><><>', sig);
+	try {
+		event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+		console.log('event----->>>>>>>', event);
+	} catch (err) {
+		res.status(400).send(`Webhook Error: ${err.message}`);
+		return;
+	}
+
+	// Handle the event
+	console.log(`Unhandled event type ${event.type}`);
+
+	// Return a 200 response to acknowledge receipt of the event
+	res.status(200).send(`Hello calling success`);
 });
