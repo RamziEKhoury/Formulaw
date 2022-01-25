@@ -42,7 +42,6 @@ db.community = require('./community.model')(sequelize, Sequelize);
 db.communityType = require('./communityType.model')(sequelize, Sequelize);
 db.subscription = require('./subscription.model')(sequelize, Sequelize);
 db.banner = require('./banner.model')(sequelize, Sequelize);
-db.subscription = require('./subscription.model')(sequelize, Sequelize);
 db.banner = require('./banner.model')(sequelize, Sequelize);
 db.journey = require('./journey.model')(sequelize, Sequelize);
 db.room = require('./Room.model')(sequelize, Sequelize);
