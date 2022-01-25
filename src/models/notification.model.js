@@ -41,6 +41,7 @@ module.exports = (sequelize, Sequelize) => {
 					WorkflowAppointment.FREE_CONSULTATION,
 					WorkflowAppointment.SCHEDULE_LEAD,
 					WorkflowAppointment.APPROVE_LEAD,
+					WorkflowAppointment.CANCELED,
 					WorkflowAppointment.FURTHER_STATUS,
 				),
 			},

@@ -1530,12 +1530,102 @@ module.exports.LeadCompleteStatus = async (req, res) => {
 	);
 };
 
+module.exports.LeadCanceledStatus = async (req, res) => {
+	const user = await Appointment.findOne({
+		where: {id: req.params.id},
+		include: [
+			{
+				model: User,
+				required: false,
+				attributes: ['firstname', 'lastname', 'email'],
+			},
+			{
+				model: Admin,
+				required: false,
+				attributes: ['firstname', 'lastname', 'email'],
+			},
+		],
+	});
+	const device = await User.findOne({where: {id: user.customerId}});
+	const notiData = {
+		title: 'Appointment',
+		message: 'Hi, Your appointment has been canceled',
+		senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
+		senderId: user.customerId,
+		senderType: 'APPOINTMENT',
+		receiverid: user.customerId,
+		notificationType: WorkflowAppointment.CANCELED,
+		target: req.params.id,
+	};
+	await Notifications.notificationCreate(notiData);
+	if (!!device.deviceToken) {
+		await Notifications.notification(device.deviceToken, 'Hi, Your appointment has been canceled');
+	}
+
+	await Mail.adminAppointmentCanceled(
+		user.adminuser.email,
+		user.time,
+		user.date,
+		(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
+	);
+
+	await Mail.userAppointmentCanceled(
+		user.user.email,
+		user.time,
+		user.date,
+	);
+
+	const appointment =	await Appointment.update(
+		{
+			status: req.body.status,
+			workflow: req.body.status,
+		},
+		{where: {id: req.params.id}},
+	);
+
+	return apiResponses.successResponseWithData(
+		res,
+		'Success',
+		appointment,
+	);
+};
+
 module.exports.getAllLawfirmCases = (req, res) => {
 	// Get Appointment from Database
 	// #swagger.tags = ['Appointment']
 	Appointment.count({
 		where: {
 			lawFirmId: req.params.lawFirmId,
+		},
+	})
+		.then((data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
+module.exports.getAllLawfirmPaidAppointment = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.count({
+		where: {
+			lawFirmId: req.params.lawFirmId,
+			ispayment: 1
 		},
 	})
 		.then((data) => {

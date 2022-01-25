@@ -100,8 +100,16 @@ module.exports = function(app) {
 		'/api/v1/appointment/leadstatuscomplete/:id',
 		appointmentController.LeadCompleteStatus);
 
+	app.put(
+		'/api/v1/appointment/leadcanceledstatus/:id',
+		appointmentController.LeadCanceledStatus);
+
 	app.get(
 		'/api/v1/appointment/all-lawfirmcases/:lawFirmId',
 		appointmentController.getAllLawfirmCases);
+
+	app.get(
+		'/api/v1/appointment/all-lawfirmpaidappointment/:lawFirmId',
+		appointmentController.getAllLawfirmPaidAppointment);
 };
 
