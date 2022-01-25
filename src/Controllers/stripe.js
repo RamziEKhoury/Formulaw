@@ -199,11 +199,12 @@ module.exports.getOneUserSubscriptions = (async (req, res) => {
 
 
 module.exports.webHooks = (async (req, res) => {
-	console.log('Calling hooks-------------------------------<><><><><><><><>')
+	console.log('Calling hooks-------------------------------<><><><><><><><>', req);
 	const sig = req.headers['stripe-signature'];
 	const endpointSecret = 'whsec_hcLpOiphBaV5nKETL2d4WUZV0pze8GY0';
 	let event;
 
+	console.log('Calling sig-------------------------------<><><><><><><><>', sig);
 	try {
 		event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
 		console.log('event----->>>>>>>', event);
