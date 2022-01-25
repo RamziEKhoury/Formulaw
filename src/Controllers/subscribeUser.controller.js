@@ -5,7 +5,7 @@ const apiResponses = require('../Components/apiresponse');
 const Mail = require('../Config/Mails');
 const Admin = db.adminUser;
 
-module.exports.addsubscribeUser = async (req, res) => {
+module.exports.addSubscribeUser = async (req, res) => {
 	try {
 		SubscribeUser.create({
 			userName: req.body.userName,  
@@ -26,7 +26,7 @@ module.exports.addsubscribeUser = async (req, res) => {
 	}
 }
 
-module.exports.updatesubscribeUser = async (req, res) => {
+module.exports.updateSubscribeUser = async (req, res) => {
 	try {
 		await SubscribeUser.update({
 			userName: req.body.userName,
@@ -49,7 +49,7 @@ module.exports.updatesubscribeUser = async (req, res) => {
 	}
 }
 
-module.exports.getsubscribeUser = (req, res) => {
+module.exports.getSubscribeUser = (req, res) => {
 	SubscribeUser.findOne({
 		where: {
 			id: req.params.id,
@@ -73,7 +73,7 @@ module.exports.getsubscribeUser = (req, res) => {
 };
 
 
-module.exports.getallsubscribeUsers = (req, res) => {
+module.exports.getallSubscribeUsers = (req, res) => {
 	SubscribeUser.findAll({
 		where: {
 			isDeleted: 0,
@@ -95,7 +95,7 @@ module.exports.getallsubscribeUsers = (req, res) => {
 		});
 };
 
-module.exports.deletesubscribeUser = async (req, res) => {
+module.exports.deleteSubscribeUser = async (req, res) => {
 	try {
 		await SubscribeUser.update(
 			{

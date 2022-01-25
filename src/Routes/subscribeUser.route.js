@@ -10,24 +10,24 @@ module.exports = function(app) {
 	});
 
 	app.post(
-		'/api/v1/subscribeUser/create-subscribeUser',
-		subscribeUserController.addsubscribeUser,
+		'/api/v1/subscribeUser/create-SubscribeUser',
+		subscribeUserController.addSubscribeUser
 	);
 	app.post(
-		'/api/v1/subscribeUser/update-subscribeUser', 
-		subscribeUserController.updatesubscribeUser,
+		'/api/v1/subscribeUser/update-SubscribeUser', 
+		subscribeUserController.updateSubscribeUser
 	);
 	app.get(
-		'/api/v1/subscribeUser/get-subscribeUser/:id',
-		subscribeUserController.getsubscribeUser,
+		'/api/v1/subscribeUser/get-SubscribeUser/:id',
+		subscribeUserController.getSubscribeUser
         );
 	
 	app.get(
-			'/api/v1/subscribeUser/get-allsubscribeUsers/',
-			subscribeUserController.getallsubscribeUsers,
+			'/api/v1/subscribeUser/get-allSubscribeUsers',
+			subscribeUserController.getallSubscribeUsers,
 	);
 	app.delete(
-			'/api/v1/subscribeUser/delete-subscribeUser/:id',
-			subscribeUserController.deletesubscribeUser,
+			'/api/v1/subscribeUser/delete-SubscribeUser/:id',
+			subscribeUserController.deleteSubscribeUser
             );
 };

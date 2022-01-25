@@ -15,24 +15,23 @@ app.use(
 	}),
 );
 app.use(bodyParser.json({limit: '200mb'}));
-// const http = require("http");
+const http = require("http");
 
 const fs = require('fs');
-const https = require('https');
-const privateKey = fs.readFileSync('privkey.pem', 'utf8');
-const certificate = fs.readFileSync('cert.pem', 'utf8');
-const credentials = {key: privateKey, cert: certificate};
+// const https = require('https');
+// const privateKey = fs.readFileSync('privkey.pem', 'utf8');
+// const certificate = fs.readFileSync('fullchain.pem', 'utf8');
+// const credentials = {key: privateKey, cert: certificate};
 
-// const httpsServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
+const httpsServer = http.createServer(app);
+// const httpsServer = https.createServer(credentials, app);
 
 // log all incoming request
 app.use((req, res, next) => {
-	// console.log("appbody=====>>",req)
 	next();
 });
 
-app.use('/Images', express.static(path.join(__dirname, 'Public/Images')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 const db = require('../src/models');
 const SocketService = require('./Config/socket');
@@ -43,7 +42,7 @@ require('./Routes')(app);
 const jsn = {Status: 'Your Server Is Started Now'};
 app.get('/*', (req, res) => {
 	res.send(jsn);
-	res.send('hello');
+	// res.send("hello");
 	// res.sendFile(__dirname + '/index.html');
 });
 
