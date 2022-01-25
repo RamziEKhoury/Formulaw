@@ -201,7 +201,7 @@ module.exports.getOneUserSubscriptions = (async (req, res) => {
 module.exports.webHooks = (async (req, res) => {
 	console.log('Calling hooks-------------------------------<><><><><><><><>', req);
 	const sig = req.headers['stripe-signature'];
-	const endpointSecret = 'whsec_hcLpOiphBaV5nKETL2d4WUZV0pze8GY0';
+	const endpointSecret = 'whsec_r5eQo2vbbmnQvweLd7GYfLwv2vHa5zQ0';
 	let event;
 
 	console.log('Calling sig-------------------------------<><><><><><><><>', sig);
