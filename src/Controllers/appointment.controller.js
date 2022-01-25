@@ -56,11 +56,11 @@ module.exports.addAppointment = async (req, res) => {
 				orderId: appointment.orderId,
 			};
 
-
+			var time = moment.duration("06:30:00");
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm:ss')+'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format('HH:mm:ss a')+'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
@@ -70,7 +70,7 @@ module.exports.addAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format('HH:mm:ss')+ '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format('HH:mm:ss a')+ '.');
 			}
 
 			return apiResponses.successResponseWithData(
@@ -824,7 +824,6 @@ module.exports.getUserAllOrders = (req, res) => {
 		order: [['createdAt', 'DESC']],
 	})
 		.then(async (data) => {
-			// console.log("fgf",data);
 			// res.status(200).send({
 			//   status: "200",
 			//   user: data,
@@ -1209,7 +1208,6 @@ module.exports.changesLawyer = (req, res) => {
 };
 
 module.exports.RescheduleAppointment = async (req, res) => {
-	console.log("dasddddddddddd",req.body);
 	try {
 		await Appointment.update(
 			{
@@ -1226,9 +1224,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				}
 
 				const appointment = await Appointment.findOne({where: {id: req.body.id}})
-				console.log("asd3333333333",appointment);
 				const device = await User.findOne({where: {id: appointment.customerId}});
-				console.log("dddddddddddddd",device);
 			const notiData = {
 				title: 'Appointment',
 				message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format("HH:mm:ss")+'.',
@@ -1239,7 +1235,6 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				notificationType: WorkflowAppointment.SCHEDULE_LEAD,
 				target: appointment.id,
 			};
-			console.log("gghvghj",notiData);
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
 				await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format("HH:mm:ss")+ '.');
@@ -1492,7 +1487,6 @@ module.exports.LeadCompleteStatus = async (req, res) => {
 			},
 		],
 	});
-	console.log('aaaaaaaaaaaaaaaaaaaa', user);
 	const device = await User.findOne({where: {id: user.customerId}});
 	const notiData = {
 		title: 'Appointment',
