@@ -76,7 +76,7 @@ function formValues(subscription, userId) {
 
 async function createUserSubscription(subscription, userId) {
 	const formvalues = formValues(subscription, userId);
-	const crate = await UserSubscription.create({
+	await UserSubscription.create({
 		userId: formvalues.userId,
 		subscriptionId: formvalues.subscriptionId,
 		durationType: formvalues.durationType,
