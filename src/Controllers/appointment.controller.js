@@ -60,7 +60,7 @@ module.exports.addAppointment = async (req, res) => {
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format('HH:mm:ss a')+'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format('HH:mm:ss')+'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
@@ -70,7 +70,7 @@ module.exports.addAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format('HH:mm:ss a')+ '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format('HH:mm:ss')+ '.');
 			}
 
 			return apiResponses.successResponseWithData(
@@ -1223,10 +1223,11 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				}
 
 				const appointment = await Appointment.findOne({where: {id: req.body.id}})
+				var time = moment.duration("06:30:00");
 				const device = await User.findOne({where: {id: appointment.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format("HH:mm:ss")+'.',
+				message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format("HH:mm:ss")+'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: appointment.customerId,
 				senderType: 'APPOINTMENT',
@@ -1236,7 +1237,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format("HH:mm:ss")+ '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format("HH:mm:ss")+ '.');
 			}
 
 				return apiResponses.successResponseWithData(res, 'Success', data);
