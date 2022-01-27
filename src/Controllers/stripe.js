@@ -3,6 +3,7 @@ const apiResponses = require('../Components/apiresponse');
 const {WorkflowAppointment} = require('../enum');
 const Notifications = require('../Config/Notifications');
 const saveSubscriptionScheduleCall = require('../Components/ScheduleAppointment');
+const moment = require('moment');
 const SubscriptionPayment = db.subscriptionPayment;
 const User = db.user;
 const Subscription = db.subscription;
@@ -75,14 +76,14 @@ function formValues(subscription, userId) {
 
 async function createUserSubscription(subscription, userId) {
 	const formvalues = formValues(subscription, userId);
-	await UserSubscription.create({
+	const crate = await UserSubscription.create({
 		userId: formvalues.userId,
 		subscriptionId: formvalues.subscriptionId,
 		durationType: formvalues.durationType,
 		subscriptionPlan: formvalues.subscriptionPlan,
 		checkSubscription: formvalues.checkSubscription,
-		startingDate: formvalues.startingDate,
-		endDate: formvalues.endDate,
+		startingDate: moment(formvalues.startingDate).format(),
+		endDate: moment(formvalues.endDate).format(),
 		numberOfMeeting: formvalues.numberOfMeeting,
 		ipAudit: formvalues.ipAudit,
 		meetingPlan: formvalues.meetingPlan,
@@ -94,7 +95,7 @@ async function createUserSubscription(subscription, userId) {
 }
 
 async function createLead(subscription, userId) {
-	const values = leadFormValues(userId);
+	const values = await leadFormValues(userId);
 	const lead = await Request.create(values).then(async (request) => {
 		const device = await User.findOne({where: {id: userId}});
 		const notiData = {
@@ -111,9 +112,8 @@ async function createLead(subscription, userId) {
 		if (!!device.deviceToken) {
 			await Notifications.notification(device.deviceToken, 'New lead created.');
 		}
+		await saveSubscriptionScheduleCall(request, subscription, userId);
 	});
-
-	await saveSubscriptionScheduleCall(lead, subscription, userId);
 }
 
 module.exports.createCharge = (async (req, res) => {
@@ -317,6 +317,7 @@ module.exports.webHooks = (async (req, res) => {
 			console.log('subscriptionStripeId-------------------------------<><><><><><><><>', subscriptionStripeId);
 			// eslint-disable-next-line max-len
 			const fetchSubscriptionPayment = await SubscriptionPayment.findOne({where: {subscriptionStripeId: subscriptionStripeId}});
+			console.log('fetchSubscriptionPayment-------------------------------<><><><><><><><>', fetchSubscriptionPayment);
 			if (!!fetchSubscriptionPayment) {
 				const subscriptionDetails = await Subscription.findOne({where: {id: fetchSubscriptionPayment.subscriptionId}});
 				await createUserSubscription(subscriptionDetails, fetchSubscriptionPayment.userId);
