@@ -32,8 +32,8 @@ const updateValidator = [
 	body('email').isLength({min: 1})
 		.trim().withMessage('Email must be specified.')
 		.isEmail().withMessage('Email must be a valid email address.'),
-	body('phoneNumber').isLength({min: 1})
-		.trim().withMessage('phoneNumber must be specified.'),
+	// body('phoneNumber').isLength({min: 1})
+	// 	.trim().withMessage('phoneNumber must be specified.'),
 	body('country').isLength({min: 1})
 		.trim().withMessage('country must be specified.'),
 	body('city').isLength({min: 1})
