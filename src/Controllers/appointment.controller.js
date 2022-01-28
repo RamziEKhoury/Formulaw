@@ -25,6 +25,7 @@ module.exports.addAppointment = async (req, res) => {
                     description: "Appointment details for add - queryId, adminId, customerId, shift, date, time",
                     schema: { $queryId: "", $adminId: "", $customerId: "", $shift: "", $date: "", $time: ""}
             } */
+		console.log('req--->', req.body);
 		const orderId = Math.floor(Math.random() * (999 - 100 + 1) + 100);
 		Appointment.create({
 			queryId: req.body.queryId,
@@ -56,11 +57,10 @@ module.exports.addAppointment = async (req, res) => {
 				orderId: appointment.orderId,
 			};
 
-			var time = moment.duration("06:30:00");
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format('HH:mm:ss')+'.',
+				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('hh:mm')+'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
@@ -70,7 +70,7 @@ module.exports.addAppointment = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.date).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format('HH:mm:ss')+ '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format('hh:mm')+ '.');
 			}
 
 			return apiResponses.successResponseWithData(
@@ -200,7 +200,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' + moment(user.time).format('HH:mm:ss')+
+							' time ' + moment(user.time).format('hh:mm')+
 							' we will connect with you soon.',
 						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
@@ -212,7 +212,7 @@ module.exports.changeStatus = async (req, res) => {
 					await Notifications.notificationCreate(notiData);
 					if (!!device.deviceToken) {
 						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' +moment(user.time).format('HH:mm:ss') +
+							' time ' +moment(user.time).format('hh:mm') +
 							' we will connect with you soon.');
 					}
 
@@ -1217,28 +1217,28 @@ module.exports.RescheduleAppointment = async (req, res) => {
 			},
 			{where: {id: req.body.id}},
 		)
-			.then(async(data) => {
+			.then(async (data) => {
 				if (!data) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
 
-				const appointment = await Appointment.findOne({where: {id: req.body.id}})
-				var time = moment.duration("06:30:00");
+				const appointment = await Appointment.findOne({where: {id: req.body.id}});
+				const time = moment.duration('06:30:00');
 				const device = await User.findOne({where: {id: appointment.customerId}});
-			const notiData = {
-				title: 'Appointment',
-				message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format("HH:mm:ss")+'.',
-				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
-				senderId: appointment.customerId,
-				senderType: 'APPOINTMENT',
-				receiverid: appointment.customerId,
-				notificationType: WorkflowAppointment.SCHEDULE_LEAD,
-				target: appointment.id,
-			};
-			await Notifications.notificationCreate(notiData);
-			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format("HH:mm:ss")+ '.');
-			}
+				const notiData = {
+					title: 'Appointment',
+					message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format('HH:mm:ss')+'.',
+					senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
+					senderId: appointment.customerId,
+					senderType: 'APPOINTMENT',
+					receiverid: appointment.customerId,
+					notificationType: WorkflowAppointment.SCHEDULE_LEAD,
+					target: appointment.id,
+				};
+				await Notifications.notificationCreate(notiData);
+				if (!!device.deviceToken) {
+					await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format('HH:mm:ss')+ '.');
+				}
 
 				return apiResponses.successResponseWithData(res, 'Success', data);
 			})
@@ -1626,7 +1626,7 @@ module.exports.getAllLawfirmPaidAppointment = (req, res) => {
 	Appointment.count({
 		where: {
 			lawFirmId: req.params.lawFirmId,
-			ispayment: 1
+			ispayment: 1,
 		},
 	})
 		.then((data) => {

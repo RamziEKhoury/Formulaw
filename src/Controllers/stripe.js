@@ -100,7 +100,7 @@ async function createLead(subscription, userId) {
 		const device = await User.findOne({where: {id: userId}});
 		const notiData = {
 			title: request.getstarted,
-			message: 'New lead created.',
+			message: 'Your free call has been scheduled and the amount have successfully paid for next subscription.',
 			senderName: device.firstname + ' ' + device.lastname,
 			senderId: userId,
 			senderType: 'LEAD',
@@ -110,7 +110,8 @@ async function createLead(subscription, userId) {
 		};
 		await Notifications.notificationCreate(notiData);
 		if (!!device.deviceToken) {
-			await Notifications.notification(device.deviceToken, 'New lead created.');
+			await Notifications.notification(device.deviceToken,
+				'Your free call has been scheduled and the amount have successfully paid for next subscription.');
 		}
 		await saveSubscriptionScheduleCall(request, subscription, userId);
 	});

@@ -47,7 +47,7 @@ module.exports.createRequest = async (req, res) => {
 			const device = await User.findOne({where: {id: req.body.userId}});
 			const notiData = {
 				title: request.getstarted,
-				message: 'New lead created.',
+				message: 'Your lead has been created successfully.',
 				senderName: device.firstname + ' ' + device.lastname,
 				senderId: req.body.userId,
 				senderType: 'LEAD',
@@ -57,7 +57,8 @@ module.exports.createRequest = async (req, res) => {
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'New lead created.');
+				await Notifications.notification(device.deviceToken,
+					'Your lead has been created successfully, Please select any slots.');
 			}
 
 			return apiResponses.successResponseWithData(
