@@ -112,13 +112,13 @@ module.exports = {
 	// appointment shedule time mail
 
 	adminAppointmentSchedule: (email, username, time, date, name, lead) => {
-		console.log('logIn_Mail====>' + email, time, date,username);
+		console.log('logIn_Mail====>' + email, time, date, username);
 		const details = {
 			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Appointment:', // Subject of the mail.
 			html:
-    '<div><span>Hi '+ username +'</span></div><div><p>'+ name +' has scheduled a meeting regarding '+ lead+' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('hh:mm') + '. Go to the Admin panel to view their profile and approve the meeting. </p><br/><p>Thank you.</p><br/>Best Regards, <br/><br/>@formulaw team member</div>',
+    '<div><span>Hi '+ username +'</span></div><div><p>'+ name +' has scheduled a meeting regarding '+ lead+' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '. Go to the Admin panel to view their profile and approve the meeting. </p><br/><p>Thank you.</p><br/>Best Regards, <br/><br/>@formulaw team member</div>',
 		};
 		console.log('admin apointment', details);
 		transporter.sendMail(details, function(error, data) {
@@ -133,13 +133,13 @@ module.exports = {
 	},
 
 	userAppointmentSchedule: (email, fullname, time, date, id, username, orderid, lawfirm) => {
-		console.log('logIn_Mail====>' + email);
+		console.log('logIn_Mail==User==>' + email, time, date);
 		const details = {
 			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Appointment', // Subject of the mail.
 			html:
-        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('hh:mm') + '.</p><br/><p>Prior to starting with '+lawfirm+', a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 15 minutes prior to the meeting Please follow this link to start your consultation.</p><br><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Receipt<br/>'+ orderid +'<br><p>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<p></br><br><p>Thank you and have a great meeting.</p><br>Best Regards,<br><p>'+ username +'</p><br>@formulaw team member<br></div>',
+        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '.</p><br/><p>Prior to starting with '+lawfirm+', a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 15 minutes prior to the meeting Please follow this link to start your consultation.</p><br><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Receipt<br/>'+ orderid +'<br><p>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<p></br><br><p>Thank you and have a great meeting.</p><br>Best Regards,<br><p>'+ username +'</p><br>@formulaw team member<br></div>',
 		};
 		console.log('user apointment', details);
 		transporter.sendMail(details, function(error, data) {
@@ -164,7 +164,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
-    '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,<br/>'+username+'<br/>@formulaw team member<br/></div>'};
+    '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,<br/>'+username+'<br/>@formulaw team member<br/></div>'};
 		console.log('user reminder---->', details);
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -185,7 +185,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
-			'<div><span>Hi '+username+'</span></div><div><span>Reminder <span><p>'+ name +' has scheduled a meeting regarding '+ lead +' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '. Go to the Admin panel to view their profile and approve the meeting. Thank you.</p><br/>Best Regards, <br/>Formula Team<br/>@formulaw team member</div>',
+			'<div><span>Hi '+username+'</span></div><div><span>Reminder <span><p>'+ name +' has scheduled a meeting regarding '+ lead +' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '. Go to the Admin panel to view their profile and approve the meeting. Thank you.</p><br/>Best Regards, <br/>Formula Team<br/>@formulaw team member</div>',
 		};
 		console.log('admin reminder----->', details);
 		transporter.sendMail(details, function(error, data) {
@@ -308,7 +308,7 @@ module.exports = {
 
 
 	adminAppointmentConsult: (email, time, date, username, name, lawyer, lawfirm) => {
-		console.log('logIn_Mail admin====>' + email,time, date, username, name, lawyer, lawfirm);
+		console.log('logIn_Mail admin====>' + email, time, date, username, name, lawyer, lawfirm);
 		const details = {
 			from: 'formulawauth@gmail.com', // sender address same as above
 			to: email, // Receiver's email id

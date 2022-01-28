@@ -200,7 +200,7 @@ module.exports.changeStatus = async (req, res) => {
 					const notiData = {
 						title: 'Appointment',
 						message: 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' + moment(user.time).format('hh:mm')+
+							' time ' + moment(user.time).format('HH:mm A')+
 							' we will connect with you soon.',
 						senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 						senderId: user.customerId,
@@ -212,7 +212,7 @@ module.exports.changeStatus = async (req, res) => {
 					await Notifications.notificationCreate(notiData);
 					if (!!device.deviceToken) {
 						await Notifications.notification(device.deviceToken, 'Hi, Your appointment call is approved for free consultation, Please be ready on ' + moment(user.date).format('DD/MM/YYYY') +
-							' time ' +moment(user.time).format('hh:mm') +
+							' time ' +moment(user.time).format('HH:mm A') +
 							' we will connect with you soon.');
 					}
 
