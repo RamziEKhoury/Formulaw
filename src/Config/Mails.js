@@ -2,6 +2,13 @@ const nodemailer = require('nodemailer');
 
 const moment = require('moment');
 
+function timeNow(i) {
+	const d = new Date(),
+		h = (d.getHours() < 10 ? '0' : '') + d.getHours(),
+		m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+	i.value = h + ':' + m;
+}
+
 const transporter = nodemailer.createTransport({
 	host: 'smtp.gmail.com',
 	port: 465,
@@ -139,7 +146,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Appointment', // Subject of the mail.
 			html:
-        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '.</p><br/><p>Prior to starting with '+lawfirm+', a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 15 minutes prior to the meeting Please follow this link to start your consultation.</p><br><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Receipt<br/>'+ orderid +'<br><p>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<p></br><br><p>Thank you and have a great meeting.</p><br>Best Regards,<br><p>'+ username +'</p><br>@formulaw team member<br></div>',
+        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on' + moment(date).format('DD/MM/YYYY') +' at '+ timeNow(time) + '.</p><br/><p>Prior to starting with '+lawfirm+', a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 15 minutes prior to the meeting Please follow this link to start your consultation.</p><br><u> https://formu.law/#/userPanel/user/dashboard/'+ id +'</u><br/>Receipt<br/>'+ orderid +'<br><p>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<p></br><br><p>Thank you and have a great meeting.</p><br>Best Regards,<br><p>'+ username +'</p><br>@formulaw team member<br></div>',
 		};
 		console.log('user apointment', details);
 		transporter.sendMail(details, function(error, data) {
