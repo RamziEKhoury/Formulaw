@@ -26,10 +26,15 @@ module.exports.addtestimonial = async (req, res) => {
 				testimonialdata: testimonial.testimonialdata,
 				rating: testimonial.rating,
 			};
+			const testimonials = await Testimonial.count({where : {lawFirmId : testimonial.lawFirmId}});
 const lawFirm = await LawFirm.findOne({where : {id : testimonial.lawFirmId}})
-				await LawFirm.update({userrating: lawFirm.userrating + (testimonial.rating) },{where: {id: testimonial.lawFirmId}})
- 
-			return apiResponses.successResponseWithData(
+if(testimonials === 1){
+	await LawFirm.update({userrating: ((lawFirm.userrating + (testimonial.rating/20))).toFixed(1) },{where: {id: testimonial.lawFirmId}})
+}
+else {
+await LawFirm.update({userrating: ((lawFirm.userrating + (testimonial.rating/20))/2).toFixed(1) },{where: {id: testimonial.lawFirmId}})
+}	
+return apiResponses.successResponseWithData(
 				res,
 				'Testimonial Created successfully!',
 				testimonialData,

@@ -117,43 +117,45 @@ module.exports.getSubscriptions = (req, res) => {
 
 module.exports.getSubscriptionsType = (req, res) => {
 	const durationType = req.params.durationType;
-	Subscription.findAll({where: {
-		durationType: durationType,
-	}});
-	Subscription.findAll({
-		where: {
-			durationType: durationType,
-		},
-		order: [['sortnumber', 'ASC']],
-	})
-		.then((data) => {
-			// res.status(200).send({
-			//   status: "200",
-			//   user: data,
-			// });
-			return apiResponses.successResponseWithData(res, 'success', data);
+
+		Subscription.findAll({
+			where: {
+				durationType: durationType,
+			},
+			order: [['sortnumber', 'ASC']],
 		})
-		.catch((err) => {
-			/* #swagger.responses[500] = {
-                                description: "Error message",
-                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-                            } */
-			// return res.status(500).send({ message: err.message });
-			res.status(500).send({
-				message: err.message || 'Some error occurred while retrieving data.',
-			});
-		})
-		.catch((err) => {
-			/* #swagger.responses[500] = {
-                    description: "Error message",
-                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-                } */
-			// return res.status(500).send({ message: err.message });
-			res.status(500).send({
-				message: 'Something Went Wrong',
-			});
-		});
+			.then((data) => {
+				// res.status(200).send({
+				//   status: "200",
+				//   user: data,
+				// });
+				const yearlySubscription = [];
+			for (let i = 0; i < data.length; i++) {
+				const discount = data[i].discount
+				const price = data[i].price
+			const discountedPrice = price - ((price * discount)/100)
+				const obj = {
+					subscriptions: data[i],
+					discountedPrice
+					
+				};
+				yearlySubscription.push(obj);
+			}
+				
+				return apiResponses.successResponseWithData(res, 'success', yearlySubscription);
+			})
+			.catch((err) => {
+				/* #swagger.responses[500] = {
+									description: "Error message",
+									schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+								} */
+				// return res.status(500).send({ message: err.message });
+				res.status(500).send({
+					message: err.message || 'Some error occurred while retrieving data.',
+				});
+			})
 };
+
 module.exports.getSubscription = (req, res) => {
 	// Get Country from Database
 	// #swagger.tags = ['Subscription']
@@ -165,8 +167,19 @@ module.exports.getSubscription = (req, res) => {
 			//   status: "200",
 			//   user: data,
 			// });
+			const yearlySubscription = [];
+				const discount = data.discount
+				const price = data.price
+			const discountedPrice = price - ((price * discount)/100)
+				const obj = {
+					subscriptions: data,
+					discountedPrice
+					
+				};
+				yearlySubscription.push(obj);
+				
+				return apiResponses.successResponseWithData(res, 'success', yearlySubscription);
 
-			return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			/* #swagger.responses[500] = {
