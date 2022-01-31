@@ -25,52 +25,75 @@ module.exports.addAppointment = async (req, res) => {
                     description: "Appointment details for add - queryId, adminId, customerId, shift, date, time",
                     schema: { $queryId: "", $adminId: "", $customerId: "", $shift: "", $date: "", $time: ""}
             } */
-		console.log('req--->', req.body);
 		const orderId = Math.floor(Math.random() * (999 - 100 + 1) + 100);
-		Appointment.create({
-			queryId: req.body.queryId,
-			lawFirmId: req.body.lawFirmId,
-			adminId: req.body.adminId,
-			customerId: req.body.customerId,
-			shift: req.body.shift,
-			date: req.body.date,
-			time: req.body.time,
-			endTime: req.body.endTime,
-			orderId: orderId,
-			scheduleAt: req.body.scheduleAt,
-		}).then(async (appointment) => {
-			await Room.create({
-				appointmentId: appointment.id,
-				roomName: appointment.id,
-				adminId: appointment.adminId,
-				customerId: appointment.customerId,
-				queryId: appointment.queryId,
-			});
-			const appointmentData = {
-				id: appointment.id,
-				queryId: appointment.queryId,
-				adminId: appointment.adminId,
-				customerId: appointment.customerId,
-				shifts: appointment.shifts,
-				date: appointment.date,
-				time: appointment.time,
-				orderId: appointment.orderId,
-			};
+		Appointment.findOrCreate({
+			where: {
+				[Op.and]: [
+					{queryId: req.body.queryId},
+					{lawFirmId: req.body.lawFirmId},
+					{customerId: req.body.customerId},
+				],
+			},
+			defaults: {
+				queryId: req.body.queryId,
+				lawFirmId: req.body.lawFirmId,
+				adminId: req.body.adminId,
+				customerId: req.body.customerId,
+				shift: req.body.shift,
+				date: req.body.date,
+				time: req.body.time,
+				endTime: req.body.endTime,
+				orderId: orderId,
+				scheduleAt: req.body.scheduleAt,
+			},
+		}).then(async(appointment) => {
+			const isAlready = appointment[1];
+			const inserted = appointment[0];
 
+			if (!isAlready) {
+				/* #swagger.responses[409] = {
+                            description: "Already!",
+                            schema: { $statusCode : 409 ,$status: true, $message: "Country already exist!", $data : {}}
+                        } */
+				res.send({
+					status: 409,
+					msg: 'appointment already exist',
+				});
+			} else {
+				const appointmentData = {
+					id: inserted.id,
+					queryId: inserted.queryId,
+					lawFirmId: inserted.lawFirmId,
+					adminId: inserted.adminId,
+					customerId: inserted.customerId,
+					shift: inserted.shift,
+					date: inserted.date,
+					time: inserted.time,
+					endTime: inserted.endTime,
+					orderId: orderId,
+					scheduleAt: inserted.scheduleAt,
+				};
+			await Room.create({
+				appointmentId: appointmentData.id,
+				roomName: appointmentData.id,
+				adminId: appointmentData.adminId,
+				customerId: appointmentData.customerId,
+				queryId: appointmentData.queryId,
+			});
 			const device = await User.findOne({where: {id: req.body.customerId}});
 			const notiData = {
 				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointment.date).format('DD/MM/YYYY')+' at '+ new Date(appointment.time)+'.',
+				message: 'Your appointment have scheduled on '+moment(appointmentData.date).format('DD/MM/YYYY')+' at '+ moment(appointmentData.time).format('hh:mm:ss')+'.',
 				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 				senderId: req.body.customerId,
 				senderType: 'APPOINTMENT',
 				receiverid: req.body.customerId,
 				notificationType: WorkflowAppointment.SCHEDULE_LEAD,
-				target: appointment.id,
+				target: appointmentData.id,
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format('hh:mm')+ '.');
+				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointmentData.time).format('DD/MM/YYYY') + ' at ' +moment(appointmentData.time).format('hh:mm:ss')+ '.');
 			}
 
 			return apiResponses.successResponseWithData(
@@ -78,6 +101,7 @@ module.exports.addAppointment = async (req, res) => {
 				'appointment registered successfully!',
 				appointmentData,
 			);
+			}
 		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
@@ -1223,11 +1247,10 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				}
 
 				const appointment = await Appointment.findOne({where: {id: req.body.id}});
-				const time = moment.duration('06:30:00');
 				const device = await User.findOne({where: {id: appointment.customerId}});
 				const notiData = {
 					title: 'Appointment',
-					message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).subtract(time).format('HH:mm:ss')+'.',
+					message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm:ss')+'.',
 					senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 					senderId: appointment.customerId,
 					senderType: 'APPOINTMENT',
@@ -1237,7 +1260,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				};
 				await Notifications.notificationCreate(notiData);
 				if (!!device.deviceToken) {
-					await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).subtract(time).format('HH:mm:ss')+ '.');
+					await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format('HH:mm:ss')+ '.');
 				}
 
 				return apiResponses.successResponseWithData(res, 'Success', data);

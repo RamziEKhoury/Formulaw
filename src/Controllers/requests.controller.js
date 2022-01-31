@@ -17,36 +17,62 @@ module.exports.createRequest = async (req, res) => {
             schema: { $industryId: "", $industryTitle: "", $getstarted: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
             } */
 
-		Request.create(req.body).then(async (request) => {
-			const createdRequest = {
-				id: request.id,
-				getstarted: request.getstarted,
-				industryId: request.industryId,
-				industryTitle: request.industryTitle,
-				firstName: request.firstName,
-				lastName: request.lastName,
-				email: request.email,
-				jurisdictionId: request.jurisdictionId,
-				languageId: request.languageId,
-				legalFieldId: request.legalFieldId,
-				legalFieldName: request.legalFieldName,
-				serviceSubcategoryId: request.serviceSubcategoryId,
-				serviceSubcategoryName: request.serviceSubcategoryName,
-				cost: request.cost,
-				budgetMin: request.budgetMin,
-				budgetMax: request.budgetMax,
-				rating: request.rating,
-				experience: request.experience,
-				lawFirmId: request.lawFirmId,
-				isActive: request.isActive,
-				isDeleted: request.isDeleted,
-			};
-		const service = await Services.findOne({where: {id: request.legalFieldId}})
-			            await Services.update({count: service.count+1}, {where: {id: request.legalFieldId}});
+		Request.findOrCreate({
+			where: {
+				[Op.and]: [
+					{getstarted: {[Op.iLike]: '%' + req.body.getstarted + '%'}},
+					{firstName: {[Op.iLike]: '%' + req.body.firstName + '%'}},
+					{lastName: {[Op.iLike]: '%' + req.body.lastName + '%'}},
+					{email: {[Op.iLike]: '%' + req.body.email + '%'}},
+				],
+			},
+
+			defaults: req.body,
+		}).then(async(request) => {
+			const isAlready = request[1];
+			const inserted = request[0];
+
+			if (!isAlready) {
+				/* #swagger.responses[409] = {
+                            description: "Already!",
+                            schema: { $statusCode : 409 ,$status: true, $message: "Country already exist!", $data : {}}
+                        } */
+				res.send({
+					status: 409,
+					msg: 'request already exist',
+				});
+			} else {
+				const requestData = {
+					id: inserted.id,
+					getstarted: inserted.getstarted,
+					industryId: inserted.industryId,
+					industryTitle: inserted.industryTitle,
+					firstName: inserted.firstName,
+					lastName: inserted.lastName,
+					email: inserted.email,
+					jurisdictionId: inserted.jurisdictionId,
+					jurisdictionName: inserted.jurisdictionName,
+					languageId: inserted.languageId,
+					languageName: inserted.languageName,
+					legalFieldId: inserted.legalFieldId,
+					legalFieldName: inserted.legalFieldName,
+					serviceSubcategoryId: inserted.serviceSubcategoryId,
+					serviceSubcategoryName: inserted.serviceSubcategoryName,
+					cost: inserted.cost,
+					budgetMin: inserted.budgetMin,
+					budgetMax: inserted.budgetMax,
+					rating: inserted.rating,
+					experience: inserted.experience,
+					lawFirmId: inserted.lawFirmId,
+					isActive: inserted.isActive,
+					isDeleted: inserted.isDeleted,
+				};
+		const service = await Services.findOne({where: {id: requestData.legalFieldId}})
+			            await Services.update({count: service.count+1}, {where: {id: requestData.legalFieldId}});
 
 			const device = await User.findOne({where: {id: req.body.userId}});
 			const notiData = {
-				title: request.getstarted,
+				title: requestData.getstarted,
 				message: 'Your lead has been created successfully.',
 				senderName: device.firstname + ' ' + device.lastname,
 				senderId: req.body.userId,
@@ -64,9 +90,10 @@ module.exports.createRequest = async (req, res) => {
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
-				createdRequest,
+				requestData,
 			);
-		});
+		}
+	});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
