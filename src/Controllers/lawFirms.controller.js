@@ -460,14 +460,14 @@ module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 
 module.exports.getFilterlawFirmsDetails = async (req, res) => {
 	try {
-		if(req.body.rating === '1'){
+		if(req.body.rating == '1'){
 			if(req.body.serviceName === "Other"){
 				LawFirm.findAll({
 					where: {
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-							{userrating: {[Op.between] : [0,3.5]}}
+							{userrating: {[Op.between] : [0.0,3.5]}}
 						],
 					},
 					include: [
@@ -477,7 +477,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 						where: {
 							[Op.and]: [
 							{price: {[Op.between] : [req.body.min_budget,req.body.max_budget]}}
-							],
+							]
 								},
 						},
 		
@@ -495,7 +495,6 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					],
 					order: [['createdAt', 'DESC']],
 				}).then((lawfirms) => {
-					
 					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 				});
 			} else {
@@ -505,7 +504,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					[Op.and]: [
 						{languageId: {[Op.contains]: req.body.languageId}},
 						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-						{userrating: {[Op.between] : [0,3.5]}}
+						{userrating: {[Op.between] : [0.0,3.5]}}
 					],
 				},
 				include: [
@@ -534,7 +533,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 			  }).then((lawfirms) => {
 				return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 			})};
-		} else if(req.body.rating === '2'){
+			} else if(req.body.rating === '2'){
 			if(req.body.serviceName === "Other"){
 				LawFirm.findAll({
 					where: {
@@ -569,7 +568,6 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					],
 					order: [['createdAt', 'DESC']],
 				}).then((lawfirms) => {
-					
 					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 				});
 			} else {
@@ -685,6 +683,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 
 		}
 	} catch (err) {
+		console.log("ghffdftd",err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
