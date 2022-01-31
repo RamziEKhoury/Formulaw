@@ -49,7 +49,6 @@ module.exports.addAppointment = async (req, res) => {
 		}).then(async(appointment) => {
 			const isAlready = appointment[1];
 			const inserted = appointment[0];
-
 			if (!isAlready) {
 				/* #swagger.responses[409] = {
                             description: "Already!",

@@ -26,7 +26,6 @@ module.exports.createRequest = async (req, res) => {
 					{email: {[Op.iLike]: '%' + req.body.email + '%'}},
 				],
 			},
-
 			defaults: req.body,
 		}).then(async(request) => {
 			const isAlready = request[1];
