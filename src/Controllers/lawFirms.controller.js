@@ -467,7 +467,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-							{userrating: {[Op.between] : [0.0,3.5]}}
+							{userrating: {[Op.gte] : 0.0}}
 						],
 					},
 					include: [
@@ -504,7 +504,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					[Op.and]: [
 						{languageId: {[Op.contains]: req.body.languageId}},
 						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-						{userrating: {[Op.between] : [0.0,3.5]}}
+						{userrating: {[Op.gte] : 0.0}}
 					],
 				},
 				include: [
@@ -540,7 +540,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-							{userrating: {[Op.between] : [3.6,4.5]}}
+							{userrating: {[Op.gte] : 3.6}}
 						],
 					},
 					include: [
@@ -577,7 +577,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					[Op.and]: [
 						{languageId: {[Op.contains]: req.body.languageId}},
 						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-						{userrating: {[Op.between] : [3.6,4.5]}}
+						{userrating: {[Op.gte] : 3.6}}
 					],
 				},
 				include: [
@@ -613,7 +613,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-							{userrating: {[Op.between] : [4.6,5.0]}}
+							{userrating: {[Op.gte] : 4.6}}
 						],
 					},
 					include: [
@@ -651,7 +651,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 					[Op.and]: [
 						{languageId: {[Op.contains]: req.body.languageId}},
 						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-						{userrating: {[Op.between] : [4.6,5.0]}}
+						{userrating: {[Op.gte] : 4.6}}
 					],
 				},
 				include: [

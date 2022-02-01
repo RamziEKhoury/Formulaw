@@ -39,5 +39,11 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/service/get-topservices/:limit',
 		serviceController.getTopServices);
+
+	app.post(
+		'/api/v1/service/sortnumber-check',
+		serviceController.sortnumberVarify,
+		);
+
 	
 };

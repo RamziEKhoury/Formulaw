@@ -27,5 +27,10 @@ module.exports = function(app) {
 
 	app.get('/api/v1/lawfirm/get-service/:id', lawFirmServiceController.getLawFirmService);
 
+	app.get(
+		'/api/v1/lawfirm/get-topPriceservice',
+		lawFirmServiceController.getLawFirmServiceMaxPrice);
+	
+
 	
 };
