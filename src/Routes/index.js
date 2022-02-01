@@ -36,4 +36,6 @@ module.exports=(app)=> {
 	require('./customer.route')(app);
 	require('./charge.route')(app);
 	require('./allCountry.route')(app);
+	require('./blogsCategory.route')(app);
+	require('./blogs.route')(app);
 };
