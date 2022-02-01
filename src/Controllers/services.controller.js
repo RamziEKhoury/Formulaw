@@ -24,6 +24,7 @@ module.exports.addService = async (req, res) => {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				description: req.body.description,
+				sortnumber: req.body.sortnumber,
 				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
 			},
@@ -47,6 +48,7 @@ module.exports.addService = async (req, res) => {
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
 					description: inserted.description,
+					sortnumber: inserted.sortnumber,
 					// isBillable: inserted.isBillable,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
@@ -77,6 +79,7 @@ module.exports.serviceUpdate = async (req, res) => {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				description: req.body.description,
+				sortnumber: req.body.sortnumber,
 				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
 			},
@@ -252,6 +255,7 @@ module.exports.getTopServices = (req, res) => {
 	// #swagger.tags = ['Service']
 	const limit = req.params.limit;
 	Services.findAll({ limit: limit,
+		isDeleted: 0,
 		order: [['count', 'DESC']],
 	})
 		.then((data) => {
@@ -272,4 +276,25 @@ module.exports.getTopServices = (req, res) => {
 				message: err.message || 'Some error occurred while retrieving Country.',
 			});
 		});
+};
+
+module.exports.sortnumberVarify = async (req, res) => {
+	try {
+		Services.findOne({
+			where: {
+				sortnumber: req.body.sortnumber,
+				isDeleted: 0,
+			},
+		}).then(async (result) => {
+			/* #swagger.responses[404] = {
+                   description: "Email Not found.",
+                   schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+               } */
+			// return res.status(404).send({ message: "Email Not found." });
+
+			return apiResponses.successResponseWithData(res, 'success!', result);
+		});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
 };
