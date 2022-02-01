@@ -25,7 +25,7 @@ module.exports.getAllCountries = (req, res) => {
 	const limit = req.params.limit;
 		AllCountry.findAll({
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['name', 'ASC']],
 		})
 			.then((result) => {
 			
