@@ -60,6 +60,7 @@ db.allcountry = require('./allCountry.model')(sequelize, Sequelize);
 db.subscriptionPayment = require('./subscriptionPayment.model')(sequelize, Sequelize);
 db.blogscategory = require('./blogsCategory.model')(sequelize, Sequelize);
 db.blog= require('./blogs.model')(sequelize, Sequelize);
+db.seo= require('./seo.model')(sequelize, Sequelize);
 
 
 db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
