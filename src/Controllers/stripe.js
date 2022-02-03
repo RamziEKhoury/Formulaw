@@ -259,6 +259,7 @@ module.exports.getSubscriptions = (async (req, res) => {
 					required: false,
 				},
 			],
+			order: [['createdAt', 'DESC']],
 		})
 			.then(async (subscriptions) => {
 				subscriptions = await Promise.all(subscriptions.map(async (p)=> {

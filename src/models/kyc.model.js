@@ -34,6 +34,12 @@ module.exports = (sequelize, Sequelize) => {
         PhnNumber: {
 			type: Sequelize.STRING,
 		},
+		passportnumber: {
+			type: Sequelize.STRING,
+		},
+		nationality: {
+			type: Sequelize.STRING,
+		},
 		status: {
             defaultValue: 'Pending',
             type: Sequelize.ENUM('Pending', 'Approved','Rejected'),

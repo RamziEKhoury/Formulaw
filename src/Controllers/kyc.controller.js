@@ -17,6 +17,8 @@ module.exports.addKycDetails = async (req, res) => {
 			country: req.body.country,
 			city: req.body.city,
 			postalcode: req.body.postalcode,
+			nationality: req.body.nationality,
+			passportnumber: req.body.passportnumber,
 		}).then((kycDetail) => {
 			return apiResponses.successResponseWithData(res, 'success!', kycDetail);
 		});
@@ -40,6 +42,8 @@ module.exports.updateKycDetails = async (req, res) => {
 					country: req.body.country,
 					city: req.body.city,
 					postalcode: req.body.postalcode,
+					nationality: req.body.nationality,
+					passportnumber: req.body.passportnumber,
 				},
 				{where: {userId: req.body.userId}},
 			)
