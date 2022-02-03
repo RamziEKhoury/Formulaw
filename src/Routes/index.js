@@ -38,4 +38,5 @@ module.exports=(app)=> {
 	require('./allCountry.route')(app);
 	require('./blogsCategory.route')(app);
 	require('./blogs.route')(app);
+	require('./seo.route')(app);
 };
