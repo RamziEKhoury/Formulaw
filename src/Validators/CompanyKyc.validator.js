@@ -14,10 +14,14 @@ const addCompanyKycDetailsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('crNumber must be specified.'),
-    body('crNumber')
+    body('nationality')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('crNumber must be specified.'),
+		.withMessage('nationality must be specified.'),
+	body('passportnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('passportnumber must be specified.'),
     body('companyName')
 		.isLength({min: 1})
 		.trim()
@@ -103,10 +107,14 @@ const updateCompanyKycDetailsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('crNumber must be specified.'),
-    body('crNumber')
+	body('nationality')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('crNumber must be specified.'),
+		.withMessage('nationality must be specified.'),
+	body('passportnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('passportnumber must be specified.'),
     body('companyName')
 		.isLength({min: 1})
 		.trim()

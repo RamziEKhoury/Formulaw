@@ -24,6 +24,8 @@ module.exports.addCompanyKycDetails = async (req, res) => {
 			country: req.body.country,
 			city: req.body.city,
 			postalcode: req.body.postalcode,
+			nationality: req.body.nationality,
+			passportnumber: req.body.passportnumber,
 		}).then((companyKycDetail) => {
 			return apiResponses.successResponseWithData(
 				res,
@@ -57,6 +59,8 @@ module.exports.updateCompanyKycDetails = async (req, res) => {
 				country: req.body.country,
 				city: req.body.city,
 				postalcode: req.body.postalcode,
+				nationality: req.body.nationality,
+			    passportnumber: req.body.passportnumber,
 			},
 			{where: {userId: req.body.userId}},
 		)
