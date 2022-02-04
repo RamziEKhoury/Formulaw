@@ -152,6 +152,7 @@ module.exports.userLogin = (req, res) => {
 				firstName: user.firstname,
 				lastName: user.lastname,
 				email: user.email,
+				roleName: user.roleName,
 				status: user.status,
 				token: token,
 			};

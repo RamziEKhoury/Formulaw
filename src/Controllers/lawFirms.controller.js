@@ -99,7 +99,7 @@ module.exports.addLawFirm = async (req, res) => {
 				const password = generatePassword();
 				const user = await User.create({
 					firstname: inserted.en_name,
-					lastname : " ",
+					lastname: ' ',
 					email: inserted.email,
 					role: UserRole.LAWFIRM_ADMIN,
 					username: inserted.email,
@@ -460,160 +460,14 @@ module.exports.lawFirmeWorkflowStatus = async (req, res) => {
 
 module.exports.getFilterlawFirmsDetails = async (req, res) => {
 	try {
-		if(req.body.rating == '1'){
-			if(req.body.serviceName === "Other"){
+		if (req.body.rating == '1') {
+			if (req.body.serviceName === 'Other') {
 				LawFirm.findAll({
 					where: {
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-							{userrating: {[Op.gte] : 0.0}}
-						],
-					},
-					include: [
-						{
-							model: LawFirmService,
-						as: 'lawfirm_services',
-						where: {
-							[Op.and]: [
-							{price: {[Op.between] : [req.body.min_budget,req.body.max_budget]}}
-							]
-								},
-						},
-		
-						{
-							model: LawFirmIndustry,
-						},
-		
-						{
-							model: LawFirmTax,
-						},
-						
-						{
-							model: Testimonial,
-						},
-					],
-					order: [['createdAt', 'DESC']],
-				}).then((lawfirms) => {
-					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-				});
-			} else {
-			const limit = 1000;
-			LawFirm.findAll({
-				where: {
-					[Op.and]: [
-						{languageId: {[Op.contains]: req.body.languageId}},
-						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-						{userrating: {[Op.gte] : 0.0}}
-					],
-				},
-				include: [
-					{
-						model: LawFirmService,
-						as: 'lawfirm_services',
-						where: {
-							[Op.and]: [
-							{title: {[Op.in]: req.body.services}},
-							{price: {[Op.between] : [req.body.min_budget,req.body.max_budget]}}
-							],
-								},
-					},
-					{
-						model: LawFirmIndustry,
-					},
-					{
-						model: LawFirmTax,
-					},
-					{
-						model: Testimonial,
-					},
-				],
-				limit: limit,
-				order: [['createdAt', 'DESC']],
-			  }).then((lawfirms) => {
-				return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-			})};
-			} else if(req.body.rating === '2'){
-			if(req.body.serviceName === "Other"){
-				LawFirm.findAll({
-					where: {
-						[Op.and]: [
-							{languageId: {[Op.contains]: req.body.languageId}},
-							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-							{userrating: {[Op.gte] : 3.6}}
-						],
-					},
-					include: [
-						{
-							model: LawFirmService,
-						as: 'lawfirm_services',
-						where: {
-							[Op.and]: [
-							{price: {[Op.between] : [req.body.min_budget,req.body.max_budget]}}
-							]
-								},
-						},
-		
-						{
-							model: LawFirmIndustry,
-						},
-		
-						{
-							model: LawFirmTax,
-						},
-						
-						{
-							model: Testimonial,
-						},
-					],
-					order: [['createdAt', 'DESC']],
-				}).then((lawfirms) => {
-					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-				});
-			} else {
-			const limit = 1000;
-			LawFirm.findAll({
-				where: {
-					[Op.and]: [
-						{languageId: {[Op.contains]: req.body.languageId}},
-						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-						{userrating: {[Op.gte] : 3.6}}
-					],
-				},
-				include: [
-					{
-						model: LawFirmService,
-						as: 'lawfirm_services',
-						where: {
-							[Op.and]: [
-							{title: {[Op.in]: req.body.services}},
-							{price: {[Op.between] : [req.body.min_budget,req.body.max_budget]}}
-							],
-								},
-					},
-					{
-						model: LawFirmIndustry,
-					},
-					{
-						model: LawFirmTax,
-					},
-					{
-						model: Testimonial,
-					},
-				],
-				limit: limit,
-				order: [['createdAt', 'DESC']],
-			  }).then((lawfirms) => {
-				return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-			})};
-		} else if (req.body.rating === '3'){
-			if(req.body.serviceName === "Other"){
-				LawFirm.findAll({
-					where: {
-						[Op.and]: [
-							{languageId: {[Op.contains]: req.body.languageId}},
-							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-							{userrating: {[Op.gte] : 4.6}}
+							{userrating: {[Op.gte]: 0.0}},
 						],
 					},
 					include: [
@@ -622,68 +476,215 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 							as: 'lawfirm_services',
 							where: {
 								[Op.and]: [
-								{price: {[Op.between] : [req.body.min_budget,req.body.max_budget]}}
-								]
-									},
+									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
+								],
+							},
 						},
-		
+
 						{
 							model: LawFirmIndustry,
 						},
-		
+
 						{
 							model: LawFirmTax,
 						},
-						
+
 						{
 							model: Testimonial,
 						},
 					],
 					order: [['createdAt', 'DESC']],
 				}).then((lawfirms) => {
-					
 					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
 				});
 			} else {
-			const limit = 1000;
-			LawFirm.findAll({
-				where: {
-					[Op.and]: [
-						{languageId: {[Op.contains]: req.body.languageId}},
-						{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
-						{userrating: {[Op.gte] : 4.6}}
+				const limit = 1000;
+				LawFirm.findAll({
+					where: {
+						[Op.and]: [
+							{languageId: {[Op.contains]: req.body.languageId}},
+							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
+							{userrating: {[Op.gte]: 0.0}},
+						],
+					},
+					include: [
+						{
+							model: LawFirmService,
+							as: 'lawfirm_services',
+							where: {
+								[Op.and]: [
+									{title: {[Op.in]: req.body.services}},
+									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
+								],
+							},
+						},
+						{
+							model: LawFirmIndustry,
+						},
+						{
+							model: LawFirmTax,
+						},
+						{
+							model: Testimonial,
+						},
 					],
-				},
-				include: [
-					{
-						model: LawFirmService,
-						as: 'lawfirm_services',
-						where: {
-							[Op.and]: [
-							{title: {[Op.in]: req.body.services}},
-							{price: {[Op.between] : [req.body.min_budget,req.body.max_budget]}}
-							]
-								},
-					},
-					{
-						model: LawFirmIndustry,
-					},
-					{
-						model: LawFirmTax,
-					},
-					{
-						model: Testimonial,
-					},
-				],
-				limit: limit,
-				order: [['createdAt', 'DESC']],
+					limit: limit,
+					order: [['createdAt', 'DESC']],
 			  }).then((lawfirms) => {
-				return apiResponses.successResponseWithData(res, 'Success', lawfirms);
-			})};
+					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+				});
+			}
+		} else if (req.body.rating === '2') {
+			if (req.body.serviceName === 'Other') {
+				LawFirm.findAll({
+					where: {
+						[Op.and]: [
+							{languageId: {[Op.contains]: req.body.languageId}},
+							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
+							{userrating: {[Op.gte]: 3.6}},
+						],
+					},
+					include: [
+						{
+							model: LawFirmService,
+							as: 'lawfirm_services',
+							where: {
+								[Op.and]: [
+									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
+								],
+							},
+						},
 
+						{
+							model: LawFirmIndustry,
+						},
+
+						{
+							model: LawFirmTax,
+						},
+
+						{
+							model: Testimonial,
+						},
+					],
+					order: [['createdAt', 'DESC']],
+				}).then((lawfirms) => {
+					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+				});
+			} else {
+				const limit = 1000;
+				LawFirm.findAll({
+					where: {
+						[Op.and]: [
+							{languageId: {[Op.contains]: req.body.languageId}},
+							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
+							{userrating: {[Op.gte]: 3.6}},
+						],
+					},
+					include: [
+						{
+							model: LawFirmService,
+							as: 'lawfirm_services',
+							where: {
+								[Op.and]: [
+									{title: {[Op.in]: req.body.services}},
+									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
+								],
+							},
+						},
+						{
+							model: LawFirmIndustry,
+						},
+						{
+							model: LawFirmTax,
+						},
+						{
+							model: Testimonial,
+						},
+					],
+					limit: limit,
+					order: [['createdAt', 'DESC']],
+			  }).then((lawfirms) => {
+					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+				});
+			}
+		} else if (req.body.rating === '3') {
+			if (req.body.serviceName === 'Other') {
+				LawFirm.findAll({
+					where: {
+						[Op.and]: [
+							{languageId: {[Op.contains]: req.body.languageId}},
+							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
+							{userrating: {[Op.gte]: 4.6}},
+						],
+					},
+					include: [
+						{
+							model: LawFirmService,
+							as: 'lawfirm_services',
+							where: {
+								[Op.and]: [
+									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
+								],
+							},
+						},
+
+						{
+							model: LawFirmIndustry,
+						},
+
+						{
+							model: LawFirmTax,
+						},
+
+						{
+							model: Testimonial,
+						},
+					],
+					order: [['createdAt', 'DESC']],
+				}).then((lawfirms) => {
+					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+				});
+			} else {
+				const limit = 1000;
+				LawFirm.findAll({
+					where: {
+						[Op.and]: [
+							{languageId: {[Op.contains]: req.body.languageId}},
+							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
+							{userrating: {[Op.gte]: 4.6}},
+						],
+					},
+					include: [
+						{
+							model: LawFirmService,
+							as: 'lawfirm_services',
+							where: {
+								[Op.and]: [
+									{title: {[Op.in]: req.body.services}},
+									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
+								],
+							},
+						},
+						{
+							model: LawFirmIndustry,
+						},
+						{
+							model: LawFirmTax,
+						},
+						{
+							model: Testimonial,
+						},
+					],
+					limit: limit,
+					order: [['createdAt', 'DESC']],
+			  }).then((lawfirms) => {
+					return apiResponses.successResponseWithData(res, 'Success', lawfirms);
+				});
+			}
 		}
 	} catch (err) {
-		console.log("ghffdftd",err);
+		console.log('ghffdftd', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
