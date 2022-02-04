@@ -14,10 +14,7 @@ module.exports.addService = async (req, res) => {
             } */
 		Services.findOrCreate({
 			where: {
-				[Op.or]: [
-					{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
-					{ar_name: {[Op.iLike]: '%' + req.body.ar_name + '%'}},
-				],
+				en_name: {[Op.iLike]: '%' + req.body.en_name + '%'},
 			},
 
 			defaults: {

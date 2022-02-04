@@ -32,10 +32,7 @@ module.exports.addLawyer = async (req, res) => {
         } */
 		Lawyer.findOrCreate({
 			where: {
-				[Op.or]: [
-					{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
-					{ar_name: {[Op.iLike]: '%' + req.body.ar_name + '%'}},
-				],
+					en_name: {[Op.iLike]: '%' + req.body.en_name + '%'},
 			},
 			defaults: {
 				en_name: req.body.en_name,
