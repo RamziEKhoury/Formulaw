@@ -82,19 +82,19 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.ENUM('lead', 'subscription'),
 			},
 			questionOne: {
-				type: DataTypes.STRING(20050),
+				type: Sequelize.STRING,
 			},
 			questionTwo: {
-				type: DataTypes.STRING(20050),
+				type: Sequelize.STRING,
 			},
 			questionThree: {
-				type: DataTypes.STRING(20050),
+				type: Sequelize.STRING,
 			},
 			questionFour: {
-				type: DataTypes.STRING(20050),
+				type: Sequelize.STRING,
 			},
 			questionFive: {
-				type: DataTypes.STRING(20050),
+				type: Sequelize.STRING,
 			},
 			isActive: {
 				defaultValue: 0,

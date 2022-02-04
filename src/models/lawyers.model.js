@@ -58,7 +58,7 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.STRING,
 			},
 			expertise: {
-				type: DataTypes.STRING(20050),
+				type: Sequelize.STRING,
 			},
 			rating: {
 				type: Sequelize.STRING,
