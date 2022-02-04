@@ -54,7 +54,7 @@ module.exports = (sequelize, Sequelize) => {
 			},
 
 			expertise: {
-				type: Sequelize.STRING,
+				type: DataTypes.STRING(2048),
 			},
 			workflow: {
 				type: Sequelize.ENUM(
