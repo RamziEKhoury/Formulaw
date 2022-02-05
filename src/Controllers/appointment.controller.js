@@ -218,8 +218,8 @@ module.exports.changeStatus = async (req, res) => {
 						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 						user.query.getstarted,
 					);
-					console.log('controller without moment--->', new Date(new Date(user.time).toUTCString().slice(0, -3)));
-					console.log('controller time--->', moment(user.time).format('HH:mm A'));
+					console.log('controller without moment--->', new Date(user.time).getUTCTime());
+					console.log('controller time--->', moment(user.time).format('MMM DD h:mm A'));
 
 					const device = await User.findOne({where: {id: user.customerId}});
 					const notiData = {
