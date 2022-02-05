@@ -46,7 +46,7 @@ module.exports.addAppointment = async (req, res) => {
 				orderId: orderId,
 				scheduleAt: req.body.scheduleAt,
 			},
-		}).then(async(appointment) => {
+		}).then(async (appointment) => {
 			const isAlready = appointment[1];
 			const inserted = appointment[0];
 			if (!isAlready) {
@@ -72,34 +72,34 @@ module.exports.addAppointment = async (req, res) => {
 					orderId: orderId,
 					scheduleAt: inserted.scheduleAt,
 				};
-			await Room.create({
-				appointmentId: appointmentData.id,
-				roomName: appointmentData.id,
-				adminId: appointmentData.adminId,
-				customerId: appointmentData.customerId,
-				queryId: appointmentData.queryId,
-			});
-			const device = await User.findOne({where: {id: req.body.customerId}});
-			const notiData = {
-				title: 'Appointment',
-				message: 'Your appointment have scheduled on '+moment(appointmentData.date).format('DD/MM/YYYY')+' at '+ moment(appointmentData.time).format('hh:mm:ss')+'.',
-				senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
-				senderId: req.body.customerId,
-				senderType: 'APPOINTMENT',
-				receiverid: req.body.customerId,
-				notificationType: WorkflowAppointment.SCHEDULE_LEAD,
-				target: appointmentData.id,
-			};
-			await Notifications.notificationCreate(notiData);
-			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointmentData.time).format('DD/MM/YYYY') + ' at ' +moment(appointmentData.time).format('hh:mm:ss')+ '.');
-			}
+				await Room.create({
+					appointmentId: appointmentData.id,
+					roomName: appointmentData.id,
+					adminId: appointmentData.adminId,
+					customerId: appointmentData.customerId,
+					queryId: appointmentData.queryId,
+				});
+				const device = await User.findOne({where: {id: req.body.customerId}});
+				const notiData = {
+					title: 'Appointment',
+					message: 'Your appointment have scheduled on '+moment(appointmentData.date).format('DD/MM/YYYY')+' at '+ moment(appointmentData.time).format('hh:mm:ss')+'.',
+					senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
+					senderId: req.body.customerId,
+					senderType: 'APPOINTMENT',
+					receiverid: req.body.customerId,
+					notificationType: WorkflowAppointment.SCHEDULE_LEAD,
+					target: appointmentData.id,
+				};
+				await Notifications.notificationCreate(notiData);
+				if (!!device.deviceToken) {
+					await Notifications.notification(device.deviceToken, 'Your appointment have scheduled on ' + moment(appointmentData.time).format('DD/MM/YYYY') + ' at ' +moment(appointmentData.time).format('hh:mm:ss')+ '.');
+				}
 
-			return apiResponses.successResponseWithData(
-				res,
-				'appointment registered successfully!',
-				appointmentData,
-			);
+				return apiResponses.successResponseWithData(
+					res,
+					'appointment registered successfully!',
+					appointmentData,
+				);
 			}
 		});
 	} catch (err) {
@@ -218,6 +218,8 @@ module.exports.changeStatus = async (req, res) => {
 						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 						user.query.getstarted,
 					);
+					console.log('controller without moment--->', user.time);
+					console.log('controller time--->', moment(user.time).format('HH:mm A'));
 
 					const device = await User.findOne({where: {id: user.customerId}});
 					const notiData = {

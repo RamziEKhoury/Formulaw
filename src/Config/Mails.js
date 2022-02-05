@@ -1,24 +1,21 @@
 const nodemailer = require('nodemailer');
 
 const moment = require('moment');
-
-function timeNow(i) {
-	const d = new Date(),
-		h = (d.getHours() < 10 ? '0' : '') + d.getHours(),
-		m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
-	i.value = h + ':' + m;
-}
+const smtpEndpoint = 'email-smtp.eu-west-1.amazonaws.com';
+const port = 465;
+const senderAddress = `Formulaw <info@formu.law>`;
+const smtpUsername = 'AKIASE3LOW3XFGIXHRV4';
+const smtpPassword = 'BALTT+vkKNKXz8rRLXe11v2JhBnhstNjNH/F8WFNTtks';
 
 const transporter = nodemailer.createTransport({
-	host: 'smtp.gmail.com',
-	port: 465,
+	host: smtpEndpoint,
+	port: port,
+	pool: true,
 	secure: true,
 	auth: {
-		user: 'formulawauth@gmail.com', // email ID
-		pass: 'Formulaw$1997', // Password
+		user: smtpUsername,
+		pass: smtpPassword,
 	},
-
-
 });
 
 
@@ -26,7 +23,7 @@ module.exports = {
 	userRegistration: (email, username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
@@ -50,7 +47,7 @@ module.exports = {
 	userPasswordReset: (email, token) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding Password reset on FORMULAW!', // Subject of the mail.
 			html:
@@ -70,7 +67,7 @@ module.exports = {
 	lawyerRegistration: (email, password) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding Registration as a Lawyer on FORMULAW!', // Subject of the mail.
 			html:
@@ -96,7 +93,7 @@ module.exports = {
 	userRegistrationAdminMail: (email, username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
@@ -121,7 +118,7 @@ module.exports = {
 	adminAppointmentSchedule: (email, username, time, date, name, lead) => {
 		console.log('logIn_Mail====>' + email, time, date, username);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Appointment:', // Subject of the mail.
 			html:
@@ -142,7 +139,7 @@ module.exports = {
 	userAppointmentSchedule: (email, fullname, time, date, id, username, orderid, lawfirm) => {
 		console.log('logIn_Mail==User==>' + email, time, date);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Appointment', // Subject of the mail.
 			html:
@@ -167,7 +164,7 @@ module.exports = {
 	userRemindermail: (email, fullname, time, date, id, username, orderid, lawfirm)=> {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
@@ -188,7 +185,7 @@ module.exports = {
 	adminRemindermail: (email, username, time, date, name, lead) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
@@ -210,7 +207,7 @@ module.exports = {
 	adminAppointmentApproved: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Approved', // Subject of the mail.
 			html:
@@ -234,7 +231,7 @@ module.exports = {
 	userAppointmentApproved: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Approved', // Subject of the mail.
 			html:
@@ -259,7 +256,7 @@ module.exports = {
 	adminAppointmentPayment: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Payment:', // Subject of the mail.
 			html:
@@ -287,7 +284,7 @@ module.exports = {
 	userAppointmentPayment: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Payment', // Subject of the mail.
 			html:
@@ -317,7 +314,7 @@ module.exports = {
 	adminAppointmentConsult: (email, time, date, username, name, lawyer, lawfirm) => {
 		console.log('logIn_Mail admin====>' + email, time, date, username, name, lawyer, lawfirm);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation:', // Subject of the mail.
 			html:
@@ -338,7 +335,7 @@ module.exports = {
 	userAppointmentConsult: (email, fullname, time, date, lawyer, lawfirm, orderid, id) => {
 		console.log('logIn_Mail user====>' + email, fullname, time, date, lawyer, lawfirm, orderid, id);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
@@ -359,7 +356,7 @@ module.exports = {
 	lawyerAppointmentConsult: (lawyer, email, user, admin) => {
 		console.log('logIn_Mail lawyer====>' + lawyer, email, user, admin);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
@@ -381,7 +378,7 @@ module.exports = {
 	adminAppointmentComplete: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead completed', // subject:", // Subject of the mail.
 			html:
@@ -404,7 +401,7 @@ module.exports = {
 	userAppointmentComplete: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead Completed', // Subject of the mail.
 			html:
@@ -428,7 +425,7 @@ module.exports = {
 	adminAppointmentCanceled: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead Canceled', // subject:", // Subject of the mail.
 			html:
@@ -451,7 +448,7 @@ module.exports = {
 	userAppointmentCanceled: (email, time, date) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead Canceled', // Subject of the mail.
 			html:
@@ -477,7 +474,7 @@ module.exports = {
 	adminSubscriptionmail: (email, fullname, username) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'User Subscription:', // Subject of the mail.
 			html:
@@ -496,7 +493,7 @@ module.exports = {
 	userSubscriptionmail: (email, fullname, id, orderid) => {
 		console.log('subscription====>' + email);
 		const details = {
-			from: 'formulawauth@gmail.com', // sender address same as above
+			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Subscription', // Subject of the mail.
 			html:
@@ -513,9 +510,58 @@ module.exports = {
 			}
 		});
 	},
-
-
-	// subscription mails
-
-
 };
+
+
+//
+// eslint-disable-next-line require-jsdoc
+// function mailTest(email, username) {
+// 	const smtpEndpoint = 'email-smtp.eu-west-1.amazonaws.com';
+// 	const port = 465;
+// 	const senderAddress = `Formulaw <info@formu.law>`;
+// 	const toAddresses = email;
+// 	const smtpUsername = 'AKIASE3LOW3XFGIXHRV4';
+// 	const smtpPassword = 'BALTT+vkKNKXz8rRLXe11v2JhBnhstNjNH/F8WFNTtks';
+// 	const subject = 'Amazon Pinpoint test (Nodemailer)';
+//
+// 	// The body of the email for recipients whose email clients support HTML content.
+// 	const body_html = `<html>
+// <head></head>
+// <body>
+//   <h1>Amazon Pinpoint Test (Nodemailer)</h1>
+//   <p>This email was sent with <a href='https://aws.amazon.com/pinpoint/'>Amazon Pinpoint</a>
+//         using <a href='https://nodemailer.com'>Nodemailer</a> for Node.js.</p>
+// </body>
+// </html>`;
+//
+// 	async function main() {
+// 		// Create the SMTP transport.
+// 		const transporter = nodemailer.createTransport({
+// 			host: smtpEndpoint,
+// 			port: port,
+// 			pool: true,
+// 			secure: true,
+// 			auth: {
+// 				user: smtpUsername,
+// 				pass: smtpPassword,
+// 			},
+// 		});
+//
+// 		// Specify the fields in the email.
+// 		const mailOptions = {
+// 			from: senderAddress,
+// 			to: toAddresses,
+// 			subject: 'Amazon Pinpoint test (Nodemailer)',
+// 			html: body_html,
+// 		};
+//
+// 		// Send the email.
+// 		const info = await transporter.sendMail(mailOptions);
+//
+// 		console.log('Message sent! Message ID: ', info.messageId);
+// 	}
+//
+// 	main().catch(console.error);
+// }
+//
+// mailTest('js362676@gmail.com', 'Jitendra');
