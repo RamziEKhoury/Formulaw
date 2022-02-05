@@ -119,20 +119,15 @@ module.exports.updatetestimonial = async (req, res) => {
 	try {
 		await Testimonial.update(
 			{
-				id: req.body.id,
-				userId: req.body.userId,
-				orderId: req.body.orderId,
-				lawFirmId: req.body.lawFirmId,
 				testimonialdata: req.body.testimonialdata,
 				rating: req.body.rating,
 			},
-			{where: {id: req.body.id}},
+			{where: {id: req.params.id}},
 		)
 			.then((testimonial) => {
 				if (!testimonial) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-
 				return apiResponses.successResponseWithData(
 					res,
 					'Success',
