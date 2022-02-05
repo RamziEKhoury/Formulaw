@@ -16,13 +16,6 @@ const {WorkflowAppointment} = require('../enum');
 const _ = require('lodash');
 const schedule = require('node-schedule');
 
-function convert(str) {
-	var date = new Date(str),
-		mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-		day = ("0" + date.getDate()).slice(-2);
-	return [date.getFullYear(), mnth, day].join("-");
-}
-
 module.exports.addAppointment = async (req, res) => {
 	try {
 		// #swagger.tags = ['Appointment']
@@ -224,8 +217,8 @@ module.exports.changeStatus = async (req, res) => {
 						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 						user.query.getstarted,
 					);
-					console.log('controller time--->', moment(user.time).format('MMM DD h:mm A'));
-					console.log('controller without moment--->', convert(user.time));
+					console.log('controller time--->', new Date(user.time).toISOString());
+					console.log('controller without moment--->', new Date(user.time).toUTCString());
 
 					const device = await User.findOne({where: {id: user.customerId}});
 					const notiData = {
