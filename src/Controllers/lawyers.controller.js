@@ -32,7 +32,7 @@ module.exports.addLawyer = async (req, res) => {
         } */
 		Lawyer.findOrCreate({
 			where: {
-					en_name: {[Op.iLike]: '%' + req.body.en_name + '%'},
+					en_name: req.body.en_name,
 			},
 			defaults: {
 				en_name: req.body.en_name,
@@ -54,6 +54,7 @@ module.exports.addLawyer = async (req, res) => {
 				images: req.body.images,
 				rating: req.body.rating,
 				experience: req.body.experience,
+				gender: req.body.gender,
 				isActive: req.body.isActive,
 			},
 		}).then(async (lawyer) => {
@@ -79,6 +80,7 @@ module.exports.addLawyer = async (req, res) => {
 					email: inserted.email,
 					role: UserRole.LAWYER,
 					username: inserted.email,
+					gender: inserted.gender,
 					password: bcrypt.hashSync(password, 8),
 					userType: 'normal',
 					lawfirmid: req.body.lawFirmId,
@@ -104,6 +106,7 @@ module.exports.addLawyer = async (req, res) => {
 					jurisdiction: inserted.jurisdiction,
 					expertise: inserted.expertise,
 					rating: inserted.rating,
+					gender: inserted.gender,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};
@@ -147,6 +150,7 @@ module.exports.lawyerUpdate = async (req, res) => {
 				numOfLawyer: req.body.numOfLawyer,
 				rating: req.body.rating,
 				experience: req.body.experience,
+				gender: req.body.gender,
 				isActive: req.body.isActive,
 			},
 			{where: {id: req.body.id}},

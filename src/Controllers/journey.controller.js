@@ -3,11 +3,9 @@ const Journey = db.journey;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addJourney = async (req, res) => {
-	console.log('dfdgsgdfh', req.body);
 	try {
 		Journey.findAll({order: [['createdAt', 'DESC']]}).then((data) => {
 			const jLength = data.length;
-			console.log(jLength);
 			if (jLength <= 2) {
 				return Journey.create({
 					title: req.body.title,

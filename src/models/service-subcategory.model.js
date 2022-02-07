@@ -21,6 +21,9 @@ module.exports = (sequelize, Sequelize) => {
 			description: {
 				type: Sequelize.STRING,
 			},
+			sortnumber: {
+				type: Sequelize.INTEGER,
+			},
 			// isBillable: {
 			//   defaultValue: 0,
 			//   type: Sequelize.ENUM('0', '1'),

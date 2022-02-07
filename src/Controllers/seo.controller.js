@@ -81,7 +81,7 @@ module.exports.getSeo = (req, res) => {
 module.exports.getSeoByPageTitle = (req, res) => {
 	Seo.findOne({
 		where: {
-            pageTitle: {[Op.iLike]: '%' + req.params.pageTitle + '%'},
+            pageTitle: req.params.pageTitle,
             isDeleted: 0,
         },
 	})

@@ -14,6 +14,10 @@ const addIndustrialValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('description must be specified.'),
+	body('sortnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('sortnumber must be specified.'),
 	// body('isBillable')
 	//   .isLength({ min: 1 })
 	//   .trim()
@@ -54,6 +58,10 @@ const updateIndustrialValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('description must be specified.'),
+	body('sortnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('sortnumber must be specified.'),
 	body('isActive')
 		.isLength({min: 1})
 		.trim()

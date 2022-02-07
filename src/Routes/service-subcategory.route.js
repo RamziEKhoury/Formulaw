@@ -35,4 +35,8 @@ module.exports = function(app) {
 	app.delete(
 		'/api/v1/service/delete-subcategory/:id',
 		serviceSubCategoryController.deleteSubcategory);
+
+	app.post(
+		'/api/v1/service/sortnumber-check/:id',
+		serviceSubCategoryController.sortnumberVarify);
 };
