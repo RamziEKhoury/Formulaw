@@ -681,7 +681,6 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 			}
 		}
 	} catch (err) {
-		console.log('ghffdftd', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
