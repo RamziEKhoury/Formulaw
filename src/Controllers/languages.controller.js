@@ -14,12 +14,13 @@ module.exports.addLanguage = async (req, res) => {
             } */
 		Language.findOrCreate({
 			where: {
-				en_name: {[Op.iLike]: '%' + req.body.en_name + '%'},
+				en_name: req.body.en_name,
 			},
 
 			defaults: {
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
+				sortnumber: req.body.sortnumber,
 				isActive: req.body.isActive,
 			},
 		}).then((language) => {
@@ -41,6 +42,7 @@ module.exports.addLanguage = async (req, res) => {
 					id: inserted.id,
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
+					sortnumber: inserted.sortnumber,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};
@@ -69,6 +71,7 @@ module.exports.languageUpdate = async (req, res) => {
 			{
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
+				sortnumber: req.body.sortnumber,
 				isActive: req.body.isActive,
 			},
 			{where: {id: req.body.id}},
@@ -123,7 +126,7 @@ module.exports.getLanguages = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -148,7 +151,7 @@ module.exports.getLanguages = (req, res) => {
 		Language.findAndCountAll({
 			where: {isDeleted: 0, isActive: 1},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((result) => {
 				// res.status(200).send({
@@ -228,6 +231,27 @@ module.exports.deleteLanguage = async (req, res) => {
 				// return res.status(500).send({ message: err.message });
 				return apiResponses.errorResponse(res, err.message, {});
 			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.sortnumberVarify = async (req, res) => {
+	try {
+		Language.findOne({
+			where: {
+				sortnumber: req.body.sortnumber,
+				isDeleted: 0,
+			},
+		}).then(async (result) => {
+			/* #swagger.responses[404] = {
+                   description: "Email Not found.",
+                   schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+               } */
+			// return res.status(404).send({ message: "Email Not found." });
+
+			return apiResponses.successResponseWithData(res, 'success!', result);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

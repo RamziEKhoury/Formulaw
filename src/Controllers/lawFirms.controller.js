@@ -34,7 +34,7 @@ module.exports.addLawFirm = async (req, res) => {
         } */
 		LawFirm.findOrCreate({
 			where: {
-				en_name: {[Op.iLike]: '%' + req.body.en_name + '%'},
+				en_name: req.body.en_name,
 			},
 			defaults: {
 				en_name: req.body.en_name,
@@ -88,10 +88,11 @@ module.exports.addLawFirm = async (req, res) => {
 					logo: inserted.logo,
 					images: inserted.images,
 					lawFirmId: inserted.id,
+					email: inserted.email,
+					gender: req.body.gender,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};
-
 				const lawyer = await Lawyer.create(lawFirmFormData);
 				const password = generatePassword();
 				const user = await User.create({
@@ -104,6 +105,7 @@ module.exports.addLawFirm = async (req, res) => {
 					userType: 'normal',
 					lawyer_id: lawyer.id,
 					lawfirmid: inserted.id,
+					gender: req.body.gender,
 					isActive: req.body.isActive,
 				});
 				await Mail.lawyerRegistration(inserted.email, password);
@@ -113,6 +115,7 @@ module.exports.addLawFirm = async (req, res) => {
 					id: inserted.id,
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
+					email: inserted.email,
 					licenseNumber: inserted.licenseNumber,
 					countryId: inserted.countryId,
 					countryTitle: inserted.countryTitle,
@@ -125,6 +128,7 @@ module.exports.addLawFirm = async (req, res) => {
 					expertise: inserted.expertise,
 					numOfLawyer: inserted.numOfLawyer,
 					rating: inserted.rating,
+					gender: req.body.gender,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};

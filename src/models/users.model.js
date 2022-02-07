@@ -75,6 +75,10 @@ module.exports = (sequelize, Sequelize) => {
 		expireToken: {
 		    type: Sequelize.DATE,
 	    },
+		gender: {
+			type: Sequelize.STRING,
+			defaultValue: 'male',
+		},
 		isActive: {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,

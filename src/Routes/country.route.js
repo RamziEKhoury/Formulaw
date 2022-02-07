@@ -35,4 +35,8 @@ module.exports = function(app) {
 	app.delete(
 		'/api/v1/country/delete-country/:id',
 		countryController.deleteCountry);
+
+	app.post(
+		'/api/v1/country/sortnumber-check',
+		countryController.sortnumberVarify);
 };

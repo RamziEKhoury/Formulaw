@@ -6,6 +6,10 @@ const addLanguageValidator = [
 		.trim().withMessage('en_name must be specified.'),
 	body('ar_name').isLength({min: 1})
 		.trim().withMessage('ar_name must be specified.'),
+	body('sortnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('sortnumber must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
 	sanitizeBody('isActive').escape(),
@@ -27,6 +31,10 @@ const updateLanguageValidator = [
 		.trim().withMessage('en_name must be specified.'),
 	body('ar_name').isLength({min: 1})
 		.trim().withMessage('ar_name must be specified.'),
+	body('sortnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('sortnumber must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
 	sanitizeBody('isActive').escape(),

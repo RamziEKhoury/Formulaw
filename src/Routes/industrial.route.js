@@ -35,4 +35,8 @@ module.exports = function(app) {
 	app.delete(
 		'/api/v1/industrial/delete-industrial/:id',
 		industrialController.deleteIndustrial);
+	
+	app.post(
+		'/api/v1/industrial/sortnumber-check',
+		industrialController.sortnumberVarify);
 };

@@ -73,6 +73,10 @@ module.exports = (sequelize, Sequelize) => {
 			images: {
 				type: DataTypes.JSONB,
 			},
+			gender: {
+				type: Sequelize.ENUM('male', 'female',),
+				defaultValue: 'male',
+			},
 			isDeleted: {
 				defaultValue: 0,
 				type: Sequelize.INTEGER,
