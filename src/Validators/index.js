@@ -25,6 +25,7 @@ const NotificationValidator = require('./Notification.validator');
 const blogsCategoryValidator = require('./blogsCategory.validator');
 const blogsValidator = require('./blogs.validator');
 const seoValidator = require('./seo.validator');
+const footerValidator = require('./footer.validator');
 
 
 module.exports = {
@@ -55,4 +56,5 @@ module.exports = {
 	blogsCategoryValidator,
 	blogsValidator,
 	seoValidator,
+	footerValidator,
 };

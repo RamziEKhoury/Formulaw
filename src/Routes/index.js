@@ -39,4 +39,5 @@ module.exports=(app)=> {
 	require('./blogsCategory.route')(app);
 	require('./blogs.route')(app);
 	require('./seo.route')(app);
+	require('./footer.route')(app);
 };
