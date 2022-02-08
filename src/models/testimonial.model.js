@@ -37,6 +37,14 @@ module.exports = (sequelize, Sequelize) => {
 					TestimonialStatus.APPROVED,
 				),
 			},
+
+			ratingstatus: {
+				defaultValue: TestimonialStatus.PENDING,
+				type: Sequelize.ENUM(
+					TestimonialStatus.PENDING,
+					TestimonialStatus.APPROVED,
+				),
+			},
 		},
 		{
 			timestamps: true,

@@ -55,7 +55,7 @@ module.exports.lawFirmServiceUpdate = async (req, res) => {
 				id: req.body.id,
 				lawFirmId: req.body.lawFirmId,
 				title: req.body.title,
-				price: req.body.title,
+				price: req.body.price,
 				currency: req.body.currency,
 				discription: req.body.discription,
 				isActive: req.body.isActive,

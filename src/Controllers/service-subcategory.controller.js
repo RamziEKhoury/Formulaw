@@ -5,19 +5,13 @@ const Op = db.Sequelize.Op;
 
 module.exports.addServiceSubCategory = async (req, res) => {
 	try {
-		console.log(req.body.en_name);
 		// #swagger.tags = ['Service']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
                     description: "service details for add - en_name, ar_name, isActive, description,isBillable",
                     schema: { $serviceId: "", $en_name: "", $ar_name: "", $isActive: "", $description: "",$isBillable:""}
             } */
-		ServiceSubcategory.findOrCreate({
-			where: {
-				en_name: req.body.en_name,
-			},
-
-			defaults: {
+		ServiceSubcategory.create({
 				serviceId: req.body.serviceId,
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
@@ -25,40 +19,13 @@ module.exports.addServiceSubCategory = async (req, res) => {
 				sortnumber: req.body.sortnumber,
 				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
-			},
 		}).then((subCategory) => {
-			console.log('counter--->', subCategory);
-			const isAlready = subCategory[1];
-			const inserted = subCategory[0];
-
-			if (!isAlready) {
-				/* #swagger.responses[409] = {
-                            description: "Already!",
-                            schema: { $statusCode : 409 ,$status: true, $message: "Already exist!", $data : {}}
-                        } */
-				res.send({
-					status: 409,
-					msg: 'Already exist',
-				});
-			} else {
-				const subCategoryData = {
-					id: inserted.id,
-					serviceId: inserted.serviceId,
-					en_name: inserted.en_name,
-					ar_name: inserted.ar_name,
-					description: inserted.description,
-					sortnumber: inserted.sortnumber,
-					// isBillable: inserted.isBillable,
-					isActive: inserted.isActive,
-					isDeleted: inserted.isDeleted,
-				};
 				// return res.status(200).send({ status:'200', message: "success!" , data: subCategoryData });
 				return apiResponses.successResponseWithData(
 					res,
 					'success!',
 					subCategoryData,
 				);
-			}
 		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);

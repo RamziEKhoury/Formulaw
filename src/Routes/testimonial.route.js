@@ -51,4 +51,9 @@ module.exports = function(app) {
 		'/api/v1/testimonial/delete-testimonial/:id',
 		testimoinalController.deletetestimonial,
 	);
+
+	app.post(
+		'/api/v1/testimonial/ratingstatus/:id/:status',
+		testimoinalController.ApprovedUserRating,
+	);
 };

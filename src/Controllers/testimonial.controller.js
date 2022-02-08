@@ -212,15 +212,34 @@ module.exports.TestimonialStatus = async (req, res) => {
 				if (!testimonial) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
+				return apiResponses.successResponseWithData(res, 'Success', testimonial);
+			})
+			.catch((err) => {
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.ApprovedUserRating = async (req, res) => {
+	console.log("adsssssssssssss",req.params);
+	try {
+		await Testimonial.update(
+			{
+				ratingstatus: req.params.status,
+			},
+			{where: {id: req.params.id}},
+		)
+			.then(async(testimonial) => {
+				if (!testimonial) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
 				const testimonialData = await Testimonial.findOne({where : {id: req.params.id}});
 				const testimonials = await Testimonial.count({where : {lawFirmId : testimonialData.lawFirmId}});
 				const lawFirm = await LawFirm.findOne({where : {id : testimonialData.lawFirmId}})
-				if(testimonials === 1){
-					await LawFirm.update({userrating: ((lawFirm.userrating + (testimonialData.rating/20))).toFixed(1) },{where: {id: testimonialData.lawFirmId}})
-				}
-				else {
 				await LawFirm.update({userrating: ((lawFirm.userrating + (testimonialData.rating/20))/2).toFixed(1) },{where: {id: testimonialData.lawFirmId}})
-				}	
+					
 				return apiResponses.successResponseWithData(res, 'Success', testimonial);
 			})
 			.catch((err) => {
