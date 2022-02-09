@@ -31,6 +31,7 @@ module.exports=(app)=> {
 	require('./policy.route')(app);
 	require('./userSubscription.route')(app);
 	require('./notification.route')(app);
+	require('./subscribeUser.route')(app);
 	require('./message.router')(app);
 	require('./dispute.route')(app);
 	require('./customer.route')(app);
