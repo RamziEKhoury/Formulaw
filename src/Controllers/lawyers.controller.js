@@ -208,11 +208,18 @@ module.exports.getLawyers = (req, res) => {
 						lawyerid: data[i].user_id,
 					},
 				});
+					const lawyerprofile = await User.findAll({
+					where: {
+						id: data[i].user_id,
+					},
+				});
 				const obj = {
 					lawyer: data[i],
 					totalTestimonials,
+					lawyerprofile
 				};
 				lawyerTotalTestimonials.push(obj);
+				
 			}
 			return apiResponses.successResponseWithData(res, 'success', lawyerTotalTestimonials);
 
@@ -345,12 +352,19 @@ module.exports.getLawyerStatuses = (req, res) => {
 						lawyerid: data[i].user_id,
 					},
 				});
+				const lawyerprofile = await User.findAll({
+					where: {
+						id: data[i].user_id,
+					},
+				});
+				
 				const obj = {
 					lawyer: data[i],
 					appointmentsPending,
 					appointmentsOpen,
 					appointmentsComplete,
 					totalTestimonials,
+					lawyerprofile
 				};
 				lawyerStatuses.push(obj);
 			}
@@ -406,10 +420,16 @@ module.exports.getLawyerTotalCases = (req, res) => {
 						lawyerid: data[i].user_id,
 					},
 				});
+					const lawyerprofile = await User.findAll({
+					where: {
+						id: data[i].user_id,
+					},
+				});
 				const obj = {
 					lawyer: data[i],
 					totalCases,
 					totalTestimonials,
+					lawyerprofile,
 				};
 				lawyerTotalCase.push(obj);
 			}
