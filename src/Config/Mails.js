@@ -3,18 +3,28 @@ const nodemailer = require('nodemailer');
 const moment = require('moment');
 const smtpEndpoint = 'email-smtp.eu-west-1.amazonaws.com';
 const port = 465;
-const senderAddress = `Formulaw <info@formu.law>`;
+const senderAddress = `Formulaw <formulawauth@gmail.com>`; //Formulaw <info@formu.law>
 const smtpUsername = 'AKIASE3LOW3XFGIXHRV4';
 const smtpPassword = 'BALTT+vkKNKXz8rRLXe11v2JhBnhstNjNH/F8WFNTtks';
 
+// const transporter = nodemailer.createTransport({
+// 	host: smtpEndpoint,
+// 	port: port,
+// 	pool: true,
+// 	secure: true,
+// 	auth: {
+// 		user: smtpUsername,
+// 		pass: smtpPassword,
+// 	},
+// });
+
 const transporter = nodemailer.createTransport({
-	host: smtpEndpoint,
-	port: port,
-	pool: true,
+	host: 'smtp.gmail.com',
+	port: 465,
 	secure: true,
 	auth: {
-		user: smtpUsername,
-		pass: smtpPassword,
+		user: 'formulawauth@gmail.com', // email ID
+		pass: 'Formulaw$1997', // Password
 	},
 });
 
@@ -499,6 +509,88 @@ module.exports = {
         		'<div><span> Dear '+ fullname +',</span></div><div><p>Thank you for booking a package with us. <br/>Prior to starting a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 15 minutes prior to the meeting <br/>Please follow this link to start your consultation. </br><p>https://formu.law/#/userPanel/user/dashboard/'+ id +'<br/>Receipt<br/>'+ orderid+'<br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/>Best Regards,<br/>FORMULAW Team<br/>@formulaw team member</div>',
 		};
 		console.log('subscription--->', details);
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+	recieverMessageEmail: (email) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: senderAddress, // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Received New Message on FORMULAW!', // Subject of the mail.
+			html:
+				`<div><span>Dear User,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click here to join chat <a href='https://formu.law'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+
+	recieverMessageEmailAdmin: (email) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: senderAddress, // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Received New Message on FORMULAW!', // Subject of the mail.
+			html:
+				`<div><span>Dear Admin,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click here to join chat <a href='https://formu.law/admin-panel'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+
+	recieverJoinRoomEmail: (email) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: senderAddress, // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Please join appointment room FORMULAW!', // Subject of the mail.
+			html:
+				`<div><span>Dear User,</span><div><p>User have joined consultation room, Please follow the link below to continue call. Ignore, If already join.</p><br><p>Click here to join <a href='https://formu.law'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+		};
+		transporter.sendMail(details, function(error, data) {
+			if (error) {
+				console.log('error=========>>>' + error);
+				return true;
+			} else {
+				console.log('data=========>>>' + JSON.stringify(data));
+				return true;
+			}
+		});
+	},
+
+	recieverJoinCallEmailAdmin: (email) => {
+		console.log('logIn_Mail====>' + email);
+		const details = {
+			from: senderAddress, // sender address same as above
+			to: email, // Receiver's email id
+			subject: 'Please join appointment room FORMULAW!', // Subject of the mail.
+			html:
+				`<div><span>Dear Admin,</span><div><p>User have joined call, Please follow the link below to continue.</p><br><p>Click here to join call <a href='https://formu.law/admin-panel'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
 				console.log('error=========>>>' + error);

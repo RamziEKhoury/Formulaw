@@ -1,6 +1,11 @@
 const socket = require('socket.io');
 const db = require('../models');
+const Notifications = require('./Notifications');
+const {recieverMessageEmail, recieverMessageEmailAdmin} = require('./Mails');
+const {WorkflowAppointment} = require('../enum');
 const Chat = db.chat;
+const User = db.user;
+const Admin = db.adminUser;
 const Message = db.message;
 
 const users={};
@@ -150,10 +155,9 @@ class SocketService {
 			/**
 			 * Send Message
 			 */
-			socket.on('message', (msg) => {
+			socket.on('message', async (msg) => {
 				console.log('total users---message-->>', users);
 				console.log('message----->>', msg);
-				// msg = JSON.parse(msg);
 				saveMessage(
 					msg.senderId,
 					msg.receiverId,
@@ -171,6 +175,30 @@ class SocketService {
 				const receiver = getKeyByValue(users, msg.receiverId);
 				console.log('receiver----->>', receiver);
 				this.io.to(receiver).emit('message', msg);
+				if (!receiver) {
+					if (msg.sendingTo === 'ADMIN') {
+						const user = await Admin.findOne({where: {id: msg.receiverId}});
+						await recieverMessageEmailAdmin(user.email);
+					} else {
+						const user = await User.findOne({where: {id: msg.receiverId}});
+						await recieverMessageEmail(user.email);
+						const notiData = {
+							title: 'You have received new message',
+							message: 'You have received new message from someone please click here to continue chat',
+							senderName: (msg.firstname ? msg.lastname: ' ' ),
+							senderId: msg.customerId,
+							senderType: 'APPOINTMENT',
+							receiverid: msg.receiverId,
+							notificationType: WorkflowAppointment.CONSULTATION,
+							target: msg.appointmentId,
+						};
+						await Notifications.notificationCreate(notiData);
+
+						if (!!user.deviceToken) {
+							await Notifications.notification(user.deviceToken, 'You have received a new message.');
+						}
+					}
+				}
 			});
 
 
@@ -178,7 +206,6 @@ class SocketService {
 			 * Disconnected manual
 			 */
 			socket.on('disconnectUser', (id) => {
-				console.log('disconnect----->>', id, 'Total--->', users);
 				const userSocketId = getKeyByValue(users, id);
 				console.log('userSocketId----->>', userSocketId);
 				socket.broadcast.emit('user-disconnected', userSocketId);

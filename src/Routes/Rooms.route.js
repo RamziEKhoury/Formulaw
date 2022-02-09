@@ -26,4 +26,14 @@ module.exports = function(app) {
 		'/api/v1/room/get-rooms',
 		roomController.getRooms,
 	);
+
+	app.post(
+		'/api/v1/room/send-mail-admin',
+		roomController.joinRoomEmailAndNotiForAdmin,
+	);
+
+	app.post(
+		'/api/v1/room/send-mail-user-lawyer',
+		roomController.joinCallEmailAndNotiForUserAndLawyer,
+	);
 };

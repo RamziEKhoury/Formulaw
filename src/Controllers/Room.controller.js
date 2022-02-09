@@ -4,6 +4,9 @@ const Request = db.request;
 const Admin = db.adminUser;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
+const {recieverJoinRoomEmail, recieverJoinCallEmailAdmin} = require('../Config/Mails');
+const {WorkflowAppointment} = require('../enum');
+const Notifications = require('../Config/Notifications');
 
 module.exports.getRooms = async (req, res) => {
 	try {
@@ -121,4 +124,46 @@ module.exports.getRoomByAppointmentId = (req, res) => {
           err.message || 'Some error occurred while retrieving RoomController.',
 			});
 		});
+};
+
+
+module.exports.joinRoomEmailAndNotiForAdmin = async (req, res) => {
+	const user = await Admin.findOne({where: {id: req.body.receiverId}});
+	await recieverJoinCallEmailAdmin(user.email);
+	const notiData = {
+		title: 'User have joined call.',
+		message: 'User have joined call for free consultation, Please click here to join call and continue. Ignore, if already joined.',
+		senderName: (req.body.firstname ? req.body.lastname : ' '),
+		senderId: req.body.senderId,
+		senderType: 'APPOINTMENT',
+		receiverid: req.body.receiverId,
+		notificationType: WorkflowAppointment.CONSULTATION,
+		target: req.body.appointmentId,
+	};
+	await Notifications.notificationCreate(notiData);
+	if (!!user.deviceToken) {
+		await Notifications.notification(user.deviceToken, 'User have joined call for free consultation, Please click here to join call and continue. Ignore, if already joined.');
+	}
+	return apiResponses.successResponseWithData(res, 'success');
+};
+
+
+module.exports.joinCallEmailAndNotiForUserAndLawyer = async (req, res) => {
+	const user = await User.findOne({where: {id: req.body.receiverId}});
+	await recieverJoinRoomEmail(user.email);
+	const notiData = {
+		title: 'User have joined call.',
+		message: 'User have joined call for consultation, Please click here to join call and continue. Ignore, if already joined.',
+		senderName: (req.body.firstname ? req.body.lastname : ' '),
+		senderId: req.body.senderId,
+		senderType: 'APPOINTMENT',
+		receiverid: req.body.receiverId,
+		notificationType: WorkflowAppointment.CONSULTATION,
+		target: req.body.appointmentId,
+	};
+	await Notifications.notificationCreate(notiData);
+	if (!!user.deviceToken) {
+		await Notifications.notification(user.deviceToken, 'User have joined call for consultation, Please click here to join call and continue. Ignore, if already joined.');
+	}
+	return apiResponses.successResponseWithData(res, 'success');
 };
