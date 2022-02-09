@@ -64,7 +64,7 @@ module.exports = (sequelize, Sequelize) => {
 			experience: {
 				type: Sequelize.STRING,
 			},
-			cost:{
+			cost: {
 				type: Sequelize.INTEGER,
 			},
 			status: {
@@ -77,20 +77,24 @@ module.exports = (sequelize, Sequelize) => {
 					RequestWorkflow.PENDING,
 				),
 			},
-			questionOne:{
-				type: Sequelize.STRING,
+			type: {
+				defaultValue: 'lead',
+				type: Sequelize.ENUM('lead', 'subscription'),
 			},
-			questionTwo:{
-				type: Sequelize.STRING,
+			questionOne: {
+				type: DataTypes.STRING(2048),
 			},
-			questionThree:{
-				type: Sequelize.STRING,
+			questionTwo: {
+				type: DataTypes.STRING(2048),
 			},
-			questionFour:{
-				type: Sequelize.STRING,
+			questionThree: {
+				type: DataTypes.STRING(2048),
 			},
-			questionFive:{
-				type: Sequelize.STRING,
+			questionFour: {
+				type: DataTypes.STRING(2048),
+			},
+			questionFive: {
+				type: DataTypes.STRING(2048),
 			},
 			isActive: {
 				defaultValue: 0,

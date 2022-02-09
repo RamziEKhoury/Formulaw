@@ -1,6 +1,7 @@
 const db = require('../models');
 const LawFirmService = db.lawFirm_service;
 const apiResponses = require('../Components/apiresponse');
+const sequelize = require('sequelize');
 
 module.exports.addLawFirmService = async (req, res) => {
 	// get input values from reqeust.
@@ -54,7 +55,7 @@ module.exports.lawFirmServiceUpdate = async (req, res) => {
 				id: req.body.id,
 				lawFirmId: req.body.lawFirmId,
 				title: req.body.title,
-				price: req.body.title,
+				price: req.body.price,
 				currency: req.body.currency,
 				discription: req.body.discription,
 				isActive: req.body.isActive,
@@ -160,3 +161,20 @@ module.exports.getLawFirmService = (req, res) => {
 			});
 		});
 };
+
+module.exports.getLawFirmServiceMaxPrice = (req, res) => {
+	LawFirmService.findAll({
+		attributes: [[sequelize.fn('max', sequelize.col('price')), 'maxPrice']],
+        raw: true,
+	})
+		.then((data) => {
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+          err.message || 'Some error occurred while retrieving LawFirmService.',
+			});
+		});
+};
+

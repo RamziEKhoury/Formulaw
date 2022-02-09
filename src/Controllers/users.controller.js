@@ -5,26 +5,30 @@ const apiResponses = require('../Components/apiresponse');
 const {createToken} = require('../Middlewares/userAuthentications');
 const bcrypt = require('bcryptjs');
 const Mail = require('../Config/Mails');
+const crypto = require('crypto');
+const Op = db.Sequelize.Op;
 
 module.exports.registration = async (req, res) => {
-	console.log('hgvjhgh', req.body);
 	try {
 		// #swagger.tags = ['UserAuth']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
-                    description: "User details for registration - fullname, email, password andisActive",
-                    schema: { $fullname: "", $email: "", $password: "",}
+                    description: "User details for registration - firstname,,lastname email, password andisActive",
+                    schema: { $firstname: "", $lastname: "", $email: "", $password: "",}
             } */
 		User.create({
-			fullname: req.body.fullname,
+			firstname: req.body.firstname,
+			lastname: req.body.lastname,
 			email: req.body.email,
+			gender: req.body.gender,
 			password: bcrypt.hashSync(req.body.password, 8),
 			userType: req.body.userType,
 			country: req.body.country,
 			city: req.body.city,
 			phoneNumber: req.body.phoneNumber,
+			policy: req.body.policy,
 			isActive: req.body.isActive,
-			isSubscribed:req.body.isSubscribed,
+			isSubscribed: req.body.isSubscribed,
 		}).then(async (user) => {
 			/* #swagger.responses[200] = {
                             description: "User registered successfully!",
@@ -33,22 +37,24 @@ module.exports.registration = async (req, res) => {
 			const token = createToken(user.id, user.email, user.role);
 			const userData = {
 				id: user.id,
-				fullname: user.fullname,
+				firstname: user.firstname,
 				lastname: user.lastname,
 				email: user.email,
+				gender: user.gender,
 				userType: user.userType,
 				country: user.country,
 				city: user.city,
 				role: user.role,
+				policy: user.policy,
 				phoneNumber: user.phoneNumber,
 				isActive: user.isActive,
 				token: token,
 			};
 
-			await Mail.userRegistration(user.email);
+			await Mail.userRegistration(user.email, user.firstname + ' ' + user.lastname);
 			const adminMail = await Admin.findAll();
 			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.userRegistrationAdminMail(adminMail[i].email);
+				await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + ' ' + user.lastname);
 			}
 
 			// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
@@ -59,7 +65,6 @@ module.exports.registration = async (req, res) => {
 			);
 		});
 	} catch (err) {
-		console.log('err', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -139,7 +144,7 @@ module.exports.userLogin = (req, res) => {
 				country: user.country,
 				city: user.city,
 				phoneNumber: user.phoneNumber,
-				fullname: user.fullname,
+				firstname: user.firstname,
 				lastname: user.lastname,
 				userType: user.userType,
 				isActive: user.isActive,
@@ -162,7 +167,7 @@ module.exports.userLogin = (req, res) => {
 		}).then(async (user) => {
 			if (!user) {
 				User.create({
-					fullname: req.body.fullname,
+					firstname: req.body.firstname,
 					lastname: req.body.lastname,
 					email: req.body.email,
 					userType: req.body.userType,
@@ -174,7 +179,7 @@ module.exports.userLogin = (req, res) => {
 					const token = createToken(user.id, user.email, user.role);
 					const userData = {
 						id: user.id,
-						fullname: user.fullname,
+						firstname: user.firstname,
 						lastname: user.lastname,
 						email: user.email,
 						country: user.country,
@@ -186,7 +191,12 @@ module.exports.userLogin = (req, res) => {
 						lawfirmid: user.lawfirmid,
 						token: token,
 					};
-					await Mail.userRegistration(user.email);
+					await Mail.userRegistration(user.email, user.firstname + ' ' + user.lastname);
+					const adminMail = await Admin.findAll();
+					for (let i = 0; i < adminMail.length; i++) {
+						await Mail.userRegistrationAdminMail(adminMail[i].email, user.firstname + ' ' + user.lastname);
+					}
+
 					// return res.status(200).send({ status:'200', message: "User registered successfully!" , data: userData });
 					return apiResponses.successResponseWithData(
 						res,
@@ -203,7 +213,7 @@ module.exports.userLogin = (req, res) => {
 					country: user.country,
 					city: user.city,
 					phoneNumber: user.phoneNumber,
-					fullname: user.fullname,
+					firstname: user.firstname,
 					userType: user.userType,
 					isActive: user.isActive,
 					role: user.role,
@@ -220,15 +230,16 @@ module.exports.userLogin = (req, res) => {
 	} else {
 		User.findOne({
 			where: {
-				facebooktoken: req.body.facebooktoken,
+				linkedin: req.body.linkedin,
 				userType: req.body.userType,
 			},
 		})
 			.then(async (user) => {
 				if (!user) {
 					User.create({
-						fullname: req.body.fullname,
-						facebooktoken: req.body.facebooktoken,
+						firstname: req.body.firstname,
+						lastname: req.body.lastname,
+						linkedin: req.body.linkedin,
 						email: req.body.email,
 						country: req.body.country,
 						city: req.body.city,
@@ -239,7 +250,7 @@ module.exports.userLogin = (req, res) => {
 						const token = createToken(user.id, user.email, user.role);
 						const userData = {
 							id: user.id,
-							fullname: user.fullname,
+							firstname: user.firstname,
 							email: user.email,
 							lastname: user.lastname,
 							country: user.country,
@@ -268,7 +279,7 @@ module.exports.userLogin = (req, res) => {
 						country: user.country,
 						city: user.city,
 						phoneNumber: user.phoneNumber,
-						fullname: user.fullname,
+						firstname: user.firstname,
 						userType: user.userType,
 						isActive: user.isActive,
 						role: user.role,
@@ -300,7 +311,6 @@ module.exports.emailVarify = async (req, res) => {
 				email: req.body.email,
 			},
 		}).then(async (result) => {
-			console.log('result---->', result);
 			/* #swagger.responses[404] = {
                    description: "Email Not found.",
                    schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
@@ -318,8 +328,10 @@ module.exports.userUpdate = async (req, res) => {
 	try {
 		User.update(
 			{
-				fullname: req.body.fullname,
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
 				email: req.body.email,
+				gender: req.body.gender,
 				profilePic: req.body.profilePic,
 				country: req.body.country,
 				city: req.body.city,
@@ -392,6 +404,67 @@ module.exports.userDeviceTokenUpdate = async (req, res) => {
 			})
 			.catch((err) => {
 				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.userPasswordReset = async (req, res) => {
+	try {
+	 User.findOne(
+		 {where: {email: req.body.email, userType: 'normal'},
+			})
+			.then((user) => {
+				if (!user) {
+					return apiResponses.successResponseWithData(res, ' User with this email doesn\'t exists.');
+				}
+				crypto.randomBytes(32, async (err, buffer)=>{
+					if (err) {
+						console.log(err);
+					}
+					const token = buffer.toString('hex');
+					User.update(
+						{
+							resetToken: token,
+							expireToken: Date.now() + 3600000,
+						},
+						{
+							where: {email: req.body.email},
+						},
+					).then((user) => {
+						if (!user) {
+							return apiResponses.notFoundResponse(res, 'Not found.', {});
+						}
+					});
+
+					await Mail.userPasswordReset(user.email, token);
+				});
+				return apiResponses.successResponseWithData(res, 'Link send to your email ');
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.updateNewPassword = async (req, res) => {
+	const sentToken = req.params.token;
+	try {
+		User.update({
+			password: await bcrypt.hashSync(req.body.password, 8),
+			resetToken: null,
+			expireToken: null,
+		},
+		{where: {resetToken: sentToken, expireToken: {[Op.gt]: Date.now()}},
+		})
+			.then(async (user) => {
+				if (!user) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				return apiResponses.successResponseWithData(res, 'Success', user);
+			})
+			.catch((error) => {
+				return apiResponses.errorResponse(res, error.message, {});
 			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);

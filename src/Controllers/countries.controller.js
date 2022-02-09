@@ -13,10 +13,7 @@ module.exports.addCountry = async (req, res) => {
             } */
 		Country.findOrCreate({
 			where: {
-				[Op.or]: [
-					{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
-					{ar_name: {[Op.iLike]: '%' + req.body.ar_name + '%'}},
-				],
+				en_name: req.body.en_name,
 			},
 
 			defaults: {
@@ -27,6 +24,7 @@ module.exports.addCountry = async (req, res) => {
 				description: req.body.description,
 				taxType: req.body.taxType,
 				tax: req.body.tax,
+				sortnumber: req.body.sortnumber,
 				isActive: req.body.isActive,
 			},
 		}).then((country) => {
@@ -52,6 +50,7 @@ module.exports.addCountry = async (req, res) => {
 					description: inserted.description,
 					taxType: inserted.taxType,
 					tax: inserted.tax,
+					sortnumber: inserted.sortnumber,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};
@@ -82,6 +81,7 @@ module.exports.countryUpdate = async (req, res) => {
 				ar_name: req.body.ar_name,
 				flag: req.body.flag,
 				description: req.body.description,
+				sortnumber: req.body.sortnumber,
 				taxType: req.body.taxType,
 				tax: req.body.tax,
 				isActive: req.body.isActive,
@@ -142,7 +142,7 @@ module.exports.getCountries = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -167,7 +167,7 @@ module.exports.getCountries = (req, res) => {
 		Country.findAndCountAll({
 			where: {isDeleted: 0, isActive: 1},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((result) => {
 				// res.status(200).send({
@@ -247,6 +247,27 @@ module.exports.deleteCountry = async (req, res) => {
 				// return res.status(500).send({ message: err.message });
 				return apiResponses.errorResponse(res, err.message, {});
 			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.sortnumberVarify = async (req, res) => {
+	try {
+		Country.findOne({
+			where: {
+				sortnumber: req.body.sortnumber,
+				isDeleted: 0,
+			},
+		}).then(async (result) => {
+			/* #swagger.responses[404] = {
+                   description: "Email Not found.",
+                   schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+               } */
+			// return res.status(404).send({ message: "Email Not found." });
+
+			return apiResponses.successResponseWithData(res, 'success!', result);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

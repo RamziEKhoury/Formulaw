@@ -28,6 +28,13 @@ module.exports = (sequelize, Sequelize) => {
 				defaultValue: 0,
 				type: Sequelize.INTEGER,
 			},
+			sortnumber: {
+				type: Sequelize.INTEGER,
+			},
+			count: {
+				defaultValue: 0,
+				type: Sequelize.INTEGER,
+			},
 		},
 		{
 			timestamps: true,

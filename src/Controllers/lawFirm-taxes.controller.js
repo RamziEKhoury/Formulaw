@@ -42,7 +42,7 @@ module.exports.getLawFirmTaxes = (req, res) => {
 	// #swagger.tags = ['LawFirmTax']
 
 	LawFirmTax.findAll({
-		where: {lawFirmId: req.body.lawFirmId},
+		where: {lawFirmId: req.params.lawFirmId},
 		isDeleted: 0,
 		isActive: 1,
 		order: [['createdAt', 'DESC']],

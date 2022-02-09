@@ -35,4 +35,8 @@ module.exports = function(app) {
 	app.delete(
 		'/api/v1/language/delete-language/:id',
 		languageController.deleteLanguage);
+
+	app.post(
+		'/api/v1/language/sortnumber-check',
+		languageController.sortnumberVarify);
 };

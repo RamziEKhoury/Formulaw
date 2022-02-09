@@ -1,10 +1,12 @@
 const db = require('../models');
 const Lawyer = db.lawyer;
 const User = db.user;
+const Appointment = db.appointment;
+const Testimonial = db.testimonial;
 const apiResponses = require('../Components/apiresponse');
 const bcrypt = require('bcryptjs');
 const Mail = require('../Config/Mails');
-const {UserRole} = require('../enum');
+const {UserRole, WorkflowAppointment} = require('../enum');
 const Op = db.Sequelize.Op;
 
 // eslint-disable-next-line require-jsdoc
@@ -30,10 +32,7 @@ module.exports.addLawyer = async (req, res) => {
         } */
 		Lawyer.findOrCreate({
 			where: {
-				[Op.or]: [
-					{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
-					{ar_name: {[Op.iLike]: '%' + req.body.ar_name + '%'}},
-				],
+					en_name: req.body.en_name,
 			},
 			defaults: {
 				en_name: req.body.en_name,
@@ -51,8 +50,11 @@ module.exports.addLawyer = async (req, res) => {
 				languageTitle: req.body.languageTitle,
 				expertise: req.body.expertise,
 				jurisdiction: req.body.jurisdiction,
+				logo: req.body.logo,
+				images: req.body.images,
 				rating: req.body.rating,
 				experience: req.body.experience,
+				gender: req.body.gender,
 				isActive: req.body.isActive,
 			},
 		}).then(async (lawyer) => {
@@ -71,21 +73,26 @@ module.exports.addLawyer = async (req, res) => {
 				});
 			} else {
 				const password = generatePassword();
-				await User.create({
-					fullname: inserted.en_name,
+				const user = await User.create({
+					firstname: inserted.en_name,
+					lastname: null,
+					lawyer_id: inserted.id,
 					email: inserted.email,
 					role: UserRole.LAWYER,
 					username: inserted.email,
+					gender: inserted.gender,
 					password: bcrypt.hashSync(password, 8),
 					userType: 'normal',
 					lawfirmid: req.body.lawFirmId,
 					isActive: req.body.isActive,
 				});
+				await Lawyer.update({user_id: user.id}, {where: {id: inserted.id}});
 				await Mail.lawyerRegistration(inserted.email, password);
 				const lawyerData = {
 					id: inserted.id,
 					en_name: inserted.en_name,
 					ar_name: inserted.ar_name,
+					email: inserted.email,
 					lawFirmId: inserted.lawFirmId,
 					licenseNumber: inserted.licenseNumber,
 					countryId: inserted.countryId,
@@ -100,6 +107,7 @@ module.exports.addLawyer = async (req, res) => {
 					jurisdiction: inserted.jurisdiction,
 					expertise: inserted.expertise,
 					rating: inserted.rating,
+					gender: inserted.gender,
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};
@@ -130,6 +138,7 @@ module.exports.lawyerUpdate = async (req, res) => {
 				id: req.body.id,
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
+				email: req.body.email,
 				licenseNumber: req.body.licenseNumber,
 				countryId: req.body.countryId,
 				countryTitle: req.body.countryTitle,
@@ -143,6 +152,7 @@ module.exports.lawyerUpdate = async (req, res) => {
 				numOfLawyer: req.body.numOfLawyer,
 				rating: req.body.rating,
 				experience: req.body.experience,
+				gender: req.body.gender,
 				isActive: req.body.isActive,
 			},
 			{where: {id: req.body.id}},
@@ -189,12 +199,27 @@ module.exports.getLawyers = (req, res) => {
 		isActive: 1,
 		order: [['createdAt', 'DESC']],
 	})
-		.then((data) => {
+		.then(async (data) => {
 			// res.status(200).send({
 			//   status: "200",
 			//   user: data,
 			// });
-			return apiResponses.successResponseWithData(res, 'success', data);
+			const lawyerTotalTestimonials = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalTestimonials = await Testimonial.findAll({
+					where: {
+						lawyerid: data[i].user_id,
+					},
+				});
+				const obj = {
+					lawyer: data[i],
+					totalTestimonials,
+				};
+				lawyerTotalTestimonials.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', lawyerTotalTestimonials);
+
+			// return apiResponses.successResponseWithData(res, 'success', data);
 		})
 		.catch((err) => {
 			/* #swagger.responses[500] = {
@@ -223,8 +248,9 @@ module.exports.getLawyer = (req, res) => {
 	// #swagger.tags = ['LawFirm']
 	Lawyer.findOne({
 		where: {id: req.params.id, isDeleted: 0},
+		
 	})
-		.then((data) => {
+		.then((data) => {	
 			// res.status(200).send({
 			//   status: "200",
 			//   user: data,
@@ -280,3 +306,138 @@ module.exports.deleteLawyer = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+
+module.exports.getLawyerStatuses = (req, res) => {
+	// Get Lawyer data from Database
+	// #swagger.tags = ['Lawyer']
+
+	Lawyer.findAll({
+		where: {lawFirmId: req.params.lawFirmId},
+		isDeleted: 0,
+		isActive: 1,
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async (data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const lawyerStatuses = [];
+			for (let i = 0; i < data.length; i++) {
+				const appointmentsPending = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+						status: WorkflowAppointment.CONSULTATION,
+					},
+				});
+				const appointmentsOpen = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+						status: WorkflowAppointment.CONSULTATION,
+					},
+				});
+				const appointmentsComplete = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+						status: WorkflowAppointment.COMPLETED,
+					},
+				});
+				const totalTestimonials = await Testimonial.findAll({
+					where: {
+						lawyerid: data[i].user_id,
+					},
+				});
+				const obj = {
+					lawyer: data[i],
+					appointmentsPending,
+					appointmentsOpen,
+					appointmentsComplete,
+					totalTestimonials,
+				};
+				lawyerStatuses.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', lawyerStatuses);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving Lawyers.',
+			});
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                    description: "Error message",
+                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
+			});
+		});
+};
+
+
+module.exports.getLawyerTotalCases = (req, res) => {
+	// Get Lawyer data from Database
+	// #swagger.tags = ['Lawyer']
+
+	Lawyer.findAll({
+		where: {lawFirmId: req.params.lawFirmId},
+		isDeleted: 0,
+		isActive: 1,
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async (data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const lawyerTotalCase = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalCases = await Appointment.count({
+					where: {
+						lawyerId: data[i].user_id,
+					},
+				});
+				const totalTestimonials = await Testimonial.findAll({
+					where: {
+						lawyerid: data[i].user_id,
+					},
+				});
+				const obj = {
+					lawyer: data[i],
+					totalCases,
+					totalTestimonials,
+				};
+				lawyerTotalCase.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', lawyerTotalCase);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving Lawyers.',
+			});
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                    description: "Error message",
+                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message: 'Something Went Wrong',
+			});
+		});
+};
+
+

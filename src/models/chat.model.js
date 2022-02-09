@@ -11,7 +11,10 @@ module.exports = (sequelize, Sequelize) => {
 		senderId: {
 			type: Sequelize.UUID,
 		},
-		fullName: {
+		firstname: {
+			type: Sequelize.STRING,
+		},
+		lastname: {
 			type: Sequelize.STRING,
 		},
 		source: {
@@ -40,8 +43,8 @@ module.exports = (sequelize, Sequelize) => {
 			defaultValue: MessageType.TEXT,
 		},
 		imageUrl: {
-			type: DataTypes.STRING,
-			defaultValue: null,
+			type: DataTypes.JSONB,
+			
 		},
 		fileUrl: {
 			type: DataTypes.STRING,

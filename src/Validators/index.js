@@ -23,6 +23,9 @@ const PreOrderValidator = require('./preOrder.validator');
 const userSubscriptionValidator = require('./userSubscription.validator');
 const NotificationValidator = require('./Notification.validator');
 const subUserValidator = require('./subUser.validator');
+const blogsCategoryValidator = require('./blogsCategory.validator');
+const blogsValidator = require('./blogs.validator');
+const seoValidator = require('./seo.validator');
 
 
 module.exports = {
@@ -51,4 +54,7 @@ module.exports = {
 	userSubscriptionValidator,
 	NotificationValidator,
 	subUserValidator,
+	blogsCategoryValidator,
+	blogsValidator,
+	seoValidator,
 };

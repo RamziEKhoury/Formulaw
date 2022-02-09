@@ -1,3 +1,4 @@
+const DataTypes = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define('userSubScription', {
 		id: {
@@ -6,32 +7,32 @@ module.exports = (sequelize, Sequelize) => {
 			allowNull: false,
 			primaryKey: true,
 		},
-        userId: {
-            type: Sequelize.UUID,
-        },
-        subscriptionId: {
-            type: Sequelize.UUID,
-        },
+		userId: {
+			type: Sequelize.UUID,
+		},
+		subscriptionId: {
+			type: Sequelize.UUID,
+		},
 		durationType: {
-            type: Sequelize.STRING,
+			type: Sequelize.STRING,
 		},
 		subscriptionPlan: {
-            type: Sequelize.STRING ,
+			type: Sequelize.STRING,
 		},
-        startingDate: {
-            type: Sequelize.STRING,
-        },
-        endDate: {
-            type: Sequelize.STRING,
-        },
-		numberOfMeating: {
+		startingDate: {
+			type: Sequelize.STRING,
+		},
+		endDate: {
+			type: Sequelize.STRING,
+		},
+		numberOfMeeting: {
 			type: Sequelize.INTEGER,
 		},
-		meatingPlan:{
+		meetingPlan: {
 			type: Sequelize.STRING,
 		},
 		ipAudit: {
-			type: Sequelize.BOOLEAN, 
+			type: Sequelize.BOOLEAN,
 		},
 		contractTemplates: {
 			type: Sequelize.BOOLEAN,
@@ -39,8 +40,9 @@ module.exports = (sequelize, Sequelize) => {
 		discount: {
 			type: Sequelize.INTEGER,
 		},
-		
-
+		contract_templates: {
+			type: DataTypes.JSONB,
+		},
 	}, {
 		timestamps: true,
 	},

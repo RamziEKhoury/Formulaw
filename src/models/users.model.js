@@ -10,7 +10,13 @@ module.exports = (sequelize, Sequelize) => {
 		lawfirmid: {
 			type: Sequelize.UUID,
 		},
-		fullname: {
+		lawyer_id: {
+			type: Sequelize.UUID,
+		},
+		firstname: {
+			type: Sequelize.STRING,
+		},
+		lastname: {
 			type: Sequelize.STRING,
 		},
 		password: {
@@ -32,14 +38,17 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 		},
 		userType: {
-			type: Sequelize.ENUM('normal', 'google', 'facebook'),
+			type: Sequelize.ENUM('normal', 'google', 'facebook', 'linkedin'),
 			defaultValue: 'normal',
 		},
 		role: {
-			type: Sequelize.ENUM(UserRole.USER, UserRole.LAWYER, UserRole.OTHERS),
+			type: Sequelize.ENUM(UserRole.USER, UserRole.LAWYER, UserRole.LAWFIRM_ADMIN, UserRole.OTHERS),
 			defaultValue: UserRole.USER,
 		},
 		facebooktoken: {
+			type: Sequelize.STRING,
+		},
+		linkedin: {
 			type: Sequelize.STRING,
 		},
 		isDeleted: {
@@ -50,8 +59,25 @@ module.exports = (sequelize, Sequelize) => {
 			defaultValue: 0,
 			type: Sequelize.INTEGER,
 		},
+		subscriptionEndAt: {
+			type: Sequelize.STRING,
+		},
 		deviceToken: {
 			type: Sequelize.STRING,
+		},
+		policy: {
+			type: Sequelize.BOOLEAN,
+			defaultValue: false,
+		},
+		resetToken: {
+			type: Sequelize.STRING,
+		},
+		expireToken: {
+		    type: Sequelize.DATE,
+	    },
+		gender: {
+			type: Sequelize.STRING,
+			defaultValue: 'male',
 		},
 		isActive: {
 			defaultValue: 0,

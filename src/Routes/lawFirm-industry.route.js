@@ -23,7 +23,7 @@ module.exports = function(app) {
 		lawFirmIndustryController.lawFirmIndustryUpdate,
 	);
 
-	app.get('/api/v1/lawfirm/get-industries/:limit', lawFirmIndustryController.getLawFirmIndustries);
+	app.get('/api/v1/lawfirm/get-industries/:lawFirmId', lawFirmIndustryController.getLawFirmIndustries);
 
 	app.get('/api/v1/lawfirm/get-industry/:id', lawFirmIndustryController.getLawFirmIndustry);
 

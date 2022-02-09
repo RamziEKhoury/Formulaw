@@ -4,7 +4,6 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addCompanyKycDetails = async (req, res) => {
-	console.log('dfdgsgdfh', req.body);
 	try {
 		Companykyc.create({
 			userId: req.body.userId,
@@ -15,6 +14,18 @@ module.exports.addCompanyKycDetails = async (req, res) => {
 			photo: req.body.photo,
 			ParmanentAddress: req.body.ParmanentAddress,
 			PhnNumber: req.body.PhnNumber,
+			officeaddressone: req.body.officeaddressone,
+			officeaddresstwo: req.body.officeaddresstwo,
+			officecountry: req.body.officecountry,
+			officecity: req.body.officecity,
+			officepostalcode: req.body.officepostalcode,
+			addressone: req.body.addressone,
+			addresstwo: req.body.addresstwo,
+			country: req.body.country,
+			city: req.body.city,
+			postalcode: req.body.postalcode,
+			nationality: req.body.nationality,
+			passportnumber: req.body.passportnumber,
 		}).then((companyKycDetail) => {
 			return apiResponses.successResponseWithData(
 				res,
@@ -23,7 +34,6 @@ module.exports.addCompanyKycDetails = async (req, res) => {
 			);
 		});
 	} catch (err) {
-		console.log('errr===========', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -39,6 +49,18 @@ module.exports.updateCompanyKycDetails = async (req, res) => {
 				photo: req.body.photo,
 				ParmanentAddress: req.body.ParmanentAddress,
 				PhnNumber: req.body.PhnNumber,
+				officeaddressone: req.body.officeaddressone,
+				officeaddresstwo: req.body.officeaddresstwo,
+				officecountry: req.body.officecountry,
+				officecity: req.body.officecity,
+				officepostalcode: req.body.officepostalcode,
+				addressone: req.body.addressone,
+				addresstwo: req.body.addresstwo,
+				country: req.body.country,
+				city: req.body.city,
+				postalcode: req.body.postalcode,
+				nationality: req.body.nationality,
+			    passportnumber: req.body.passportnumber,
 			},
 			{where: {userId: req.body.userId}},
 		)
@@ -64,7 +86,7 @@ module.exports.getallUserCompanyKycDetails = (req, res) => {
 	const limit = req.params.limit;
 	Companykyc.findAll({
 		include: [
-			{model: User, required: false, attributes: ['fullname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 		],
 		order: [['createdAt', 'DESC']],
 	})
@@ -86,7 +108,7 @@ module.exports.getallUserCompanyKycDetails = (req, res) => {
 module.exports.getOneUserCompanyKycDetails = (req, res) => {
 	Companykyc.findOne({
 		include: [
-			{model: User, required: false, attributes: ['fullname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 		],
 		where: {userId: req.params.userId},
 	})
@@ -122,7 +144,6 @@ module.exports.CompanykycStatus = async (req, res) => {
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 	} catch (err) {
-		console.log('errrrrr', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };

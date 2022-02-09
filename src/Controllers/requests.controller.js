@@ -1,76 +1,98 @@
 const db = require('../models');
 const Request = db.request;
-const Admin = db.adminUser;
 const Appointment = db.appointment;
+const Services = db.service;
 const User = db.user;
 const apiResponses = require('../Components/apiresponse');
-const Mail = require('../Config/Mails');
 const Notifications = require('../Config/Notifications');
+const {WorkflowAppointment} = require('../enum');
 const Op = db.Sequelize.Op;
 
 module.exports.createRequest = async (req, res) => {
 	try {
 		// #swagger.tags = ['Requests']
-		console.log(req.body);
 		/*  #swagger.parameters['obj'] = {
             in: 'body',
              description: "Request details for add - firstName, lastName,email,jurisdictionId,languageId,legalFieldId,legalFieldName,serviceSubcategoryId,serviceSubcategoryName,budgetMin,budgetMax,rating,lawFirmId, experience, isActive",
             schema: { $industryId: "", $industryTitle: "", $getstarted: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
             } */
 
-		Request.create(req.body).then(async (request) => {
-			const createdRequest = {
-				id: request.id,
-				getstarted: request.getstarted,
-				industryId: request.industryId,
-				industryTitle: request.industryTitle,
-				firstName: request.firstName,
-				lastName: request.lastName,
-				email: request.email,
-				jurisdictionId: request.jurisdictionId,
-				languageId: request.languageId,
-				legalFieldId: request.legalFieldId,
-				legalFieldName: request.legalFieldName,
-				serviceSubcategoryId: request.serviceSubcategoryId,
-				serviceSubcategoryName: request.serviceSubcategoryName,
-				cost: request.cost,
-				budgetMin: request.budgetMin,
-				budgetMax: request.budgetMax,
-				rating: request.rating,
-				experience: request.experience,
-				lawFirmId: request.lawFirmId,
-				isActive: request.isActive,
-				isDeleted: request.isDeleted,
-			};
+		Request.findOrCreate({
+			where: {
+				[Op.and]: [
+					{getstarted: req.body.getstarted },
+					{firstName: req.body.firstName },
+					{lastName: req.body.lastName },
+					{email: req.body.email },
+				],
+			},
+			defaults: req.body,
+		}).then(async(request) => {
+			const isAlready = request[1];
+			const inserted = request[0];
+
+			if (!isAlready) {
+				/* #swagger.responses[409] = {
+                            description: "Already!",
+                            schema: { $statusCode : 409 ,$status: true, $message: "Country already exist!", $data : {}}
+                        } */
+				res.send({
+					status: 409,
+					msg: 'request already exist',
+				});
+			} else {
+				const requestData = {
+					id: inserted.id,
+					getstarted: inserted.getstarted,
+					industryId: inserted.industryId,
+					industryTitle: inserted.industryTitle,
+					firstName: inserted.firstName,
+					lastName: inserted.lastName,
+					email: inserted.email,
+					jurisdictionId: inserted.jurisdictionId,
+					jurisdictionName: inserted.jurisdictionName,
+					languageId: inserted.languageId,
+					languageName: inserted.languageName,
+					legalFieldId: inserted.legalFieldId,
+					legalFieldName: inserted.legalFieldName,
+					serviceSubcategoryId: inserted.serviceSubcategoryId,
+					serviceSubcategoryName: inserted.serviceSubcategoryName,
+					cost: inserted.cost,
+					budgetMin: inserted.budgetMin,
+					budgetMax: inserted.budgetMax,
+					rating: inserted.rating,
+					experience: inserted.experience,
+					lawFirmId: inserted.lawFirmId,
+					isActive: inserted.isActive,
+					isDeleted: inserted.isDeleted,
+				};
+		const service = await Services.findOne({where: {id: requestData.legalFieldId}})
+			            await Services.update({count: service.count+1}, {where: {id: requestData.legalFieldId}});
 
 			const device = await User.findOne({where: {id: req.body.userId}});
 			const notiData = {
-				title: request.getstarted,
-				message: 'New lead created.',
-				senderName: device.fullname,
+				title: requestData.getstarted,
+				message: 'Your lead has been created successfully.',
+				senderName: device.firstname + ' ' + device.lastname,
 				senderId: req.body.userId,
 				senderType: 'LEAD',
 				receiverid: req.body.userId,
-				notificationType: null,
-				target: 'Lead',
+				notificationType: WorkflowAppointment.CREAT_LEAD,
+				target: req.body.userId,
 			};
 			await Notifications.notificationCreate(notiData);
 			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken, 'New lead created.');
-			}
-			await Mail.userLeadSubmitted(request.email, request.getstarted);
-			const adminMail = await Admin.findAll();
-			for (let i = 0; i < adminMail.length; i++) {
-				await Mail.adminLeadMain(adminMail[i].email);
+				await Notifications.notification(device.deviceToken,
+					'Your lead has been created successfully, Please select any slots.');
 			}
 
-			// return res.status(200).send({ status:'200', message: "success!" , $data: createdRequest });
 			return apiResponses.successResponseWithData(
 				res,
 				'success!',
-				createdRequest,
+				requestData,
 			);
-		});
+		}
+	});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}
@@ -207,7 +229,6 @@ module.exports.getRequests = (req, res) => {
 		Request.findAndCountAll({
 			where: {isDeleted: 0, isActive: 1},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
 		})
 			.then((result) => {
 				// res.status(200).send({

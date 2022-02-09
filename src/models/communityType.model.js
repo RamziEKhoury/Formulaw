@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
 		'community_type',
@@ -16,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.STRING,
 			},
 			instruction: {
+				type: Sequelize.STRING,
+			},
+					image: {
 				type: Sequelize.STRING,
 			},
 		},

@@ -16,8 +16,19 @@ module.exports = function(app) {
 		[SubscriptionValidator.addSubscriptionValidator],
 		subscriptionController.addSubscription,
 	);
+
+	app.post(
+		'/api/v1/subscription/add-subscriptionPayment',
+		subscriptionController.addSubscriptionPayment);
+
+	app.post(
+		'/api/v1/subscription/update-subscription',
+		// [SubscriptionValidator.updateSubscriptionValidator],
+		subscriptionController.updateSubscription,
+	);
 	app.get('/api/v1/subscription/get-subscriptionstype/:durationType', subscriptionController.getSubscriptionsType);
 	app.get('/api/v1/subscription/get-subscriptions/:limit', subscriptionController.getSubscriptions);
 
 	app.get('/api/v1/subscription/get-subscription/:id', subscriptionController.getSubscription);
+	app.get('/api/v1/subscription/get-allsubscriptionpayment', subscriptionController.getAllSubscriptionPayment);
 };

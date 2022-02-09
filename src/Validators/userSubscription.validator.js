@@ -14,18 +14,18 @@ const addUserSubscriptionValidator = [
 		.trim().withMessage('startingDate must be specified.'),
 	body('endDate').isLength({min: 1})
 		.trim().withMessage('endDate must be specified.'),
-		body('discount')
+	body('discount')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('discount must be specified.'),
-	body('numberOfMeating')
+	body('numberOfMeeting')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('numberOfMeating must be specified.'),
-	body('meatingPlan')
+		.withMessage('numberOfMeeting must be specified.'),
+	body('meetingPlan')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('meatingPlan must be specified.'),
+		.withMessage('meetingPlan must be specified.'),
 	body('ipAudit')
 		.isLength({min: 1})
 		.trim()
@@ -34,6 +34,10 @@ const addUserSubscriptionValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('contractTemplates must be specified.'),
+	body('contract_templates.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('contract_templates must be specified.'),
 
 	sanitizeBody('userId').escape(),
 	(req, res, next) => {
@@ -50,7 +54,7 @@ const addUserSubscriptionValidator = [
 const UpdateUserSubscriptionValidator = [
 	body('userId').isLength({min: 1})
 		.trim().withMessage('userId must be specified.'),
-        body('durationType').isLength({min: 1})
+	body('durationType').isLength({min: 1})
 		.trim().withMessage('durationType must be specified.'),
 	body('subscriptionPlan').isLength({min: 1})
 		.trim().withMessage('subscription Plan must be specified.'),
@@ -58,18 +62,18 @@ const UpdateUserSubscriptionValidator = [
 		.trim().withMessage('startingDate must be specified.'),
 	body('endDate').isLength({min: 1})
 		.trim().withMessage('endDate must be specified.'),
-		body('discount')
+	body('discount')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('discount must be specified.'),
-	body('numberOfMeating')
+	body('numberOfMeeting')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('numberOfMeating must be specified.'),
-	body('meatingPlan')
+		.withMessage('numberOfMeeting must be specified.'),
+	body('meetingPlan')
 		.isLength({min: 1})
 		.trim()
-		.withMessage('meatingPlan must be specified.'),
+		.withMessage('meetingPlan must be specified.'),
 	body('ipAudit')
 		.isLength({min: 1})
 		.trim()
@@ -78,7 +82,11 @@ const UpdateUserSubscriptionValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('contractTemplates must be specified.'),
-		
+	body('contract_templates.*')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('contract_templates must be specified.'),
+
 	sanitizeBody('countryCode').escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);

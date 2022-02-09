@@ -1,3 +1,4 @@
+const {WorkflowAppointment} = require('../enum');
 module.exports = (sequelize, Sequelize) => {
 	return sequelize.define(
 		'appointment',
@@ -25,7 +26,10 @@ module.exports = (sequelize, Sequelize) => {
 			lawFirmId: {
 				type: Sequelize.UUID,
 			},
-
+			lawyerId: {
+				defaultValue: null,
+				type: Sequelize.UUID,
+			},
 			orderId: {
 				type: Sequelize.INTEGER,
 			},
@@ -35,13 +39,35 @@ module.exports = (sequelize, Sequelize) => {
 			},
 
 			status: {
-				defaultValue: 'pending',
-				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: WorkflowAppointment.PENDING,
+				type: Sequelize.ENUM(
+					WorkflowAppointment.PENDING,
+					WorkflowAppointment.FREE_CONSULTATION,
+					WorkflowAppointment.CONSULTATION,
+					WorkflowAppointment.COMPLETED,
+					WorkflowAppointment.PAYMENT,
+					WorkflowAppointment.CREAT_LEAD,
+					WorkflowAppointment.SCHEDULE_LEAD,
+					WorkflowAppointment.APPROVE_LEAD,
+					WorkflowAppointment.CANCELED,
+					WorkflowAppointment.FURTHER_STATUS,
+				),
 			},
 
 			workflow: {
-				defaultValue: 'pending',
-				type: Sequelize.ENUM('pending', 'free consultation', 'approved', 'payment', 'consultation', 'completed'),
+				defaultValue: WorkflowAppointment.PENDING,
+				type: Sequelize.ENUM(
+					WorkflowAppointment.PENDING,
+					WorkflowAppointment.FREE_CONSULTATION,
+					WorkflowAppointment.CONSULTATION,
+					WorkflowAppointment.COMPLETED,
+					WorkflowAppointment.PAYMENT,
+					WorkflowAppointment.CREAT_LEAD,
+					WorkflowAppointment.SCHEDULE_LEAD,
+					WorkflowAppointment.APPROVE_LEAD,
+					WorkflowAppointment.CANCELED,
+					WorkflowAppointment.FURTHER_STATUS,
+				),
 			},
 
 			date: {
@@ -49,6 +75,16 @@ module.exports = (sequelize, Sequelize) => {
 			},
 
 			time: {
+				type: Sequelize.STRING,
+			},
+			endTime: {
+				type: Sequelize.STRING,
+			},
+			ispayment: {
+				type: Sequelize.INTEGER,
+				defaultValue: 0,
+			},
+			scheduleAt: {
 				type: Sequelize.STRING,
 			},
 

@@ -35,4 +35,15 @@ module.exports = function(app) {
 	app.delete(
 		'/api/v1/service/delete-service/:id',
 		serviceController.deleteService);
+	
+	app.get(
+		'/api/v1/service/get-topservices/:limit',
+		serviceController.getTopServices);
+
+	app.post(
+		'/api/v1/service/sortnumber-check',
+		serviceController.sortnumberVarify,
+		);
+
+	
 };

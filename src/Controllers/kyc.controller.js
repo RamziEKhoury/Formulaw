@@ -4,9 +4,7 @@ const User = db.user;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addKycDetails = async (req, res) => {
-	console.log('dfdgsgdfh', req.body);
 	try {
-		console.log(req.body.userId);
 		Kyc.create({
 			userId: req.body.userId,
 			passport: req.body.passport,
@@ -14,6 +12,13 @@ module.exports.addKycDetails = async (req, res) => {
 			ParmanentAddress: req.body.ParmanentAddress,
 			PhnNumber: req.body.PhnNumber,
 			reason: req.body.reason,
+			addressone: req.body.addressone,
+			addresstwo: req.body.addresstwo,
+			country: req.body.country,
+			city: req.body.city,
+			postalcode: req.body.postalcode,
+			nationality: req.body.nationality,
+			passportnumber: req.body.passportnumber,
 		}).then((kycDetail) => {
 			return apiResponses.successResponseWithData(res, 'success!', kycDetail);
 		});
@@ -32,6 +37,13 @@ module.exports.updateKycDetails = async (req, res) => {
 					ParmanentAddress: req.body.ParmanentAddress,
 					PhnNumber: req.body.PhnNumber,
 					reason: req.body.reason,
+					addressone: req.body.addressone,
+					addresstwo: req.body.addresstwo,
+					country: req.body.country,
+					city: req.body.city,
+					postalcode: req.body.postalcode,
+					nationality: req.body.nationality,
+					passportnumber: req.body.passportnumber,
 				},
 				{where: {userId: req.body.userId}},
 			)
@@ -53,7 +65,7 @@ module.exports.getallUserKycDetails = (req, res) => {
 	const limit = req.params.limit;
 	Kyc.findAll({
 		include: [
-			{model: User, required: false, attributes: ['fullname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 		],
 		order: [['createdAt', 'DESC']],
 	})
@@ -75,7 +87,7 @@ module.exports.getallUserKycDetails = (req, res) => {
 module.exports.getOneUserKycDetails = (req, res) => {
 	Kyc.findOne({
 		include: [
-			{model: User, required: false, attributes: ['fullname', 'email']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
 		],
 		where: {userId: req.params.userId},
 	})
@@ -107,7 +119,6 @@ module.exports.kycStatus = async (req, res) => {
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 	} catch (err) {
-		console.log('errrrrr', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };

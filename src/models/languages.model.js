@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
 		ar_name: {
 			type: Sequelize.STRING,
 		},
+		sortnumber: {
+			type: Sequelize.INTEGER,
+		},
 		isActive: {
 			type: Sequelize.INTEGER,
 		},

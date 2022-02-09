@@ -5,55 +5,26 @@ const Op = db.Sequelize.Op;
 
 module.exports.addLanguage = async (req, res) => {
 	try {
-		console.log(req.body.en_name);
 		// #swagger.tags = ['Language']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
                     description: "Language details for add - en_name, ar_name, isActive",
                     schema: { $en_name: "", $ar_name: "", $isActive: ""}
             } */
-		Language.findOrCreate({
-			where: {
-				[Op.or]: [
-					{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
-					{ar_name: {[Op.iLike]: '%' + req.body.ar_name + '%'}},
-				],
-			},
-
-			defaults: {
+		Language.create({
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
+				sortnumber: req.body.sortnumber,
 				isActive: req.body.isActive,
-			},
+			
 		}).then((language) => {
-			console.log('language--->', language);
-			const isAlready = language[1];
-			const inserted = language[0];
-
-			if (!isAlready) {
-				/* #swagger.responses[409] = {
-                            description: "success!",
-                            schema: { $statusCode : 409 ,$status: true, $message: "Language already exist!", $data : {}}
-                        } */
-				res.send({
-					status: 409,
-					msg: 'Language already exist',
-				});
-			} else {
-				const languageData = {
-					id: inserted.id,
-					en_name: inserted.en_name,
-					ar_name: inserted.ar_name,
-					isActive: inserted.isActive,
-					isDeleted: inserted.isDeleted,
-				};
 				// return res.status(200).send({ status:'200', message: "success!" , data: languageData });
 				return apiResponses.successResponseWithData(
 					res,
 					'success!',
-					languageData,
+					language,
 				);
-			}
+			
 		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
@@ -72,6 +43,7 @@ module.exports.languageUpdate = async (req, res) => {
 			{
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
+				sortnumber: req.body.sortnumber,
 				isActive: req.body.isActive,
 			},
 			{where: {id: req.body.id}},
@@ -126,7 +98,7 @@ module.exports.getLanguages = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -151,7 +123,7 @@ module.exports.getLanguages = (req, res) => {
 		Language.findAndCountAll({
 			where: {isDeleted: 0, isActive: 1},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((result) => {
 				// res.status(200).send({
@@ -231,6 +203,27 @@ module.exports.deleteLanguage = async (req, res) => {
 				// return res.status(500).send({ message: err.message });
 				return apiResponses.errorResponse(res, err.message, {});
 			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.sortnumberVarify = async (req, res) => {
+	try {
+		Language.findOne({
+			where: {
+				sortnumber: req.body.sortnumber,
+				isDeleted: 0,
+			},
+		}).then(async (result) => {
+			/* #swagger.responses[404] = {
+                   description: "Email Not found.",
+                   schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+               } */
+			// return res.status(404).send({ message: "Email Not found." });
+
+			return apiResponses.successResponseWithData(res, 'success!', result);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

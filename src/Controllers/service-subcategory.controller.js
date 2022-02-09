@@ -5,61 +5,27 @@ const Op = db.Sequelize.Op;
 
 module.exports.addServiceSubCategory = async (req, res) => {
 	try {
-		console.log(req.body.en_name);
 		// #swagger.tags = ['Service']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
                     description: "service details for add - en_name, ar_name, isActive, description,isBillable",
                     schema: { $serviceId: "", $en_name: "", $ar_name: "", $isActive: "", $description: "",$isBillable:""}
             } */
-		ServiceSubcategory.findOrCreate({
-			where: {
-				[Op.or]: [
-					{en_name: {[Op.iLike]: '%' + req.body.en_name + '%'}},
-					{ar_name: {[Op.iLike]: '%' + req.body.ar_name + '%'}},
-				],
-			},
-
-			defaults: {
+		ServiceSubcategory.create({
 				serviceId: req.body.serviceId,
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				description: req.body.description,
+				sortnumber: req.body.sortnumber,
 				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
-			},
 		}).then((subCategory) => {
-			console.log('counter--->', subCategory);
-			const isAlready = subCategory[1];
-			const inserted = subCategory[0];
-
-			if (!isAlready) {
-				/* #swagger.responses[409] = {
-                            description: "Already!",
-                            schema: { $statusCode : 409 ,$status: true, $message: "Already exist!", $data : {}}
-                        } */
-				res.send({
-					status: 409,
-					msg: 'Already exist',
-				});
-			} else {
-				const subCategoryData = {
-					id: inserted.id,
-					serviceId: inserted.serviceId,
-					en_name: inserted.en_name,
-					ar_name: inserted.ar_name,
-					description: inserted.description,
-					// isBillable: inserted.isBillable,
-					isActive: inserted.isActive,
-					isDeleted: inserted.isDeleted,
-				};
 				// return res.status(200).send({ status:'200', message: "success!" , data: subCategoryData });
 				return apiResponses.successResponseWithData(
 					res,
 					'success!',
 					subCategoryData,
 				);
-			}
 		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
@@ -80,6 +46,7 @@ module.exports.subCategoryUpdate = async (req, res) => {
 				serviceId: req.body.serviceId,
 				ar_name: req.body.ar_name,
 				description: req.body.description,
+				sortnumber: req.body.sortnumber,
 				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
 			},
@@ -143,7 +110,7 @@ module.exports.getServiceSubcategories = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((data) => {
 				// res.status(200).send({
@@ -172,7 +139,7 @@ module.exports.getServiceSubcategories = (req, res) => {
 				isActive: 1,
 			},
 			limit: limit,
-			order: [['createdAt', 'DESC']],
+			order: [['sortnumber', 'ASC']],
 		})
 			.then((result) => {
 				// res.status(200).send({
@@ -256,6 +223,28 @@ module.exports.deleteSubcategory = async (req, res) => {
 				// return res.status(500).send({ message: err.message });
 				return apiResponses.errorResponse(res, err.message, {});
 			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.sortnumberVarify = async (req, res) => {
+	try {
+		ServiceSubcategory.findOne({
+			where: {
+				serviceId: req.params.id,
+				sortnumber: req.body.sortnumber,
+				isDeleted: 0,
+			},
+		}).then(async (result) => {
+			/* #swagger.responses[404] = {
+                   description: "Email Not found.",
+                   schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
+               } */
+			// return res.status(404).send({ message: "Email Not found." });
+
+			return apiResponses.successResponseWithData(res, 'success!', result);
+		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

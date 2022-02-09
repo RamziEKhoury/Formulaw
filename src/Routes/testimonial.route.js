@@ -15,13 +15,31 @@ module.exports = function(app) {
 		[TestimonialValidator.addTestimonial],
 		testimoinalController.addtestimonial,
 	);
+	app.post(
+		'/api/v1/testimonial/status/:id/:status',
+		testimoinalController.TestimonialStatus,
+	);
 	app.get(
 		'/api/v1/testimonial/view-testimonials',
 		testimoinalController.viewtestimonials,
 	);
 	app.get(
+		'/api/v1/testimonial/get-approvedtestimonials',
+		testimoinalController.getApprovedtestimonials,
+	);
+	app.get(
 		'/api/v1/testimonial/view-testimonial/:id',
 		testimoinalController.viewtestimonial,
+	);
+
+	app.get(
+		'/api/v1/testimonial/getOneLawyer-testimonial/:lawyerid',
+		testimoinalController.viewOneLawyertestimonials,
+	);
+
+	app.get(
+		'/api/v1/testimonial/getOneLawfirm-testimonial/:lawFirmId',
+		testimoinalController.viewOneLawfirmtestimonials,
 	);
 
 	app.put(
@@ -32,5 +50,10 @@ module.exports = function(app) {
 	app.delete(
 		'/api/v1/testimonial/delete-testimonial/:id',
 		testimoinalController.deletetestimonial,
+	);
+
+	app.post(
+		'/api/v1/testimonial/ratingstatus/:id/:status',
+		testimoinalController.ApprovedUserRating,
 	);
 };

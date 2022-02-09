@@ -1,6 +1,7 @@
 const usersController = require('../Controllers/users.controller');
 const {checkDuplicateEmail} = require('../Middlewares/userVarified');
 const UserAuth = require('../Validators/User.validator');
+const {getUserCredentialsForCredentials} = require('../Controllers/linkedin.controller');
 
 
 module.exports= function(app) {
@@ -47,5 +48,20 @@ module.exports= function(app) {
 	app.post(
 		'/api/v1/auth/user/update-deviceToken/:id',
 		usersController.userDeviceTokenUpdate,
+	);
+
+	app.post(
+		'/api/v1/auth/user/reset-password',
+		usersController.userPasswordReset,
+	);
+
+	app.post(
+		'/api/v1/auth/user/Updatenew-password/:token',
+		usersController.updateNewPassword,
+	);
+
+	app.get(
+		'/api/v1/auth/user/getLinkedinDetails',
+		getUserCredentialsForCredentials,
 	);
 };

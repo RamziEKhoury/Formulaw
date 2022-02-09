@@ -12,6 +12,10 @@ const addCountryValidator = [
 		.trim().withMessage('tax type must be specified.'),
 	body('tax').isLength({min: 1})
 		.trim().withMessage('tax must be specified.'),
+	body('sortnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('sortnumber must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
 	sanitizeBody('countryCode').escape(),
@@ -41,6 +45,10 @@ const updateCountryValidator = [
 		.trim().withMessage('tax type must be specified.'),
 	body('tax').isLength({min: 1})
 		.trim().withMessage('tax must be specified.'),
+	body('sortnumber')
+		.isLength({min: 1})
+		.trim()
+		.withMessage('sortnumber must be specified.'),
 	body('isActive').isLength({min: 1})
 		.trim().withMessage('isActive must be specified.'),
 	sanitizeBody('countryCode').escape(),

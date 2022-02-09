@@ -28,12 +28,15 @@ module.exports = (sequelize, Sequelize) => {
 		taxType:{
 			type: Sequelize.STRING,
 		  },
-		  tax:{
+		tax:{
 			type: Sequelize.STRING,
 		  },
 		flag: {
 			type: Sequelize.STRING,
 		},
+		sortnumber: {
+			type: Sequelize.INTEGER,
+		}
 	}, {
 		timestamps: true,
 	},
