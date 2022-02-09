@@ -94,7 +94,7 @@ module.exports.getLawFirmIndustries = (req, res) => {
 	// #swagger.tags = ['LawFirmIndustry']
 
 	LawFirmIndustry.findAll({
-		where: {lawFirmId: req.body.lawFirmId},
+		where: {lawFirmId: req.params.lawFirmId},
 		isDeleted: 0,
 		isActive: 1,
 		order: [['createdAt', 'DESC']],

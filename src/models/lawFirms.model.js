@@ -83,7 +83,7 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.INTEGER,
 			},
 			userrating: {
-				defaultValue: 0,
+				defaultValue: 5,
 				type: Sequelize.FLOAT,
 			}
 		},

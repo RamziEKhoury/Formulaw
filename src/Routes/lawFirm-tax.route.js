@@ -23,7 +23,7 @@ module.exports = function(app) {
 	// 	lawFirmTaxController.lawFirmTaxUpdate,
 	// );
 
-	app.get('/api/v1/lawfirm/get-taxes/:limit', lawFirmTaxController.getLawFirmTaxes);
+	app.get('/api/v1/lawfirm/get-taxes/:lawFirmId', lawFirmTaxController.getLawFirmTaxes);
 
 	app.get('/api/v1/lawfirm/get-tax/:id', lawFirmTaxController.getLawFirmTax);
 

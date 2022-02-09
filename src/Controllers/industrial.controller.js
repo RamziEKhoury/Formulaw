@@ -11,50 +11,22 @@ module.exports.addIndustrial = async (req, res) => {
                     description: "Industrial details for add - en_name, ar_name, isActive, description,isBillable",
                     schema: { $en_name: "", $ar_name: "", $isActive: "", $description: "",isBillable:""}
             } */
-		Industrial.findOrCreate({
-			where: {
-				en_name: req.body.en_name,
-			},
-
-			defaults: {
+		Industrial.create({
 				en_name: req.body.en_name,
 				ar_name: req.body.ar_name,
 				description: req.body.description,
 				sortnumber: req.body.sortnumber,
 				// isBillable: req.body.isBillable,
 				isActive: req.body.isActive,
-			},
+			
 		}).then((industrial) => {
-			const isAlready = industrial[1];
-			const inserted = industrial[0];
-
-			if (!isAlready) {
-				/* #swagger.responses[409] = {
-                            description: "Already!",
-                            schema: { $statusCode : 409 ,$status: true, $message: "Already exist!", $data : {}}
-                        } */
-				res.send({
-					status: 409,
-					msg: 'Already exist',
-				});
-			} else {
-				const industrialData = {
-					id: inserted.id,
-					en_name: inserted.en_name,
-					ar_name: inserted.ar_name,
-					description: inserted.description,
-					sortnumber: inserted.sortnumber,
-					// isBillable: inserted.isBillable,
-					isActive: inserted.isActive,
-					isDeleted: inserted.isDeleted,
-				};
 				// return res.status(200).send({ status:'200', message: "success!" , data: industrialData });
 				return apiResponses.successResponseWithData(
 					res,
 					'success!',
-					industrialData,
+					industrial,
 				);
-			}
+			
 		});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);

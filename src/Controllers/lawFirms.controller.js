@@ -152,7 +152,6 @@ module.exports.lawFirmUpdate = async (req, res) => {
 		 description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,price,currency,numOfLawyer,jurisdiction,expertise,rating,taxType,tax, isActive",
 			schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$logo: "",$images:"",$price: "" ,$currency: "", $rating: "" , $experience: "",$taxType:"",$tax:"", $numOfLawyer: "", $jurisdiction: "", $expertise: ""}
             } */
-
 	try {
 		await LawFirm.update(
 			{
@@ -477,6 +476,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 							as: 'lawfirm_services',
 							where: {
 								[Op.and]: [
+									{title: 'Per hour rate'},
 									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
 								],
 							},
@@ -551,6 +551,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 							as: 'lawfirm_services',
 							where: {
 								[Op.and]: [
+									{title: 'Per hour rate'},
 									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
 								],
 							},
@@ -625,6 +626,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 							as: 'lawfirm_services',
 							where: {
 								[Op.and]: [
+									{title: 'Per hour rate'},
 									{price: {[Op.between]: [req.body.min_budget, req.body.max_budget]}},
 								],
 							},
