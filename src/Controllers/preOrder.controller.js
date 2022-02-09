@@ -4,7 +4,6 @@ const Request = db.request;
 const apiResponses = require('../Components/apiresponse');
 
 module.exports.addPreOrder = async (req, res) => {
-	console.log('sfdfgdg', req.body);
 	try {
 		PreOrder.create({
 			appointmentId: req.body.appointmentId,
@@ -78,7 +77,7 @@ module.exports.getPreOrders = (req, res) => {
 
 module.exports.getPreOrder = (req, res) => {
 	PreOrder.findOne({
-		where: {queryId: req.params.queryId},
+		where: {appointmentId: req.params.appointmentId},
 	})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);

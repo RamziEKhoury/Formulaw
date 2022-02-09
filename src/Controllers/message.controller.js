@@ -63,3 +63,24 @@ module.exports.getDocument = (req, res) => {
 			});
 		});
 };
+
+module.exports.getAdminMessagesOfUserWithFile = (req, res) => {
+	Messages.findAll({
+		where: {
+			receiverId: req.params.adminId,
+			appointmentId: req.params.appointmentId,
+			messageType: 'FILE',
+		},
+	})
+	 .then((data) => {
+			return apiResponses.successResponseWithData(
+				res, 'success', data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+					err.message ||
+					'Some error occurred while retrieving messages.',
+			});
+		});
+};
