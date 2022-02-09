@@ -149,9 +149,11 @@ module.exports.createCharge = (async (req, res) => {
 				return apiResponses.successResponseWithData(res, 'Success', data);
 			})
 			.catch( (e) => {
+				console.log("SAdadadasdasdasdsadasdasd------------------",e.raw.message);
 				return apiResponses.errorResponse(res, e.raw.message);
 			});
 	} catch (err) {
+		console.log("SAdadadasdasdasdsadasdasd",err);
 		return apiResponses.errorResponse(res, err);
 	}
 });

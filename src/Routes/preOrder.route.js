@@ -23,7 +23,7 @@ module.exports = function(app) {
 		preOrderController.updatePreOrder,
 	);
 
-	app.get('/api/v1/preOrder/get-onePreOrderDetails/:queryId',
+	app.get('/api/v1/preOrder/get-onePreOrderDetails/:appointmentId',
      preOrderController.getPreOrder
      );
 

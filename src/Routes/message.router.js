@@ -23,4 +23,10 @@ module.exports = function(app) {
 		'/api/v1/message/all-document/:id',
 		messageControllers.getDocument
 	);
+
+	
+	app.get(
+		'/api/v1/message/all-adminmessagesofuserwithfile/:adminId/:appointmentId',
+		messageControllers.getAdminMessagesOfUserWithFile
+	);
 };

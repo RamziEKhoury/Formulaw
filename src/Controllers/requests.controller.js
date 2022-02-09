@@ -20,10 +20,10 @@ module.exports.createRequest = async (req, res) => {
 		Request.findOrCreate({
 			where: {
 				[Op.and]: [
-					{getstarted: req.body.getstarted },
-					{firstName: req.body.firstName },
-					{lastName: req.body.lastName },
-					{email: req.body.email },
+					{getstarted: {[Op.iLike]: '%' + req.body.getstarted + '%'} },
+					{firstName:{[Op.iLike]: '%' + req.body.firstName + '%'} },
+					{lastName: {[Op.iLike]: '%' + req.body.lastName + '%'} },
+					{email: {[Op.iLike]: '%' + req.body.email + '%'} },
 				],
 			},
 			defaults: req.body,
