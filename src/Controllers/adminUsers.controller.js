@@ -8,7 +8,6 @@ const moment = require('moment');
 
 module.exports.registration = async (req, res) => {
 	try {
-		console.log(req.body.firstname + req.body.lastname);
 		// #swagger.tags = ['Auth']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
@@ -257,7 +256,6 @@ module.exports.admin = (req, res) => {
 };
 
 module.exports.updateprofile = async (req, res) => {
-	console.log(req.body);
 	try {
 		await Admin.update(
 			{
@@ -277,7 +275,6 @@ module.exports.updateprofile = async (req, res) => {
 				if (!user) {
 					return apiResponses.notFoundResponse(res, 'Not found.', {});
 				}
-				console.log(user);
 				return apiResponses.successResponseWithData(res, 'Success', user);
 			})
 			.catch((err) => {

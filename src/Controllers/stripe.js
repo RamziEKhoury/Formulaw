@@ -149,11 +149,9 @@ module.exports.createCharge = (async (req, res) => {
 				return apiResponses.successResponseWithData(res, 'Success', data);
 			})
 			.catch( (e) => {
-				console.log("SAdadadasdasdasdsadasdasd------------------",e.raw.message);
 				return apiResponses.errorResponse(res, e.raw.message);
 			});
 	} catch (err) {
-		console.log("SAdadadasdasdasdsadasdasd",err);
 		return apiResponses.errorResponse(res, err);
 	}
 });
@@ -161,7 +159,6 @@ module.exports.createCharge = (async (req, res) => {
 
 module.exports.SubscriptionMonthly = (async (req, res) => {
 	try {
-		console.log(req.body);
 		let customerIn = null;
 		let priceIn = null;
 		await stripe.customers.create({
@@ -235,7 +232,6 @@ module.exports.cancelSubscription = (async (req, res) => {
 
 module.exports.getOneSubscription = (async (req, res) => {
 	try {
-		console.log(req.body);
 		await stripe.subscriptions.retrieve(
 			req.body.subscriptionId,
 		).then(async (subscription) => {
@@ -314,14 +310,11 @@ module.exports.getOneUserSubscriptions = (async (req, res) => {
 
 module.exports.webHooks = (async (req, res) => {
 	const event = req.body;
-	console.log('event-------------------------------<><><><><><><><>', event.data);
 	try {
 		if (event.type === 'customer.subscription.updated' && event.data.object.status === 'active') {
 			const subscriptionStripeId = event.data.object.id;
-			console.log('subscriptionStripeId-------------------------------<><><><><><><><>', subscriptionStripeId);
 			// eslint-disable-next-line max-len
 			const fetchSubscriptionPayment = await SubscriptionPayment.findOne({where: {subscriptionStripeId: subscriptionStripeId}});
-			console.log('fetchSubscriptionPayment-------------------------------<><><><><><><><>', fetchSubscriptionPayment);
 			if (!!fetchSubscriptionPayment) {
 				const subscriptionDetails = await Subscription.findOne({where: {id: fetchSubscriptionPayment.subscriptionId}});
 				await createUserSubscription(subscriptionDetails, fetchSubscriptionPayment.userId);

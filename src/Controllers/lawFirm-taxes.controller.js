@@ -5,7 +5,6 @@ const apiResponses = require('../Components/apiresponse');
 module.exports.addLawFirmTax = async (req, res) => {
 	// get input values from reqeust.
 	const taxData = req.body.values;
-	console.log(taxData);
 	const lawFirmId = req.body.lawFirmId;
 
 	try {
@@ -31,13 +30,11 @@ module.exports.addLawFirmTax = async (req, res) => {
 		});
 		return apiResponses.successResponseWithData(res, 'success!');
 	} catch (err) {
-		console.log('errgdfhjfgjhgk', err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
 
 module.exports.getLawFirmTaxes = (req, res) => {
-	// console.log("kjngf",req.lawFirmId);
 	// Get Lawfirm data from Database
 	// #swagger.tags = ['LawFirmTax']
 

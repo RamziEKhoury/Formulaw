@@ -12,7 +12,6 @@ module.exports.addLawFirmService = async (req, res) => {
 		if (serviceData === undefined || serviceData === '') {
 			res.send({status: 409, msg: 'Service Data should not be empty.'});
 		}
-		// console.log(serviceData);
 		// Loop over service data to get individual fields. like title and id.
 		serviceData.map((service, i) => {
 			const services = {

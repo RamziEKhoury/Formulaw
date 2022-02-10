@@ -5,7 +5,6 @@ const apiResponses = require('../Components/apiresponse');
 module.exports.addBanner = async (req, res) => {
 	try {
 		// #swagger.tags = ['Banner']
-		console.log(req.body.title);
 		/*  #swagger.parameters['obj'] = {
 			          in: 'body',
 			          description: "Banner details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,experience,jurisdiction,expertise,rating,isActive",
@@ -19,7 +18,6 @@ module.exports.addBanner = async (req, res) => {
 			images: req.body.images,
 			logo: req.body.logo,
 		}).then((banner) => {
-			// console.log('banner--->', banner);
 			// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
 			return apiResponses.successResponseWithData(res, 'success!', banner);
 		});

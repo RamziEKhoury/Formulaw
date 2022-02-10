@@ -4,7 +4,6 @@ const Policy = db.policy;
 const apiResponses = require('../Components/apiresponse');
 module.exports.addpolicy = async (req, res) => {
 	try {
-		console.log(req.body);
 		Policy.create({
 			id: req.body.id,
 			privacyandPolicy: req.body.privacyandPolicy,
@@ -53,8 +52,6 @@ module.exports.viewPolicys = (req, res) => {
 };
 
 module.exports.viewpolicy = (req, res) => {
-	console.log(req.params);
-
 	Policy.findOne({
 		where: {
 			id: req.params.id,

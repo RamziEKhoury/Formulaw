@@ -4,7 +4,6 @@ const apiResponses = require('../Components/apiresponse');
 
 module.exports.addBlog = async (req, res) => {
 	try {
-		console.log(req.body);
 		Blog.create({
             blogCategoryId: req.body.blogCategoryId,
             userId: req.body.userId,

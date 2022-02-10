@@ -223,7 +223,6 @@ module.exports.TestimonialStatus = async (req, res) => {
 };
 
 module.exports.ApprovedUserRating = async (req, res) => {
-	console.log("adsssssssssssss",req.params);
 	try {
 		await Testimonial.update(
 			{

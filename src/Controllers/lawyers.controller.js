@@ -22,7 +22,6 @@ function generatePassword() {
 }
 
 module.exports.addLawyer = async (req, res) => {
-	console.log('dfdgsgdfh', req.body);
 	try {
 		// #swagger.tags = ['Lawyer']
 		/*  #swagger.parameters['obj'] = {
@@ -58,7 +57,6 @@ module.exports.addLawyer = async (req, res) => {
 				isActive: req.body.isActive,
 			},
 		}).then(async (lawyer) => {
-			// console.log('lawyer--->', lawyer);
 			const isAlready = lawyer[1];
 			const inserted = lawyer[0];
 
