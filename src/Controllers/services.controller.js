@@ -23,7 +23,7 @@ module.exports.addService = async (req, res) => {
 				return apiResponses.successResponseWithData(
 					res,
 					'success!',
-					serviceData,
+					service,
 				);
 			
 		});

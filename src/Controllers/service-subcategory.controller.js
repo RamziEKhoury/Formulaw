@@ -24,7 +24,7 @@ module.exports.addServiceSubCategory = async (req, res) => {
 				return apiResponses.successResponseWithData(
 					res,
 					'success!',
-					subCategoryData,
+					subCategory,
 				);
 		});
 	} catch (err) {

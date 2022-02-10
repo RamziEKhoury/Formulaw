@@ -303,6 +303,8 @@ module.exports.getLawfirm = (req, res) => {
 		include: [
 			{
 				model: LawFirmService,
+				as: 'lawfirm_services',
+				where: {title: 'Per hour rate'},
 			},
 
 			{
