@@ -7,9 +7,10 @@ const storage = multer.diskStorage({
 		cb(null, path.join(__dirname, '../Public/Images'));
 	},
 	filename: function(req, file, cb) {
+		const stamp = Math.floor(Math.random() * (999 - 100 + 1) + 100)
 		cb(
 			null,
-			file.fieldname + '-' + Date.now() + path.extname(file.originalname),
+			path.parse(file.originalname).name + '-' + stamp + path.extname(file.originalname),
 		);
 	},
 });
