@@ -13,8 +13,6 @@ module.exports.addJourney = async (req, res) => {
 					sortNumber: req.body.sortNumber,
 					icon: req.body.icon,
 				}).then((journey) => {
-					// console.log('journey--->', journey);
-
 					// return res.status(200).send({ status:'200', message: "success!" , $data: lawfirmdata });
 					return apiResponses.successResponseWithData(res, 'success!', journey);
 				});

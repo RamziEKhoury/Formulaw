@@ -102,7 +102,6 @@ module.exports.addAppointment = async (req, res) => {
 			}
 		});
 	} catch (err) {
-		console.log("errrrr============",err);
 		return apiResponses.errorResponse(res, err);
 	}
 };
@@ -1281,7 +1280,6 @@ module.exports.Consultation = async (req, res) => {
 
 	var month = new Date(new Date().setMonth(new Date().getMonth()));
     var dueDate = new Date(month.setDate(month.getDate() + 21)).toISOString();
-	console.log("sASASasSasAS=============",dueDate);
 	Appointment.update(
 		{
 			ispayment: 1,
@@ -1496,7 +1494,6 @@ module.exports.Consultation = async (req, res) => {
 		}
 	})
 		.catch((err) => {
-			console.log("ERR============================",err);
 			return apiResponses.errorResponse(res, err.message, {});
 		});
 };

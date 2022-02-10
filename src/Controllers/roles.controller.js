@@ -4,7 +4,6 @@ const apiResponses = require('../Components/apiresponse');
 
 module.exports.addRole = async (req, res) => {
 	try {
-		console.log(req.body);
 		// #swagger.tags = ['Role']
 		/*  #swagger.parameters['obj'] = {
                     in: 'body',
@@ -35,7 +34,6 @@ module.exports.addRole = async (req, res) => {
 };
 
 module.exports.roleById = (req, res) => {
-	console.log('req_params---', req.params);
 	// #swagger.tags = ['Role']
 	// Get User from Database
 	Role.findOne({

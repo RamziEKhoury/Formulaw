@@ -7,7 +7,6 @@ const apiResponses = require('../Components/apiresponse');
 
 module.exports.addcommunity = async (req, res) => {
 	try {
-		console.log(req.body);
 		Community.create({
 			id: req.body.id,
 			titleOne: req.body.titleOne,
@@ -72,7 +71,6 @@ module.exports.viewcommunity = (req, res) => {
 };
 
 module.exports.updatecommunity = async (req, res) => {
-	console.log(req.body);
 	try {
 		await Community.update(
 			{
@@ -118,7 +116,6 @@ module.exports.deletecommunity = async (req, res) => {
 
 module.exports.addcommunity_type = async (req, res) => {
 	try {
-		console.log(req.body);
 		CommunityType.create({
 			id: req.body.id,
 			communityId: req.body.communityId,
@@ -190,7 +187,6 @@ module.exports.viewcommunity_type = (req, res) => {
 };
 
 module.exports.updatecommunity_type = async (req, res) => {
-	console.log(req.body);
 	try {
 		await CommunityType.update(
 			{
