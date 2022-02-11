@@ -81,7 +81,7 @@ module.exports.getOneBlog = (req, res) => {
 };
 
 module.exports.getBlogByCategory = (req, res) => {
-	Blog.findOne({
+	Blog.findAll({
 		where: {blogCategoryId: req.params.blogCategoryId,isDeleted: 0},
 	})
 		.then((data) => {
