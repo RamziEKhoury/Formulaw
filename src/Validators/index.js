@@ -26,6 +26,7 @@ const subUserValidator = require('./subUser.validator');
 const blogsCategoryValidator = require('./blogsCategory.validator');
 const blogsValidator = require('./blogs.validator');
 const seoValidator = require('./seo.validator');
+const faqHeadingValidator = require('./faq_heading.validator');
 
 
 module.exports = {
@@ -57,4 +58,5 @@ module.exports = {
 	blogsCategoryValidator,
 	blogsValidator,
 	seoValidator,
+	faqHeadingValidator
 };
