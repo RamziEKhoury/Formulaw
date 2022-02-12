@@ -63,6 +63,7 @@ db.blog= require('./blogs.model')(sequelize, Sequelize);
 db.seo= require('./seo.model')(sequelize, Sequelize);
 db.subscribeUser = require('./subscribeUser.model')(sequelize, Sequelize);
 db.faq_heading = require('./faq_heading.model')(sequelize, Sequelize);
+db.faq_answer = require('./faq_answers.model')(sequelize, Sequelize);
 
 
 db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
@@ -86,6 +87,7 @@ db.charge.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
 db.charge.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'});
 db.subscriptionPayment.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
 db.subscriptionPayment.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'});
+db.faq_heading.hasMany(db.faq_answer, {sourceKey: 'id', foreignKey: 'faq_heading_id'});
 
 db.lawFirm.hasMany(db.lawFirm_service, {
 	sourceKey: 'id',

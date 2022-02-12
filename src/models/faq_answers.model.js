@@ -1,16 +1,19 @@
 const DataTypes = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
-	return sequelize.define('faq_heading', {
+	return sequelize.define('faq_answers', {
 		id: {
 			type: Sequelize.UUID,
 			defaultValue: Sequelize.UUIDV4,
 			allowNull: false,
 			primaryKey: true,
 		},
-		title: {
-			type: Sequelize.STRING,
+		faq_heading_id: {
+			type: Sequelize.UUID,
 		},
-		description: {
+		question: {
+			type: DataTypes.STRING(1024),
+		},
+		answer: {
 			type: DataTypes.STRING(2048),
 		},
 		images: {
