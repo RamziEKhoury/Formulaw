@@ -24,12 +24,16 @@ module.exports = function(app) {
 	);
 
 	app.get(
-		'/api/v1/faq_answer/get-faq_answer/:limit',
-		faqAnswerController.getFaqAnswer);
+		'/api/v1/faq_answer/get-faq_answers/:limit',
+		faqAnswerController.getFaqAnswers);
 
 	app.get(
 		'/api/v1/faq_answer/get-faq_answer/:id',
 		faqAnswerController.getFaqAnswer);
+		
+	app.get(
+		'/api/v1/faq_answer/get-faq_answerbyheading/:faqHeadingId',
+		faqAnswerController.getFaqAnswersByHeading);
 
 	app.delete(
 		'/api/v1/faq_answer/delete-faq_answer/:id',
