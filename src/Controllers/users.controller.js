@@ -1,6 +1,7 @@
 const db = require('../models');
 const User = db.user;
 const Admin = db.adminUser;
+const Lawyer = db.lawyer;
 const apiResponses = require('../Components/apiresponse');
 const {createToken} = require('../Middlewares/userAuthentications');
 const bcrypt = require('bcryptjs');
@@ -456,6 +457,31 @@ module.exports.updateNewPassword = async (req, res) => {
 			expireToken: null,
 		},
 		{where: {resetToken: sentToken, expireToken: {[Op.gt]: Date.now()}},
+		})
+			.then(async (user) => {
+				if (!user) {
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				return apiResponses.successResponseWithData(res, 'Success', user);
+			})
+			.catch((error) => {
+				return apiResponses.errorResponse(res, error.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
+module.exports.updateLawFirmPassword = async (req, res) => {
+	try {
+     const lawyer = await Lawyer.findOne({where: {lawFirmId: req.body.lawFirmId,email: req.body.email}})
+		if(!lawyer){
+			return apiResponses.notFoundResponse(res, 'Not found.', {});
+		}
+		User.update({
+			password: await bcrypt.hashSync(req.body.password, 8),
+		},
+		{where: {id: lawyer.user_id},
 		})
 			.then(async (user) => {
 				if (!user) {

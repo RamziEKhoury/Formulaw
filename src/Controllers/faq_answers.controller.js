@@ -81,6 +81,23 @@ module.exports.getFaqAnswer = (req, res) => {
 		});
 };
 
+module.exports.getFaqAnswersByHeading = (req, res) => {
+	FaqAnswer.findAll({
+		where: {faq_heading_id: req.params.faqHeadingId,
+			isDeleted: 0,
+			isActive: 1,
+		},
+	})
+		.then((data) => {
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving data.',
+			});
+		});
+};
+
 module.exports.deleteFaqAnswer = async (req, res) => {
 	try {
 		await FaqAnswer.update(

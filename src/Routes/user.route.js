@@ -60,6 +60,11 @@ module.exports= function(app) {
 		usersController.updateNewPassword,
 	);
 
+	app.post(
+		'/api/v1/auth/user/UpdatenewLawFirm-password',
+		usersController.updateLawFirmPassword,
+	);
+
 	app.get(
 		'/api/v1/auth/user/getLinkedinDetails',
 		getUserCredentialsForCredentials,
