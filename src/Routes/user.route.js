@@ -69,4 +69,9 @@ module.exports= function(app) {
 		'/api/v1/auth/user/getLinkedinDetails',
 		getUserCredentialsForCredentials,
 	);
+	app.post(
+		'/api/v1/auth/user/lawyerlogin',
+		UserAuth.lawyerLogInValidator,
+		usersController.lawyerLogin,
+	);
 };
