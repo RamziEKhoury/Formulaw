@@ -81,8 +81,8 @@ module.exports.getOneBlog = (req, res) => {
 
 module.exports.getNewBlog = (req, res) => {
 	Blog.findOne({
-        where: {isDeleted: 0},
-        order: [['createdAt', 'DESC']]})
+		where: {isDeleted: 0},
+		order: [['createdAt', 'DESC']]})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
 		})

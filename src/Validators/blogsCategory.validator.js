@@ -1,4 +1,4 @@
-const {body, sanitizeBody, validationResult,param} = require('express-validator');
+const {body, sanitizeBody, validationResult, param} = require('express-validator');
 const {isNumber} = require('underscore');
 const apiResponses = require('../Components/apiresponse');
 
@@ -7,7 +7,7 @@ const addBlogsCategoryValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('title  must be specified.'),
-    body('description')
+	body('description')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('description must be specified.'),
@@ -15,11 +15,10 @@ const addBlogsCategoryValidator = [
 	// 	.isLength({min: 1})
 	// 	.trim()
 	// 	.withMessage('images must be uploaded.'),
-    body('iconsUrl')
+	body('iconsUrl')
 		.isLength({min: 1})
-		.trim()
 		.withMessage('icons must be uploaded.'),
-	
+
 
 	sanitizeBody('title').escape(),
 	(req, res, next) => {
@@ -37,7 +36,7 @@ const addBlogsCategoryValidator = [
 ];
 
 const updateBlogsCategoryValidator = [
-    body('id')
+	body('id')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('id  must be specified.'),
@@ -45,7 +44,7 @@ const updateBlogsCategoryValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('title  must be specified.'),
-    body('description')
+	body('description')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('description must be specified.'),
@@ -53,11 +52,11 @@ const updateBlogsCategoryValidator = [
 	// 	.isLength({min: 1})
 	// 	.trim()
 	// 	.withMessage('images must be uploaded.'),
-    body('iconsUrl')
+	body('iconsUrl')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('icons must be uploaded.'),
-	
+
 
 	sanitizeBody('title').escape(),
 	(req, res, next) => {
@@ -75,11 +74,10 @@ const updateBlogsCategoryValidator = [
 ];
 
 
-
 const blogsCategoryValidator = {
 	addBlogsCategoryValidator: addBlogsCategoryValidator,
-    updateBlogsCategoryValidator: updateBlogsCategoryValidator,
-	
+	updateBlogsCategoryValidator: updateBlogsCategoryValidator,
+
 };
 
 module.exports = blogsCategoryValidator;

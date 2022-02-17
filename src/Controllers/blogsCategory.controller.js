@@ -22,9 +22,9 @@ module.exports.updateBlogCategory = async (req, res) => {
 		await BlogCategory.update(
 			{
 				title: req.body.title,
-                description: req.body.description,
-                imagesUrl: req.body.imagesUrl,
-                iconsUrl: req.body.iconsUrl,
+				description: req.body.description,
+				imagesUrl: req.body.imagesUrl,
+				iconsUrl: req.body.iconsUrl,
 			},
 			{where: {id: req.body.id}},
 		)
@@ -43,10 +43,9 @@ module.exports.updateBlogCategory = async (req, res) => {
 };
 
 module.exports.getBlogCategories = (req, res) => {
-
 	BlogCategory.findAll({
-        where: {isDeleted: 0},
-        order: [['createdAt', 'DESC']]})
+		where: {isDeleted: 0},
+		order: [['createdAt', 'DESC']]})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
 		})
@@ -64,7 +63,7 @@ module.exports.getBlogCategories = (req, res) => {
 
 module.exports.getBlogCategory = (req, res) => {
 	BlogCategory.findOne({
-		where: {id: req.params.id,isDeleted: 0},
+		where: {id: req.params.id, isDeleted: 0},
 	})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);

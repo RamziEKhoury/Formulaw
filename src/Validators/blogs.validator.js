@@ -1,13 +1,13 @@
-const {body, sanitizeBody, validationResult,param} = require('express-validator');
+const {body, sanitizeBody, validationResult, param} = require('express-validator');
 const {isNumber} = require('underscore');
 const apiResponses = require('../Components/apiresponse');
 
 const addBlogsValidator = [
-    body('userId')
+	body('userId')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('user id  must be specified.'),
-    body('blogCategoryId')
+	body('blogCategoryId')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('blogCategory Id  must be specified.'),
@@ -15,7 +15,7 @@ const addBlogsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('title  must be specified.'),
-    body('description')
+	body('description')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('description must be specified.'),
@@ -23,8 +23,7 @@ const addBlogsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('images must be uploaded.'),
-    
-	
+
 
 	sanitizeBody('blogCategoryId').escape(),
 	(req, res, next) => {
@@ -42,15 +41,15 @@ const addBlogsValidator = [
 ];
 
 const updateBlogsValidator = [
-    body('id')
+	body('id')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('id  must be specified.'),
-    body('userId')
+	body('userId')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('user id  must be specified.'),
-    body('blogCategoryId')
+	body('blogCategoryId')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('blogCategory Id  must be specified.'),
@@ -58,7 +57,7 @@ const updateBlogsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('title  must be specified.'),
-    body('description')
+	body('description')
 		.isLength({min: 1})
 		.trim()
 		.withMessage('description must be specified.'),
@@ -66,7 +65,7 @@ const updateBlogsValidator = [
 		.isLength({min: 1})
 		.trim()
 		.withMessage('images must be uploaded.'),
-	
+
 
 	sanitizeBody('blogCategoryId').escape(),
 	(req, res, next) => {
@@ -84,11 +83,10 @@ const updateBlogsValidator = [
 ];
 
 
-
 const blogsValidator = {
 	addBlogsValidator: addBlogsValidator,
-    updateBlogsValidator: updateBlogsValidator,
-	
+	updateBlogsValidator: updateBlogsValidator,
+
 };
 
 module.exports = blogsValidator;
