@@ -79,6 +79,20 @@ module.exports.getOneBlog = (req, res) => {
 		});
 };
 
+module.exports.getNewBlog = (req, res) => {
+	Blog.findOne({
+        where: {isDeleted: 0},
+        order: [['createdAt', 'DESC']]})
+		.then((data) => {
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving data.',
+			});
+		});
+};
+
 module.exports.getBlogByCategory = (req, res) => {
 	Blog.findAll({
 		where: {blogCategoryId: req.params.blogCategoryId, isDeleted: 0},
