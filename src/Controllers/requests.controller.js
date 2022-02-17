@@ -17,30 +17,9 @@ module.exports.createRequest = async (req, res) => {
             schema: { $industryId: "", $industryTitle: "", $getstarted: "", $firstName: "", $lastName: "" ,  $email: "", $jurisdictionId: "" , $languageId: "" , $legalFieldId: "" ,$legalFieldName: "" ,$serviceSubcategoryId: "" ,$serviceSubcategoryName: "" , $budgetMin: "" , $budgetMax: "",$rating:"", $lawFirmId: "", $experience: "", $isActive: ""}
             } */
 
-		Request.findOrCreate({
-			where: {
-				[Op.and]: [
-					{getstarted: {[Op.iLike]: '%' + req.body.getstarted + '%'} },
-					{firstName:{[Op.iLike]: '%' + req.body.firstName + '%'} },
-					{lastName: {[Op.iLike]: '%' + req.body.lastName + '%'} },
-					{email: {[Op.iLike]: '%' + req.body.email + '%'} },
-				],
-			},
-			defaults: req.body,
-		}).then(async(request) => {
-			const isAlready = request[1];
-			const inserted = request[0];
-
-			if (!isAlready) {
-				/* #swagger.responses[409] = {
-                            description: "Already!",
-                            schema: { $statusCode : 409 ,$status: true, $message: "Country already exist!", $data : {}}
-                        } */
-				res.send({
-					status: 409,
-					msg: 'request already exist',
-				});
-			} else {
+		Request.create(req.body)
+			.then(async (request) => {
+				const inserted = request;
 				const requestData = {
 					id: inserted.id,
 					getstarted: inserted.getstarted,
@@ -66,33 +45,32 @@ module.exports.createRequest = async (req, res) => {
 					isActive: inserted.isActive,
 					isDeleted: inserted.isDeleted,
 				};
-		const service = await Services.findOne({where: {id: requestData.legalFieldId}})
+				const service = await Services.findOne({where: {id: requestData.legalFieldId}});
 			            await Services.update({count: service.count+1}, {where: {id: requestData.legalFieldId}});
 
-			const device = await User.findOne({where: {id: req.body.userId}});
-			const notiData = {
-				title: requestData.getstarted,
-				message: 'Your lead has been created successfully.',
-				senderName: device.firstname + ' ' + device.lastname,
-				senderId: req.body.userId,
-				senderType: 'LEAD',
-				receiverid: req.body.userId,
-				notificationType: WorkflowAppointment.CREAT_LEAD,
-				target: req.body.userId,
-			};
-			await Notifications.notificationCreate(notiData);
-			if (!!device.deviceToken) {
-				await Notifications.notification(device.deviceToken,
-					'Your lead has been created successfully, Please select any slots.');
-			}
+				const device = await User.findOne({where: {id: req.body.userId}});
+				const notiData = {
+					title: requestData.getstarted,
+					message: 'Your lead has been created successfully.',
+					senderName: device.firstname + ' ' + device.lastname,
+					senderId: req.body.userId,
+					senderType: 'LEAD',
+					receiverid: req.body.userId,
+					notificationType: WorkflowAppointment.CREAT_LEAD,
+					target: req.body.userId,
+				};
+				await Notifications.notificationCreate(notiData);
+				if (!!device.deviceToken) {
+					await Notifications.notification(device.deviceToken,
+						'Your lead has been created successfully, Please select any slots.');
+				}
 
-			return apiResponses.successResponseWithData(
-				res,
-				'success!',
-				requestData,
-			);
-		}
-	});
+				return apiResponses.successResponseWithData(
+					res,
+					'success!',
+					requestData,
+				);
+			});
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

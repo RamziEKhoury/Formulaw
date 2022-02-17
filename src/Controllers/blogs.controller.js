@@ -5,12 +5,12 @@ const apiResponses = require('../Components/apiresponse');
 module.exports.addBlog = async (req, res) => {
 	try {
 		Blog.create({
-            blogCategoryId: req.body.blogCategoryId,
-            userId: req.body.userId,
+			blogCategoryId: req.body.blogCategoryId,
+			userId: req.body.userId,
 			title: req.body.title,
 			description: req.body.description,
 			imagesUrls: req.body.imagesUrls,
-            type: req.body.type,
+			type: req.body.type,
 		}).then((blog) => {
 			return apiResponses.successResponseWithData(res, 'success!', blog);
 		});
@@ -24,11 +24,11 @@ module.exports.updateBlog = async (req, res) => {
 		await Blog.update(
 			{
 				blogCategoryId: req.body.blogCategoryId,
-                userId: req.body.userId,
-                title: req.body.title,
-                description: req.body.description,
-                imagesUrls: req.body.imagesUrls,
-                type: req.body.type,
+				userId: req.body.userId,
+				title: req.body.title,
+				description: req.body.description,
+				imagesUrls: req.body.imagesUrls,
+				type: req.body.type,
 			},
 			{where: {id: req.body.id}},
 		)
@@ -47,10 +47,9 @@ module.exports.updateBlog = async (req, res) => {
 };
 
 module.exports.getBlogs = (req, res) => {
-
 	Blog.findAll({
-        where: {isDeleted: 0},
-        order: [['createdAt', 'DESC']]})
+		where: {isDeleted: 0},
+		order: [['createdAt', 'DESC']]})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
 		})
@@ -68,7 +67,7 @@ module.exports.getBlogs = (req, res) => {
 
 module.exports.getOneBlog = (req, res) => {
 	Blog.findOne({
-		where: {id: req.params.id,isDeleted: 0},
+		where: {id: req.params.id, isDeleted: 0},
 	})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
@@ -82,7 +81,7 @@ module.exports.getOneBlog = (req, res) => {
 
 module.exports.getBlogByCategory = (req, res) => {
 	Blog.findAll({
-		where: {blogCategoryId: req.params.blogCategoryId,isDeleted: 0},
+		where: {blogCategoryId: req.params.blogCategoryId, isDeleted: 0},
 	})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
