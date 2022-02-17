@@ -32,6 +32,10 @@ module.exports = function(app) {
 		'/api/v1/blogs/get-blog/:id',
 		blogsController.getOneBlog);
     
+	app.get(
+		'/api/v1/blogs/get-newblog',
+		blogsController.getNewBlog);
+
     app.get(
         '/api/v1/blogs/get-blogbycategory/:blogCategoryId',
         blogsController.getBlogByCategory);

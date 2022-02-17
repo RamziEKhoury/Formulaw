@@ -47,7 +47,6 @@ module.exports.updateBlog = async (req, res) => {
 };
 
 module.exports.getBlogs = (req, res) => {
-
 	Blog.findAll({
         where: {isDeleted: 0},
         order: [['createdAt', 'DESC']]})
@@ -70,6 +69,20 @@ module.exports.getOneBlog = (req, res) => {
 	Blog.findOne({
 		where: {id: req.params.id,isDeleted: 0},
 	})
+		.then((data) => {
+			return apiResponses.successResponseWithData(res, 'success', data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving data.',
+			});
+		});
+};
+
+module.exports.getNewBlog = (req, res) => {
+	Blog.findOne({
+        where: {isDeleted: 0},
+        order: [['createdAt', 'DESC']]})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
 		})

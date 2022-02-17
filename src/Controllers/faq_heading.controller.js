@@ -102,3 +102,43 @@ module.exports.deleteFaqHeading = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+module.exports.getAllFaqs = (req, res) => {
+	FaqHeading.findAll({
+		where: {
+			isDeleted: 0,
+			isActive: 1,
+		},
+		include: [
+			{model: FaqAnswer, required: false},
+		],
+		limit: req.params.limit,
+		order: [['createdAt', 'DESC']]})
+		.then(async(data) => {
+			const faqs = [];
+			for (let i = 0; i < data.length; i++) {
+				const allFaqs = await FaqAnswer.findAll({
+					where: {
+						faq_heading_id: data[i].id,
+					},
+				});
+				const obj = {
+					faq_heading: data[i],
+					allFaqs,
+				};
+				faqs.push(obj);
+				
+			}
+			return apiResponses.successResponseWithData(res, 'success', faqs);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || 'Some error occurred while retrieving data.',
+			});
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: 'Something Went Wrong',
+			});
+		});
+};
