@@ -32,10 +32,6 @@ module.exports = function(app) {
 		'/api/v1/faq_heading/get-faq_heading/:id',
 		faqHeadingController.getFaqHeading);
 	
-	app.get(
-		'/api/v1/faq_heading/get-allfaqs',
-		faqHeadingController.getAllFaqs);
-
 	app.delete(
 		'/api/v1/faq_heading/delete-faq_heading/:id',
 		faqHeadingController.deleteFaqHeading);
