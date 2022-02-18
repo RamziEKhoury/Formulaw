@@ -176,7 +176,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
 			},
 			{where: {id: req.body.id}},
 		)
-			.then((lawFirm) => {
+			.then(async(lawFirm) => {
 				if (!lawFirm) {
 					/* #swagger.responses[404] = {
                                description: "Lawfirm Not found.",
@@ -191,6 +191,8 @@ module.exports.lawFirmUpdate = async (req, res) => {
 
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
+				await Lawyer.update({email: req.body.email}, {where: {lawFirmId:  req.body.id}});
+				await User.update({email: req.body.email}, {where: {lawfirmid:  req.body.id}});
 				return apiResponses.successResponseWithData(res, 'Success', lawFirm);
 			})
 			.catch((err) => {
