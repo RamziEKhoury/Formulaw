@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
 		const stamp = Math.floor(Math.random() * (999 - 100 + 1) + 100)
 		cb(
 			null,
-			path.parse(file.originalname).name + '-' + stamp + path.extname(file.originalname),
+			path.parse(file.originalname).name +"-"+Date.now() + path.extname(file.originalname),
 		);
 	},
 });
