@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 		},
 		keywords: {
-			type: Sequelize.STRING,
+			type: DataTypes.STRING(3048),
 		},
 		isDeleted: {
 			defaultValue: 0,
