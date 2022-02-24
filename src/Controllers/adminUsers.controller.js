@@ -61,7 +61,6 @@ module.exports.userLogin = (req, res) => {
 	Admin.findOne({
 		where: {
 			username: req.body.username,
-			roleId: req.body.roleId,
 		},
 	})
 		.then(async (user) => {
@@ -162,6 +161,7 @@ module.exports.userLogin = (req, res) => {
 			);
 		})
 		.catch((err) => {
+			console.log("Dssssssa",err);
 			/* #swagger.responses[500] = {
                 description: "Error message",
                 schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
