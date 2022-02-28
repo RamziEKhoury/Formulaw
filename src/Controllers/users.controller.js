@@ -474,7 +474,7 @@ module.exports.updateNewPassword = async (req, res) => {
 };
 
 module.exports.updateLawFirmPassword = async (req, res) => {
-	try {
+ 	try {
      const lawyer = await Lawyer.findOne({where: {lawFirmId: req.body.lawFirmId,email: req.body.email}})
 		if(!lawyer){
 			return apiResponses.notFoundResponse(res, 'Not found.', {});
@@ -499,27 +499,18 @@ module.exports.updateLawFirmPassword = async (req, res) => {
 };
 
 module.exports.lawyerLogin = (req, res) => {
-	// #swagger.tags = ['UserAuth']
-	/*  #swagger.parameters['obj'] = {
-            in: 'body',
-            description: "User details for login - email, userType and password",
-            schema: { $email: "", $userType:"", $password: ""}
-    } */
-	if(req.body.role === "LAWFIRM_ADMIN"){
 		User.findOne({
 			where: {
 				email: req.body.email,
-				role: req.body.role,
+				isActive : 1,
+				isDeleted : 0,
 			},
 		}).then(async (user) => {
 			if (!user) {
-				/* #swagger.responses[404] = {
-                       description: "User Not found.",
-                       schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
-                   } */
-				// return res.status(404).send({ message: "User Not found." });
 				return apiResponses.notFoundResponse(res, 'User Not found.', {});
 			}
+
+			if(user.role === "LAWFIRM_ADMIN" || user.role === "LAWYER" ){
 
 			const passwordIsValid = bcrypt.compareSync(
 				req.body.password,
@@ -527,14 +518,6 @@ module.exports.lawyerLogin = (req, res) => {
 			);
 
 			if (!passwordIsValid) {
-				/* #swagger.responses[401] = {
-                        description: "Invalid Password!",
-                        schema: { $accessToken: "", $message: "Invalid Password!" }
-                    } */
-				// return res.status(401).send({
-				//   accessToken: null,
-				//   message: "Invalid Password!"
-				// });
 				return apiResponses.unauthorizedResponse(
 					res,
 					'Invalid Password!',
@@ -542,97 +525,7 @@ module.exports.lawyerLogin = (req, res) => {
 				);
 			}
 			if (user.isDeleted) {
-				/* #swagger.responses[401] = {
-                        description: "Your email is not verified, please verify before logging in.",
-                        schema: { $accessToken: "", $message: "Your email is not verified, please verify before logging in." }
-                    } */
-				// return res.status(401).send({
-				//   accessToken: null,
-				//   message: "User not available."
-				// });
-				return apiResponses.unauthorizedResponse(
-					res,
-					'User not available',
-					null,
-				);
-			}
-
-			const token = createToken(user.id, user.email, user.role);
-			/* #swagger.responses[500] = {
-                        description: "User logged in!",
-                        schema: { $id: "user id", $email: "user email",  $accessToken: "user token"}
-                    } */
-			// return res.status(200).send({
-			//   id: user.id,
-			//   email: user.email,
-			//   accessToken: token
-			// });
-			const obj = {
-				id: user.id,
-				email: user.email,
-				country: user.country,
-				city: user.city,
-				phoneNumber: user.phoneNumber,
-				firstname: user.firstname,
-				lastname: user.lastname,
-				userType: user.userType,
-				isActive: user.isActive,
-				role: user.role,
-				lawfirmid: user.lawfirmid,
-				token: token,
-			};
-			return apiResponses.successResponseWithData(
-				res,
-				'Successfully login',
-				obj,
-			);
-		});
-	} else if (req.body.role === "LAWYER") {
-		User.findOne({
-			where: {
-				email: req.body.email,
-				role: req.body.role
 				
-			},
-		}).then(async (user) => {
-			if (!user) {
-				/* #swagger.responses[404] = {
-                       description: "User Not found.",
-                       schema: { $statusCode: "404",  $status: false, $message: "User Not found.",  $data: {}}
-                   } */
-				// return res.status(404).send({ message: "User Not found." });
-				return apiResponses.notFoundResponse(res, 'User Not found.', {});
-			}
-
-			const passwordIsValid = bcrypt.compareSync(
-				req.body.password,
-				user.password,
-			);
-
-			if (!passwordIsValid) {
-				/* #swagger.responses[401] = {
-                        description: "Invalid Password!",
-                        schema: { $accessToken: "", $message: "Invalid Password!" }
-                    } */
-				// return res.status(401).send({
-				//   accessToken: null,
-				//   message: "Invalid Password!"
-				// });
-				return apiResponses.unauthorizedResponse(
-					res,
-					'Invalid Password!',
-					null,
-				);
-			}
-			if (user.isDeleted) {
-				/* #swagger.responses[401] = {
-                        description: "Your email is not verified, please verify before logging in.",
-                        schema: { $accessToken: "", $message: "Your email is not verified, please verify before logging in." }
-                    } */
-				// return res.status(401).send({
-				//   accessToken: null,
-				//   message: "User not available."
-				// });
 				return apiResponses.unauthorizedResponse(
 					res,
 					'User not available',
@@ -641,15 +534,7 @@ module.exports.lawyerLogin = (req, res) => {
 			}
 
 			const token = createToken(user.id, user.email, user.role);
-			/* #swagger.responses[500] = {
-                        description: "User logged in!",
-                        schema: { $id: "user id", $email: "user email",  $accessToken: "user token"}
-                    } */
-			// return res.status(200).send({
-			//   id: user.id,
-			//   email: user.email,
-			//   accessToken: token
-			// });
+		
 			const obj = {
 				id: user.id,
 				email: user.email,
@@ -669,20 +554,15 @@ module.exports.lawyerLogin = (req, res) => {
 				'Successfully login',
 				obj,
 			);
-		})
-	} else {
+		}else {
 		return apiResponses.unauthorizedResponse(
 			res,
 			'You are not authorized to login here!',
 			null,
 		).catch((err) => {
-				/* #swagger.responses[500] = {
-                    description: "Error message",
-                    schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-                } */
-				// return res.status(500).send({ message: err.message });
 				return apiResponses.errorResponse(res, err.message, {});
 			});
 		}
-	}
+	})
 
+}

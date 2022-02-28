@@ -1676,3 +1676,161 @@ module.exports.getAllLawfirmPaidAppointment = (req, res) => {
 			});
 		});
 };
+
+
+
+module.exports.getUserPendingOrders = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {
+			customerId: req.params.userId,
+			status: WorkflowAppointment.PENDING,
+		},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
+
+		],
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async (data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const userTotalOrders = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalOrders = await LawFirmService.findAll({
+					where: {title: {[Op.in]: data[i].query.serviceSubcategoryName},
+						            lawFirmId: data[i].lawFirmId,
+					},
+				});
+				const obj = {
+					appointment: data[i],
+					totalOrders,
+				};
+				userTotalOrders.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', userTotalOrders);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+          err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
+module.exports.getUserActiveOrders = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {
+			customerId: req.params.userId,
+			status: {[Op.or]: [WorkflowAppointment.PENDING, 
+							   WorkflowAppointment.FREE_CONSULTATION,
+							   WorkflowAppointment.CONSULTATION,
+							   WorkflowAppointment.PAYMENT,
+							   WorkflowAppointment.APPROVE_LEAD
+							   ] 
+							},
+		},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
+
+		],
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async (data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const userTotalOrders = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalOrders = await LawFirmService.findAll({
+					where: {title: {[Op.in]: data[i].query.serviceSubcategoryName},
+						            lawFirmId: data[i].lawFirmId,
+					},
+				});
+				const obj = {
+					appointment: data[i],
+					totalOrders,
+				};
+				userTotalOrders.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', userTotalOrders);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+          err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
+};
+
+module.exports.getUserCanceledOrders = (req, res) => {
+	// Get Appointment from Database
+	// #swagger.tags = ['Appointment']
+	Appointment.findAll({
+		where: {
+			customerId: req.params.userId,
+			status: WorkflowAppointment.CANCELED,
+		},
+		include: [
+			{model: Request, required: false},
+			{model: LawFirm, required: false, attributes: ['en_name']},
+			{model: Admin, required: false, attributes: ['firstname', 'lastname']},
+			{model: User, required: false, attributes: ['firstname', 'lastname', 'email']},
+
+		],
+		order: [['createdAt', 'DESC']],
+	})
+		.then(async (data) => {
+			// res.status(200).send({
+			//   status: "200",
+			//   user: data,
+			// });
+			const userTotalOrders = [];
+			for (let i = 0; i < data.length; i++) {
+				const totalOrders = await LawFirmService.findAll({
+					where: {title: {[Op.in]: data[i].query.serviceSubcategoryName},
+						            lawFirmId: data[i].lawFirmId,
+					},
+				});
+				const obj = {
+					appointment: data[i],
+					totalOrders,
+				};
+				userTotalOrders.push(obj);
+			}
+			return apiResponses.successResponseWithData(res, 'success', userTotalOrders);
+		})
+		.catch((err) => {
+			/* #swagger.responses[500] = {
+                                description: "Error message",
+                                schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                            } */
+			// return res.status(500).send({ message: err.message });
+			res.status(500).send({
+				message:
+          err.message || 'Some error occurred while retrieving Appointment.',
+			});
+		});
+};

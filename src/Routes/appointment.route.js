@@ -111,5 +111,17 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/appointment/all-lawfirmpaidappointment/:lawFirmId',
 		appointmentController.getAllLawfirmPaidAppointment);
+	
+	app.get(
+		'/api/v1/appointment/my-pendingorders/:userId',
+		appointmentController.getUserPendingOrders);
+
+	app.get(
+		'/api/v1/appointment/my-activeorders/:userId',
+		appointmentController.getUserActiveOrders);
+
+	app.get(
+		'/api/v1/appointment/my-canceledorders/:userId',
+		appointmentController.getUserCanceledOrders);
 };
 
