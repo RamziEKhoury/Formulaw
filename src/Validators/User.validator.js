@@ -92,8 +92,6 @@ const emailValidator = [
 		body('email').isLength({min: 1})
 			.trim().withMessage('email must be specified.')
 			.isEmail().withMessage('Email must be a valid email address.'),
-		body('role').isLength({min: 1})
-			.trim().withMessage('role must be specified.'),
 		sanitizeBody('email').escape(),
 		(req, res, next) => {
 			const errors = validationResult(req);
