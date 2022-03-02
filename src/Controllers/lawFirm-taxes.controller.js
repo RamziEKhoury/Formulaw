@@ -34,6 +34,45 @@ module.exports.addLawFirmTax = async (req, res) => {
 	}
 };
 
+module.exports.lawFirmTaxUpdate = async (req, res) => {
+	// #swagger.tags = ['LawFirmIndustry']
+	/*  #swagger.parameters['obj'] = {
+		in: 'body',
+		description: "LawFirmIndustry details for add -lawFirmId,title,discription,isActive",
+			          schema: {$lawFirmId:"",$title:"",$isActive:""}
+            } */
+			console.log("aaaaaaaaaaaaaaaaaaaaaaaaa",req.body.values,req.body.lawFirmId);
+			const taxData = req.body.values;
+	      const lawFirmId = req.body.lawFirmId;
+
+	try {
+	await LawFirmTax.destroy({
+			where: {lawFirmId: lawFirmId},
+		  })
+		  .then((tax) => {
+			if (taxData === undefined || taxData === '') {
+				res.send({status: 409, msg: 'Tax Data should not be empty.'});
+			}
+			taxData.map((tax, i) => {
+				const taxes = {
+					taxType: tax.label,
+					id: tax.value,
+					countryId: tax.countryId,
+					tax: tax.tax,
+					countryTitle: tax.countryTitle,
+					lawFirmId: lawFirmId,
+				};
+	  	LawFirmTax.create(taxes)
+				.then((lawFirmTax) => {})
+			})
+		})
+		return apiResponses.successResponseWithData(res, 'success!');
+	} catch (err) {
+		console.log("ADSerrrrrrrrrrrrrr",err);
+		return apiResponses.errorResponse(res, err);
+	}
+};
+
 module.exports.getLawFirmTaxes = (req, res) => {
 	// Get Lawfirm data from Database
 	// #swagger.tags = ['LawFirmTax']

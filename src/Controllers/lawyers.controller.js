@@ -48,6 +48,7 @@ module.exports.addLawyer = async (req, res) => {
 				languageId: req.body.languageId,
 				languageTitle: req.body.languageTitle,
 				expertise: req.body.expertise,
+				jurisdictionid: req.body.jurisdictionid,
 				jurisdiction: req.body.jurisdiction,
 				logo: req.body.logo,
 				images: req.body.images,
@@ -55,6 +56,7 @@ module.exports.addLawyer = async (req, res) => {
 				experience: req.body.experience,
 				gender: req.body.gender,
 				isActive: req.body.isActive,
+				type: "lawyer"
 			},
 		}).then(async (lawyer) => {
 			const isAlready = lawyer[1];
@@ -152,10 +154,12 @@ module.exports.lawyerUpdate = async (req, res) => {
 				experience: req.body.experience,
 				gender: req.body.gender,
 				isActive: req.body.isActive,
+				jurisdiction: req.body.jurisdiction,
+      			jurisdictionid: req.body.jurisdictionid,
 			},
 			{where: {id: req.body.id}},
 		)
-			.then((lawyer) => {
+			.then(async(lawyer) => {
 				if (!lawyer) {
 					/* #swagger.responses[404] = {
                                description: "lawyer Not found.",
@@ -170,6 +174,7 @@ module.exports.lawyerUpdate = async (req, res) => {
 
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: lawyer });
+				await User.update({email: req.body.email}, {where: {lawyer_id:  req.body.id}});
 				return apiResponses.successResponseWithData(res, 'Success', lawyer);
 			})
 			.catch((err) => {

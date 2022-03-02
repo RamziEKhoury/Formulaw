@@ -42,48 +42,29 @@ module.exports.lawFirmIndustryUpdate = async (req, res) => {
 		description: "LawFirmIndustry details for add -lawFirmId,title,discription,isActive",
 			          schema: {$lawFirmId:"",$title:"",$isActive:""}
             } */
+			const industryData = req.body.values;
+	      const lawFirmId = req.body.lawFirmId;
 
 	try {
-		await LawFirmIndustry.update(
-			{
-				id: req.body.id,
-				lawFirmId: req.body.lawFirmId,
-				title: req.body.title,
-				industryId: req.body.industryId,
-				discription: req.body.discription,
-				isActive: req.body.isActive,
-			},
-			{where: {id: req.body.id}},
-		)
-			.then((lawFirmIndustry) => {
-				if (!lawFirmIndustry) {
-					/* #swagger.responses[404] = {
-                               description: "LawFirmIndustry Not found.",
-                               schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
-                           } */
-					// return res.status(404).send({ message: "Not found." });
-					return apiResponses.notFoundResponse(res, 'Not found.', {});
-				}
-				/* #swagger.responses[200] = {
-                            description: "success!",
-                           schema: { $lawFirmId:"lawFirmId",$title:"title",$discription:"discription"  $isActive: "0"}
-
-                        } */
-				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
-				return apiResponses.successResponseWithData(
-					res,
-					'Success',
-					lawFirmIndustry,
-				);
+	await LawFirmIndustry.destroy({
+			where: {lawFirmId: lawFirmId},
+		  })
+		  .then((industry) => {
+			if (industryData === undefined || industryData === '') {
+				res.send({status: 409, msg: 'Industry Data should not be empty.'});
+			}
+			industryData.map((industry, i) => {
+				const industries = {
+					title: industry.label,
+					industryId: industry.value,
+					lawFirmId: lawFirmId,
+					isActive: 1
+				};
+	  	LawFirmIndustry.create(industries)
+				.then((lawFirmIndustry) => {})
 			})
-			.catch((err) => {
-				/* #swagger.responses[500] = {
-                            description: "Error message",
-                            schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
-                        } */
-				// return res.status(500).send({ message: err.message });
-				return apiResponses.errorResponse(res, err.message, {});
-			});
+		})
+		return apiResponses.successResponseWithData(res, 'success!');
 	} catch (err) {
 		return apiResponses.errorResponse(res, err);
 	}

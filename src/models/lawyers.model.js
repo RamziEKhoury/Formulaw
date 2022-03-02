@@ -28,34 +28,37 @@ module.exports = (sequelize, Sequelize) => {
 				type: Sequelize.STRING,
 			},
 			countryId: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			countryTitle: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			languageId: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			languageTitle: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			industryId: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			industryTitle: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			serviceId: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			serviceTitle: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			experience: {
 				type: Sequelize.INTEGER,
 			},
+			jurisdictionid: {
+				type: DataTypes.JSONB,
+			},
 			jurisdiction: {
-				type: Sequelize.STRING,
+				type: DataTypes.JSONB,
 			},
 			expertise: {
 				type: DataTypes.STRING(2048),
