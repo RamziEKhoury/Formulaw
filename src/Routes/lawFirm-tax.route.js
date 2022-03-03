@@ -17,11 +17,11 @@ module.exports = function(app) {
 		lawFirmTaxController.addLawFirmTax,
 	);
 
-	// app.post(
-	// 	'/api/v1/lawfirm/update-tax',
-	// 	[LawFirmTaxValidator.updateLawFirmTaxValidator],
-	// 	lawFirmTaxController.lawFirmTaxUpdate,
-	// );
+	app.post(
+		'/api/v1/lawfirm/update-tax',
+		[LawFirmTaxValidator.updateLawFirmTaxValidator],
+		lawFirmTaxController.lawFirmTaxUpdate,
+	);
 
 	app.get('/api/v1/lawfirm/get-taxes/:lawFirmId', lawFirmTaxController.getLawFirmTaxes);
 
