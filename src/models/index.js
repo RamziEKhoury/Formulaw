@@ -66,41 +66,41 @@ db.faq_heading = require('./faq_heading.model')(sequelize, Sequelize);
 db.faq_answer = require('./faq_answers.model')(sequelize, Sequelize);
 
 
-// db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
-// db.userSubscription.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'});
-// db.preOrder.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
-// db.preOrder.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'});
-// db.kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
-// db.Company_kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
-// db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
-// db.appointment.hasOne(db.user, {sourceKey: 'customerId', foreignKey: 'id'});
-// db.appointment.hasOne(db.adminUser, {sourceKey: 'adminId', foreignKey: 'id'});
-// db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
-// db.appointment.hasOne(db.lawFirm, {sourceKey: 'lawFirmId', foreignKey: 'id'});
-// db.appointment.hasOne(db.lawyer, {sourceKey: 'lawyerId', foreignKey: 'id'});
-// db.appointment.hasOne(db.lawFirm_service, {sourceKey: 'lawFirmId', foreignKey: 'lawFirmId'});
-// db.lawyer.hasOne(db.testimonial, {sourceKey: 'user_id', foreignKey: 'lawyerid'});
-// db.lawFirm.hasMany(db.testimonial, {sourceKey: 'id', foreignKey: 'lawFirmId'});
-// db.dispute.hasMany(db.user, {sourceKey: 'userId', foreignKey: 'id'});
-// db.charge.hasMany(db.customer, {sourceKey: 'customer', foreignKey: 'customerId'});
-// db.charge.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
-// db.charge.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'});
-// db.subscriptionPayment.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
-// db.subscriptionPayment.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'});
-// db.faq_heading.hasMany(db.faq_answer, {sourceKey: 'id', foreignKey: 'faq_heading_id'});
-//
-// db.lawFirm.hasMany(db.lawFirm_service, {
-// 	sourceKey: 'id',
-// 	foreignKey: 'lawFirmId',
-// });
-// db.lawFirm.hasMany(db.lawFirm_industry, {
-// 	sourceKey: 'id',
-// 	foreignKey: 'lawFirmId',
-// });
-// db.lawFirm.hasMany(db.lawFirm_tax, {
-// 	sourceKey: 'id',
-// 	foreignKey: 'lawFirmId',
-// });
-// db.chat.hasMany(db.message, {sourceKey: 'id', foreignKey: 'chatId'});
+db.userSubscription.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
+db.userSubscription.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'});
+db.preOrder.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
+db.preOrder.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'});
+db.kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
+db.Company_kyc.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
+db.testimonial.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
+db.appointment.hasOne(db.user, {sourceKey: 'customerId', foreignKey: 'id'});
+db.appointment.hasOne(db.adminUser, {sourceKey: 'adminId', foreignKey: 'id'});
+db.appointment.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
+db.appointment.hasOne(db.lawFirm, {sourceKey: 'lawFirmId', foreignKey: 'id'});
+db.appointment.hasOne(db.lawyer, {sourceKey: 'lawyerId', foreignKey: 'id'});
+db.appointment.hasOne(db.lawFirm_service, {sourceKey: 'lawFirmId', foreignKey: 'lawFirmId'});
+db.lawyer.hasOne(db.testimonial, {sourceKey: 'user_id', foreignKey: 'lawyerid'});
+db.lawFirm.hasMany(db.testimonial, {sourceKey: 'id', foreignKey: 'lawFirmId'});
+db.dispute.hasMany(db.user, {sourceKey: 'userId', foreignKey: 'id'});
+db.charge.hasMany(db.customer, {sourceKey: 'customer', foreignKey: 'customerId'});
+db.charge.hasOne(db.request, {sourceKey: 'queryId', foreignKey: 'id'});
+db.charge.hasOne(db.appointment, {sourceKey: 'appointmentId', foreignKey: 'id'});
+db.subscriptionPayment.hasOne(db.user, {sourceKey: 'userId', foreignKey: 'id'});
+db.subscriptionPayment.hasOne(db.subscription, {sourceKey: 'subscriptionId', foreignKey: 'id'});
+db.faq_heading.hasMany(db.faq_answer, {sourceKey: 'id', foreignKey: 'faq_heading_id'});
+
+db.lawFirm.hasMany(db.lawFirm_service, {
+	sourceKey: 'id',
+	foreignKey: 'lawFirmId',
+});
+db.lawFirm.hasMany(db.lawFirm_industry, {
+	sourceKey: 'id',
+	foreignKey: 'lawFirmId',
+});
+db.lawFirm.hasMany(db.lawFirm_tax, {
+	sourceKey: 'id',
+	foreignKey: 'lawFirmId',
+});
+db.chat.hasMany(db.message, {sourceKey: 'id', foreignKey: 'chatId'});
 
 module.exports = db;
