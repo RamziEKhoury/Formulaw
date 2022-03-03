@@ -207,7 +207,7 @@ module.exports.userProfile = (req, res) => {
 module.exports.admins = (req, res) => {
 	// Get User from Database
 	// #swagger.tags = ['Auth']
-	Admin.findAll({where: {roleName: 'super-admin'}, order: [['createdAt', 'DESC']]})
+	Admin.findAll({where: {is_assigned: 0}, order: [['createdAt', 'DESC']]})
 		.then(async (users) => {
 			if (users.length === 0) {
 				/* #swagger.responses[404] = {
@@ -221,6 +221,13 @@ module.exports.admins = (req, res) => {
 			//   status: "200",
 			//   user: user,
 			// });
+			const userWithOne = await Admin.findOne({where: {is_assigned: 1}})
+			const userWithTwo = await Admin.findOne({where: {is_assigned: 2}})
+			if(!!userWithOne && !!userWithTwo && users.length !== 0){
+				await Admin.update({is_assigned: 2},{where: {id: userWithOne.id}})
+				await Admin.update({is_assigned: 0},{where: {id: userWithTwo.id}})
+				await Admin.update({is_assigned: 1},{where: {id: users[0].id}})
+			}
 			return apiResponses.successResponseWithData(res, 'success', users);
 		})
 		.catch((err) => {

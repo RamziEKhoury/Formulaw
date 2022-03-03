@@ -64,5 +64,9 @@ module.exports = (sequelize, Sequelize) => {
     aboutme: {
       type: Sequelize.STRING,
     },
+    is_assigned: {
+      defaultValue: 0,
+      type: Sequelize.INTEGER,
+    },
   });
 };

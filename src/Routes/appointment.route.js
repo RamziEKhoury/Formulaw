@@ -123,5 +123,9 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/appointment/my-canceledorders/:userId',
 		appointmentController.getUserCanceledOrders);
+
+	app.get(
+		'/api/v1/appointment/admin-appointments/:adminId',
+		appointmentController.getAdminAppointment);
 };
 
