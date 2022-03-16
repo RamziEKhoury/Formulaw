@@ -128,8 +128,9 @@ module.exports.getRoomByAppointmentId = (req, res) => {
 
 
 module.exports.joinRoomEmailAndNotiForAdmin = async (req, res) => {
-	const user = await Admin.findOne({where: {id: req.body.receiverId}});
-	await recieverJoinCallEmailAdmin(user.email);
+	const Adminuser = await Admin.findOne({where: {id: req.body.receiverId}});
+	const user = await User.findOne({where: {id: req.body.senderId}});
+	await recieverJoinCallEmailAdmin(Adminuser.email,user.firstname);
 	const notiData = {
 		title: 'User have joined call.',
 		message: 'User have joined call for free consultation, Please click here to join call and continue. Ignore, if already joined.',

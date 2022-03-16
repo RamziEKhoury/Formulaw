@@ -108,7 +108,7 @@ module.exports.addLawFirm = async (req, res) => {
 					gender: req.body.gender,
 					isActive: req.body.isActive,
 				});
-				await Mail.lawyerRegistration(inserted.email, password);
+				await Mail.lawyerRegistration(inserted.email,inserted.en_name, password);
 
 				await Lawyer.update({user_id: user.id}, {where: {id: lawyer.id}});
 				const lawFirmData = {

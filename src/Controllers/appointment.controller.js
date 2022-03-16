@@ -15,6 +15,7 @@ const Notifications = require('../Config/Notifications');
 const {WorkflowAppointment} = require('../enum');
 const _ = require('lodash');
 const schedule = require('node-schedule');
+const { lawFirm } = require('../models');
 
 module.exports.addAppointment = async (req, res) => {
 	try {
@@ -107,6 +108,7 @@ module.exports.addAppointment = async (req, res) => {
 };
 
 module.exports.addBulkAppointment = async (req, res) => {
+	console.log("req==========================",req.body);
 	try {
 		Appointment.bulkCreate(req.body)
 			.then(async (scheduleCall) => {
@@ -123,12 +125,22 @@ module.exports.addBulkAppointment = async (req, res) => {
 							id: schedule.customerId,
 						},
 					});
-					await Mail.userSubscriptionmail(
-						userMail.email,
-						(userMail.firstname ? userMail.firstname : ' ') + ' ' + (userMail.lastname ? userMail.lastname : ' '),
-						schedule.customerId,
-						schedule.orderId,
-					);
+					if(req.body.length > 0) {
+						const lawFirm = await LawFirm.findOne({
+							where: {
+								id: req.body[0].lawFirmId,
+							},
+						});
+						console.log("dsaaaaaaaaaaaa",lawFirm,lawFirm.en_name);
+						await Mail.userSubscriptionmail(
+							userMail.email,
+							(userMail.firstname ? userMail.firstname : ' ') + ' ' + (userMail.lastname ? userMail.lastname : ' '),
+							schedule.customerId,
+							schedule.orderId,
+							lawFirm.en_name,
+
+						);
+					}
 
 
 					const adminMail = await Admin.findOne({
@@ -336,6 +348,7 @@ module.exports.changeStatus = async (req, res) => {
 						user.user.email,
 						user.time,
 						user.date,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 					);
 
 					await Appointment.update(
@@ -652,6 +665,7 @@ module.exports.changeStatus = async (req, res) => {
 						user.user.email,
 						user.time,
 						user.date,
+						(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 					);
 
 					await Appointment.update(
@@ -1250,7 +1264,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				const device = await User.findOne({where: {id: appointment.customerId}});
 				const notiData = {
 					title: 'Appointment',
-					message: 'Your appointment have been  Rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm:ss')+'.',
+					message: 'Your appointment has been rescheduled on '+moment(appointment.time).format('DD/MM/YYYY')+' at '+ moment(appointment.time).format('HH:mm:ss')+'.',
 					senderName: (device.firstname ? device.firstname: ' ' ) + ' ' + (device.lastname ? device.lastname : ' ' ),
 					senderId: appointment.customerId,
 					senderType: 'APPOINTMENT',
@@ -1260,7 +1274,7 @@ module.exports.RescheduleAppointment = async (req, res) => {
 				};
 				await Notifications.notificationCreate(notiData);
 				if (!!device.deviceToken) {
-					await Notifications.notification(device.deviceToken, 'Your appointment have been  Rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format('HH:mm:ss')+ '.');
+					await Notifications.notification(device.deviceToken, 'Your appointment has been rescheduled on ' + moment(appointment.time).format('DD/MM/YYYY') + ' at ' +moment(appointment.time).format('HH:mm:ss')+ '.');
 				}
 
 				return apiResponses.successResponseWithData(res, 'Success', data);
