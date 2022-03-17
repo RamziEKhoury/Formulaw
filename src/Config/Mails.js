@@ -151,7 +151,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Appointment', // Subject of the mail.
 			html:
-        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a kind reminder that your meeting on  '+ ' ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + 'is confirmed.' + '.</p><br/><p>Before your meeting with  '+lawfirm+', the Formulaw team offers a free consultation to get to know you and your needs.<br/> The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. </p><br/><p> Please click here to start your consultation.</p><br><u> https://formu.law/user/dashboard/'+ id + '<br><p>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<p></br><br><p>Thank you and have a great meeting.</p><br><div><span>Best regards</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u></div></div>',
+        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a kind reminder that your meeting on  '+ ' ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') +  ' is confirmed.' + '.</p><br/><p>Before your meeting with  '+lawfirm+', the Formulaw team offers a free consultation to get to know you and your needs.<br/> The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. </p><br/><p> Please click here to start your consultation.</p><br><u> https://formu.law/user/dashboard/'+ id + '<br><p>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<p></br><br><p>Thank you and have a great meeting.</p><br><div><span>Best regards</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u></div></div>',
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -405,7 +405,7 @@ module.exports = {
 	},
 
 	userAppointmentComplete: (email, time, date,name) => {
-		console.log('logIn_Mail====>' + email);
+		console.log('logIn_Mail====>' + email,name);
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
@@ -503,7 +503,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Subscription', // Subject of the mail.
 			html:
-        		'<div><span> Dear '+ fullname +',</span></div><div><p>Thank you for booking a package with us. <br/>Before your meeting with ' + lawfirm + ', the Formulaw team offers a free consultation to get to know you and your needs. The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. <br/>Please click <a href=https://formu.law/user/dashboard/'+ id +'>here</a> to start your consultation.<br/>Receipt<br/>'+ orderid+'<br/>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<br/>Thank you and have a great meeting.<br/>Best regards,<br/>FORMULAW team.<br/>@formulaw team member</div>',
+        		'<div><span> Dear '+ fullname +',</span></div><div><p>Thank you for booking a package with us. <br/><br/>Before your meeting with ' + lawfirm + ', the Formulaw team offers a free consultation to get to know you and your needs. The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. <br/> <br/><br/>Please click <a href=https://formu.law/user/dashboard/'+ id +'>here</a> to start your consultation.<br/><br/><br/>Receipt<br/>'+ orderid+'<br/>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<br/><br/><br/>Thank you and have a great meeting.<br/><br/><br/>Best regards,<br/>FORMULAW team.<br/>@formulaw team member</div>',
 		};
 		console.log('subscription--->', details);
 		transporter.sendMail(details, function(error, data) {
@@ -524,7 +524,9 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Received New Message on FORMULAW!', // Subject of the mail.
 			html:
-				`<div><span>Dear User,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click here to join chat <a href='https://formu.law'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+				'<div><span>Dear User,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click here to join chat <a href=`https://formu.law`>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
+				email +
+				'</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP`, // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {

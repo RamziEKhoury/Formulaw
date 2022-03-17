@@ -1555,6 +1555,7 @@ module.exports.LeadCompleteStatus = async (req, res) => {
 		user.user.email,
 		user.time,
 		user.date,
+		(user.user.firstname ? user.user.firstname : ' ') + ' ' + (user.user.lastname ? user.user.lastname : ' '),
 	);
 
 	const appointment =	await Appointment.update(
