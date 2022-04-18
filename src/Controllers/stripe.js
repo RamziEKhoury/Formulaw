@@ -9,7 +9,7 @@ const User = db.user;
 const Subscription = db.subscription;
 const Request = db.request;
 const UserSubscription = db.userSubscription;
-const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST || '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');
 
 async function leadFormValues(userId) {
 	const userInfo = await User.findOne({where: {id: userId}});
