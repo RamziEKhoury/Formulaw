@@ -37,12 +37,8 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
-        '<div><span>Hi ' + username +' ,<br/>'+email+'</span><div><p>Welcome to Formulaw. We’re thrilled to see you here!</p><br/><p>On behalf of the whole Formulaw team we would like to welcome you to the family. Here at Formulaw we pride ourselves in being a secure, transparent, and cost-efficient platform, ensuring that your legal problems are solved seamlessly.</p><br/><p>Get to know more about us in our formulaw news article.</p><br/><p>You can also find more of our guides here to learn more about Formulaw</p><br/><p>Thank you.</p><br/></div><div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u></div>',
-
-
+        '<div><span>Hi ' + username +' ,<br/>'+email+'</span><div><p>Welcome to Formulaw. We’re thrilled to see you here!</p><br/><p>On behalf of the whole Formulaw team we would like to welcome you to the family. Here at Formulaw we pride ourselves in being a secure, transparent, and cost-efficient platform, ensuring that your legal problems are solved seamlessly.</p><br/><p>Get to know more about us in our Formulaw news article.</p><br/><p>You can also find more of our guides here to learn more about Formulaw</p><br/><p>Thank you.</p><br/></div><div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u></div>',
 		};
-
-		console.log('details--->', details);
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
 				console.log('error=========>>>' + error);
@@ -55,13 +51,16 @@ module.exports = {
 	},
 
 	userPasswordReset: (email, token) => {
-		console.log('logIn_Mail====>' + email);
+		var resetUrl =` https://formu.law/reset-password/${token}`
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding Password reset on FORMULAW!', // Subject of the mail.
 			html:
-        `<div><span>Dear User,</span><div><p>Please follow the link below to reset your password.</p><br><p>Click here to reset password <a href='https://formu.law/reset-password/${token}'>link</a></p></p><br><p>Please do not share your password credentials with anyone and keep it stored safely.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+        '<div><span>Dear User,</span><div><p>Please follow the link below to reset your password.</p><br><p>Click here to reset password <a  href="'+resetUrl+'">link</a></p></p><br><p>Please do not share your password credentials with anyone and keep it stored safely.' +
+		'</p><br><p>IMPORTANT: if this email is in your Spam folder mark it as “Not Spam” first. If you are receiving fraudulent emails from FORMULAW, please forward this email to support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
+		email +
+		'</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -74,20 +73,19 @@ module.exports = {
 		});
 	},
 
-	lawyerRegistration: (email, password) => {
-		console.log('logIn_Mail====>' + email);
+	lawyerRegistration: (email,name, password) => {
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Regarding Registration as a Lawyer on FORMULAW!', // Subject of the mail.
 			html:
-        '<div><span>Dear Lawyer,</span><div><p>Thank you for registering with FORMULAW as a Lawyer, Your username is <b>' +
+        '<div><span>Dear ' + name + ',</span><div><p>Thank you for registering with FORMULAW as a Lawyer, Your username is <b>' +
         email +
         '</b> and password is <b>' +
         password +
-        '</b>.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        '</b>.</p><br><p>IMPORTANT: if this email is in your Spam folder mark it as “Not Spam” first. If you are receiving fraudulent emails from FORMULAW, please forward this email to support@formulaw.com.</p><br></br><p>You have been registered with FORMULAW with ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with UKM. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+		'</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -107,7 +105,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
-        '<p>' + username +' has created an account with Formulaw. Go to the Admin panel to view their profile and approve any pending documents.<p> <br/><p>Thank you.<p><br/><p>Best Regards,<p><br><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u>'};
+        '<p>' + username +' has created an account with Formulaw. Go to the Admin panel to view their profile and approve any pending documents.<p> <br/><p>Thank you.<p><br/><div><span>Best regards</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u></div>'};
 
 		console.log('admin details--->', details);
 
@@ -132,7 +130,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Appointment:', // Subject of the mail.
 			html:
-    '<div><span>Hi '+ username +'</span></div><div><p>'+ name +' has scheduled a meeting regarding '+ lead+' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '. Go to the Admin panel to view their profile and approve the meeting. </p><br/><p>Thank you.</p><br/>Best Regards, <br/><br/>@formulaw team member</div>',
+    '<div><span>Hi '+ username +'</span></div><div><p>'+ name +' has scheduled a meeting regarding '+ lead+' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '. Go to the Admin panel to view their profile and approve the meeting. </p><br/><p>Thank you.</p><br/><div><span>Best regards</span><br><span>FORMULAW team.</span></div></div>',
 		};
 		console.log('admin apointment', details);
 		transporter.sendMail(details, function(error, data) {
@@ -153,7 +151,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Appointment', // Subject of the mail.
 			html:
-        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on '+ ' ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '.</p><br/><p>Prior to starting with '+lawfirm+', a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 30 minutes prior to the meeting </p><br/><p> Please follow this link to start your consultation.</p><br><u> https://formu.law/user/dashboard/'+ id + '<br><p>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<p></br><br><p>Thank you and have a great meeting.</p><br>Best Regards,<br><p>'+ username +'</p><br>@formulaw team member<br></div>',
+        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a kind reminder that your meeting on  '+ ' ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') +  ' is confirmed.' + '</p><br/><p>Before your meeting with  '+lawfirm+', the Formulaw team offers a free consultation to get to know you and your needs.<br/> The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. </p><br/><p> Please click here to start your consultation.</p><br><u> https://formu.law/user/dashboard/'+ id + '<br><p>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<p></br><br><p>Thank you and have a great meeting.</p><br><div><span>Best regards</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u></div></div>',
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -177,7 +175,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
-    '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/></p>Best Regards,<br/>'+username+'<br/>@formulaw team member<br/></div>'};
+    '<div><span>Dear '+ fullname +',</span></div><div><p>This is a special reminder to confirm your meeting on ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '.<br/>Please follow this link to start your consultation. <br/><u> https://formu.law/user/dashboard/'+ id +'</u><br/>Please feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<br/></p><div><span>Best regards</span><br><span>FORMULAW team.</span></div></div>'};
 		console.log('user reminder---->', details);
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -198,7 +196,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Reminder', // Subject of the mail.
 			html:
-			'<div><span>Hi '+username+'</span></div><div><span>Reminder <span><p>'+ name +' has scheduled a meeting regarding '+ lead +' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '. Go to the Admin panel to view their profile and approve the meeting. Thank you.</p><br/>Best Regards, <br/>Formula Team<br/>@formulaw team member</div>',
+			'<div><span>Hi '+username+'</span></div><div><span>A kind reminder.<span><p>'+ name +' has scheduled a meeting regarding  '+ lead +' at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + '. Go to the Admin panel to view their profile and approve the meeting. <br/> Thank you.</p><br/>Best regards, <br/>Formula team</div>',
 		};
 		console.log('admin reminder----->', details);
 		transporter.sendMail(details, function(error, data) {
@@ -214,17 +212,16 @@ module.exports = {
 
 
 	adminAppointmentApproved: (email, time, date, name) => {
-		console.log('logIn_Mail====>' + email);
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Approved', // Subject of the mail.
 			html:
-        '<div><span>Dear Admin,</span><div><p>Hi, You Approved This appointment with <b> ' +
+        '<div><span>Dear Admin,</span><div><p>You approved this appointment with <b> ' +
         name +
-        '</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        '</b> .</p><br><p>Important: if this email is in your Spam folder mark it as "Not Spam" first. If you are recieving fraudulent emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+			'</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -237,17 +234,18 @@ module.exports = {
 		});
 	},
 
-	userAppointmentApproved: (email, time, date) => {
+	userAppointmentApproved: (email, time, date,name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Approved', // Subject of the mail.
 			html:
-        '<div><span>Dear User,</span><div><p>Hi, Your appointment  is approved now For Next Process <b> ' +
-        '</b> we will connect with you soon.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        '<div><span>Dear '+
+        name +',</span><div><p>Hi, Your appointment has been approved by our team.  <b> ' +
+        '</b> Our team will connect with you soon.</p><br><p>Important: if this email is in your Spam folder mark it as "Not Spam" first. If you are recieving fraudulent emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+                '</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -277,7 +275,7 @@ module.exports = {
        moment(time).format('HH:mm:ss') +
         '</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+                '</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -303,7 +301,7 @@ module.exports = {
       moment(time).format('HH:mm:ss') +
         '</b> we will connect with you soon.</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+                '</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -348,8 +346,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
-           '<div><span>Dear '+ fullname +',<span></div><div><p>We would like to confirm you have been assigned to '+ lawyer + ' at ' + lawfirm +'. Thank you for your booking.</p><br/>Order details<br/>'+orderid+'<br/>Please follow this link to be directed to the chat.<br/><u> https://formu.law/user/dashboard/'+ id +'</u><br/>join at ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '<br/>Feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/>Best Regards,<br/>FORMULAW Team<br/>@formulaw team member<br/></div>'};
-		console.log('admin appointment---->', details );
+           '<div><span>Dear '+ fullname +',<span></div><div><p>We would like to confirm you have been assigned to '+ lawyer + ' at ' + lawfirm +'. Thank you for your booking.</p><br/>ORDER DETAILS:<br/>'+orderid+'<br/>Please follow click <br/><u> https://formu.law/user/dashboard/'+ id +'</u> to be directed to the chat room.<br/>Join on  ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm:ss') + '<br/> Please feel free to contact us if you have any question. The Formulaw team is available to assist you at your convenience.<br/>Thank you and have a great meeting.<br/>Best regards,<br/>FORMULAW Team.<br/></div>'};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
 				console.log('error=========>>>' + error);
@@ -369,8 +366,8 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Consultation', // Subject of the mail.
 			html:
-			'<div><span>Hi '+lawyer+',<span></div><div><p>'+ user +' has connected with you. Go to your portal to view their request to complete their case.<br/></p>Thank you.<br/>Best Regards,<br/>'+admin+'<br/>Formulaw Team <br/></div>',
-		};	console.log('admin appointment---->', details );
+			'<div><span>Dear '+lawyer+',<span></div><div><p>'+ user +' has connected with you. Please go to your portal to view their request and complete their booking. <br/></p>Thank you.<br/>Best regards,<br/>Formulaw Team.<br/></div>',
+		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
 				console.log('error=========>>>' + error);
@@ -394,7 +391,7 @@ module.exports = {
         '<div><span>Dear Admin,</span><div><p>Hi,This  appointment is Completed . <b> ' +
         '</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+                '</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -407,17 +404,17 @@ module.exports = {
 		});
 	},
 
-	userAppointmentComplete: (email, time, date) => {
-		console.log('logIn_Mail====>' + email);
+	userAppointmentComplete: (email, time, date,name) => {
+		console.log('logIn_Mail====>' + email,name);
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Lead Completed', // Subject of the mail.
 			html:
-        '<div><span>Dear User,</span><div><p>Hi, Your appointment Status is Completed Now .' +
-        '</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        '<div><span>Dear '+ name + ',</span><div><p>Your appointment status has been completed.' +
+        '</p><br><p>IMPORTANT: if this email is in your Spam folder mark it as “Not Spam” first. If you are receiving fraudulent emails from FORMULAW, please forward this email to support@formulaw.com.</p><br></br><p>You have been registered with FORMULAW with ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+        '</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -438,10 +435,10 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Lead Canceled', // subject:", // Subject of the mail.
 			html:
-        '<div><span>Dear Admin,</span><div><p>Hi,This  appointment has been Canceled by user . <b> ' +
-        '</b> .</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        '<div><span>Dear Admin,</span><div><p>Hi,This  appointment has been Canceled by ' + name + ' . <b> ' +
+        '</b> .</p><br><p>IMPORTANT: if this email is in your Spam folder mark it as “Not Spam” first. If you are receiving fraudulent emails from FORMULAW, please forward this email to support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+            '</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -461,10 +458,10 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Lead Canceled', // Subject of the mail.
 			html:
-        '<div><span>Dear User,</span><div><p>Hi, Your appointment has been Canceled  .' +
-        '</p><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you are recieving froud emails from FORMULAW, please forward this email support@formulaw.com</p><br></br><p>You have been registered with https://www.formulaw.com with Email- ' +
+        '<div><span>Dear User,</span><div><p>Hi, Your appointment has been Canceled .' +
+        '</p><br><p>IMPORTANT: if this email is in your Spam folder mark it as “Not Spam” first. If you are receiving fraudulent emails from FORMULAW, please forward this email to support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
         email +
-        '</p><br><p>If you have any questions or require assistance please click here to contact us. To receive our latest updates and freebies, like us on Facebook (facebook.com/formulaw.in) or follow us on Twitter (@formulaw).</p><br><p>Once again, thank you for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best Regards</span><br><span>FORMULAW Team</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
+                '</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -499,14 +496,14 @@ module.exports = {
 		});
 	},
 
-	userSubscriptionmail: (email, fullname, id, orderid) => {
-		console.log('subscription====>' + email);
+	userSubscriptionmail: (email, fullname, id, orderid,lawfirm) => {
+		console.log('subscription====>' + email,lawfirm);
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Subscription', // Subject of the mail.
 			html:
-        		'<div><span> Dear '+ fullname +',</span></div><div><p>Thank you for booking a package with us. <br/>Prior to starting a member of the Formulaw team would like to get to know you and your needs prior to giving you off to our trusted partners. The meeting will be done on our platform either via text or video depending on your preference. Please be logged on the platform 30 minutes prior to the meeting <br/>Please follow this link to start your consultation. </br><p>https://formu.law/user/dashboard/'+ id +'<br/>Receipt<br/>'+ orderid+'<br/>Please feel free to contact us if you have any question. I would be ready to give the necessary assistance.<br/>Thank you and have a great meeting.<br/>Best Regards,<br/>FORMULAW Team<br/>@formulaw team member</div>',
+        		'<div><span> Dear '+ fullname +',</span></div><div><p>Thank you for booking a package with us. <br/><br/>Before your meeting with ' + lawfirm + ', the Formulaw team offers a free consultation to get to know you and your needs. The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. <br/> <br/><br/>Please click <a href=https://formu.law/user/dashboard/'+ id +'>here</a> to start your consultation.<br/><br/><br/>Receipt<br/>'+ orderid+'<br/>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<br/><br/><br/>Thank you and have a great meeting.<br/><br/><br/>Best regards,<br/>FORMULAW team.<br/>@formulaw team member</div>',
 		};
 		console.log('subscription--->', details);
 		transporter.sendMail(details, function(error, data) {
@@ -527,7 +524,9 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Received New Message on FORMULAW!', // Subject of the mail.
 			html:
-				`<div><span>Dear User,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click here to join chat <a href='https://formu.law'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+				'<div><span>Dear User,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click here to join chat <a href=`https://formu.law`>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
+				email +
+				'</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP`, // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -548,7 +547,9 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Received New Message on FORMULAW!', // Subject of the mail.
 			html:
-				`<div><span>Dear Admin,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click here to join chat <a href='https://formu.law/admin-panel'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+				'<div><span>Dear Admin,</span><div><p>You have received a new message, Please follow the link below to continue chat.</p><br><p>Click <a href=`https://formu.law/admin-panel`>here</a> to join chat </p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
+				email +
+				'</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP`, // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -569,7 +570,8 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Please join appointment room FORMULAW!', // Subject of the mail.
 			html:
-				`<div><span>Dear User,</span><div><p>User have joined consultation room, Please follow the link below to continue call. Ignore, If already join.</p><br><p>Click here to join <a href='https://formu.law'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+				`<div><span>Dear User,</span><div><p>You have joined the consultation room. Please follow the link below to continue the call. Ignore this message if you are already joined.</p><br><p>Link to join: <a href='https://formu.law'>link</a></p></p>
+				<br><br><p>IMPORTANT: if this email is in your Spam folder mark it as “Not Spam” first. If you are receiving fraudulent emails from FORMULAW, please forward this email to support@formulaw.com.</p><br></br>`, // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -582,14 +584,15 @@ module.exports = {
 		});
 	},
 
-	recieverJoinCallEmailAdmin: (email) => {
-		console.log('logIn_Mail====>' + email);
+	recieverJoinCallEmailAdmin: (email,name) => {
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
 			subject: 'Please join appointment room FORMULAW!', // Subject of the mail.
 			html:
-				`<div><span>Dear Admin,</span><div><p>User have joined call, Please follow the link below to continue.</p><br><p>Click here to join call <a href='https://formu.law/admin-panel'>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br>`, // Sending OTP
+				'<div><span>Dear Admin,</span><div><p> ' + name + ' have joined call, Please follow the link below to continue.</p><br><p>Click here to join call <a href=`https://formu.law/admin-panel`>link</a></p></p><br><br><p>Important: If this email is in your Spam folder mark it as "Not Spam" first. If you have any issue, please forward this email support@formulaw.com</p><br></br><p>You have been registered with FORMULAW with ' +
+				email +
+				'</p><br><p>If you have any questions or require assistance please click <a href=`https://formu.law/`>here</a> to contact us. To receive our latest updates and giveaways, like us on <a href=`https://www.facebook.com/Formulaw-106673215258270`>Facebook</a> or follow us on <a href=`https://twitter.com/TheFormulaw`>Twitter</a>.</p><br><p>Thank you again for signing up with FORMULAW. We look forward to working with you.</p></div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://www.formulaw.com</u><div>', // Sending OTP`, // Sending OTP
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {

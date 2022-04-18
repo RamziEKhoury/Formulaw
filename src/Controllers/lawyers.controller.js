@@ -87,7 +87,7 @@ module.exports.addLawyer = async (req, res) => {
 					isActive: req.body.isActive,
 				});
 				await Lawyer.update({user_id: user.id}, {where: {id: inserted.id}});
-				await Mail.lawyerRegistration(inserted.email, password);
+				await Mail.lawyerRegistration(inserted.email,inserted.en_name, password);
 				const lawyerData = {
 					id: inserted.id,
 					en_name: inserted.en_name,
