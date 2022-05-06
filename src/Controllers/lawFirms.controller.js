@@ -108,7 +108,7 @@ module.exports.addLawFirm = async (req, res) => {
 					gender: req.body.gender,
 					isActive: req.body.isActive,
 				});
-				await Mail.lawyerRegistration(inserted.email,inserted.en_name, password);
+				await Mail.lawyerRegistration(inserted.email, inserted.en_name, password);
 
 				await Lawyer.update({user_id: user.id}, {where: {id: lawyer.id}});
 				const lawFirmData = {
@@ -176,7 +176,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
 			},
 			{where: {id: req.body.id}},
 		)
-			.then(async(lawFirm) => {
+			.then(async (lawFirm) => {
 				if (!lawFirm) {
 					/* #swagger.responses[404] = {
                                description: "Lawfirm Not found.",
@@ -191,8 +191,8 @@ module.exports.lawFirmUpdate = async (req, res) => {
 
                         } */
 				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
-				await Lawyer.update({email: req.body.email}, {where: {lawFirmId:  req.body.id}});
-				await User.update({email: req.body.email}, {where: {lawfirmid:  req.body.id}});
+				await Lawyer.update({email: req.body.email}, {where: {lawFirmId: req.body.id}});
+				await User.update({email: req.body.email}, {where: {lawfirmid: req.body.id}});
 				return apiResponses.successResponseWithData(res, 'Success', lawFirm);
 			})
 			.catch((err) => {
@@ -381,6 +381,7 @@ module.exports.getlawFirmsDetails = async (req, res) => {
 			include: [
 				{
 					model: LawFirmService,
+					where: {isDeleted: 0},
 				},
 
 				{
@@ -408,6 +409,7 @@ module.exports.getlawFirmDetails = async (req, res) => {
 			include: [
 				{
 					model: LawFirmService,
+					where: {isDeleted: 0},
 				},
 				{
 					model: LawFirmIndustry,

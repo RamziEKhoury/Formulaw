@@ -30,7 +30,8 @@ module.exports = function(app) {
 	app.get(
 		'/api/v1/lawfirm/get-topPriceservice',
 		lawFirmServiceController.getLawFirmServiceMaxPrice);
-	
 
-	
+	app.post(
+		'/api/v1/lawfirm/lawFirmServiceDelete',
+		lawFirmServiceController.lawFirmServiceDelete);
 };

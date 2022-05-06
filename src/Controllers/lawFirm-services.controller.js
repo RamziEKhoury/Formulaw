@@ -51,8 +51,6 @@ module.exports.lawFirmServiceUpdate = async (req, res) => {
 	try {
 		await LawFirmService.update(
 			{
-				id: req.body.id,
-				lawFirmId: req.body.lawFirmId,
 				title: req.body.title,
 				price: req.body.price,
 				currency: req.body.currency,
@@ -164,7 +162,7 @@ module.exports.getLawFirmService = (req, res) => {
 module.exports.getLawFirmServiceMaxPrice = (req, res) => {
 	LawFirmService.findAll({
 		attributes: [[sequelize.fn('max', sequelize.col('price')), 'maxPrice']],
-        raw: true,
+		raw: true,
 	})
 		.then((data) => {
 			return apiResponses.successResponseWithData(res, 'success', data);
@@ -177,3 +175,46 @@ module.exports.getLawFirmServiceMaxPrice = (req, res) => {
 		});
 };
 
+module.exports.lawFirmServiceDelete = async (req, res) => {
+	// #swagger.tags = ['LawFirmService']
+	/*  #swagger.parameters['obj'] = {
+		in: 'body',
+		 description: "LawFirmService details for add -lawFirmId,title,price,currency,discription,isActive",
+						  schema: {$lawFirmId:"",$title:"",$price:"",$currency:"", $discription:"",$isActive:""}
+                          */
+
+	try {
+		await LawFirmService.destroy({where: {id: req.body.id}})
+			.then((LawFirmService) => {
+				if (!LawFirmService) {
+					/* #swagger.responses[404] = {
+                               description: "LawFirmService Not found.",
+                               schema: { $statusCode: "404",  $status: false, $message: "Not found.",  $data: {}}
+                           } */
+					// return res.status(404).send({ message: "Not found." });
+					return apiResponses.notFoundResponse(res, 'Not found.', {});
+				}
+				/* #swagger.responses[200] = {
+                            description: "success!",
+                           schema: { $lawFirmId:"lawFirmId",$title:"title",$discription:"discription"  $isActive: "0"}
+
+                        } */
+				// return res.status(200).send({ status:'200', message: "success!" , data: lawFirm });
+				return apiResponses.successResponseWithData(
+					res,
+					'Success',
+					LawFirmService,
+				);
+			})
+			.catch((err) => {
+				/* #swagger.responses[500] = {
+                            description: "Error message",
+                            schema: { $statusCode: "500",  $status: false, $message: "Error Message", $data: {}}
+                        } */
+				// return res.status(500).send({ message: err.message });
+				return apiResponses.errorResponse(res, err.message, {});
+			});
+	} catch (err) {
+		return apiResponses.errorResponse(res, err);
+	}
+};

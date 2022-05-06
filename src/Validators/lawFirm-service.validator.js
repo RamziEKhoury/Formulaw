@@ -17,19 +17,19 @@ const addLawFirmServiceValidator = [
 	// 	.trim()
 	// 	.withMessage('discription must be specified.'),
 
-    // body('price')
+	// body('price')
 	// 	.isLength({min: 1})
 	// 	.trim()
-	// 	.withMessage('price must be specified.'),    
+	// 	.withMessage('price must be specified.'),
 
-	
+
 	// body('isActive')
 	// 	.isLength({min: 1})
 	// 	.trim()
 	// 	.withMessage('isActive must be specified.'),
 
 	sanitizeBody('lawFirmId').escape(),
-	
+
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -45,10 +45,10 @@ const addLawFirmServiceValidator = [
 ];
 
 const updateLawFirmServiceValidator = [
-	body('lawFirmId')
-		.isLength({min: 1})
-		.trim()
-		.withMessage('lawFirmId must be specified.'),
+	// body('lawFirmId')
+	// 	.isLength({min: 1})
+	// 	.trim()
+	// 	.withMessage('lawFirmId must be specified.'),
 	// body('title')
 	// 	.isLength({min: 1})
 	// 	.trim()
@@ -59,10 +59,10 @@ const updateLawFirmServiceValidator = [
 	// 	.trim()
 	// 	.withMessage('discription must be specified.'),
 
-    // body('price')
+	// body('price')
 	// 	.isLength({min: 1})
 	// 	.trim()
-	// 	.withMessage('price must be specified.'), 
+	// 	.withMessage('price must be specified.'),
 
 	// body('isActive')
 	// 	.isLength({min: 1})
@@ -70,7 +70,7 @@ const updateLawFirmServiceValidator = [
 	// 	.withMessage('isActive must be specified.'),
 
 	sanitizeBody('lawFirmId').escape(),
-	
+
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
