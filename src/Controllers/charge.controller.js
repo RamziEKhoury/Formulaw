@@ -5,10 +5,13 @@ const Request = db.request;
 const Appointment = db.appointment;
 const apiResponses = require('../Components/apiresponse');
 const Op = db.Sequelize.Op;
+const OrderId = require('order-id')('key');
 
 module.exports.addCharge = async (req, res) => {
 	try {
+		const id = OrderId.generate();
 		Charge.create({
+			order_id: id,
 			appointmentId: req.body.appointmentId,
 			customerid: req.body.customerid,
 			queryId: req.body.queryId,

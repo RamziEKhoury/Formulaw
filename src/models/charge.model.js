@@ -192,6 +192,9 @@ module.exports = (sequelize, Sequelize) => {
 		transfer_group: {
 			type: Sequelize.STRING,
 		},
+		order_id: {
+			type: Sequelize.STRING,
+		},
 		type: {
 			type: Sequelize.ENUM('Lead', 'Subscription'),
 			defaultValue: 'Lead',
