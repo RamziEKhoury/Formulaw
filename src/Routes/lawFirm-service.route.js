@@ -34,4 +34,8 @@ module.exports = function(app) {
 	app.post(
 		'/api/v1/lawfirm/lawFirmServiceDelete',
 		lawFirmServiceController.lawFirmServiceDelete);
+
+	app.post(
+		'/api/v1/lawfirm/addMoreServices',
+		lawFirmServiceController.addMoreServices);
 };

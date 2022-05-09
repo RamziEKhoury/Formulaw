@@ -218,3 +218,35 @@ module.exports.lawFirmServiceDelete = async (req, res) => {
 		return apiResponses.errorResponse(res, err);
 	}
 };
+
+module.exports.addMoreServices = async (req, res) => {
+	try {
+		if (req.body.title === undefined || req.body.title === '' ||
+			req.body.discription === '' || req.body.discription === '' ||
+			req.body.price === undefined || req.body.price === '' ||
+			req.body.currency === undefined || req.body.price === '') {
+			res.send({status: 400, msg: 'All fields should be mandatory'});
+		}
+		LawFirmService.create({
+			title: req.body.title,
+			discription: req.body.discription,
+			price: req.body.price,
+			currency: req.body.currency,
+			lawFirmId: req.body.lawfirmId,
+			isActive: 1,
+		})
+			.then((LawFirmService) => {
+				// #swagger.tags = ['LawFirmService']
+				/*  #swagger.parameters['obj'] = {
+                                  in: 'body',
+                                  description: "LawFirmService details for add -lawFirmId,title,price,currency,discription,isActive",
+                                  schema: {$lawFirmId:"",$title:"",$price:"",$currency:"", $discription:"",$isActive:""}
+                    } */
+
+				return apiResponses.successResponseWithData(res, 'success!', LawFirmService);
+			});
+	} catch (err) {
+		// Error response of Query.
+		return apiResponses.errorResponse(res, err);
+	}
+};
