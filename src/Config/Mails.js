@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 	secure: true,
 	auth: {
 		user: 'formulawauth@gmail.com', // email ID
-		pass: 'Formulaw$1997', // Password
+		pass: 'goccungsxloutyaf', // Password
 	},
 });
 
