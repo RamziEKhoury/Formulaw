@@ -7,7 +7,7 @@ const Testimonial = db.testimonial;
 const User = db.user;
 const Lawyer = db.lawyer;
 const apiResponses = require('../Components/apiresponse');
-const {UserRole} = require('../enum');
+const {UserRole, RequestWorkflow} = require('../enum');
 const bcrypt = require('bcryptjs');
 const Mail = require('../Config/Mails');
 const Op = db.Sequelize.Op;
@@ -32,6 +32,17 @@ module.exports.addLawFirm = async (req, res) => {
 			          description: "LawFirm details for add - en_name, ar_name,licenseNumber,countryId,countryTitle,langaugeId,langaugeTitle,logo,images,experience,currency,numOfLawyer,jurisdiction,expertise,rating,taxType,tax, isActive",
 			          schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$langaugeTitle:"",$logo: "",$images:"" ,$currency: "",$serviceId:"", $rating: "" , $experience:"",$numOfLawyer: "", $taxType:"",$tax:"", $expertise: "",$jurisdiction:""}
         } */
+
+		let userRating = 0;
+		if (req.body.rating === 'avarage') {
+			userRating = 2;
+		}
+		if (req.body.rating === 'good') {
+			userRating = 3.7;
+		}
+		if (req.body.rating === 'excellent') {
+			userRating = 4.7;
+		}
 		LawFirm.findOrCreate({
 			where: {
 				en_name: req.body.en_name,
@@ -52,6 +63,7 @@ module.exports.addLawFirm = async (req, res) => {
 				jurisdictionid: req.body.jurisdictionid,
 				jurisdiction: req.body.jurisdiction,
 				rating: req.body.rating,
+				userrating: userRating,
 				experience: req.body.experience,
 				isActive: req.body.isActive,
 			},
@@ -469,7 +481,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 		if (req.body.rating == '1') {
 			if (req.body.serviceName === 'Other') {
 				LawFirm.findAll({
-					where: {
+					where: {workflow: RequestWorkflow.APPROVE,
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
@@ -507,7 +519,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 			} else {
 				const limit = 1000;
 				LawFirm.findAll({
-					where: {
+					where: {workflow: RequestWorkflow.APPROVE,
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
@@ -544,7 +556,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 		} else if (req.body.rating === '2') {
 			if (req.body.serviceName === 'Other') {
 				LawFirm.findAll({
-					where: {
+					where: {workflow: RequestWorkflow.APPROVE,
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
@@ -582,7 +594,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 			} else {
 				const limit = 1000;
 				LawFirm.findAll({
-					where: {
+					where: {workflow: RequestWorkflow.APPROVE,
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
@@ -619,7 +631,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 		} else if (req.body.rating === '3') {
 			if (req.body.serviceName === 'Other') {
 				LawFirm.findAll({
-					where: {
+					where: {workflow: RequestWorkflow.APPROVE,
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
@@ -657,7 +669,7 @@ module.exports.getFilterlawFirmsDetails = async (req, res) => {
 			} else {
 				const limit = 1000;
 				LawFirm.findAll({
-					where: {
+					where: {workflow: RequestWorkflow.APPROVE,
 						[Op.and]: [
 							{languageId: {[Op.contains]: req.body.languageId}},
 							{jurisdictionid: {[Op.contains]: req.body.jurisdictionid}},
