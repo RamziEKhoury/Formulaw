@@ -165,6 +165,16 @@ module.exports.lawFirmUpdate = async (req, res) => {
 			schema: { $en_name: "", $ar_name: "" ,  $isActive: "", $licenseNumber: "" , $countryId: "" ,$countryTitle:"", $langaugeId: "",$logo: "",$images:"",$price: "" ,$currency: "", $rating: "" , $experience: "",$taxType:"",$tax:"", $numOfLawyer: "", $jurisdiction: "", $expertise: ""}
             } */
 	try {
+		let userRating = 0;
+		if (req.body.rating === 'avarage') {
+			userRating = 2;
+		}
+		if (req.body.rating === 'good') {
+			userRating = 3.7;
+		}
+		if (req.body.rating === 'excellent') {
+			userRating = 4.7;
+		}
 		await LawFirm.update(
 			{
 				id: req.body.id,
@@ -183,6 +193,7 @@ module.exports.lawFirmUpdate = async (req, res) => {
 				rating: req.body.rating,
 				experience: req.body.experience,
 				logo: req.body.logo,
+				userrating: userRating,
 				images: req.body.images,
 				isActive: req.body.isActive,
 			},
