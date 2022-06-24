@@ -67,7 +67,7 @@ const addLawFirmValidator = [
 		.trim()
 		.withMessage('isActive must be specified.'),
 
-		sanitizeBody('en_name').escape(),
+		sanitizeBody('numOfLawyer').escape(),
 
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -152,7 +152,7 @@ const updateLawFirmValidator = [
 		.trim()
 		.withMessage('isActive must be specified.'),
 
-	sanitizeBody('en_name').escape(),
+	sanitizeBody('isActive').escape(),
 
 	(req, res, next) => {
 
