@@ -1,11 +1,20 @@
 const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
 
 const moment = require('moment');
 const smtpEndpoint = 'email-smtp.eu-west-1.amazonaws.com';
 const port = 465;
-const senderAddress = `Formulaw <formulawauth@gmail.com>`; //Formulaw <info@formu.law>
+const senderAddress = `info@formu.law`; // Formulaw <info@formu.law> || Formulaw <formulawauth@gmail.com>
 const smtpUsername = 'AKIASE3LOW3XFGIXHRV4';
 const smtpPassword = 'BALTT+vkKNKXz8rRLXe11v2JhBnhstNjNH/F8WFNTtks';
+
+const transporter = nodemailer.createTransport({
+	service: 'SendGrid',
+	auth: {
+		user: 'apikey',
+		pass: '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',
+	},
+});
 
 // const transporter = nodemailer.createTransport({
 // 	host: smtpEndpoint,
@@ -18,15 +27,15 @@ const smtpPassword = 'BALTT+vkKNKXz8rRLXe11v2JhBnhstNjNH/F8WFNTtks';
 // 	},
 // });
 
-const transporter = nodemailer.createTransport({
-	host: 'smtp.gmail.com',
-	port: 465,
-	secure: true,
-	auth: {
-		user: 'formulawauth@gmail.com', // email ID
-		pass: 'goccungsxloutyaf', // Password
-	},
-});
+// const transporter = nodemailer.createTransport({
+// 	host: 'smtp.gmail.com',
+// 	port: 465,
+// 	secure: true,
+// 	auth: {
+// 		user: 'formulawauth@gmail.com', // email ID
+// 		pass: 'goccungsxloutyaf', // Password
+// 	},
+// });
 
 
 module.exports = {
@@ -37,7 +46,23 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Regarding registration on FORMULAW!', // Subject of the mail.
 			html:
-        '<div><span>Hi ' + username +' ,<br/>'+email+'</span><div><p>Welcome to Formulaw. We’re thrilled to see you here!</p><br/><p>On behalf of the whole Formulaw team we would like to welcome you to the family. Here at Formulaw we pride ourselves in being a secure, transparent, and cost-efficient platform, ensuring that your legal problems are solved seamlessly.</p><br/><p>Get to know more about us in our Formulaw news article.</p><br/><p>You can also find more of our guides here to learn more about Formulaw</p><br/><p>Thank you.</p><br/></div><div><span>Best regards,</span><br><span>FORMULAW team.</span><br><u>https://formu.law</u></div>',
+        '<div><span>Hi ' + username +' ,<br/>'+email+'</span><p>Welcome to Formulaw. We&rsquo;re thrilled to see you here!</p>\n' +
+				'<p><br></p>\n' +
+				'<p>On behalf of the whole Formulaw team we would like to welcome you to the family. Here at Formulaw we pride ourselves in being a secure, transparent, and cost-efficient platform, ensuring that your legal problems are solved seamlessly.</p>\n' +
+				'<p><br></p>\n' +
+				'<p>Get to know more about Formulaw here:</p>\n' +
+				'<a href="https://www.youtube.com/watch?v=TTClX5nkj58&ab_channel=formulaw">https://www.youtube.com/watch?v=TTClX5nkj58&ab_channel=formulaw</a>\n' +
+				'<p></p>\n' +
+				'<p><br></p>\n' +
+				'<p>alternatively we have an FAQ that can answer some of your legal queries</p>\n' +
+				'<a href="https://formu.law/faq">https://formu.law/faq</a>\n' +
+				'<p>&nbsp;</p>\n' +
+				'<p>Thank you for your time</p>\n' +
+				'<p><br></p>\n' +
+				'<p><br></p>\n' +
+				'<span>Best regards,</span>\n' +
+				'<p>The Formulaw team</p>\n' +
+				'<a href="https://formu.law">https://formu.law</a>',
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -51,7 +76,7 @@ module.exports = {
 	},
 
 	userPasswordReset: (email, token) => {
-		var resetUrl =` https://formu.law/reset-password/${token}`
+		const resetUrl =` https://formu.law/reset-password/${token}`;
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
@@ -73,7 +98,7 @@ module.exports = {
 		});
 	},
 
-	lawyerRegistration: (email,name, password) => {
+	lawyerRegistration: (email, name, password) => {
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
@@ -151,7 +176,7 @@ module.exports = {
 			to: email, // Receiver's email id
 			subject: 'Appointment', // Subject of the mail.
 			html:
-        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a kind reminder that your meeting on  '+ ' ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') +  ' is confirmed.' + '</p><br/><p>Before your meeting with  '+lawfirm+', the Formulaw team offers a free consultation to get to know you and your needs.<br/> The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. </p><br/><p> Please click here to start your consultation.</p><br><u> https://formu.law/user/dashboard/'+ id + '<br><p>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<p></br><br><p>Thank you and have a great meeting.</p><br><div><span>Best regards</span><br><span>FORMULAW team.</span><br><u>https://formu.law</u></div></div>',
+        '<div><span>Dear '+ fullname +',</span></div><div><p>This is a kind reminder that your meeting on  '+ ' ' + moment(date).format('DD/MM/YYYY') +' at '+ moment(time).format('HH:mm A') + ' is confirmed.' + '</p><br/><p>Before your meeting with  '+lawfirm+', the Formulaw team offers a free consultation to get to know you and your needs.<br/> The meeting will take place on our platform either via chat or video call – depending on your personal preference. Please be logged on the platform 15 minutes before the scheduled consultation. </p><br/><p> Please click here to start your consultation.</p><br><u> https://formu.law/user/dashboard/'+ id + '<br><p>Feel free to contact us if you have any questions. The Formulaw team is available to assist you at your convenience.<p></br><br><p>Thank you and have a great meeting.</p><br><div><span>Best regards</span><br><span>FORMULAW team.</span><br><u>https://formu.law</u></div></div>',
 		};
 		transporter.sendMail(details, function(error, data) {
 			if (error) {
@@ -234,7 +259,7 @@ module.exports = {
 		});
 	},
 
-	userAppointmentApproved: (email, time, date,name) => {
+	userAppointmentApproved: (email, time, date, name) => {
 		console.log('logIn_Mail====>' + email);
 		const details = {
 			from: senderAddress, // sender address same as above
@@ -404,8 +429,8 @@ module.exports = {
 		});
 	},
 
-	userAppointmentComplete: (email, time, date,name) => {
-		console.log('logIn_Mail====>' + email,name);
+	userAppointmentComplete: (email, time, date, name) => {
+		console.log('logIn_Mail====>' + email, name);
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
@@ -496,8 +521,8 @@ module.exports = {
 		});
 	},
 
-	userSubscriptionmail: (email, fullname, id, orderid,lawfirm) => {
-		console.log('subscription====>' + email,lawfirm);
+	userSubscriptionmail: (email, fullname, id, orderid, lawfirm) => {
+		console.log('subscription====>' + email, lawfirm);
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
@@ -584,7 +609,7 @@ module.exports = {
 		});
 	},
 
-	recieverJoinCallEmailAdmin: (email,name) => {
+	recieverJoinCallEmailAdmin: (email, name) => {
 		const details = {
 			from: senderAddress, // sender address same as above
 			to: email, // Receiver's email id
