@@ -11,8 +11,8 @@ const smtpPassword = 'BALTT+vkKNKXz8rRLXe11v2JhBnhstNjNH/F8WFNTtks';
 const transporter = nodemailer.createTransport({
 	service: 'SendGrid',
 	auth: {
-		user: 'apikey',
-		pass: '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',
+		user: process.env.SENDGRID_USER,
+		pass: process.env.SENDGRID_PASS,
 	},
 });
 
